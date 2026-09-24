@@ -17,15 +17,22 @@ export interface CodePointInfo {
  * Walks a string one Unicode scalar value at a time, tracking 1-based
  * line/column (in UTF-16 code units, matching how editors report position).
  * Recognizes \n, \r\n and \r as line breaks.
+ *
+ * Returns a plain array rather than being a generator: every rule that
+ * consumes this needs random access (previous/next lookahead for the
+ * invisible-character rule, a full pass per rule otherwise), so nothing
+ * benefits from lazy iteration, and a plain loop avoids generator/iterator
+ * overhead that matters at multi-megabyte-file scale.
  */
-export function* iterateCodePoints(text: string): Generator<CodePointInfo> {
+export function iterateCodePoints(text: string): CodePointInfo[] {
+  const out: CodePointInfo[] = [];
   let line = 1;
   let column = 1;
   let i = 0;
   while (i < text.length) {
     const codePoint = text.codePointAt(i)!;
     const width = codePoint > 0xffff ? 2 : 1;
-    yield { codePoint, index: i, width, line, column };
+    out.push({ codePoint, index: i, width, line, column });
     if (codePoint === 0x0a) {
       line++;
       column = 1;
@@ -40,6 +47,7 @@ export function* iterateCodePoints(text: string): Generator<CodePointInfo> {
     }
     i += width;
   }
+  return out;
 }
 
 function rangeSearch(ranges: ReadonlyArray<readonly [number, number, ...unknown[]]>, cp: number): number {

@@ -1,0 +1,7 @@
+- id: ghostchars
+  name: ghostchars
+  description: Catch invisible and deceptive Unicode (bidi control smuggling, zero-width characters, tag/variation-selector payload smuggling, homoglyph confusables).
+  entry: ghostchars
+  language: node
+  types: [text]
+  pass_filenames: true

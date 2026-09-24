@@ -1,0 +1,33 @@
+# Example: run ghostchars as a SARIF producer and upload the results to
+# GitHub code scanning, so findings show up under the Security tab alongside
+# CodeQL etc. Copy this to .github/workflows/ghostchars-sarif.yml.
+name: ghostchars (SARIF)
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  schedule:
+    - cron: '0 6 * * 1' # weekly, catches drift in third-party/vendored files
+
+permissions:
+  contents: read
+  security-events: write
+
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Scan for invisible / deceptive Unicode
+        uses: antonsoo/ghostchars@main
+        continue-on-error: true # let the SARIF upload run even if findings fail the step
+        with:
+          format: sarif
+          output: ghostchars.sarif
+
+      - name: Upload SARIF to code scanning
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: ghostchars.sarif

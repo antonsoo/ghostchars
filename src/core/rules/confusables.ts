@@ -7,8 +7,11 @@ import { scriptsOf } from '../unicode-utils.js';
 // map every code point in an identifier through confusables.txt's prototype
 // mapping, concatenate the results, and compare. Two spellings that are not
 // character-for-character identical but reduce to the same skeleton are the
-// definition of a confusable pair (e.g. Latin "paypal" vs "pаypal" with a
-// Cyrillic а, U+0430). We flag two independent signals, both from TR39 +
+// definition of a confusable pair (e.g. an all-Latin "paypal" vs the same
+// word with its "a" swapped for Cyrillic small letter a, U+0430 -- written
+// as an escape here rather than pasted in literally, for the same reason
+// IDENTIFIER_RE below uses escapes: ghostchars would otherwise flag its own
+// source). We flag two independent signals, both from TR39 +
 // Scripts.txt/ScriptExtensions.txt:
 //   1. A single identifier that mixes scripts with no shared "Common"/
 //      "Inherited" characters tying them together (restriction-level style
@@ -22,10 +25,27 @@ function getConfusableMap(): Map<number, number[]> {
   return confusableMap;
 }
 
-const IDENTIFIER_RE = /[\p{L}\p{M}\p{Nd}\p{Pc}][\p{L}\p{M}\p{Nd}\p{Pc}‌‍]*/gu;
+// ZWNJ/ZWJ (U+200C, U+200D) are built via String.fromCodePoint rather than
+// written into this source at all, in any form -- this file is exactly the
+// kind of place ghostchars itself would flag an invisible character sitting
+// unescaped (or even escaped-but-visually-absent) in source.
+const ZWNJ = String.fromCodePoint(0x200c);
+const ZWJ = String.fromCodePoint(0x200d);
+const IDENTIFIER_RE = new RegExp(`[\\p{L}\\p{M}\\p{Nd}\\p{Pc}][\\p{L}\\p{M}\\p{Nd}\\p{Pc}${ZWNJ}${ZWJ}]*`, 'gu');
 const SCRIPT_NEUTRAL = new Set(['Common', 'Inherited']);
 
+// Fast paths for the overwhelmingly common case (a plain ASCII identifier):
+// skip the confusables map and script lookups entirely rather than doing a
+// map/binary-search per character. Only 8 ASCII code points appear as
+// *source* entries in confusables.txt at all (0, 1, I, l-look-alikes, etc.),
+// and plain ASCII text can never itself "mix scripts" once Common/Inherited
+// (digits, underscore) are excluded -- it is always exactly {Latin} or {}.
+// eslint-disable-next-line no-control-regex -- \x00-\x7f is "the ASCII range", not a control-character mistake.
+const ASCII_RE = /^[\x00-\x7f]+$/;
+const ASCII_CONFUSABLE_CHARS = new Set([...getConfusableMap().keys()].filter((cp) => cp < 128).map((cp) => String.fromCodePoint(cp)));
+
 function skeletonOf(token: string): string {
+  if (ASCII_RE.test(token) && ![...token].some((c) => ASCII_CONFUSABLE_CHARS.has(c))) return token;
   const map = getConfusableMap();
   let out = '';
   for (const ch of token) {
@@ -37,6 +57,7 @@ function skeletonOf(token: string): string {
 }
 
 function scriptsOfToken(token: string): Set<string> {
+  if (ASCII_RE.test(token)) return new Set(); // ASCII letters/digits are always Latin/Common alone -- never "mixed"
   const scripts = new Set<string>();
   for (const ch of token) {
     const cp = ch.codePointAt(0)!;
@@ -84,9 +105,9 @@ export function scanConfusables(text: string): Finding[] {
 
   for (const token of tokens) {
     if (token.text.length < 2) continue; // single characters can't "mix" scripts meaningfully
+    const skeleton = skeletonOf(token.text);
     const scripts = scriptsOfToken(token.text);
     if (scripts.size > 1) {
-      const skeleton = skeletonOf(token.text);
       findings.push({
         rule: 'confusable',
         severity: 'warning',
@@ -101,7 +122,6 @@ export function scanConfusables(text: string): Finding[] {
       });
     }
 
-    const skeleton = skeletonOf(token.text);
     if (!bySkeleton.has(skeleton)) bySkeleton.set(skeleton, []);
     bySkeleton.get(skeleton)!.push(token);
   }

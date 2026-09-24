@@ -54,7 +54,11 @@ export function reveal(text: string): string {
   while (i < text.length) {
     const finding = byStart.get(i);
     if (finding) {
-      const label = finding.codePoints.map((cp) => `U+${cp.toString(16).toUpperCase().padStart(4, '0')} ${ABBR.get(cp) ?? shortName(finding, cp)}`).join(' ');
+      const describe = (cp: number) => `U+${cp.toString(16).toUpperCase().padStart(4, '0')} ${ABBR.get(cp) ?? shortName(finding, cp)}`;
+      const label =
+        finding.codePoints.length > 4
+          ? `${describe(finding.codePoints[0]!)} .. ${describe(finding.codePoints[finding.codePoints.length - 1]!)} (${finding.codePoints.length} code points)`
+          : finding.codePoints.map(describe).join(' ');
       out += `⟦${label}⟧`;
       if (finding.decoded) out += ` → "${finding.decoded}"`;
       i = Math.max(finding.end.offset, i + 1);

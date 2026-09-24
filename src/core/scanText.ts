@@ -8,7 +8,7 @@ import type { Finding, ScanOptions, ScanResult, Severity } from './types.js';
 import { iterateCodePoints } from './unicode-utils.js';
 
 export function scanText(text: string, options: ScanOptions = {}): ScanResult {
-  const codePoints = [...iterateCodePoints(text)];
+  const codePoints = iterateCodePoints(text);
 
   const findings = [...scanBidi(codePoints, text), ...scanTags(text), ...scanVariationSelectors(text), ...scanInvisible(codePoints), ...scanConfusables(text), ...scanWhitespaceAndControl(codePoints)];
 

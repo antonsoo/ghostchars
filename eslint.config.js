@@ -6,7 +6,9 @@ export default tseslint.config(
   js.configs.recommended,
   ...tseslint.configs.recommended,
   {
-    ignores: ['dist/**', 'web/dist/**', 'web/node_modules/**', 'node_modules/**', 'src/generated/**'],
+    // examples/ is a gallery of deliberately bad/unusual input (that's the
+    // point -- ghostchars is meant to flag it), not code meant to pass lint.
+    ignores: ['dist/**', 'web/dist/**', 'web/node_modules/**', 'node_modules/**', 'src/generated/**', 'examples/**'],
   },
   {
     files: ['**/*.ts'],
@@ -19,7 +21,7 @@ export default tseslint.config(
   {
     files: ['scripts/**/*.mjs', 'esbuild.*.mjs'],
     languageOptions: {
-      globals: { process: 'readonly', console: 'readonly', fetch: 'readonly' },
+      globals: { process: 'readonly', console: 'readonly', fetch: 'readonly', Buffer: 'readonly', performance: 'readonly' },
     },
   },
 );

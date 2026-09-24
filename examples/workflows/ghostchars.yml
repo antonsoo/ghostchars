@@ -1,0 +1,22 @@
+# Example: run ghostchars on every push and PR, with inline annotations on
+# the offending lines. Copy this to .github/workflows/ghostchars.yml in your
+# own repo.
+name: ghostchars
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Scan for invisible / deceptive Unicode
+        uses: antonsoo/ghostchars@main
+        with:
+          format: github

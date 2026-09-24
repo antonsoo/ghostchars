@@ -1,0 +1,64 @@
+name: 'ghostchars'
+description: 'Catch invisible and deceptive Unicode -- bidi control smuggling, zero-width characters, tag/variation-selector payload smuggling, and homoglyph confusables.'
+author: 'Anton Soloviev'
+branding:
+  icon: 'eye'
+  color: 'purple'
+
+inputs:
+  paths:
+    description: 'Space-separated paths to scan (defaults to the whole checkout).'
+    required: false
+    default: '.'
+  format:
+    description: 'Output format: pretty, json, sarif, or github.'
+    required: false
+    default: 'github'
+  output:
+    description: 'File to write the report to. If empty, the report goes to stdout (and, for format=github, becomes inline PR annotations).'
+    required: false
+    default: ''
+  config:
+    description: 'Path to a .ghostcharsrc.json config file. Defaults to ./.ghostcharsrc.json if present.'
+    required: false
+    default: ''
+  node-version:
+    description: 'Node.js version to set up before running ghostchars.'
+    required: false
+    default: '24'
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Set up Node.js
+      uses: actions/setup-node@v7
+      with:
+        node-version: ${{ inputs.node-version }}
+
+    - name: Run ghostchars
+      shell: bash
+      env:
+        GC_PATHS: ${{ inputs.paths }}
+        GC_FORMAT: ${{ inputs.format }}
+        GC_OUTPUT: ${{ inputs.output }}
+        GC_CONFIG: ${{ inputs.config }}
+        GC_ACTION_PATH: ${{ github.action_path }}
+      run: |
+        set -euo pipefail
+        args=(--format "$GC_FORMAT")
+        if [ -n "$GC_CONFIG" ]; then
+          args+=(--config "$GC_CONFIG")
+        fi
+        # shellcheck disable=SC2206 # intentional word-splitting: paths is a
+        # space-separated list of paths/globs, same convention as `git add`.
+        args+=($GC_PATHS)
+
+        set +e
+        if [ -n "$GC_OUTPUT" ]; then
+          node "$GC_ACTION_PATH/dist/cli.js" "${args[@]}" > "$GC_OUTPUT"
+        else
+          node "$GC_ACTION_PATH/dist/cli.js" "${args[@]}"
+        fi
+        status=$?
+        set -e
+        exit "$status"
