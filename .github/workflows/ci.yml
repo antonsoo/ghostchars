@@ -1,0 +1,89 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  library:
+    name: typecheck, lint, test, build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: '24'
+          cache: 'npm'
+
+      - run: npm ci
+
+      - run: npm run typecheck
+      - run: npm run lint
+      - run: npm test
+      - run: npm run build
+
+      - name: Verify dist/cli.js is up to date
+        run: |
+          git diff --exit-code -- dist/cli.js || {
+            echo "::error::dist/cli.js is stale. Run 'npm run build' and commit the result.";
+            exit 1;
+          }
+
+      - name: Self-scan (src/ must be clean)
+        run: node dist/cli.js src action.yml package.json tsconfig.json tsconfig.build.json eslint.config.js esbuild.cli.mjs .pre-commit-hooks.yaml
+
+      - name: Benchmark smoke test
+        run: node scripts/benchmark.mjs 2
+
+  action-self-test:
+    name: Action self-test (uses ./)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Must pass on real source
+        uses: ./
+        with:
+          paths: 'src action.yml package.json README.md'
+          format: pretty
+
+      - name: Must fail on examples/fixtures
+        id: fixtures
+        uses: ./
+        continue-on-error: true
+        with:
+          paths: 'examples/fixtures'
+          format: pretty
+
+      - name: Assert the fixtures step actually failed
+        run: |
+          if [ "${{ steps.fixtures.outcome }}" != "failure" ]; then
+            echo "::error::expected the Action to fail on examples/fixtures (it contains a known bidi-control finding), but it reported '${{ steps.fixtures.outcome }}'."
+            exit 1
+          fi
+          echo "ok: the Action correctly failed on examples/fixtures/bad.js"
+
+  web:
+    name: web app (build)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: web
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: '24'
+          cache: 'npm'
+          cache-dependency-path: web/package-lock.json
+
+      - run: npm ci
+      - run: npm run typecheck
+      - run: npm run lint
+      - run: npm run build
