@@ -93,7 +93,7 @@ export function scanConfusables(text: string): Finding[] {
         start: { line: token.line, column: token.column, offset: token.index },
         end: { line: token.line, column: token.column + token.text.length, offset: token.index + token.text.length },
         codePoints: [...token.text].map((c) => c.codePointAt(0)!),
-        names: [...scripts],
+        names: [...token.text].map((c) => unicodeName(c.codePointAt(0)!)),
         message: `Identifier "${token.text}" mixes scripts (${[...scripts].join(', ')}) in one word -- a common homoglyph-attack shape. Skeleton: "${skeleton}".`,
         suggestion: 'Confirm every character is intentional (e.g. a Greek variable name is fine on its own, but Latin+Cyrillic in one identifier rarely is), or rename to a single script.',
         skeleton,

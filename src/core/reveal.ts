@@ -41,6 +41,11 @@ export function reveal(text: string): string {
   const { findings } = scanText(text);
   const byStart = new Map<number, Finding>();
   for (const f of findings) {
+    // Confusables stay as ordinary visible text here -- the point of reveal()
+    // is surfacing what's invisible, and collapsing a whole lookalike
+    // identifier into one opaque chip would defeat that. The confusable
+    // rule's own message/skeleton already carries the useful detail.
+    if (f.rule === 'confusable') continue;
     if (!byStart.has(f.start.offset)) byStart.set(f.start.offset, f);
   }
 
