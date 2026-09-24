@@ -1,0 +1,70 @@
+{
+  "name": "ghostchars",
+  "version": "0.1.0",
+  "description": "Catch invisible and deceptive Unicode (bidi control smuggling, zero-width characters, tag/variation-selector payload smuggling, homoglyph confusables) in code, docs, and LLM prompts.",
+  "keywords": [
+    "unicode",
+    "security",
+    "trojan-source",
+    "bidi",
+    "homoglyph",
+    "prompt-injection",
+    "static-analysis",
+    "linter",
+    "cli"
+  ],
+  "homepage": "https://antonsoo.github.io/ghostchars/",
+  "bugs": "https://github.com/antonsoo/ghostchars/issues",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/antonsoo/ghostchars.git"
+  },
+  "license": "MIT",
+  "author": "Anton Soloviev",
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "bin": {
+    "ghostchars": "dist/cli.js"
+  },
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "src",
+    "LICENSE",
+    "LICENSE-UNICODE"
+  ],
+  "scripts": {
+    "generate:unicode": "node scripts/generate-unicode-data.mjs",
+    "build:lib": "tsc -p tsconfig.build.json",
+    "build:cli": "node esbuild.cli.mjs",
+    "build": "npm run build:lib && npm run build:cli",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint .",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "bench": "node scripts/benchmark.mjs",
+    "web:dev": "npm --prefix web run dev",
+    "web:build": "npm --prefix web run build"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^8.18.0",
+    "@typescript-eslint/parser": "^8.18.0",
+    "esbuild": "^0.24.0",
+    "eslint": "^9.17.0",
+    "typescript": "^5.7.2",
+    "vitest": "^2.1.8"
+  },
+  "allowScripts": {
+    "esbuild@0.24.2": true,
+    "esbuild@0.21.5": true
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "unicodeVersion": "17.0.0",
+  "emojiVersion": "16.0",
+  "generatedAt": "2026-09-24T09:21:00.021Z",
+  "sources": {
+    "derivedCoreProperties": {
+      "url": "https://unicode.org/Public/17.0.0/ucd/DerivedCoreProperties.txt",
+      "sha256": "24c7fed1195c482faaefd5c1e7eb821c5ee1fb6de07ecdbaa64b56a99da22c08",
+      "bytes": 1134781
+    },
+    "scripts": {
+      "url": "https://unicode.org/Public/17.0.0/ucd/Scripts.txt",
+      "sha256": "9f5e50d3abaee7d6ce09480f325c706f485ae3240912527e651954d2d6b035bf",
+      "bytes": 192458
+    },
+    "scriptExtensions": {
+      "url": "https://unicode.org/Public/17.0.0/ucd/ScriptExtensions.txt",
+      "sha256": "ec2107e58825a1586acee8e0911ce18260394ac8b87e535ca325f1ccbeb06bc6",
+      "bytes": 20705
+    },
+    "emojiData": {
+      "url": "https://unicode.org/Public/17.0.0/ucd/emoji/emoji-data.txt",
+      "sha256": "2cb2bb9455cda83e8481541ecf5b6dfda66a3bb89efa3fa7c5297eccf607b72b",
+      "bytes": 102858
+    },
+    "emojiSequences": {
+      "url": "https://unicode.org/Public/emoji/16.0/emoji-sequences.txt",
+      "sha256": "3fe3c77e72e8f26df302dc7d99b106c5d08fd808ef7246fb5d4502d659fe659c",
+      "bytes": 187089
+    },
+    "confusables": {
+      "url": "https://unicode.org/Public/security/16.0.0/confusables.txt",
+      "sha256": "95bd0aad6dced5ebc63436f459c06ab21a8d107cd842fb57f5c3a1e91bca8611",
+      "bytes": 653348
+    }
+  }
+}
