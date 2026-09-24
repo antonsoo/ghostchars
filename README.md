@@ -2,7 +2,6 @@
 
 **See the characters you can't.** Catch invisible and deceptive Unicode in code, docs, and LLM prompts.
 
-[![CI](https://github.com/antonsoo/ghostchars/actions/workflows/ci.yml/badge.svg)](https://github.com/antonsoo/ghostchars/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![Live demo](https://img.shields.io/badge/demo-the%20UV%20lamp-8f73ff)](https://antonsoo.github.io/ghostchars/)
 
