@@ -1,5 +1,12 @@
 node_modules/
-dist/
+
+# dist/ is build output and normally untracked, except the single-file CLI
+# bundle: `npx github:antonsoo/ghostchars` and the GitHub Action both need to
+# run without a build step, so dist/cli.js is committed deliberately (CI
+# verifies it's up to date on every push).
+dist/*
+!dist/cli.js
+
 web/dist/
 web/node_modules/
 *.log
