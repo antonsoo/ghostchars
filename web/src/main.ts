@@ -22,7 +22,7 @@ app.innerHTML = `
       <p>Paste code, docs, or an LLM prompt. ghostchars finds bidi overrides, zero-width
       characters, smuggled tag/variation-selector payloads, and homoglyph lookalikes --
       entirely in this tab.</p>
-      <div class="privacy-note"><span class="dot" aria-hidden="true"></span>Nothing you paste leaves your browser. No network requests, no analytics.</div>
+      <div class="privacy-note"><span class="dot" aria-hidden="true"></span>Nothing you type or paste ever leaves your browser. No analytics, no tracking -- only Google Fonts loads over the network, for the typeface.</div>
     </section>
 
     <div class="lamp-row">

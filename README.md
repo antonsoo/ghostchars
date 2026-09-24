@@ -112,7 +112,7 @@ See [`examples/workflows/ghostchars.yml`](examples/workflows/ghostchars.yml) and
 
 ## The web app: "the UV lamp"
 
-<https://antonsoo.github.io/ghostchars/> -- paste or type text and hidden characters glow as labelled chips; a panel decodes smuggled tag/variation-selector payloads; a side-by-side bidi view shows "what you see" (your real browser rendering the bytes, reordering included) against "what the compiler sees" (logical order, every control character made visible); confusable identifiers are underlined with their skeleton on hover; one click copies the sanitized text. Everything runs client-side -- no network requests after the page loads.
+<https://antonsoo.github.io/ghostchars/> -- paste or type text and hidden characters glow as labelled chips; a panel decodes smuggled tag/variation-selector payloads; a side-by-side bidi view shows "what you see" (your real browser rendering the bytes, reordering included) against "what the compiler sees" (logical order, every control character made visible); confusable identifiers are underlined with their skeleton on hover; one click copies the sanitized text. Everything runs client-side: the text you inspect is never sent anywhere. (Google Fonts loads over the network for the typeface; nothing else does.)
 
 ![The web app comparing "what you see" vs. the decoded logical order of a tag-smuggled prompt injection, with the hidden instruction revealed](docs/assets/web-tags.png)
 

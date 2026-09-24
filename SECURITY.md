@@ -14,4 +14,4 @@ Please open a [GitHub Security Advisory](https://github.com/antonsoo/ghostchars/
 
 - ghostchars flags suspicious Unicode; it does not sandbox, execute, or otherwise act on the files it scans.
 - `sanitize()` / `--fix` perform textual removal only (no code execution, no network access).
-- The web app (`web/`) does all processing client-side and makes no network requests after the page loads.
+- The web app (`web/`) does all text processing client-side; the only network request it makes is loading its Google Fonts typeface, and the text you inspect is never sent anywhere.
