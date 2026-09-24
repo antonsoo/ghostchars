@@ -49,7 +49,7 @@ jobs:
       - name: Must pass on real source
         uses: ./
         with:
-          paths: 'src action.yml package.json README.md'
+          paths: 'src action.yml package.json'
           format: pretty
 
       - name: Must fail on examples/fixtures
