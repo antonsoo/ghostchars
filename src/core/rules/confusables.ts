@@ -68,6 +68,21 @@ function scriptsOfToken(token: string): Set<string> {
   return scripts;
 }
 
+// UTS #39's Highly Restrictive identifier profile explicitly permits these
+// script combinations as a single cohesive unit, because ordinary Japanese,
+// Chinese and Korean text legitimately mixes them within one word -- Han
+// ideographs alongside Hiragana/Katakana (Japanese), Han alongside Bopomofo
+// (Chinese), or Han alongside Hangul (Korean/Hanja). Without this, every
+// Japanese localization string in the wild (e.g. a typical `ja`
+// diagnostics/messages file) reads as a "mixed-script homoglyph attack",
+// which is real noise, not a real signal.
+const COHESIVE_SCRIPT_GROUPS: ReadonlyArray<ReadonlySet<string>> = [new Set(['Han', 'Hiragana', 'Katakana']), new Set(['Han', 'Bopomofo']), new Set(['Han', 'Hangul'])];
+
+function isCohesiveScriptSet(scripts: Set<string>): boolean {
+  if (scripts.size <= 1) return true;
+  return COHESIVE_SCRIPT_GROUPS.some((group) => [...scripts].every((s) => group.has(s)));
+}
+
 interface Token {
   text: string;
   index: number;
@@ -98,6 +113,20 @@ function tokenize(text: string): Token[] {
   return tokens;
 }
 
+// A pure-ASCII lookalike (rn/m, O/0, l/1/I) is a font-rendering problem, not
+// the Unicode cross-script attack this tool targets, and treating it as one
+// is noisy: English prose is full of accidental ASCII near-matches (this
+// README included, once: "CI" vs "C0/C1"). A collision is only reported
+// when at least one of the colliding spellings contains a character outside
+// the ASCII range; skeletonOf() still runs for every token regardless (an
+// ASCII token can itself contain one of the 8 ASCII confusables.txt source
+// characters -- e.g. "admin" skeleton-normalizes its "m" to "rn" -- so its
+// skeleton is not always its own text, and both sides of a real, in-scope
+// collision have to land on the same key to be found at all).
+function isAscii(s: string): boolean {
+  return ASCII_RE.test(s);
+}
+
 export function scanConfusables(text: string): Finding[] {
   const findings: Finding[] = [];
   const tokens = tokenize(text);
@@ -107,7 +136,7 @@ export function scanConfusables(text: string): Finding[] {
     if (token.text.length < 2) continue; // single characters can't "mix" scripts meaningfully
     const skeleton = skeletonOf(token.text);
     const scripts = scriptsOfToken(token.text);
-    if (scripts.size > 1) {
+    if (scripts.size > 1 && !isCohesiveScriptSet(scripts)) {
       findings.push({
         rule: 'confusable',
         severity: 'warning',
@@ -129,6 +158,8 @@ export function scanConfusables(text: string): Finding[] {
   for (const [skeleton, group] of bySkeleton) {
     const distinctSpellings = new Set(group.map((t) => t.text));
     if (distinctSpellings.size < 2) continue;
+    if (![...distinctSpellings].some((s) => !isAscii(s))) continue; // ASCII-vs-ASCII: out of scope, see note above
+
     for (const token of group) {
       const others = distinctSpellings.size - (distinctSpellings.has(token.text) ? 1 : 0);
       findings.push({

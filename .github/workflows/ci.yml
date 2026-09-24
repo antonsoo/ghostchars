@@ -4,6 +4,7 @@ on:
   push:
     branches: [main]
   pull_request:
+  workflow_dispatch:
 
 permissions:
   contents: read
@@ -34,8 +35,8 @@ jobs:
             exit 1;
           }
 
-      - name: Self-scan (src/ must be clean)
-        run: node dist/cli.js src action.yml package.json tsconfig.json tsconfig.build.json eslint.config.js esbuild.cli.mjs .pre-commit-hooks.yaml
+      - name: Self-scan (repo's own source and docs must be clean)
+        run: node dist/cli.js src action.yml package.json tsconfig.json tsconfig.build.json eslint.config.js esbuild.cli.mjs .pre-commit-hooks.yaml README.md CHANGELOG.md CONTRIBUTING.md SECURITY.md
 
       - name: Benchmark smoke test
         run: node scripts/benchmark.mjs 2
@@ -49,7 +50,7 @@ jobs:
       - name: Must pass on real source
         uses: ./
         with:
-          paths: 'src action.yml package.json'
+          paths: 'src action.yml package.json README.md'
           format: pretty
 
       - name: Must fail on examples/fixtures

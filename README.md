@@ -149,7 +149,7 @@ Driven directly by the `Default_Ignorable_Code_Point` property rather than a han
 
 ### Confusables (rule 5)
 
-Follows UTS #39's skeleton approach: every character in an identifier-shaped token is mapped through `confusables.txt`'s prototype mapping and concatenated. Two independent signals are flagged: a single identifier whose non-Common/Inherited characters span more than one `Script`/`Script_Extensions` value (from `Scripts.txt` + `ScriptExtensions.txt`), and two *different* spellings elsewhere in the same input that reduce to the same skeleton -- the actual lookalike-identifier attack, e.g. `admin` (Latin) vs. `админ`-style substitutions sharing a skeleton with the real name. Plain-ASCII tokens skip the character-by-character mapping entirely (only 8 ASCII code points appear as confusables.txt source entries at all), which is most of what a real file contains.
+Follows UTS #39's skeleton approach: every character in an identifier-shaped token is mapped through `confusables.txt`'s prototype mapping and concatenated. Two independent signals are flagged: a single identifier whose non-Common/Inherited characters span more than one `Script`/`Script_Extensions` value (from `Scripts.txt` + `ScriptExtensions.txt`, with Han+Hiragana+Katakana/Bopomofo/Hangul treated as one cohesive CJK unit rather than "mixed" -- see limitations below), and two *different* spellings elsewhere in the same input that reduce to the same skeleton and where at least one side is non-ASCII -- the actual lookalike-identifier attack, e.g. an ASCII `admin` vs. the same word with a Cyrillic substitution for one letter sharing a skeleton with the real name.
 
 ### Whitespace & control characters (rule 6)
 
@@ -157,7 +157,10 @@ A fixed list of Unicode space separators and line/paragraph separators that aren
 
 ## Accuracy and limitations
 
-- **Tokenization is regex-based, not an AST.** The confusables rule treats any `\p{L}\p{M}\p{Nd}\p{Pc}`-shaped run as an "identifier," including words inside comments, string literals, and plain prose -- it will flag `admin` written twice in a docstring next to its Cyrillic lookalike, the same as it would in real code. That's a legitimate signal in code, but it also means ordinary English text can trip the skeleton-collision check: this README's own draft failed ghostchars' self-scan because "CI" and "C0/C1" reduce to the same skeleton (capital I, digit 1, and lowercase l are genuinely confusable per `confusables.txt`). CI therefore only runs the confusables rule over `src/`, not over prose docs.
+- **A confusable/skeleton collision requires at least one non-ASCII side.** Two pure-ASCII spellings that happen to share a TR39 skeleton (`rn`/`m`, `l`/`1`/`I`, `O`/`0`) are a font-rendering ambiguity, not the cross-script Unicode attack this tool targets -- and English prose is full of them by accident (an early draft of this README tripped over "CI" vs. "C0/C1" reducing to the same skeleton). Flagging those would be noise, not signal, so ghostchars only reports a collision when at least one spelling contains a non-ASCII character -- the actual homoglyph-attack shape (a genuine ASCII `admin` next to the same word with one letter swapped for a Cyrillic lookalike, U+0430 in place of "a").
+- **CJK script-mixing is treated as one cohesive unit, per UTS #39's Highly Restrictive profile**, not flagged as "mixed": Han+Hiragana+Katakana (Japanese), Han+Bopomofo (Chinese), and Han+Hangul (Korean) are ordinary, single-language text, not a homoglyph shape. Scripts outside those groups (Latin+Cyrillic, Latin+Greek, etc.) are still flagged.
+- **Tokenization is regex-based, not an AST.** The confusables rule treats any `\p{L}\p{M}\p{Nd}\p{Pc}`-shaped run as an "identifier," including words inside comments, string literals, and plain prose -- it will flag `admin` written twice in a docstring next to its Cyrillic lookalike, the same as it would in real code.
+- **A single character type is sometimes both a real signal and commonly legitimate at once.** NBSP is the clearest case: French typography requires it before `:`/`;`/`!`/`?`, so any French-localized string will contain plenty of "findings" that are correct detections of a real, intentional NBSP -- not an attack. This is a known, honest trade-off of not being format-aware (see the `node_modules` breakdown below); `.ghostcharsrc.json` per-glob overrides exist specifically to quiet a known-legitimate path (e.g. a translations directory) without touching the default elsewhere.
 - **CJK variation sequences are accepted, not verified.** A single variation selector on a CJK ideograph is treated as an ordinary Ideographic Variation Sequence rather than checked against the real IVD registry (not vendored here), so an invalid but structurally-single selector on a CJK base won't be flagged.
 - **The bidi-balance check is per-line by design** (see above); a payload that only becomes unbalanced when reasoned about across an entire multi-line paragraph, rather than within one rendered line, is out of scope.
 - **NFKC-instability detection (optional in the brief) is not implemented.** Everything else in the brief is.
@@ -169,12 +172,23 @@ A fixed list of Unicode space separators and line/paragraph separators that aren
 npm run bench
 ```
 
-Measured on this machine (14 vCPU / 48 GB RAM, WSL2 Linux) **while several other builds were running concurrently** -- this is a contended-machine number, not a best case, and `npm run bench` will do meaningfully better on an idle box:
+Every rule in this tool is triggered by either a code point ≥ U+0080 or a C0/DEL control character -- so `scanText()` opens with one linear regex test (`/[^\t\n\r\x20-\x7E]/`) over the whole input, and if it finds nothing, returns immediately: no code point iteration, no tokenizing, nothing. Plain ASCII, the overwhelming majority of real source, takes that path.
 
-- `scanText()` on 15 MiB of synthetic, code-shaped text (labelled synthetic; not sampled from a real project): **15.1s, ~1.0 MiB/s**, 15,728,663 code points, 669 findings.
-- `scanText()` over this repo's real `node_modules/` (3,353 files, 34.1 MiB): **17.9s, ~1.9 MiB/s**, 9,441 findings.
+Measured on this machine (14 vCPU / 48 GB RAM, WSL2 Linux; numbers vary with concurrent load on this box, run `npm run bench` for a live measurement):
 
-The confusables rule dominates cost (per-token script/skeleton lookups); it has a fast path for plain-ASCII tokens (the common case) but a file that's mostly unique multi-script identifiers is close to worst case.
+- **Pure-ASCII fast path**: `scanText()` on 30 MiB of pure-ASCII, code-shaped synthetic text: **21ms, ~1.4 GiB/s**, 0 findings.
+- **Mixed content** (the fast path can't apply -- every rule actually runs): `scanText()` on 30 MiB of synthetic text with non-ASCII/bidi/confusable content scattered through it (labelled synthetic; not sampled from a real project): **~7s, ~4 MiB/s**, 1,321 findings. The confusables rule dominates this cost (per-token skeleton/script lookups over every identifier-shaped run once the file isn't 100% clean).
+- **Real-world**: `scanText()` over this repo's own `node_modules/` (3,353 files, 34.1 MiB, walked directly -- `ghostchars` itself would never scan a gitignored `node_modules/` in normal use, but it's a convenient stand-in for "a big, messy, real tree"): **2.3s, ~15 MiB/s**, 1,599 findings:
+
+  | count | rule |
+  |---:|---|
+  | 1,002 | `unusual-whitespace` |
+  | 577 | `confusable` |
+  | 9 | `invisible` |
+  | 8 | `control-character` |
+  | 3 | `variation-selector-stray` |
+
+  Spot-checked 20+ of each category by hand. The `unusual-whitespace` majority is real, correct NBSP detections inside TypeScript's own French/German/Polish/Portuguese localization JSON (the trade-off described above, not a bug). The remainder were genuine, if usually benign, anomalies: a duplicated variation selector and a stray one in two READMEs/package.json descriptions, two ZWJ characters sitting either side of a minus sign in a numeric exponent in TypeScript's own `.d.ts` ("10" + U+200D + U+2212 + U+200D + "16", almost certainly a copy-paste artifact from another document), literal BEL/ESC bytes in `js-yaml`'s own escape-sequence tables, and C1 control bytes in two CLI libraries' own keypress-handling code -- all true positives, none of them attacks. Before the confusables fix above, this same scan reported 9,441 findings, the great majority of it Han+Hiragana+Katakana "mixed script" noise across TypeScript's `ja`/`ko`/`zh` localization files.
 
 ## Comparison
 
@@ -189,7 +203,7 @@ ghostchars overlaps both at the bidi layer and adds tag/variation-selector decod
 npm test
 ```
 
-45 tests across every rule (positive and negative cases -- legitimate emoji ZWJ sequences, RGI flag tag sequences, Persian ZWNJ, CJK variation sequences, and plain-ASCII/single-script identifiers all must **not** fire), plus `sanitize()`/`reveal()` and CLI/config/file-discovery coverage.
+54 tests across every rule (positive and negative cases -- legitimate emoji ZWJ sequences, RGI flag tag sequences, Persian ZWNJ, CJK variation sequences, real Japanese/Korean CJK-script text, and plain-ASCII/single-script/ASCII-vs-ASCII-only identifiers all must **not** fire), plus `sanitize()`/`reveal()`, the ASCII fast path, and CLI/config/file-discovery coverage.
 
 ## Contributing
 

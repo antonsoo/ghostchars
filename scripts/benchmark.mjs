@@ -1,9 +1,11 @@
 #!/usr/bin/env node
-// Measures scanText() throughput on a large synthetic input, and a full CLI
-// run (I/O + file discovery + scanning) over this repo's own node_modules,
-// which is a realistic "big, messy, mostly-JS tree" workload. Both numbers
-// are printed for `npm run bench` / the README to quote verbatim -- nothing
-// here is a curated best-case run.
+// Measures scanText() throughput on: (1) a large purely-ASCII synthetic
+// input, to isolate the whole-file ASCII fast path's throughput; (2) a large
+// synthetic input with scattered non-ASCII/bidi/confusable content mixed in,
+// so the slow path is also exercised; and (3) a full multi-file run over
+// this repo's own node_modules, a realistic "big, messy, mostly-JS tree"
+// workload, broken down by rule. All numbers are printed for `npm run bench`
+// / the README to quote verbatim -- nothing here is a curated best case.
 
 import { existsSync, readFileSync, readdirSync, statSync } from 'node:fs';
 import { dirname, join } from 'node:path';
@@ -12,10 +14,23 @@ import { scanText } from '../dist/index.js';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 
-function buildSyntheticCorpus(targetBytes) {
+function buildAsciiCorpus(targetBytes) {
+  const lines = [];
+  let bytes = 0;
+  let i = 0;
+  while (bytes < targetBytes) {
+    const line = `function handler_${i}(request, response) { return response.json({ id: ${i}, ok: request.id === ${i} }); }`;
+    lines.push(line);
+    bytes += line.length + 1;
+    i++;
+  }
+  return lines.join('\n');
+}
+
+function buildMixedCorpus(targetBytes) {
   // Deterministic, code-shaped synthetic text (explicitly synthetic, not
   // sampled from any real project) with an occasional Trojan-Source-style
-  // finding mixed in, so the benchmark also exercises every rule rather than
+  // finding mixed in, so this corpus also exercises every rule rather than
   // taking the all-clean fast path.
   const lines = [];
   let bytes = 0;
@@ -48,19 +63,37 @@ function fmtMBps(bytes, ms) {
 console.log(`Machine: ${process.arch}, ${process.platform}, Node ${process.version}, ${(await import('node:os')).cpus().length} logical CPUs`);
 console.log('');
 
-// --- 1. Raw scanText() throughput on a large synthetic string -------------
 const targetMB = Number(process.argv[2] ?? 50);
-const corpus = buildSyntheticCorpus(targetMB * 1024 * 1024);
-const bytes = Buffer.byteLength(corpus, 'utf8');
-console.log(`[1] scanText() on ${(bytes / 1024 / 1024).toFixed(1)} MiB of synthetic, code-shaped text (labelled synthetic; not sampled from a real project):`);
 
-const t0 = performance.now();
-const { findings, codePointCount } = scanText(corpus);
-const t1 = performance.now();
-console.log(`    ${fmtMs(t1 - t0)} (${fmtMBps(bytes, t1 - t0)} MiB/s, ${codePointCount.toLocaleString()} code points, ${findings.length.toLocaleString()} findings)`);
-console.log('');
+// --- 1. Pure-ASCII fast path: the whole-file HAS_NON_ASCII_OR_CONTROL_RE
+// check finds nothing, so scanText() returns immediately -- no code point
+// iteration, no tokenizing. This isolates that fast path's throughput.
+{
+  const corpus = buildAsciiCorpus(targetMB * 1024 * 1024);
+  const bytes = Buffer.byteLength(corpus, 'utf8');
+  console.log(`[1] scanText() on ${(bytes / 1024 / 1024).toFixed(1)} MiB of pure-ASCII, code-shaped synthetic text:`);
+  const t0 = performance.now();
+  const { findings, codePointCount } = scanText(corpus);
+  const t1 = performance.now();
+  console.log(`    ${fmtMs(t1 - t0)} (${fmtMBps(bytes, t1 - t0)} MiB/s, ${codePointCount.toLocaleString()} code points, ${findings.length.toLocaleString()} findings)`);
+  console.log('');
+}
 
-// --- 2. Real-world multi-file throughput: this repo's own node_modules/ --
+// --- 2. Mixed content: the same corpus, with non-ASCII/bidi/confusable
+// content scattered through it, so every rule (including the slower
+// per-token confusables path) actually runs.
+{
+  const corpus = buildMixedCorpus(targetMB * 1024 * 1024);
+  const bytes = Buffer.byteLength(corpus, 'utf8');
+  console.log(`[2] scanText() on ${(bytes / 1024 / 1024).toFixed(1)} MiB of synthetic text with scattered non-ASCII content (labelled synthetic; not sampled from a real project):`);
+  const t0 = performance.now();
+  const { findings, codePointCount } = scanText(corpus);
+  const t1 = performance.now();
+  console.log(`    ${fmtMs(t1 - t0)} (${fmtMBps(bytes, t1 - t0)} MiB/s, ${codePointCount.toLocaleString()} code points, ${findings.length.toLocaleString()} findings)`);
+  console.log('');
+}
+
+// --- 3. Real-world multi-file throughput: this repo's own node_modules/ --
 // (walked directly here, bypassing the CLI's .gitignore-aware discovery --
 // node_modules is gitignored by design, but it's still a convenient stand-in
 // for "a big, messy, real tree of mostly-JS files" for a raw throughput
@@ -79,8 +112,8 @@ if (existsSync(nodeModules)) {
   walk(nodeModules);
 
   let totalBytes = 0;
-  let totalFindings = 0;
   let scannedFiles = 0;
+  const byRule = new Map();
   const t2 = performance.now();
   for (const file of files) {
     const stat = statSync(file);
@@ -93,12 +126,16 @@ if (existsSync(nodeModules)) {
     }
     if (text.includes('\0')) continue;
     totalBytes += Buffer.byteLength(text, 'utf8');
-    totalFindings += scanText(text).findings.length;
+    for (const f of scanText(text).findings) byRule.set(f.rule, (byRule.get(f.rule) ?? 0) + 1);
     scannedFiles++;
   }
   const t3 = performance.now();
-  console.log(`[2] scanText() over ${scannedFiles.toLocaleString()} real files in this repo's node_modules/ (${(totalBytes / 1024 / 1024).toFixed(1)} MiB total):`);
+  const totalFindings = [...byRule.values()].reduce((a, b) => a + b, 0);
+  console.log(`[3] scanText() over ${scannedFiles.toLocaleString()} real files in this repo's node_modules/ (${(totalBytes / 1024 / 1024).toFixed(1)} MiB total):`);
   console.log(`    ${fmtMs(t3 - t2)} (${fmtMBps(totalBytes, t3 - t2)} MiB/s, ${totalFindings.toLocaleString()} findings)`);
+  for (const [rule, count] of [...byRule.entries()].sort((a, b) => b[1] - a[1])) {
+    console.log(`      ${String(count).padStart(6)}  ${rule}`);
+  }
 } else {
-  console.log('[2] Skipped: node_modules/ not present (run `npm install` first).');
+  console.log('[3] Skipped: node_modules/ not present (run `npm install` first).');
 }

@@ -6617,6 +6617,11 @@ function scriptsOfToken(token) {
   }
   return scripts;
 }
+var COHESIVE_SCRIPT_GROUPS = [/* @__PURE__ */ new Set(["Han", "Hiragana", "Katakana"]), /* @__PURE__ */ new Set(["Han", "Bopomofo"]), /* @__PURE__ */ new Set(["Han", "Hangul"])];
+function isCohesiveScriptSet(scripts) {
+  if (scripts.size <= 1) return true;
+  return COHESIVE_SCRIPT_GROUPS.some((group) => [...scripts].every((s) => group.has(s)));
+}
 function tokenize(text) {
   const tokens = [];
   let line = 1;
@@ -6636,6 +6641,9 @@ function tokenize(text) {
   }
   return tokens;
 }
+function isAscii(s) {
+  return ASCII_RE.test(s);
+}
 function scanConfusables(text) {
   const findings = [];
   const tokens = tokenize(text);
@@ -6644,7 +6652,7 @@ function scanConfusables(text) {
     if (token.text.length < 2) continue;
     const skeleton = skeletonOf(token.text);
     const scripts = scriptsOfToken(token.text);
-    if (scripts.size > 1) {
+    if (scripts.size > 1 && !isCohesiveScriptSet(scripts)) {
       findings.push({
         rule: "confusable",
         severity: "warning",
@@ -6664,6 +6672,7 @@ function scanConfusables(text) {
   for (const [skeleton, group] of bySkeleton) {
     const distinctSpellings = new Set(group.map((t) => t.text));
     if (distinctSpellings.size < 2) continue;
+    if (![...distinctSpellings].some((s) => !isAscii(s))) continue;
     for (const token of group) {
       const others = distinctSpellings.size - (distinctSpellings.has(token.text) ? 1 : 0);
       findings.push({
@@ -7002,7 +7011,11 @@ function finding(cp, rule, severity, message, suggestion) {
 }
 
 // src/core/scanText.ts
+var HAS_NON_ASCII_OR_CONTROL_RE = /[^\t\n\r\x20-\x7E]/;
 function scanText(text, options = {}) {
+  if (!HAS_NON_ASCII_OR_CONTROL_RE.test(text)) {
+    return { findings: [], codePointCount: text.length };
+  }
   const codePoints = iterateCodePoints(text);
   const findings = [...scanBidi(codePoints, text), ...scanTags(text), ...scanVariationSelectors(text), ...scanInvisible(codePoints), ...scanConfusables(text), ...scanWhitespaceAndControl(codePoints)];
   const allow = new Set(options.allowCodePoints ?? []);
