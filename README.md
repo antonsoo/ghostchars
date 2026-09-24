@@ -190,7 +190,7 @@ ghostchars overlaps both at the bidi layer and adds tag/variation-selector decod
 npm test
 ```
 
-43 tests across every rule (positive and negative cases -- legitimate emoji ZWJ sequences, RGI flag tag sequences, Persian ZWNJ, CJK variation sequences, and plain-ASCII/single-script identifiers all must **not** fire), plus `sanitize()`/`reveal()` and CLI/config/file-discovery coverage.
+45 tests across every rule (positive and negative cases -- legitimate emoji ZWJ sequences, RGI flag tag sequences, Persian ZWNJ, CJK variation sequences, and plain-ASCII/single-script identifiers all must **not** fire), plus `sanitize()`/`reveal()` and CLI/config/file-discovery coverage.
 
 ## Contributing
 

@@ -7609,7 +7609,13 @@ function main(argv) {
     return revealCommand(args.paths[0]);
   }
   const cwd = process.cwd();
-  const config = args.noConfig ? {} : loadConfig(cwd, args.config);
+  let config;
+  try {
+    config = args.noConfig ? {} : loadConfig(cwd, args.config);
+  } catch (err) {
+    console.error(colors.red(err.message));
+    return 2;
+  }
   const start = performance.now();
   const { files, skipped } = discoverFiles(args.paths, cwd);
   const report = { files: [], skipped, durationMs: 0 };

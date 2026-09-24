@@ -1,10 +1,27 @@
 import { mkdtempSync, readFileSync, rmSync, writeFileSync, mkdirSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
-import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 import { main } from '../src/cli/index.js';
 import { discoverFiles } from '../src/cli/walk.js';
 import { loadConfig, scanOptionsForFile } from '../src/cli/config.js';
+
+// vi.spyOn(console, ...) does not reliably intercept calls made from other
+// modules in this Node/Vitest combination, so CLI output is suppressed by
+// direct, restored reassignment instead -- these tests care about exit
+// codes and file effects, not what got printed.
+function withSilencedConsole<T>(fn: () => T): T {
+  const originalLog = console.log;
+  const originalError = console.error;
+  console.log = () => {};
+  console.error = () => {};
+  try {
+    return fn();
+  } finally {
+    console.log = originalLog;
+    console.error = originalError;
+  }
+}
 
 let dir: string;
 let originalCwd: string;
@@ -63,26 +80,40 @@ describe('config', () => {
 describe('main() end-to-end', () => {
   it('exits 1 when error-level findings are present', () => {
     writeFileSync(join(dir, 'bad.js'), 'const a = 1;‮// rlo');
-    const logSpy = vi.spyOn(console, 'log').mockImplementation(() => {});
-    const code = main(['bad.js', '--format', 'json']);
-    logSpy.mockRestore();
+    const code = withSilencedConsole(() => main(['bad.js', '--format', 'json']));
     expect(code).toBe(1);
   });
 
   it('exits 0 for clean input', () => {
     writeFileSync(join(dir, 'good.js'), 'const a = 1;\n');
-    const logSpy = vi.spyOn(console, 'log').mockImplementation(() => {});
-    const code = main(['good.js']);
-    logSpy.mockRestore();
+    const code = withSilencedConsole(() => main(['good.js']));
     expect(code).toBe(0);
   });
 
   it('--fix removes fixable findings in place', () => {
     writeFileSync(join(dir, 'fixme.js'), 'a​b');
-    const logSpy = vi.spyOn(console, 'log').mockImplementation(() => {});
-    main(['fixme.js', '--fix']);
-    logSpy.mockRestore();
+    withSilencedConsole(() => main(['fixme.js', '--fix']));
     const after = readFileSync(join(dir, 'fixme.js'), 'utf8');
     expect(after).toBe('ab');
+  });
+
+  it('exits 2 (not a crash) on a malformed config file, with a clear message', () => {
+    writeFileSync(join(dir, 'good.js'), 'const a = 1;\n');
+    writeFileSync(join(dir, '.ghostcharsrc.json'), '{not valid json');
+    // loadConfig() itself is the unit under test for the message; main()'s
+    // job is just to catch it and return a clean exit code instead of
+    // letting the exception escape as an uncaught stack trace.
+    expect(() => loadConfig(dir)).toThrowError(/Failed to parse/);
+    let code = -1;
+    expect(() => {
+      code = withSilencedConsole(() => main(['good.js']));
+    }).not.toThrow();
+    expect(code).toBe(2);
+  });
+
+  it('handles an empty file and a missing path without crashing', () => {
+    writeFileSync(join(dir, 'empty.js'), '');
+    const code = withSilencedConsole(() => main(['empty.js', 'does-not-exist.js']));
+    expect(code).toBe(0);
   });
 });

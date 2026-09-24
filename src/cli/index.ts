@@ -85,7 +85,13 @@ export function main(argv: string[]): number {
   }
 
   const cwd = process.cwd();
-  const config = args.noConfig ? {} : loadConfig(cwd, args.config);
+  let config;
+  try {
+    config = args.noConfig ? {} : loadConfig(cwd, args.config);
+  } catch (err) {
+    console.error(colors.red((err as Error).message));
+    return 2;
+  }
   const start = performance.now();
   const { files, skipped } = discoverFiles(args.paths, cwd);
 
