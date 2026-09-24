@@ -23,6 +23,9 @@ Different tools catch pieces of this (an editor might warn about ambiguous chara
 npx github:antonsoo/ghostchars .
 ```
 
+npm 12 refuses git-hosted packages unless you opt in, so on npm 12+ run
+`npx --allow-git=root github:antonsoo/ghostchars .` instead.
+
 Or install from source:
 
 ```sh

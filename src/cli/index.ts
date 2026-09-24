@@ -1,5 +1,6 @@
 #!/usr/bin/env node
-import { readFileSync, writeFileSync } from 'node:fs';
+import { readFileSync, realpathSync, writeFileSync } from 'node:fs';
+import { fileURLToPath } from 'node:url';
 import { scanText } from '../core/index.js';
 import type { ScanOptions } from '../core/index.js';
 import { loadConfig, scanOptionsForFile } from './config.js';
@@ -139,7 +140,18 @@ export function main(argv: string[]): number {
   return 0;
 }
 
-const invokedDirectly = process.argv[1] && import.meta.url === `file://${process.argv[1]}`;
-if (invokedDirectly) {
+// npx, `npm i -g` and node_modules/.bin all launch the CLI through a symlink, so
+// compare resolved real paths rather than the raw argv[1] string.
+function invokedDirectly(): boolean {
+  const entry = process.argv[1];
+  if (!entry) return false;
+  try {
+    return realpathSync(entry) === realpathSync(fileURLToPath(import.meta.url));
+  } catch {
+    return false;
+  }
+}
+
+if (invokedDirectly()) {
   process.exit(main(process.argv.slice(2)));
 }

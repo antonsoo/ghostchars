@@ -1,7 +1,8 @@
 #!/usr/bin/env node
 
 // src/cli/index.ts
-import { readFileSync as readFileSync4, writeFileSync } from "node:fs";
+import { readFileSync as readFileSync4, realpathSync, writeFileSync } from "node:fs";
+import { fileURLToPath } from "node:url";
 
 // src/core/names.ts
 var NAMES = /* @__PURE__ */ new Map([
@@ -7668,8 +7669,16 @@ function main(argv) {
   if (counts.error > 0) return 1;
   return 0;
 }
-var invokedDirectly = process.argv[1] && import.meta.url === `file://${process.argv[1]}`;
-if (invokedDirectly) {
+function invokedDirectly() {
+  const entry = process.argv[1];
+  if (!entry) return false;
+  try {
+    return realpathSync(entry) === realpathSync(fileURLToPath(import.meta.url));
+  } catch {
+    return false;
+  }
+}
+if (invokedDirectly()) {
   process.exit(main(process.argv.slice(2)));
 }
 export {
