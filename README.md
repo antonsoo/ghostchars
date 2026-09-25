@@ -217,3 +217,7 @@ See [CONTRIBUTING.md](CONTRIBUTING.md). Issues and PRs welcome.
 [MIT](LICENSE) for the code. Vendored Unicode data (`src/generated/`) is governed by the [Unicode License](LICENSE-UNICODE).
 
 See [SECURITY.md](SECURITY.md) for the security policy.
+
+---
+
+<sub>Part of [Officina](https://antonsoo.github.io/officina/), a set of small open-source tools by [Anton Soloviev](https://github.com/antonsoo).</sub>
