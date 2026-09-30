@@ -51,9 +51,9 @@ node dist/cli.js .
 | 1 | `bidi-control`, `bidi-mark`, `bidi-unbalanced` | Explicit bidi formatting characters (U+202A-202E, U+2066-2069), bidi marks (U+200E, U+200F, U+061C), and embeddings/isolates that open without closing on a line | error / warning / error |
 | 2 | `tag-smuggling` | Unicode tag characters (U+E0000-U+E007F) outside a valid emoji tag sequence -- decodes the hidden ASCII | error |
 | 3 | `variation-selector-smuggling`, `variation-selector-stray` | Variation-selector runs that decode to a hidden payload, or selectors on a base that can't take one | error / warning |
-| 4 | `invisible` | Any `Default_Ignorable_Code_Point` character without a legitimate emoji-ZWJ or script-joining context | warning |
+| 4 | `invisible` | Any `Default_Ignorable_Code_Point` character without a legitimate emoji-ZWJ or script-joining context (a ZWJ/ZWNJ after an Indic virama, such as a Malayalam chillu, counts as one) | warning |
 | 5 | `confusable` | Identifiers that mix scripts, or that reduce to the same TR39 "skeleton" as a different spelling elsewhere in the file | warning / error |
-| 6 | `unusual-whitespace`, `control-character` | NBSP/em-space/ideographic-space-etc. standing in for a normal space, and C0/C1 controls (especially ESC, which enables terminal escape injection) | warning / warning-or-error |
+| 6 | `unusual-whitespace`, `control-character` | NBSP/em-space/ideographic-space-etc. standing in for a normal space (French typography's no-break space before `; : ! ?` and inside `« »` is allowed), and C0/C1 controls (especially ESC, which enables terminal escape injection) | warning / warning-or-error |
 
 Run `ghostchars reveal <file>` to see all of this rendered inline, e.g. an override character shows as:
 
@@ -78,6 +78,14 @@ ghostchars . --fix                  # apply safe removals in place
 ```
 
 ### As an LLM input filter
+
+Install the library from GitHub; its `prepare` script builds `dist/` on install. Add
+`--allow-git=root` on npm 12+. The `ghostchars` package on the npm registry is a different,
+unrelated project.
+
+```sh
+npm install github:antonsoo/ghostchars
+```
 
 ```ts
 import { sanitize, scanText } from 'ghostchars';

@@ -2,6 +2,20 @@
 
 All notable changes to this project are documented in this file.
 
+## [0.1.1] - 2026-09-30
+
+### Fixed
+
+- Installing from GitHub (`npm install github:antonsoo/ghostchars`) gave a
+  package with only the bundled CLI, so the documented library import failed;
+  a `prepare` script now builds `dist/` on install. The README says how to
+  install from GitHub and that the `ghostchars` package on npm is a different
+  project.
+- `invisible` no longer flags a ZWJ/ZWNJ right after an Indic virama at the
+  end of a word (legacy Malayalam chillus are NA + VIRAMA + ZWJ).
+- `unusual-whitespace` no longer flags the no-break space French typography
+  puts before `; : ! ?` and inside `« »`.
+
 ## [0.1.0] - 2026-09-24
 
 Initial release.
