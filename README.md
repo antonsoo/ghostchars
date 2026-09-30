@@ -53,7 +53,7 @@ node dist/cli.js .
 | 3 | `variation-selector-smuggling`, `variation-selector-stray` | Variation-selector runs that decode to a hidden payload, or selectors on a base that can't take one | error / warning |
 | 4 | `invisible` | Any `Default_Ignorable_Code_Point` character without a legitimate emoji-ZWJ or script-joining context (a ZWJ/ZWNJ after an Indic virama, such as a Malayalam chillu, counts as one) | warning |
 | 5 | `confusable` | Identifiers that mix scripts, or that reduce to the same TR39 "skeleton" as a different spelling elsewhere in the file | warning / error |
-| 6 | `unusual-whitespace`, `control-character` | NBSP/em-space/ideographic-space-etc. standing in for a normal space (French typography's no-break space before `; : ! ?` and inside `« »` is allowed), and C0/C1 controls (especially ESC, which enables terminal escape injection) | warning / warning-or-error |
+| 6 | `unusual-whitespace`, `control-character` | NBSP/em-space/ideographic-space-etc. standing in for a normal space (French typography's no-break space before `; : ! ?` and inside `« »` is allowed), the braille pattern blank outside braille text (it looks like a space but isn't whitespace), and C0/C1 controls (especially ESC, which enables terminal escape injection) | warning / warning-or-error |
 
 Run `ghostchars reveal <file>` to see all of this rendered inline, e.g. an override character shows as:
 
@@ -214,7 +214,7 @@ ghostchars overlaps both at the bidi layer and adds tag/variation-selector decod
 npm test
 ```
 
-54 tests across every rule (positive and negative cases -- legitimate emoji ZWJ sequences, RGI flag tag sequences, Persian ZWNJ, CJK variation sequences, real Japanese/Korean CJK-script text, and plain-ASCII/single-script/ASCII-vs-ASCII-only identifiers all must **not** fire), plus `sanitize()`/`reveal()`, the ASCII fast path, and CLI/config/file-discovery coverage.
+62 tests across every rule (positive and negative cases -- legitimate emoji ZWJ sequences, RGI flag tag sequences, Persian ZWNJ, CJK variation sequences, real Japanese/Korean CJK-script text, and plain-ASCII/single-script/ASCII-vs-ASCII-only identifiers all must **not** fire), plus `sanitize()`/`reveal()`, the ASCII fast path, and CLI/config/file-discovery coverage.
 
 ## Contributing
 

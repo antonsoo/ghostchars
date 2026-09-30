@@ -36,6 +36,7 @@ var NAMES = /* @__PURE__ */ new Map([
   [12644, "HANGUL FILLER"],
   [65279, "ZERO WIDTH NO-BREAK SPACE"],
   [65440, "HALFWIDTH HANGUL FILLER"],
+  [10240, "BRAILLE PATTERN BLANK"],
   // Unusual whitespace
   [160, "NO-BREAK SPACE"],
   [8192, "EN QUAD"],
@@ -6990,6 +6991,10 @@ function bytesToSelectors(bytes) {
 // src/core/rules/whitespaceControl.ts
 var UNUSUAL_WHITESPACE = /* @__PURE__ */ new Set([160, 8192, 8193, 8194, 8195, 8196, 8197, 8198, 8199, 8200, 8201, 8202, 8239, 8287, 8232, 8233, 12288, 133]);
 var ESCAPE = 27;
+var BRAILLE_BLANK = 10240;
+function isBraillePattern(cp) {
+  return cp !== void 0 && cp.codePoint > BRAILLE_BLANK && cp.codePoint <= 10495;
+}
 function isC0Control(cp) {
   return cp <= 31 && cp !== 9 && cp !== 10 && cp !== 13;
 }
@@ -7011,6 +7016,9 @@ function scanWhitespaceAndControl(codePoints) {
     if (UNUSUAL_WHITESPACE.has(cp.codePoint)) {
       if (isFrenchTypography(codePoints[idx - 1], cp, codePoints[idx + 1])) continue;
       findings.push(finding(cp, "unusual-whitespace", "warning", `${unicodeName(cp.codePoint)} looks like a normal space or line break but is a distinct code point -- it can split tokens, defeat string/keyword matching, or hide in a diff.`, "Replace with a regular space (U+0020) or ASCII newline."));
+    } else if (cp.codePoint === BRAILLE_BLANK) {
+      if (isBraillePattern(codePoints[idx - 1]) || isBraillePattern(codePoints[idx + 1])) continue;
+      findings.push(finding(cp, "unusual-whitespace", "warning", "BRAILLE PATTERN BLANK (U+2800) renders as an empty space but is not whitespace: trim() and word splitting leave it in, so it can pass for a blank name or a gap between words.", "Replace with a regular space (U+0020); it belongs only between braille patterns."));
     } else if (isC0Control(cp.codePoint) || isC1Control(cp.codePoint)) {
       const isEscape = cp.codePoint === ESCAPE;
       findings.push(

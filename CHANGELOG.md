@@ -15,6 +15,10 @@ All notable changes to this project are documented in this file.
   end of a word (legacy Malayalam chillus are NA + VIRAMA + ZWJ).
 - `unusual-whitespace` no longer flags the no-break space French typography
   puts before `; : ! ?` and inside `« »`.
+- The braille pattern blank (U+2800) went unreported. It renders as an empty
+  space but isn't whitespace, so `trim()` and word splitting keep it; it is
+  now an `unusual-whitespace` warning, except between braille patterns, where
+  it is braille's word space.
 
 ## [0.1.0] - 2026-09-24
 

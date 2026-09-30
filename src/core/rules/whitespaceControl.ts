@@ -13,6 +13,16 @@ const UNUSUAL_WHITESPACE = new Set([0x00a0, 0x2000, 0x2001, 0x2002, 0x2003, 0x20
 
 const ESCAPE = 0x001b;
 
+// BRAILLE PATTERN BLANK renders as an empty cell but is a symbol, not
+// whitespace: trim() and word splitting leave it alone, which is why it turns
+// up as a "blank" display name or a gap that isn't one. Between braille
+// patterns it is the ordinary word space of braille text.
+const BRAILLE_BLANK = 0x2800;
+
+function isBraillePattern(cp: CodePointInfo | undefined): boolean {
+  return cp !== undefined && cp.codePoint > BRAILLE_BLANK && cp.codePoint <= 0x28ff;
+}
+
 function isC0Control(cp: number): boolean {
   return cp <= 0x1f && cp !== 0x09 && cp !== 0x0a && cp !== 0x0d;
 }
@@ -39,6 +49,9 @@ export function scanWhitespaceAndControl(codePoints: CodePointInfo[]): Finding[]
     if (UNUSUAL_WHITESPACE.has(cp.codePoint)) {
       if (isFrenchTypography(codePoints[idx - 1], cp, codePoints[idx + 1])) continue;
       findings.push(finding(cp, 'unusual-whitespace', 'warning', `${unicodeName(cp.codePoint)} looks like a normal space or line break but is a distinct code point -- it can split tokens, defeat string/keyword matching, or hide in a diff.`, 'Replace with a regular space (U+0020) or ASCII newline.'));
+    } else if (cp.codePoint === BRAILLE_BLANK) {
+      if (isBraillePattern(codePoints[idx - 1]) || isBraillePattern(codePoints[idx + 1])) continue;
+      findings.push(finding(cp, 'unusual-whitespace', 'warning', 'BRAILLE PATTERN BLANK (U+2800) renders as an empty space but is not whitespace: trim() and word splitting leave it in, so it can pass for a blank name or a gap between words.', 'Replace with a regular space (U+0020); it belongs only between braille patterns.'));
     } else if (isC0Control(cp.codePoint) || isC1Control(cp.codePoint)) {
       const isEscape = cp.codePoint === ESCAPE;
       findings.push(

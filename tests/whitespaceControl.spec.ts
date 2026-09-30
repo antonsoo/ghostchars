@@ -32,6 +32,21 @@ describe('unusual whitespace and control characters', () => {
   });
 });
 
+describe('braille pattern blank', () => {
+  it('flags a braille blank used as a space in ordinary text', () => {
+    const { findings } = scanText('pass\u2800word');
+    const hit = findings.find((f) => f.codePoints[0] === 0x2800);
+    expect(hit?.rule).toBe('unusual-whitespace');
+    expect(hit?.names[0]).toBe('BRAILLE PATTERN BLANK');
+  });
+
+  it('does not flag the word space between braille patterns', () => {
+    // "hello world" in grade-1 braille.
+    const { findings } = scanText('\u2813\u2811\u2807\u2807\u2815\u2800\u283a\u2815\u2817\u2807\u2819');
+    expect(findings.some((f) => f.codePoints[0] === 0x2800)).toBe(false);
+  });
+});
+
 describe('French typography', () => {
   it('does not flag the no-break spaces French puts before ; : ! ? and inside guillemets', () => {
     const text = 'Bonjour ! « Citation » et ça va ? Oui : bien ;';

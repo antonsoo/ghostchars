@@ -40,6 +40,7 @@ const NAMES: ReadonlyMap<number, string> = new Map([
   [0x3164, 'HANGUL FILLER'],
   [0xfeff, 'ZERO WIDTH NO-BREAK SPACE'],
   [0xffa0, 'HALFWIDTH HANGUL FILLER'],
+  [0x2800, 'BRAILLE PATTERN BLANK'],
 
   // Unusual whitespace
   [0x00a0, 'NO-BREAK SPACE'],
