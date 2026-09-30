@@ -6863,6 +6863,24 @@ var JOINING_SCRIPTS = /* @__PURE__ */ new Set([
   "Limbu",
   "Buginese"
 ]);
+var VIRAMAS = /* @__PURE__ */ new Set([
+  2381,
+  2509,
+  2637,
+  2765,
+  2893,
+  3021,
+  3149,
+  3277,
+  3405,
+  3530,
+  3972,
+  4153,
+  4154,
+  6098,
+  6980,
+  43456
+]);
 function isOwnedElsewhere(cp) {
   return EXPLICIT_FORMATTING.has(cp) || BIDI_MARKS.has(cp) || cp >= TAG_BASE && cp <= TAG_CANCEL || isVariationSelector(cp) || cp >= 6155 && cp <= 6157 || // Mongolian free variation selectors: legitimate script marks
   cp >= 6068 && cp <= 6069;
@@ -6879,6 +6897,7 @@ function scanInvisible(codePoints) {
       const next = codePoints[idx + 1];
       if (cp.codePoint === ZWJ2 && isEmojiJoinContext(prev, next)) continue;
       if (isJoiningScriptContext(prev, next)) continue;
+      if (prev !== void 0 && VIRAMAS.has(prev.codePoint)) continue;
     }
     findings.push({
       rule: "invisible",
@@ -6977,10 +6996,20 @@ function isC0Control(cp) {
 function isC1Control(cp) {
   return cp >= 128 && cp <= 159;
 }
+var NBSP = 160;
+var NARROW_NBSP = 8239;
+var FRENCH_SPACED_AFTER = /* @__PURE__ */ new Set([59, 58, 33, 63, 187]);
+var GUILLEMET_OPEN = 171;
+function isFrenchTypography(prev, cp, next) {
+  if (cp.codePoint !== NBSP && cp.codePoint !== NARROW_NBSP) return false;
+  return next !== void 0 && FRENCH_SPACED_AFTER.has(next.codePoint) || prev?.codePoint === GUILLEMET_OPEN;
+}
 function scanWhitespaceAndControl(codePoints) {
   const findings = [];
-  for (const cp of codePoints) {
+  for (let idx = 0; idx < codePoints.length; idx++) {
+    const cp = codePoints[idx];
     if (UNUSUAL_WHITESPACE.has(cp.codePoint)) {
+      if (isFrenchTypography(codePoints[idx - 1], cp, codePoints[idx + 1])) continue;
       findings.push(finding(cp, "unusual-whitespace", "warning", `${unicodeName(cp.codePoint)} looks like a normal space or line break but is a distinct code point -- it can split tokens, defeat string/keyword matching, or hide in a diff.`, "Replace with a regular space (U+0020) or ASCII newline."));
     } else if (isC0Control(cp.codePoint) || isC1Control(cp.codePoint)) {
       const isEscape = cp.codePoint === ESCAPE;
@@ -7444,6 +7473,9 @@ function msToStr(ms) {
   return ms < 1e3 ? `${ms.toFixed(0)}ms` : `${(ms / 1e3).toFixed(2)}s`;
 }
 
+// src/cli/version.ts
+var VERSION = "0.1.1";
+
 // src/cli/formatters/sarif.ts
 var SARIF_LEVEL = { error: "error", warning: "warning", info: "note" };
 var RULE_DESCRIPTIONS = {
@@ -7493,7 +7525,7 @@ function formatSarif(report) {
           driver: {
             name: "ghostchars",
             informationUri: "https://github.com/antonsoo/ghostchars",
-            version: "0.1.0",
+            version: VERSION,
             rules
           }
         },
@@ -7558,7 +7590,6 @@ function revealCommand(target) {
 }
 
 // src/cli/index.ts
-var VERSION = "0.1.0";
 var HELP = `ghostchars ${VERSION} -- catch invisible and deceptive Unicode
 
 Usage:

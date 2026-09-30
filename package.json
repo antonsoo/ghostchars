@@ -1,6 +1,6 @@
 {
   "name": "ghostchars",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Catch invisible and deceptive Unicode (bidi control smuggling, zero-width characters, tag/variation-selector payload smuggling, homoglyph confusables) in code, docs, and LLM prompts.",
   "keywords": [
     "unicode",
@@ -47,6 +47,7 @@
     "build:lib": "tsc -p tsconfig.build.json",
     "build:cli": "node esbuild.cli.mjs",
     "build": "npm run build:lib && npm run build:cli",
+    "prepare": "npm run build:lib",
     "typecheck": "tsc --noEmit",
     "lint": "eslint .",
     "test": "vitest run",

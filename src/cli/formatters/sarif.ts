@@ -1,5 +1,6 @@
 import type { RuleId, Severity } from '../../core/index.js';
 import type { ScanReport } from '../report.js';
+import { VERSION } from '../version.js';
 
 const SARIF_LEVEL: Record<Severity, string> = { error: 'error', warning: 'warning', info: 'note' };
 
@@ -53,7 +54,7 @@ export function formatSarif(report: ScanReport): string {
           driver: {
             name: 'ghostchars',
             informationUri: 'https://github.com/antonsoo/ghostchars',
-            version: '0.1.0',
+            version: VERSION,
             rules,
           },
         },

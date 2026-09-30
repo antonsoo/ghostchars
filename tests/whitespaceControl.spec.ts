@@ -31,3 +31,15 @@ describe('unusual whitespace and control characters', () => {
     expect(finding!.severity).toBe('warning');
   });
 });
+
+describe('French typography', () => {
+  it('does not flag the no-break spaces French puts before ; : ! ? and inside guillemets', () => {
+    const text = 'Bonjour ! « Citation » et ça va ? Oui : bien ;';
+    expect(scanText(text).findings.filter((f) => f.rule === 'unusual-whitespace')).toEqual([]);
+  });
+
+  it('still flags a no-break space between words or in code', () => {
+    expect(scanText('if (x)').findings.some((f) => f.rule === 'unusual-whitespace')).toBe(true);
+    expect(scanText('deux mots').findings.some((f) => f.rule === 'unusual-whitespace')).toBe(true);
+  });
+});

@@ -21,10 +21,23 @@ function isC1Control(cp: number): boolean {
   return cp >= 0x80 && cp <= 0x9f;
 }
 
+const NBSP = 0x00a0;
+const NARROW_NBSP = 0x202f;
+// French typography puts a (narrow) no-break space before ; : ! ? and » and after «.
+const FRENCH_SPACED_AFTER = new Set([0x003b, 0x003a, 0x0021, 0x003f, 0x00bb]);
+const GUILLEMET_OPEN = 0x00ab;
+
+function isFrenchTypography(prev: CodePointInfo | undefined, cp: CodePointInfo, next: CodePointInfo | undefined): boolean {
+  if (cp.codePoint !== NBSP && cp.codePoint !== NARROW_NBSP) return false;
+  return (next !== undefined && FRENCH_SPACED_AFTER.has(next.codePoint)) || prev?.codePoint === GUILLEMET_OPEN;
+}
+
 export function scanWhitespaceAndControl(codePoints: CodePointInfo[]): Finding[] {
   const findings: Finding[] = [];
-  for (const cp of codePoints) {
+  for (let idx = 0; idx < codePoints.length; idx++) {
+    const cp = codePoints[idx]!;
     if (UNUSUAL_WHITESPACE.has(cp.codePoint)) {
+      if (isFrenchTypography(codePoints[idx - 1], cp, codePoints[idx + 1])) continue;
       findings.push(finding(cp, 'unusual-whitespace', 'warning', `${unicodeName(cp.codePoint)} looks like a normal space or line break but is a distinct code point -- it can split tokens, defeat string/keyword matching, or hide in a diff.`, 'Replace with a regular space (U+0020) or ASCII newline.'));
     } else if (isC0Control(cp.codePoint) || isC1Control(cp.codePoint)) {
       const isEscape = cp.codePoint === ESCAPE;

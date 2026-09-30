@@ -55,6 +55,14 @@ const JOINING_SCRIPTS = new Set([
   'Buginese',
 ]);
 
+// Viramas (halants) of the Indic and Southeast Asian scripts above. A ZWJ/ZWNJ right after one
+// selects a half form, a chillu or an explicit virama (Unicode ch. 12, "Rendering Behavior"),
+// including at the end of a word -- legacy Malayalam chillus are NA + VIRAMA + ZWJ -- so the
+// character after it needn't be in the script at all.
+const VIRAMAS = new Set([
+  0x094d, 0x09cd, 0x0a4d, 0x0acd, 0x0b4d, 0x0bcd, 0x0c4d, 0x0ccd, 0x0d4d, 0x0dca, 0x0f84, 0x1039, 0x103a, 0x17d2, 0x1b44, 0xa9c0,
+]);
+
 function isOwnedElsewhere(cp: number): boolean {
   return (
     EXPLICIT_FORMATTING.has(cp) ||
@@ -81,6 +89,7 @@ export function scanInvisible(codePoints: CodePointInfo[]): Finding[] {
       const next = codePoints[idx + 1];
       if (cp.codePoint === ZWJ && isEmojiJoinContext(prev, next)) continue;
       if (isJoiningScriptContext(prev, next)) continue;
+      if (prev !== undefined && VIRAMAS.has(prev.codePoint)) continue;
     }
 
     findings.push({

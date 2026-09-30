@@ -40,3 +40,20 @@ describe('invisible / default-ignorable characters', () => {
     expect(findings.some((f) => f.rule === 'invisible' && f.codePoints[0] === 0x200d)).toBe(true);
   });
 });
+
+describe('ZWJ/ZWNJ after a virama', () => {
+  it('does not flag a legacy Malayalam chillu (NA + VIRAMA + ZWJ) at the end of a word', () => {
+    const { findings } = scanText('ന്‍ കാൽ');
+    expect(findings.filter((f) => f.rule === 'invisible')).toEqual([]);
+  });
+
+  it('does not flag a Devanagari half form requested with ZWJ', () => {
+    const { findings } = scanText('क्‍ष');
+    expect(findings.filter((f) => f.rule === 'invisible')).toEqual([]);
+  });
+
+  it('still flags a ZWJ between ASCII letters', () => {
+    const { findings } = scanText('ad‍min');
+    expect(findings.some((f) => f.rule === 'invisible' && f.codePoints[0] === 0x200d)).toBe(true);
+  });
+});

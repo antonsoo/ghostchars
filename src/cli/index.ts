@@ -14,8 +14,8 @@ import type { ScanReport } from './report.js';
 import { severityCounts } from './report.js';
 import { colors } from './colors.js';
 import { discoverFiles } from './walk.js';
+import { VERSION } from './version.js';
 
-const VERSION = '0.1.0';
 
 const HELP = `ghostchars ${VERSION} -- catch invisible and deceptive Unicode
 
