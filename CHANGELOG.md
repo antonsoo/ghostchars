@@ -2,6 +2,30 @@
 
 All notable changes to this project are documented in this file.
 
+## [0.1.3] - 2026-10-01
+
+### Fixed
+
+- Memory. Scanning a file with any non-ASCII character in it built an object
+  for every code point of the file, well over a hundred bytes per character:
+  the benchmark needed 2.7 GB at 20 MiB, and `npm run bench` ran out of heap
+  at its own default of 50 MiB. Each rule now looks for its own characters and
+  keeps a record only of what it reports, so memory follows the findings. The
+  50 MiB mixed benchmark finishes in about 3 s, and the scan of this repo's
+  `node_modules` went from 2.3 s to 0.7 s. Findings are identical: checked on
+  30,000 generated hostile strings and 3,411 real files (254,669 findings),
+  and on 40,000 generated identifier texts for the confusables rule (81,023).
+- Many findings in one text made the scan quadratic. The tag and
+  variation-selector rules rescanned the text from its start for the line and
+  column of each finding, and `sanitize()` copied the rest of the text for
+  each removal: 30,000 stray selectors in 60 KB took 2.7 s to scan and 3.6 s
+  to sanitize, now about 50 ms each.
+
+### Changed
+
+- The README's benchmark figures are measured again, at the benchmark's
+  default size.
+
 ## [0.1.2] - 2026-10-01
 
 ### Added

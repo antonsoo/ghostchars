@@ -80,6 +80,36 @@ function unicodeName(cp) {
   return `U+${cp.toString(16).toUpperCase().padStart(4, "0")}`;
 }
 
+// src/core/rules/position.ts
+function positionIndex(text) {
+  let breaks;
+  const lineBreaks = () => {
+    const found = [];
+    for (let i = 0; i < text.length; i++) {
+      const c = text.charCodeAt(i);
+      if (c === 10 || c === 13 && text.charCodeAt(i + 1) !== 10) found.push(i);
+    }
+    return found;
+  };
+  return (index) => {
+    breaks ??= lineBreaks();
+    let lo = 0;
+    let hi = breaks.length;
+    while (lo < hi) {
+      const mid = lo + hi >>> 1;
+      if (breaks[mid] < index) lo = mid + 1;
+      else hi = mid;
+    }
+    const lastBreak = lo === 0 ? -1 : breaks[lo - 1];
+    return { line: lo + 1, column: index - lastBreak, offset: index };
+  };
+}
+function describeCodePoint(text, index, positionAt) {
+  const codePoint = text.codePointAt(index);
+  const { line, column } = positionAt(index);
+  return { codePoint, index, width: codePoint > 65535 ? 2 : 1, line, column };
+}
+
 // src/core/rules/bidi.ts
 var EXPLICIT_FORMATTING = /* @__PURE__ */ new Set([8234, 8235, 8236, 8237, 8238, 8294, 8295, 8296, 8297]);
 var BIDI_MARKS = /* @__PURE__ */ new Set([8206, 8207, 1564]);
@@ -88,16 +118,20 @@ var EMBED_OR_OVERRIDE = /* @__PURE__ */ new Set([8234, 8235, 8237, 8238]);
 var ISOLATE_INITIATOR = /* @__PURE__ */ new Set([8294, 8295, 8296]);
 var PDF = 8236;
 var PDI = 8297;
-function scanBidi(codePoints, text) {
+var BIDI_RE = /[\u061c\u200e\u200f\u202a-\u202e\u2066-\u2069]/g;
+function scanBidi(text, positionAt) {
   const findings = [];
   let stack = [];
+  BIDI_RE.lastIndex = 0;
   const flushUnterminated = () => {
     for (const entry of stack) {
       findings.push(makeFinding(entry.info, text, "bidi-unbalanced", "error", `${unicodeName(entry.codePoint)} is opened but never closed before the end of the line.`, "Add the matching POP DIRECTIONAL FORMATTING (U+202C) or POP DIRECTIONAL ISOLATE (U+2069), or remove this character."));
     }
     stack = [];
   };
-  for (const cp of codePoints) {
+  for (let match = BIDI_RE.exec(text); match !== null; match = BIDI_RE.exec(text)) {
+    const cp = describeCodePoint(text, match.index, positionAt);
+    if (stack.length > 0 && stack[0].info.line !== cp.line) flushUnterminated();
     if (EXPLICIT_FORMATTING.has(cp.codePoint)) {
       findings.push(
         makeFinding(
@@ -130,8 +164,6 @@ function scanBidi(codePoints, text) {
       } else {
         stack.length = stack.length - 1 - idx;
       }
-    } else if (cp.codePoint === 10 || cp.codePoint === 13) {
-      flushUnterminated();
     }
   }
   flushUnterminated();
@@ -6524,29 +6556,25 @@ var scriptNames = ["Adlam", "Ahom", "Anatolian_Hieroglyphs", "Arabic", "Armenian
 var scriptRanges = [[0, 64, 25], [65, 90, 74], [91, 96, 25], [97, 122, 74], [123, 169, 25], [170, 170, 74], [171, 185, 25], [186, 186, 74], [187, 191, 25], [192, 214, 74], [215, 215, 25], [216, 246, 74], [247, 247, 25], [248, 696, 74], [697, 735, 25], [736, 740, 74], [741, 745, 25], [746, 747, 13], [748, 767, 25], [768, 879, 58], [880, 883, 45], [884, 884, 25], [885, 887, 45], [890, 893, 45], [894, 894, 25], [895, 895, 45], [900, 900, 45], [901, 901, 25], [902, 902, 45], [903, 903, 25], [904, 906, 45], [908, 908, 45], [910, 929, 45], [931, 993, 45], [994, 1007, 26], [1008, 1023, 45], [1024, 1156, 30], [1157, 1158, 58], [1159, 1327, 30], [1329, 1366, 4], [1369, 1418, 4], [1421, 1423, 4], [1425, 1479, 55], [1488, 1514, 55], [1519, 1524, 55], [1536, 1540, 3], [1541, 1541, 25], [1542, 1547, 3], [1548, 1548, 25], [1549, 1562, 3], [1563, 1563, 25], [1564, 1566, 3], [1567, 1567, 25], [1568, 1599, 3], [1600, 1600, 25], [1601, 1610, 3], [1611, 1621, 58], [1622, 1647, 3], [1648, 1648, 58], [1649, 1756, 3], [1757, 1757, 25], [1758, 1791, 3], [1792, 1805, 145], [1807, 1866, 145], [1869, 1871, 145], [1872, 1919, 3], [1920, 1969, 157], [1984, 2042, 105], [2045, 2047, 105], [2048, 2093, 131], [2096, 2110, 131], [2112, 2139, 85], [2142, 2142, 85], [2144, 2154, 145], [2160, 2193, 3], [2199, 2273, 3], [2274, 2274, 25], [2275, 2303, 3], [2304, 2384, 32], [2385, 2388, 58], [2389, 2403, 32], [2404, 2405, 25], [2406, 2431, 32], [2432, 2435, 10], [2437, 2444, 10], [2447, 2448, 10], [2451, 2472, 10], [2474, 2480, 10], [2482, 2482, 10], [2486, 2489, 10], [2492, 2500, 10], [2503, 2504, 10], [2507, 2510, 10], [2519, 2519, 10], [2524, 2525, 10], [2527, 2531, 10], [2534, 2558, 10], [2561, 2563, 48], [2565, 2570, 48], [2575, 2576, 48], [2579, 2600, 48], [2602, 2608, 48], [2610, 2611, 48], [2613, 2614, 48], [2616, 2617, 48], [2620, 2620, 48], [2622, 2626, 48], [2631, 2632, 48], [2635, 2637, 48], [2641, 2641, 48], [2649, 2652, 48], [2654, 2654, 48], [2662, 2678, 48], [2689, 2691, 46], [2693, 2701, 46], [2703, 2705, 46], [2707, 2728, 46], [2730, 2736, 46], [2738, 2739, 46], [2741, 2745, 46], [2748, 2757, 46], [2759, 2761, 46], [2763, 2765, 46], [2768, 2768, 46], [2784, 2787, 46], [2790, 2801, 46], [2809, 2815, 46], [2817, 2819, 120], [2821, 2828, 120], [2831, 2832, 120], [2835, 2856, 120], [2858, 2864, 120], [2866, 2867, 120], [2869, 2873, 120], [2876, 2884, 120], [2887, 2888, 120], [2891, 2893, 120], [2901, 2903, 120], [2908, 2909, 120], [2911, 2915, 120], [2918, 2935, 120], [2946, 2947, 153], [2949, 2954, 153], [2958, 2960, 153], [2962, 2965, 153], [2969, 2970, 153], [2972, 2972, 153], [2974, 2975, 153], [2979, 2980, 153], [2984, 2986, 153], [2990, 3001, 153], [3006, 3010, 153], [3014, 3016, 153], [3018, 3021, 153], [3024, 3024, 153], [3031, 3031, 153], [3046, 3066, 153], [3072, 3084, 156], [3086, 3088, 156], [3090, 3112, 156], [3114, 3129, 156], [3132, 3140, 156], [3142, 3144, 156], [3146, 3149, 156], [3157, 3158, 156], [3160, 3162, 156], [3164, 3165, 156], [3168, 3171, 156], [3174, 3183, 156], [3191, 3199, 156], [3200, 3212, 63], [3214, 3216, 63], [3218, 3240, 63], [3242, 3251, 63], [3253, 3257, 63], [3260, 3268, 63], [3270, 3272, 63], [3274, 3277, 63], [3285, 3286, 63], [3292, 3294, 63], [3296, 3299, 63], [3302, 3311, 63], [3313, 3315, 63], [3328, 3340, 84], [3342, 3344, 84], [3346, 3396, 84], [3398, 3400, 84], [3402, 3407, 84], [3412, 3427, 84], [3430, 3455, 84], [3457, 3459, 138], [3461, 3478, 138], [3482, 3505, 138], [3507, 3515, 138], [3517, 3517, 138], [3520, 3526, 138], [3530, 3530, 138], [3535, 3540, 138], [3542, 3542, 138], [3544, 3551, 138], [3558, 3567, 138], [3570, 3572, 138], [3585, 3642, 158], [3647, 3647, 25], [3648, 3675, 158], [3713, 3714, 73], [3716, 3716, 73], [3718, 3722, 73], [3724, 3747, 73], [3749, 3749, 73], [3751, 3773, 73], [3776, 3780, 73], [3782, 3782, 73], [3784, 3790, 73], [3792, 3801, 73], [3804, 3807, 73], [3840, 3911, 159], [3913, 3948, 159], [3953, 3991, 159], [3993, 4028, 159], [4030, 4044, 159], [4046, 4052, 159], [4053, 4056, 25], [4057, 4058, 159], [4096, 4255, 99], [4256, 4293, 41], [4295, 4295, 41], [4301, 4301, 41], [4304, 4346, 41], [4347, 4347, 25], [4348, 4351, 41], [4352, 4607, 51], [4608, 4680, 39], [4682, 4685, 39], [4688, 4694, 39], [4696, 4696, 39], [4698, 4701, 39], [4704, 4744, 39], [4746, 4749, 39], [4752, 4784, 39], [4786, 4789, 39], [4792, 4798, 39], [4800, 4800, 39], [4802, 4805, 39], [4808, 4822, 39], [4824, 4880, 39], [4882, 4885, 39], [4888, 4954, 39], [4957, 4988, 39], [4992, 5017, 39], [5024, 5109, 23], [5112, 5117, 23], [5120, 5759, 18], [5760, 5788, 108], [5792, 5866, 130], [5867, 5869, 25], [5870, 5880, 130], [5888, 5909, 146], [5919, 5919, 146], [5920, 5940, 53], [5941, 5942, 25], [5952, 5971, 17], [5984, 5996, 147], [5998, 6e3, 147], [6002, 6003, 147], [6016, 6109, 69], [6112, 6121, 69], [6128, 6137, 69], [6144, 6145, 96], [6146, 6147, 25], [6148, 6148, 96], [6149, 6149, 25], [6150, 6169, 96], [6176, 6264, 96], [6272, 6314, 96], [6320, 6389, 18], [6400, 6430, 76], [6432, 6443, 76], [6448, 6459, 76], [6464, 6464, 76], [6468, 6479, 76], [6480, 6509, 148], [6512, 6516, 148], [6528, 6571, 103], [6576, 6601, 103], [6608, 6618, 103], [6622, 6623, 103], [6624, 6655, 69], [6656, 6683, 16], [6686, 6687, 16], [6688, 6750, 149], [6752, 6780, 149], [6783, 6793, 149], [6800, 6809, 149], [6816, 6829, 149], [6832, 6877, 58], [6880, 6891, 58], [6912, 6988, 6], [6990, 7039, 6], [7040, 7103, 142], [7104, 7155, 9], [7164, 7167, 9], [7168, 7223, 75], [7227, 7241, 75], [7245, 7247, 75], [7248, 7295, 109], [7296, 7306, 30], [7312, 7354, 41], [7357, 7359, 41], [7360, 7367, 142], [7376, 7378, 58], [7379, 7379, 25], [7380, 7392, 58], [7393, 7393, 25], [7394, 7400, 58], [7401, 7404, 25], [7405, 7405, 58], [7406, 7411, 25], [7412, 7412, 58], [7413, 7415, 25], [7416, 7417, 58], [7418, 7418, 25], [7424, 7461, 74], [7462, 7466, 45], [7467, 7467, 30], [7468, 7516, 74], [7517, 7521, 45], [7522, 7525, 74], [7526, 7530, 45], [7531, 7543, 74], [7544, 7544, 30], [7545, 7614, 74], [7615, 7615, 45], [7616, 7679, 58], [7680, 7935, 74], [7936, 7957, 45], [7960, 7965, 45], [7968, 8005, 45], [8008, 8013, 45], [8016, 8023, 45], [8025, 8025, 45], [8027, 8027, 45], [8029, 8029, 45], [8031, 8061, 45], [8064, 8116, 45], [8118, 8132, 45], [8134, 8147, 45], [8150, 8155, 45], [8157, 8175, 45], [8178, 8180, 45], [8182, 8190, 45], [8192, 8203, 25], [8204, 8205, 58], [8206, 8292, 25], [8294, 8304, 25], [8305, 8305, 74], [8308, 8318, 25], [8319, 8319, 74], [8320, 8334, 25], [8336, 8348, 74], [8352, 8385, 25], [8400, 8432, 58], [8448, 8485, 25], [8486, 8486, 45], [8487, 8489, 25], [8490, 8491, 74], [8492, 8497, 25], [8498, 8498, 74], [8499, 8525, 25], [8526, 8526, 74], [8527, 8543, 25], [8544, 8584, 74], [8585, 8587, 25], [8592, 9257, 25], [9280, 9290, 25], [9312, 10239, 25], [10240, 10495, 15], [10496, 11123, 25], [11126, 11263, 25], [11264, 11359, 42], [11360, 11391, 74], [11392, 11507, 26], [11513, 11519, 26], [11520, 11557, 41], [11559, 11559, 41], [11565, 11565, 41], [11568, 11623, 160], [11631, 11632, 160], [11647, 11647, 160], [11648, 11670, 39], [11680, 11686, 39], [11688, 11694, 39], [11696, 11702, 39], [11704, 11710, 39], [11712, 11718, 39], [11720, 11726, 39], [11728, 11734, 39], [11736, 11742, 39], [11744, 11775, 30], [11776, 11869, 25], [11904, 11929, 50], [11931, 12019, 50], [12032, 12245, 50], [12272, 12292, 25], [12293, 12293, 50], [12294, 12294, 25], [12295, 12295, 50], [12296, 12320, 25], [12321, 12329, 50], [12330, 12333, 58], [12334, 12335, 51], [12336, 12343, 25], [12344, 12347, 50], [12348, 12351, 25], [12353, 12438, 56], [12441, 12442, 58], [12443, 12444, 25], [12445, 12447, 56], [12448, 12448, 25], [12449, 12538, 64], [12539, 12540, 25], [12541, 12543, 64], [12549, 12591, 13], [12593, 12686, 51], [12688, 12703, 25], [12704, 12735, 13], [12736, 12773, 25], [12783, 12783, 25], [12784, 12799, 64], [12800, 12830, 51], [12832, 12895, 25], [12896, 12926, 51], [12927, 13007, 25], [13008, 13054, 64], [13055, 13055, 25], [13056, 13143, 64], [13144, 13311, 25], [13312, 19903, 50], [19904, 19967, 25], [19968, 40959, 50], [40960, 42124, 172], [42128, 42182, 172], [42192, 42239, 79], [42240, 42539, 167], [42560, 42655, 30], [42656, 42743, 7], [42752, 42785, 25], [42786, 42887, 74], [42888, 42890, 25], [42891, 42972, 74], [42993, 43007, 74], [43008, 43052, 144], [43056, 43065, 25], [43072, 43127, 126], [43136, 43205, 132], [43214, 43225, 132], [43232, 43263, 32], [43264, 43309, 66], [43310, 43310, 25], [43311, 43311, 66], [43312, 43347, 129], [43359, 43359, 129], [43360, 43388, 51], [43392, 43469, 61], [43471, 43471, 25], [43472, 43481, 61], [43486, 43487, 61], [43488, 43518, 99], [43520, 43574, 22], [43584, 43597, 22], [43600, 43609, 22], [43612, 43615, 22], [43616, 43647, 99], [43648, 43714, 150], [43739, 43743, 150], [43744, 43766, 90], [43777, 43782, 39], [43785, 43790, 39], [43793, 43798, 39], [43808, 43814, 39], [43816, 43822, 39], [43824, 43866, 74], [43867, 43867, 25], [43868, 43876, 74], [43877, 43877, 45], [43878, 43881, 74], [43882, 43883, 25], [43888, 43967, 23], [43968, 44013, 90], [44016, 44025, 90], [44032, 55203, 51], [55216, 55238, 51], [55243, 55291, 51], [63744, 64109, 50], [64112, 64217, 50], [64256, 64262, 74], [64275, 64279, 4], [64285, 64310, 55], [64312, 64316, 55], [64318, 64318, 55], [64320, 64321, 55], [64323, 64324, 55], [64326, 64335, 55], [64336, 64829, 3], [64830, 64831, 25], [64832, 64975, 3], [65008, 65023, 3], [65024, 65039, 58], [65040, 65049, 25], [65056, 65069, 58], [65070, 65071, 30], [65072, 65106, 25], [65108, 65126, 25], [65128, 65131, 25], [65136, 65140, 3], [65142, 65276, 3], [65279, 65279, 25], [65281, 65312, 25], [65313, 65338, 74], [65339, 65344, 25], [65345, 65370, 74], [65371, 65381, 25], [65382, 65391, 64], [65392, 65392, 25], [65393, 65437, 64], [65438, 65439, 25], [65440, 65470, 51], [65474, 65479, 51], [65482, 65487, 51], [65490, 65495, 51], [65498, 65500, 51], [65504, 65510, 25], [65512, 65518, 25], [65529, 65533, 25], [65536, 65547, 78], [65549, 65574, 78], [65576, 65594, 78], [65596, 65597, 78], [65599, 65613, 78], [65616, 65629, 78], [65664, 65786, 78], [65792, 65794, 25], [65799, 65843, 25], [65847, 65855, 25], [65856, 65934, 45], [65936, 65948, 25], [65952, 65952, 45], [66e3, 66044, 25], [66045, 66045, 58], [66176, 66204, 80], [66208, 66256, 19], [66272, 66272, 58], [66273, 66299, 25], [66304, 66339, 112], [66349, 66351, 112], [66352, 66378, 43], [66384, 66426, 114], [66432, 66461, 166], [66463, 66463, 166], [66464, 66499, 115], [66504, 66517, 115], [66560, 66639, 31], [66640, 66687, 134], [66688, 66717, 122], [66720, 66729, 122], [66736, 66771, 121], [66776, 66811, 121], [66816, 66855, 37], [66864, 66915, 20], [66927, 66927, 20], [66928, 66938, 168], [66940, 66954, 168], [66956, 66962, 168], [66964, 66965, 168], [66967, 66977, 168], [66979, 66993, 168], [66995, 67001, 168], [67003, 67004, 168], [67008, 67059, 162], [67072, 67382, 77], [67392, 67413, 77], [67424, 67431, 77], [67456, 67461, 74], [67463, 67504, 74], [67506, 67514, 74], [67584, 67589, 28], [67592, 67592, 28], [67594, 67637, 28], [67639, 67640, 28], [67644, 67644, 28], [67647, 67647, 28], [67648, 67669, 57], [67671, 67679, 57], [67680, 67711, 124], [67712, 67742, 100], [67751, 67759, 100], [67808, 67826, 54], [67828, 67829, 54], [67835, 67839, 54], [67840, 67867, 127], [67871, 67871, 127], [67872, 67897, 81], [67903, 67903, 81], [67904, 67929, 136], [67968, 67999, 93], [68e3, 68023, 92], [68028, 68047, 92], [68050, 68095, 92], [68096, 68099, 67], [68101, 68102, 67], [68108, 68115, 67], [68117, 68119, 67], [68121, 68149, 67], [68152, 68154, 67], [68159, 68168, 67], [68176, 68184, 67], [68192, 68223, 117], [68224, 68255, 113], [68288, 68326, 86], [68331, 68342, 86], [68352, 68405, 5], [68409, 68415, 5], [68416, 68437, 60], [68440, 68447, 60], [68448, 68466, 59], [68472, 68479, 59], [68480, 68497, 128], [68505, 68508, 128], [68521, 68527, 128], [68608, 68680, 118], [68736, 68786, 111], [68800, 68850, 111], [68858, 68863, 111], [68864, 68903, 52], [68912, 68921, 52], [68928, 68965, 40], [68969, 68997, 40], [69006, 69007, 40], [69216, 69246, 3], [69248, 69289, 171], [69291, 69293, 171], [69296, 69297, 171], [69314, 69319, 3], [69328, 69336, 3], [69370, 69375, 3], [69376, 69415, 116], [69424, 69465, 139], [69488, 69513, 119], [69552, 69579, 24], [69600, 69622, 38], [69632, 69709, 14], [69714, 69749, 14], [69759, 69759, 14], [69760, 69826, 62], [69837, 69837, 62], [69840, 69864, 140], [69872, 69881, 140], [69888, 69940, 21], [69942, 69959, 21], [69968, 70006, 82], [70016, 70111, 133], [70113, 70132, 138], [70144, 70161, 70], [70163, 70209, 70], [70272, 70278, 98], [70280, 70280, 98], [70282, 70285, 98], [70287, 70301, 98], [70303, 70313, 98], [70320, 70378, 71], [70384, 70393, 71], [70400, 70403, 44], [70405, 70412, 44], [70415, 70416, 44], [70419, 70440, 44], [70442, 70448, 44], [70450, 70451, 44], [70453, 70457, 44], [70459, 70459, 58], [70460, 70468, 44], [70471, 70472, 44], [70475, 70477, 44], [70480, 70480, 44], [70487, 70487, 44], [70493, 70499, 44], [70502, 70508, 44], [70512, 70516, 44], [70528, 70537, 165], [70539, 70539, 165], [70542, 70542, 165], [70544, 70581, 165], [70583, 70592, 165], [70594, 70594, 165], [70597, 70597, 165], [70599, 70602, 165], [70604, 70613, 165], [70615, 70616, 165], [70625, 70626, 165], [70656, 70747, 104], [70749, 70753, 104], [70784, 70855, 161], [70864, 70873, 161], [71040, 71093, 135], [71096, 71133, 135], [71168, 71236, 95], [71248, 71257, 95], [71264, 71276, 96], [71296, 71353, 152], [71360, 71369, 152], [71376, 71395, 99], [71424, 71450, 1], [71453, 71467, 1], [71472, 71494, 1], [71680, 71739, 34], [71840, 71922, 170], [71935, 71935, 170], [71936, 71942, 33], [71945, 71945, 33], [71948, 71955, 33], [71957, 71958, 33], [71960, 71989, 33], [71991, 71992, 33], [71995, 72006, 33], [72016, 72025, 33], [72096, 72103, 102], [72106, 72151, 102], [72154, 72164, 102], [72192, 72263, 173], [72272, 72354, 141], [72368, 72383, 18], [72384, 72440, 125], [72448, 72457, 32], [72544, 72551, 133], [72640, 72673, 143], [72688, 72697, 143], [72704, 72712, 12], [72714, 72758, 12], [72760, 72773, 12], [72784, 72812, 12], [72816, 72847, 87], [72850, 72871, 87], [72873, 72886, 87], [72960, 72966, 88], [72968, 72969, 88], [72971, 73014, 88], [73018, 73018, 88], [73020, 73021, 88], [73023, 73031, 88], [73040, 73049, 88], [73056, 73061, 47], [73063, 73064, 47], [73066, 73102, 47], [73104, 73105, 47], [73107, 73112, 47], [73120, 73129, 47], [73136, 73179, 163], [73184, 73193, 163], [73440, 73464, 83], [73472, 73488, 65], [73490, 73530, 65], [73534, 73562, 65], [73648, 73648, 79], [73664, 73713, 153], [73727, 73727, 153], [73728, 74649, 27], [74752, 74862, 27], [74864, 74868, 27], [74880, 75075, 27], [77712, 77810, 29], [77824, 78933, 36], [78944, 82938, 36], [82944, 83526, 2], [90368, 90425, 49], [92160, 92728, 7], [92736, 92766, 97], [92768, 92777, 97], [92782, 92783, 97], [92784, 92862, 154], [92864, 92873, 154], [92880, 92909, 8], [92912, 92917, 8], [92928, 92997, 123], [93008, 93017, 123], [93019, 93025, 123], [93027, 93047, 123], [93053, 93071, 123], [93504, 93561, 72], [93760, 93850, 89], [93856, 93880, 11], [93883, 93907, 11], [93952, 94026, 94], [94031, 94087, 94], [94095, 94111, 94], [94176, 94176, 155], [94177, 94177, 106], [94178, 94179, 50], [94180, 94180, 68], [94192, 94198, 50], [94208, 101119, 155], [101120, 101589, 68], [101631, 101631, 68], [101632, 101662, 155], [101760, 101874, 155], [110576, 110579, 64], [110581, 110587, 64], [110589, 110590, 64], [110592, 110592, 64], [110593, 110879, 56], [110880, 110882, 64], [110898, 110898, 56], [110928, 110930, 56], [110933, 110933, 64], [110948, 110951, 64], [110960, 111355, 106], [113664, 113770, 35], [113776, 113788, 35], [113792, 113800, 35], [113808, 113817, 35], [113820, 113823, 35], [113824, 113827, 25], [117760, 118012, 25], [118016, 118451, 25], [118458, 118480, 25], [118496, 118512, 25], [118528, 118573, 58], [118576, 118598, 58], [118608, 118723, 25], [118784, 119029, 25], [119040, 119078, 25], [119081, 119142, 25], [119143, 119145, 58], [119146, 119162, 25], [119163, 119170, 58], [119171, 119172, 25], [119173, 119179, 58], [119180, 119209, 25], [119210, 119213, 58], [119214, 119274, 25], [119296, 119365, 45], [119488, 119507, 25], [119520, 119539, 25], [119552, 119638, 25], [119648, 119672, 25], [119808, 119892, 25], [119894, 119964, 25], [119966, 119967, 25], [119970, 119970, 25], [119973, 119974, 25], [119977, 119980, 25], [119982, 119993, 25], [119995, 119995, 25], [119997, 120003, 25], [120005, 120069, 25], [120071, 120074, 25], [120077, 120084, 25], [120086, 120092, 25], [120094, 120121, 25], [120123, 120126, 25], [120128, 120132, 25], [120134, 120134, 25], [120138, 120144, 25], [120146, 120485, 25], [120488, 120779, 25], [120782, 120831, 25], [120832, 121483, 137], [121499, 121503, 137], [121505, 121519, 137], [122624, 122654, 74], [122661, 122666, 74], [122880, 122886, 42], [122888, 122904, 42], [122907, 122913, 42], [122915, 122916, 42], [122918, 122922, 42], [122928, 122989, 30], [123023, 123023, 30], [123136, 123180, 107], [123184, 123197, 107], [123200, 123209, 107], [123214, 123215, 107], [123536, 123566, 164], [123584, 123641, 169], [123647, 123647, 169], [124112, 124153, 101], [124368, 124410, 110], [124415, 124415, 110], [124608, 124638, 151], [124640, 124661, 151], [124670, 124671, 151], [124896, 124902, 39], [124904, 124907, 39], [124909, 124910, 39], [124912, 124926, 39], [124928, 125124, 91], [125127, 125142, 91], [125184, 125259, 0], [125264, 125273, 0], [125278, 125279, 0], [126065, 126132, 25], [126209, 126269, 25], [126464, 126467, 3], [126469, 126495, 3], [126497, 126498, 3], [126500, 126500, 3], [126503, 126503, 3], [126505, 126514, 3], [126516, 126519, 3], [126521, 126521, 3], [126523, 126523, 3], [126530, 126530, 3], [126535, 126535, 3], [126537, 126537, 3], [126539, 126539, 3], [126541, 126543, 3], [126545, 126546, 3], [126548, 126548, 3], [126551, 126551, 3], [126553, 126553, 3], [126555, 126555, 3], [126557, 126557, 3], [126559, 126559, 3], [126561, 126562, 3], [126564, 126564, 3], [126567, 126570, 3], [126572, 126578, 3], [126580, 126583, 3], [126585, 126588, 3], [126590, 126590, 3], [126592, 126601, 3], [126603, 126619, 3], [126625, 126627, 3], [126629, 126633, 3], [126635, 126651, 3], [126704, 126705, 3], [126976, 127019, 25], [127024, 127123, 25], [127136, 127150, 25], [127153, 127167, 25], [127169, 127183, 25], [127185, 127221, 25], [127232, 127405, 25], [127462, 127487, 25], [127488, 127488, 56], [127489, 127490, 25], [127504, 127547, 25], [127552, 127560, 25], [127568, 127569, 25], [127584, 127589, 25], [127744, 128728, 25], [128732, 128748, 25], [128752, 128764, 25], [128768, 128985, 25], [128992, 129003, 25], [129008, 129008, 25], [129024, 129035, 25], [129040, 129095, 25], [129104, 129113, 25], [129120, 129159, 25], [129168, 129197, 25], [129200, 129211, 25], [129216, 129217, 25], [129232, 129240, 25], [129280, 129623, 25], [129632, 129645, 25], [129648, 129660, 25], [129664, 129674, 25], [129678, 129734, 25], [129736, 129736, 25], [129741, 129756, 25], [129759, 129770, 25], [129775, 129784, 25], [129792, 129938, 25], [129940, 130042, 25], [131072, 173791, 50], [173824, 178205, 50], [178208, 183981, 50], [183984, 191456, 50], [191472, 192093, 50], [194560, 195101, 50], [196608, 201546, 50], [201552, 210041, 50], [917505, 917505, 25], [917536, 917631, 25], [917760, 917999, 58]];
 
 // src/core/unicode-utils.ts
-function iterateCodePoints(text) {
-  const out = [];
-  let line = 1;
-  let column = 1;
-  let i = 0;
-  while (i < text.length) {
-    const codePoint = text.codePointAt(i);
-    const width = codePoint > 65535 ? 2 : 1;
-    out.push({ codePoint, index: i, width, line, column });
-    if (codePoint === 10) {
-      line++;
-      column = 1;
-    } else if (codePoint === 13) {
-      if (text[i + width] !== "\n") {
-        line++;
-        column = 1;
-      }
-    } else {
-      column += width;
-    }
-    i += width;
+function codePointBefore(text, index) {
+  if (index <= 0) return void 0;
+  const last = text.charCodeAt(index - 1);
+  if (last >= 56320 && last <= 57343 && index >= 2) {
+    const first = text.charCodeAt(index - 2);
+    if (first >= 55296 && first <= 56319) return (first - 55296) * 1024 + (last - 56320) + 65536;
   }
-  return out;
+  return last;
+}
+function countCodePoints(text) {
+  let pairs = 0;
+  SURROGATE_PAIR_RE.lastIndex = 0;
+  while (SURROGATE_PAIR_RE.exec(text) !== null) pairs++;
+  return text.length - pairs;
+}
+var SURROGATE_PAIR_RE = /[\uD800-\uDBFF][\uDC00-\uDFFF]/g;
+function rangesToClass(ranges) {
+  const hex = (cp) => `\\u{${cp.toString(16)}}`;
+  return `[${ranges.map(([lo, hi]) => lo === hi ? hex(lo) : `${hex(lo)}-${hex(hi)}`).join("")}]`;
 }
 function rangeSearch(ranges, cp) {
   let lo = 0;
@@ -6562,9 +6590,6 @@ function rangeSearch(ranges, cp) {
 }
 function inRanges(ranges, cp) {
   return rangeSearch(ranges, cp) >= 0;
-}
-function isDefaultIgnorable(cp) {
-  return inRanges(defaultIgnorableRanges, cp);
 }
 function isEmoji(cp) {
   return inRanges(emojiRanges, cp);
@@ -6624,42 +6649,54 @@ function isCohesiveScriptSet(scripts) {
   if (scripts.size <= 1) return true;
   return COHESIVE_SCRIPT_GROUPS.some((group) => [...scripts].every((s) => group.has(s)));
 }
-function tokenize(text) {
-  const tokens = [];
-  let line = 1;
-  let lineStart = 0;
+function forEachToken(text, visit) {
   IDENTIFIER_RE.lastIndex = 0;
   let match;
-  const newlineIdx = [];
-  for (let i = 0; i < text.length; i++) if (text.charCodeAt(i) === 10) newlineIdx.push(i);
   while (match = IDENTIFIER_RE.exec(text)) {
-    const index = match.index;
-    while (line - 1 < newlineIdx.length && newlineIdx[line - 1] < index) {
-      lineStart = newlineIdx[line - 1] + 1;
-      line++;
-    }
-    tokens.push({ text: match[0], index, line, column: index - lineStart + 1 });
+    visit({ text: match[0], index: match.index });
     if (match.index === IDENTIFIER_RE.lastIndex) IDENTIFIER_RE.lastIndex++;
   }
-  return tokens;
+}
+function lineLookup(text) {
+  let newlines;
+  return (index) => {
+    if (!newlines) {
+      newlines = [];
+      for (let i = 0; i < text.length; i++) if (text.charCodeAt(i) === 10) newlines.push(i);
+    }
+    let lo = 0;
+    let hi = newlines.length;
+    while (lo < hi) {
+      const mid = lo + hi >>> 1;
+      if (newlines[mid] < index) lo = mid + 1;
+      else hi = mid;
+    }
+    return { line: lo + 1, column: index - (lo === 0 ? 0 : newlines[lo - 1] + 1) + 1 };
+  };
 }
 function isAscii(s) {
   return ASCII_RE.test(s);
 }
 function scanConfusables(text) {
   const findings = [];
-  const tokens = tokenize(text);
+  const lineOf = lineLookup(text);
+  const span = (token) => {
+    const { line, column } = lineOf(token.index);
+    return {
+      start: { line, column, offset: token.index },
+      end: { line, column: column + token.text.length, offset: token.index + token.text.length }
+    };
+  };
   const bySkeleton = /* @__PURE__ */ new Map();
-  for (const token of tokens) {
-    if (token.text.length < 2) continue;
+  forEachToken(text, (token) => {
+    if (token.text.length < 2 || isAscii(token.text)) return;
     const skeleton = skeletonOf(token.text);
     const scripts = scriptsOfToken(token.text);
     if (scripts.size > 1 && !isCohesiveScriptSet(scripts)) {
       findings.push({
         rule: "confusable",
         severity: "warning",
-        start: { line: token.line, column: token.column, offset: token.index },
-        end: { line: token.line, column: token.column + token.text.length, offset: token.index + token.text.length },
+        ...span(token),
         codePoints: [...token.text].map((c) => c.codePointAt(0)),
         names: [...token.text].map((c) => unicodeName(c.codePointAt(0))),
         message: `Identifier "${token.text}" mixes scripts (${[...scripts].join(", ")}) in one word -- a common homoglyph-attack shape. Skeleton: "${skeleton}".`,
@@ -6670,8 +6707,22 @@ function scanConfusables(text) {
     }
     if (!bySkeleton.has(skeleton)) bySkeleton.set(skeleton, []);
     bySkeleton.get(skeleton).push(token);
-  }
-  for (const [skeleton, group] of bySkeleton) {
+  });
+  if (bySkeleton.size === 0) return findings;
+  const matchedSkeleton = /* @__PURE__ */ new Map();
+  forEachToken(text, (token) => {
+    if (token.text.length < 2 || !isAscii(token.text)) return;
+    let skeleton = matchedSkeleton.get(token.text);
+    if (skeleton === void 0) {
+      const reduced = skeletonOf(token.text);
+      skeleton = bySkeleton.has(reduced) ? reduced : null;
+      matchedSkeleton.set(token.text, skeleton);
+    }
+    if (skeleton !== null) bySkeleton.get(skeleton).push(token);
+  });
+  const groups = [...bySkeleton].map(([skeleton, group]) => ({ skeleton, group: group.sort((a, b) => a.index - b.index) }));
+  groups.sort((a, b) => a.group[0].index - b.group[0].index);
+  for (const { skeleton, group } of groups) {
     const distinctSpellings = new Set(group.map((t) => t.text));
     if (distinctSpellings.size < 2) continue;
     if (![...distinctSpellings].some((s) => !isAscii(s))) continue;
@@ -6680,8 +6731,7 @@ function scanConfusables(text) {
       findings.push({
         rule: "confusable",
         severity: "error",
-        start: { line: token.line, column: token.column, offset: token.index },
-        end: { line: token.line, column: token.column + token.text.length, offset: token.index + token.text.length },
+        ...span(token),
         codePoints: [...token.text].map((c) => c.codePointAt(0)),
         names: [...token.text].map((c) => unicodeName(c.codePointAt(0))),
         message: `"${token.text}" is visually confusable with ${others} other spelling(s) used elsewhere in this file (they share the skeleton "${skeleton}") -- this is how lookalike identifier/variable attacks work.`,
@@ -6887,20 +6937,23 @@ function isOwnedElsewhere(cp) {
   return EXPLICIT_FORMATTING.has(cp) || BIDI_MARKS.has(cp) || cp >= TAG_BASE && cp <= TAG_CANCEL || isVariationSelector(cp) || cp >= 6155 && cp <= 6157 || // Mongolian free variation selectors: legitimate script marks
   cp >= 6068 && cp <= 6069;
 }
-function scanInvisible(codePoints) {
+var DEFAULT_IGNORABLE_RE = new RegExp(rangesToClass(defaultIgnorableRanges), "gu");
+function scanInvisible(text, positionAt) {
   const findings = [];
-  for (let idx = 0; idx < codePoints.length; idx++) {
-    const cp = codePoints[idx];
-    if (!cp) continue;
-    if (!isDefaultIgnorable(cp.codePoint) || isOwnedElsewhere(cp.codePoint)) continue;
-    if (cp.codePoint === BOM && cp.index === 0) continue;
-    if (cp.codePoint === ZWJ2 || cp.codePoint === ZWNJ2) {
-      const prev = codePoints[idx - 1];
-      const next = codePoints[idx + 1];
-      if (cp.codePoint === ZWJ2 && isEmojiJoinContext(prev, next)) continue;
+  DEFAULT_IGNORABLE_RE.lastIndex = 0;
+  for (let match = DEFAULT_IGNORABLE_RE.exec(text); match !== null; match = DEFAULT_IGNORABLE_RE.exec(text)) {
+    const index = match.index;
+    const codePoint = text.codePointAt(index);
+    if (isOwnedElsewhere(codePoint)) continue;
+    if (codePoint === BOM && index === 0) continue;
+    if (codePoint === ZWJ2 || codePoint === ZWNJ2) {
+      const prev = codePointBefore(text, index);
+      const next = text.codePointAt(index + 1);
+      if (codePoint === ZWJ2 && isEmojiJoinContext(prev, next)) continue;
       if (isJoiningScriptContext(prev, next)) continue;
-      if (prev !== void 0 && VIRAMAS.has(prev.codePoint)) continue;
+      if (prev !== void 0 && VIRAMAS.has(prev)) continue;
     }
+    const cp = describeCodePoint(text, index, positionAt);
     findings.push({
       rule: "invisible",
       severity: "warning",
@@ -6916,33 +6969,16 @@ function scanInvisible(codePoints) {
   return findings;
 }
 function isEmojiJoinContext(prev, next) {
-  const isEmojiLike = (c) => c !== void 0 && (isEmoji(c.codePoint) || isRegionalIndicator(c.codePoint) || c.codePoint === 65039);
+  const isEmojiLike = (c) => c !== void 0 && (isEmoji(c) || isRegionalIndicator(c) || c === 65039);
   return isEmojiLike(prev) && isEmojiLike(next);
 }
 function isJoiningScriptContext(prev, next) {
-  const inJoiningScript = (c) => c !== void 0 && scriptsOf(c.codePoint).some((s) => JOINING_SCRIPTS.has(s));
+  const inJoiningScript = (c) => c !== void 0 && scriptsOf(c).some((s) => JOINING_SCRIPTS.has(s));
   return inJoiningScript(prev) && inJoiningScript(next);
 }
 
-// src/core/rules/position.ts
-function indexToPosition(text, index) {
-  let line = 1;
-  let lastNewline = -1;
-  for (let i = 0; i < index; i++) {
-    const c = text.charCodeAt(i);
-    if (c === 10) {
-      line++;
-      lastNewline = i;
-    } else if (c === 13 && text.charCodeAt(i + 1) !== 10) {
-      line++;
-      lastNewline = i;
-    }
-  }
-  return { line, column: index - lastNewline, offset: index };
-}
-
 // src/core/rules/tags.ts
-function scanTags(text) {
+function scanTags(text, positionAt) {
   const findings = [];
   for (const run of decodeTags(text)) {
     if (run.isValidEmojiTagSequence) continue;
@@ -6950,8 +6986,8 @@ function scanTags(text) {
     findings.push({
       rule: "tag-smuggling",
       severity: "error",
-      start: indexToPosition(text, run.start),
-      end: indexToPosition(text, run.end),
+      start: positionAt(run.start),
+      end: positionAt(run.end),
       codePoints: run.codePoints,
       names: run.codePoints.map(unicodeName),
       message: run.hasEmojiBase ? `Unicode tag characters after an emoji base do not form a valid emoji tag sequence (only flag sequences like U+1F3F4 + letters + U+E007F are legitimate). Decoded payload: ${JSON.stringify(printable)}.` : `Unicode tag characters (U+E0000-U+E007F) with no legitimate emoji base -- these are invisible outside the code point inspector and decode to hidden ASCII: ${JSON.stringify(printable)}.`,
@@ -6964,7 +7000,7 @@ function scanTags(text) {
 }
 
 // src/core/rules/variationSelectors.ts
-function scanVariationSelectors(text) {
+function scanVariationSelectors(text, positionAt) {
   const findings = [];
   for (const run of decodeVariationSelectors(text)) {
     if (run.isOrdinaryPresentationSelector) continue;
@@ -6973,8 +7009,8 @@ function scanVariationSelectors(text) {
     findings.push({
       rule: isSmuggling ? "variation-selector-smuggling" : "variation-selector-stray",
       severity: isSmuggling ? "error" : "warning",
-      start: indexToPosition(text, run.start),
-      end: indexToPosition(text, run.end),
+      start: positionAt(run.start),
+      end: positionAt(run.end),
       codePoints,
       names: codePoints.map(unicodeName),
       message: isSmuggling ? `${run.bytes.length} variation selectors decode as hidden UTF-8 text via the byte-per-selector smuggling scheme (VS1-16 -> 0-15, VS17-256 -> 16-255): ${JSON.stringify(run.decodedText)}.` : run.baseCodePoint === void 0 ? "Variation selector with no preceding base character to apply a glyph variant to." : `Variation selector on U+${run.baseCodePoint.toString(16).toUpperCase()} (${unicodeName(run.baseCodePoint)}), which has no registered variation sequence for it.`,
@@ -6996,7 +7032,7 @@ var UNUSUAL_WHITESPACE = /* @__PURE__ */ new Set([160, 8192, 8193, 8194, 8195, 8
 var ESCAPE = 27;
 var BRAILLE_BLANK = 10240;
 function isBraillePattern(cp) {
-  return cp !== void 0 && cp.codePoint > BRAILLE_BLANK && cp.codePoint <= 10495;
+  return cp !== void 0 && cp > BRAILLE_BLANK && cp <= 10495;
 }
 function isC0Control(cp) {
   return cp <= 31 && cp !== 9 && cp !== 10 && cp !== 13;
@@ -7009,18 +7045,24 @@ var NARROW_NBSP = 8239;
 var FRENCH_SPACED_AFTER = /* @__PURE__ */ new Set([59, 58, 33, 63, 187]);
 var GUILLEMET_OPEN = 171;
 function isFrenchTypography(prev, cp, next) {
-  if (cp.codePoint !== NBSP && cp.codePoint !== NARROW_NBSP) return false;
-  return next !== void 0 && FRENCH_SPACED_AFTER.has(next.codePoint) || prev?.codePoint === GUILLEMET_OPEN;
+  if (cp !== NBSP && cp !== NARROW_NBSP) return false;
+  return next !== void 0 && FRENCH_SPACED_AFTER.has(next) || prev === GUILLEMET_OPEN;
 }
-function scanWhitespaceAndControl(codePoints) {
+var CANDIDATE_RE = /[\x00-\x08\x0b\x0c\x0e-\x1f\x80-\x9f\u00a0\u2000-\u200a\u2028\u2029\u202f\u205f\u2800\u3000]/g;
+function scanWhitespaceAndControl(text, positionAt) {
   const findings = [];
-  for (let idx = 0; idx < codePoints.length; idx++) {
-    const cp = codePoints[idx];
+  CANDIDATE_RE.lastIndex = 0;
+  for (let match = CANDIDATE_RE.exec(text); match !== null; match = CANDIDATE_RE.exec(text)) {
+    const index = match.index;
+    const codePoint = text.charCodeAt(index);
+    const prev = () => codePointBefore(text, index);
+    const next = () => text.codePointAt(index + 1);
+    if (UNUSUAL_WHITESPACE.has(codePoint) && isFrenchTypography(prev(), codePoint, next())) continue;
+    if (codePoint === BRAILLE_BLANK && (isBraillePattern(prev()) || isBraillePattern(next()))) continue;
+    const cp = describeCodePoint(text, index, positionAt);
     if (UNUSUAL_WHITESPACE.has(cp.codePoint)) {
-      if (isFrenchTypography(codePoints[idx - 1], cp, codePoints[idx + 1])) continue;
       findings.push(finding(cp, "unusual-whitespace", "warning", `${unicodeName(cp.codePoint)} looks like a normal space or line break but is a distinct code point -- it can split tokens, defeat string/keyword matching, or hide in a diff.`, "Replace with a regular space (U+0020) or ASCII newline."));
     } else if (cp.codePoint === BRAILLE_BLANK) {
-      if (isBraillePattern(codePoints[idx - 1]) || isBraillePattern(codePoints[idx + 1])) continue;
       findings.push(finding(cp, "unusual-whitespace", "warning", "BRAILLE PATTERN BLANK (U+2800) renders as an empty space but is not whitespace: trim() and word splitting leave it in, so it can pass for a blank name or a gap between words.", "Replace with a regular space (U+0020); it belongs only between braille patterns."));
     } else if (isC0Control(cp.codePoint) || isC1Control(cp.codePoint)) {
       const isEscape = cp.codePoint === ESCAPE;
@@ -7057,12 +7099,19 @@ function scanText(text, options = {}) {
   if (!HAS_NON_ASCII_OR_CONTROL_RE.test(text)) {
     return { findings: [], codePointCount: text.length };
   }
-  const codePoints = iterateCodePoints(text);
-  const findings = [...scanBidi(codePoints, text), ...scanTags(text), ...scanVariationSelectors(text), ...scanInvisible(codePoints), ...scanConfusables(text), ...scanWhitespaceAndControl(codePoints)];
+  const positionAt = positionIndex(text);
+  const findings = [
+    ...scanBidi(text, positionAt),
+    ...scanTags(text, positionAt),
+    ...scanVariationSelectors(text, positionAt),
+    ...scanInvisible(text, positionAt),
+    ...scanConfusables(text),
+    ...scanWhitespaceAndControl(text, positionAt)
+  ];
   const allow = new Set(options.allowCodePoints ?? []);
   const filtered = findings.filter((f) => !f.codePoints.every((cp) => allow.has(cp))).map((f) => applySeverityOverride(f, options)).filter((f) => f !== null).map((f) => options.file ? { ...f, file: options.file } : f);
   filtered.sort((a, b) => a.start.offset - b.start.offset || a.rule.localeCompare(b.rule));
-  return { findings: filtered, codePointCount: codePoints.length };
+  return { findings: filtered, codePointCount: countCodePoints(text) };
 }
 function applySeverityOverride(finding2, options) {
   const override = options.severityOverrides?.[finding2.rule];
@@ -7092,12 +7141,14 @@ function sanitize(text, policy = {}) {
       }
     }
     if (spans.length === 0) return { text: current, fixed, remaining };
-    const merged = mergeSpans(spans);
-    let out = current;
-    for (let i = merged.length - 1; i >= 0; i--) {
-      const [start, end] = merged[i];
-      out = out.slice(0, start) + out.slice(end);
+    const kept = [];
+    let cursor = 0;
+    for (const [start, end] of mergeSpans(spans)) {
+      kept.push(current.slice(cursor, start));
+      cursor = end;
     }
+    kept.push(current.slice(cursor));
+    const out = kept.join("");
     if (out.length === current.length) return { text: current, fixed, remaining };
     current = out;
   }
@@ -7488,7 +7539,7 @@ function msToStr(ms) {
 }
 
 // src/cli/version.ts
-var VERSION = "0.1.2";
+var VERSION = "0.1.3";
 
 // src/cli/formatters/sarif.ts
 var SARIF_LEVEL = { error: "error", warning: "warning", info: "note" };

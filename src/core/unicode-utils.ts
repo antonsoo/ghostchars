@@ -3,6 +3,7 @@ import { emojiRanges } from '../generated/emoji.js';
 import { scriptExtensionRanges } from '../generated/script-extensions.js';
 import { scriptNames, scriptRanges } from '../generated/scripts.js';
 
+/** One code point of a text that a rule has something to say about. */
 export interface CodePointInfo {
   codePoint: number;
   /** Index of the first UTF-16 code unit of this code point. */
@@ -14,40 +15,34 @@ export interface CodePointInfo {
 }
 
 /**
- * Walks a string one Unicode scalar value at a time, tracking 1-based
- * line/column (in UTF-16 code units, matching how editors report position).
- * Recognizes \n, \r\n and \r as line breaks.
- *
- * Returns a plain array rather than being a generator: every rule that
- * consumes this needs random access (previous/next lookahead for the
- * invisible-character rule, a full pass per rule otherwise), so nothing
- * benefits from lazy iteration, and a plain loop avoids generator/iterator
- * overhead that matters at multi-megabyte-file scale.
+ * The code point that ends just before UTF-16 index `index`, or undefined at
+ * the start of the text. A low surrogate preceded by a high one is read as
+ * the pair, the same way `codePointAt` reads it going forwards.
  */
-export function iterateCodePoints(text: string): CodePointInfo[] {
-  const out: CodePointInfo[] = [];
-  let line = 1;
-  let column = 1;
-  let i = 0;
-  while (i < text.length) {
-    const codePoint = text.codePointAt(i)!;
-    const width = codePoint > 0xffff ? 2 : 1;
-    out.push({ codePoint, index: i, width, line, column });
-    if (codePoint === 0x0a) {
-      line++;
-      column = 1;
-    } else if (codePoint === 0x0d) {
-      // Treat \r and \r\n as a single line break; don't double-count \n.
-      if (text[i + width] !== '\n') {
-        line++;
-        column = 1;
-      }
-    } else {
-      column += width;
-    }
-    i += width;
+export function codePointBefore(text: string, index: number): number | undefined {
+  if (index <= 0) return undefined;
+  const last = text.charCodeAt(index - 1);
+  if (last >= 0xdc00 && last <= 0xdfff && index >= 2) {
+    const first = text.charCodeAt(index - 2);
+    if (first >= 0xd800 && first <= 0xdbff) return (first - 0xd800) * 0x400 + (last - 0xdc00) + 0x10000;
   }
-  return out;
+  return last;
+}
+
+/** How many code points `text` holds: its UTF-16 length, less one for each surrogate pair. */
+export function countCodePoints(text: string): number {
+  let pairs = 0;
+  SURROGATE_PAIR_RE.lastIndex = 0;
+  while (SURROGATE_PAIR_RE.exec(text) !== null) pairs++;
+  return text.length - pairs;
+}
+
+const SURROGATE_PAIR_RE = /[\uD800-\uDBFF][\uDC00-\uDFFF]/g;
+
+/** A character class matching exactly the code points in `ranges`, for a `u`-flag regular expression. */
+export function rangesToClass(ranges: ReadonlyArray<readonly [number, number, ...unknown[]]>): string {
+  const hex = (cp: number) => `\\u{${cp.toString(16)}}`;
+  return `[${ranges.map(([lo, hi]) => (lo === hi ? hex(lo) : `${hex(lo)}-${hex(hi)}`)).join('')}]`;
 }
 
 function rangeSearch(ranges: ReadonlyArray<readonly [number, number, ...unknown[]]>, cp: number): number {

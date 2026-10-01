@@ -1,6 +1,7 @@
 import { unicodeName } from '../names.js';
 import type { Finding } from '../types.js';
-import type { CodePointInfo } from '../unicode-utils.js';
+import { codePointBefore, type CodePointInfo } from '../unicode-utils.js';
+import { describeCodePoint, type PositionLookup } from './position.js';
 
 // Unusual whitespace: visually indistinguishable (or nearly so) from a
 // normal space/newline but tokenizes differently, which has been used to
@@ -19,8 +20,8 @@ const ESCAPE = 0x001b;
 // patterns it is the ordinary word space of braille text.
 const BRAILLE_BLANK = 0x2800;
 
-function isBraillePattern(cp: CodePointInfo | undefined): boolean {
-  return cp !== undefined && cp.codePoint > BRAILLE_BLANK && cp.codePoint <= 0x28ff;
+function isBraillePattern(cp: number | undefined): boolean {
+  return cp !== undefined && cp > BRAILLE_BLANK && cp <= 0x28ff;
 }
 
 function isC0Control(cp: number): boolean {
@@ -37,20 +38,31 @@ const NARROW_NBSP = 0x202f;
 const FRENCH_SPACED_AFTER = new Set([0x003b, 0x003a, 0x0021, 0x003f, 0x00bb]);
 const GUILLEMET_OPEN = 0x00ab;
 
-function isFrenchTypography(prev: CodePointInfo | undefined, cp: CodePointInfo, next: CodePointInfo | undefined): boolean {
-  if (cp.codePoint !== NBSP && cp.codePoint !== NARROW_NBSP) return false;
-  return (next !== undefined && FRENCH_SPACED_AFTER.has(next.codePoint)) || prev?.codePoint === GUILLEMET_OPEN;
+function isFrenchTypography(prev: number | undefined, cp: number, next: number | undefined): boolean {
+  if (cp !== NBSP && cp !== NARROW_NBSP) return false;
+  return (next !== undefined && FRENCH_SPACED_AFTER.has(next)) || prev === GUILLEMET_OPEN;
 }
 
-export function scanWhitespaceAndControl(codePoints: CodePointInfo[]): Finding[] {
+// Everything this rule can flag: the C0 controls other than tab, LF and CR, the C1 controls
+// (U+0085 among them), the unusual spaces above and the braille blank. All in the BMP.
+// eslint-disable-next-line no-control-regex -- intentional: control characters are what this rule looks for.
+const CANDIDATE_RE = /[\x00-\x08\x0b\x0c\x0e-\x1f\x80-\x9f\u00a0\u2000-\u200a\u2028\u2029\u202f\u205f\u2800\u3000]/g;
+
+export function scanWhitespaceAndControl(text: string, positionAt: PositionLookup): Finding[] {
   const findings: Finding[] = [];
-  for (let idx = 0; idx < codePoints.length; idx++) {
-    const cp = codePoints[idx]!;
+  CANDIDATE_RE.lastIndex = 0;
+  for (let match = CANDIDATE_RE.exec(text); match !== null; match = CANDIDATE_RE.exec(text)) {
+    const index = match.index;
+    const codePoint = text.charCodeAt(index);
+    const prev = (): number | undefined => codePointBefore(text, index);
+    const next = (): number | undefined => text.codePointAt(index + 1);
+    if (UNUSUAL_WHITESPACE.has(codePoint) && isFrenchTypography(prev(), codePoint, next())) continue;
+    if (codePoint === BRAILLE_BLANK && (isBraillePattern(prev()) || isBraillePattern(next()))) continue;
+
+    const cp = describeCodePoint(text, index, positionAt);
     if (UNUSUAL_WHITESPACE.has(cp.codePoint)) {
-      if (isFrenchTypography(codePoints[idx - 1], cp, codePoints[idx + 1])) continue;
       findings.push(finding(cp, 'unusual-whitespace', 'warning', `${unicodeName(cp.codePoint)} looks like a normal space or line break but is a distinct code point -- it can split tokens, defeat string/keyword matching, or hide in a diff.`, 'Replace with a regular space (U+0020) or ASCII newline.'));
     } else if (cp.codePoint === BRAILLE_BLANK) {
-      if (isBraillePattern(codePoints[idx - 1]) || isBraillePattern(codePoints[idx + 1])) continue;
       findings.push(finding(cp, 'unusual-whitespace', 'warning', 'BRAILLE PATTERN BLANK (U+2800) renders as an empty space but is not whitespace: trim() and word splitting leave it in, so it can pass for a blank name or a gap between words.', 'Replace with a regular space (U+0020); it belongs only between braille patterns.'));
     } else if (isC0Control(cp.codePoint) || isC1Control(cp.codePoint)) {
       const isEscape = cp.codePoint === ESCAPE;

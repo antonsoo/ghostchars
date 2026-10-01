@@ -1,9 +1,9 @@
 import { decodeTags } from '../decodeTags.js';
 import { unicodeName } from '../names.js';
 import type { Finding } from '../types.js';
-import { indexToPosition } from './position.js';
+import type { PositionLookup } from './position.js';
 
-export function scanTags(text: string): Finding[] {
+export function scanTags(text: string, positionAt: PositionLookup): Finding[] {
   const findings: Finding[] = [];
   for (const run of decodeTags(text)) {
     if (run.isValidEmojiTagSequence) continue;
@@ -11,8 +11,8 @@ export function scanTags(text: string): Finding[] {
     findings.push({
       rule: 'tag-smuggling',
       severity: 'error',
-      start: indexToPosition(text, run.start),
-      end: indexToPosition(text, run.end),
+      start: positionAt(run.start),
+      end: positionAt(run.end),
       codePoints: run.codePoints,
       names: run.codePoints.map(unicodeName),
       message: run.hasEmojiBase

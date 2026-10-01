@@ -1,6 +1,6 @@
 {
   "name": "@antonsoloviev/ghostchars",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Catch invisible and deceptive Unicode (bidi control smuggling, zero-width characters, tag/variation-selector payload smuggling, homoglyph confusables) in code, docs, and LLM prompts.",
   "keywords": [
     "unicode",

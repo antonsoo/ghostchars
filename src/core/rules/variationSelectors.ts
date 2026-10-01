@@ -1,9 +1,9 @@
 import { decodeVariationSelectors } from '../decodeVariationSelectors.js';
 import { unicodeName } from '../names.js';
 import type { Finding } from '../types.js';
-import { indexToPosition } from './position.js';
+import type { PositionLookup } from './position.js';
 
-export function scanVariationSelectors(text: string): Finding[] {
+export function scanVariationSelectors(text: string, positionAt: PositionLookup): Finding[] {
   const findings: Finding[] = [];
   for (const run of decodeVariationSelectors(text)) {
     if (run.isOrdinaryPresentationSelector) continue;
@@ -14,8 +14,8 @@ export function scanVariationSelectors(text: string): Finding[] {
     findings.push({
       rule: isSmuggling ? 'variation-selector-smuggling' : 'variation-selector-stray',
       severity: isSmuggling ? 'error' : 'warning',
-      start: indexToPosition(text, run.start),
-      end: indexToPosition(text, run.end),
+      start: positionAt(run.start),
+      end: positionAt(run.end),
       codePoints,
       names: codePoints.map(unicodeName),
       message: isSmuggling

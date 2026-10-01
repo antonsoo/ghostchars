@@ -33,12 +33,16 @@ export function sanitize(text: string, policy: SanitizePolicy = {}): SanitizeRes
     }
     if (spans.length === 0) return { text: current, fixed, remaining };
 
-    const merged = mergeSpans(spans);
-    let out = current;
-    for (let i = merged.length - 1; i >= 0; i--) {
-      const [start, end] = merged[i]!;
-      out = out.slice(0, start) + out.slice(end);
+    // Keep what lies between the spans, in one pass: cutting them out of the string one at a
+    // time copies the rest of the text for every span.
+    const kept: string[] = [];
+    let cursor = 0;
+    for (const [start, end] of mergeSpans(spans)) {
+      kept.push(current.slice(cursor, start));
+      cursor = end;
     }
+    kept.push(current.slice(cursor));
+    const out = kept.join('');
     if (out.length === current.length) return { text: current, fixed, remaining };
     current = out;
   }

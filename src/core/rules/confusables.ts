@@ -86,31 +86,35 @@ function isCohesiveScriptSet(scripts: Set<string>): boolean {
 interface Token {
   text: string;
   index: number;
-  line: number;
-  column: number;
 }
 
-function tokenize(text: string): Token[] {
-  const tokens: Token[] = [];
-  let line = 1;
-  let lineStart = 0;
+/** Calls `visit` with each identifier-shaped run in `text`, in order. */
+function forEachToken(text: string, visit: (token: Token) => void): void {
   IDENTIFIER_RE.lastIndex = 0;
   let match: RegExpExecArray | null;
-  // Track line/column by scanning newlines up to each match (identifiers are
-  // typically sparse relative to full text, so this stays cheap in practice).
-  const newlineIdx: number[] = [];
-  for (let i = 0; i < text.length; i++) if (text.charCodeAt(i) === 0x0a) newlineIdx.push(i);
-
   while ((match = IDENTIFIER_RE.exec(text))) {
-    const index = match.index;
-    while (line - 1 < newlineIdx.length && newlineIdx[line - 1]! < index) {
-      lineStart = newlineIdx[line - 1]! + 1;
-      line++;
-    }
-    tokens.push({ text: match[0], index, line, column: index - lineStart + 1 });
+    visit({ text: match[0], index: match.index });
     if (match.index === IDENTIFIER_RE.lastIndex) IDENTIFIER_RE.lastIndex++;
   }
-  return tokens;
+}
+
+/** 1-based line and column of a UTF-16 offset, counting "\n" as the line break. Found on first use. */
+function lineLookup(text: string): (index: number) => { line: number; column: number } {
+  let newlines: number[] | undefined;
+  return (index) => {
+    if (!newlines) {
+      newlines = [];
+      for (let i = 0; i < text.length; i++) if (text.charCodeAt(i) === 0x0a) newlines.push(i);
+    }
+    let lo = 0;
+    let hi = newlines.length;
+    while (lo < hi) {
+      const mid = (lo + hi) >>> 1;
+      if (newlines[mid]! < index) lo = mid + 1;
+      else hi = mid;
+    }
+    return { line: lo + 1, column: index - (lo === 0 ? 0 : newlines[lo - 1]! + 1) + 1 };
+  };
 }
 
 // A pure-ASCII lookalike (rn/m, O/0, l/1/I) is a font-rendering problem, not
@@ -129,19 +133,29 @@ function isAscii(s: string): boolean {
 
 export function scanConfusables(text: string): Finding[] {
   const findings: Finding[] = [];
-  const tokens = tokenize(text);
-  const bySkeleton = new Map<string, Token[]>();
+  const lineOf = lineLookup(text);
+  const span = (token: Token): Pick<Finding, 'start' | 'end'> => {
+    const { line, column } = lineOf(token.index);
+    return {
+      start: { line, column, offset: token.index },
+      end: { line, column: column + token.text.length, offset: token.index + token.text.length },
+    };
+  };
 
-  for (const token of tokens) {
-    if (token.text.length < 2) continue; // single characters can't "mix" scripts meaningfully
+  // First the identifiers that contain a non-ASCII character. Only they can mix scripts, and a
+  // collision is reported only when one of its spellings is among them (see the note above), so
+  // their skeletons are the only ones worth keeping. A file with none is done after this pass,
+  // without a skeleton computed or a token kept for any of its ordinary identifiers.
+  const bySkeleton = new Map<string, Token[]>();
+  forEachToken(text, (token) => {
+    if (token.text.length < 2 || isAscii(token.text)) return; // single characters can't "mix" scripts meaningfully
     const skeleton = skeletonOf(token.text);
     const scripts = scriptsOfToken(token.text);
     if (scripts.size > 1 && !isCohesiveScriptSet(scripts)) {
       findings.push({
         rule: 'confusable',
         severity: 'warning',
-        start: { line: token.line, column: token.column, offset: token.index },
-        end: { line: token.line, column: token.column + token.text.length, offset: token.index + token.text.length },
+        ...span(token),
         codePoints: [...token.text].map((c) => c.codePointAt(0)!),
         names: [...token.text].map((c) => unicodeName(c.codePointAt(0)!)),
         message: `Identifier "${token.text}" mixes scripts (${[...scripts].join(', ')}) in one word -- a common homoglyph-attack shape. Skeleton: "${skeleton}".`,
@@ -153,9 +167,28 @@ export function scanConfusables(text: string): Finding[] {
 
     if (!bySkeleton.has(skeleton)) bySkeleton.set(skeleton, []);
     bySkeleton.get(skeleton)!.push(token);
-  }
+  });
+  if (bySkeleton.size === 0) return findings;
 
-  for (const [skeleton, group] of bySkeleton) {
+  // Then the ASCII identifiers that share one of those skeletons. Each distinct spelling is
+  // reduced once; the ones that match nothing are remembered as such and not kept.
+  const matchedSkeleton = new Map<string, string | null>();
+  forEachToken(text, (token) => {
+    if (token.text.length < 2 || !isAscii(token.text)) return;
+    let skeleton = matchedSkeleton.get(token.text);
+    if (skeleton === undefined) {
+      const reduced = skeletonOf(token.text);
+      skeleton = bySkeleton.has(reduced) ? reduced : null;
+      matchedSkeleton.set(token.text, skeleton);
+    }
+    if (skeleton !== null) bySkeleton.get(skeleton)!.push(token);
+  });
+
+  // Report groups in the order their first spelling appears in the text, each in text order.
+  const groups = [...bySkeleton].map(([skeleton, group]) => ({ skeleton, group: group.sort((a, b) => a.index - b.index) }));
+  groups.sort((a, b) => a.group[0]!.index - b.group[0]!.index);
+
+  for (const { skeleton, group } of groups) {
     const distinctSpellings = new Set(group.map((t) => t.text));
     if (distinctSpellings.size < 2) continue;
     if (![...distinctSpellings].some((s) => !isAscii(s))) continue; // ASCII-vs-ASCII: out of scope, see note above
@@ -165,8 +198,7 @@ export function scanConfusables(text: string): Finding[] {
       findings.push({
         rule: 'confusable',
         severity: 'error',
-        start: { line: token.line, column: token.column, offset: token.index },
-        end: { line: token.line, column: token.column + token.text.length, offset: token.index + token.text.length },
+        ...span(token),
         codePoints: [...token.text].map((c) => c.codePointAt(0)!),
         names: [...token.text].map((c) => unicodeName(c.codePointAt(0)!)),
         message: `"${token.text}" is visually confusable with ${others} other spelling(s) used elsewhere in this file (they share the skeleton "${skeleton}") -- this is how lookalike identifier/variable attacks work.`,

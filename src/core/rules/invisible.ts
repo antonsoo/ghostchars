@@ -1,7 +1,8 @@
 import { unicodeName } from '../names.js';
 import type { Finding } from '../types.js';
-import { isDefaultIgnorable, isEmoji, isRegionalIndicator, scriptsOf } from '../unicode-utils.js';
-import type { CodePointInfo } from '../unicode-utils.js';
+import { defaultIgnorableRanges } from '../../generated/default-ignorable.js';
+import { codePointBefore, isEmoji, isRegionalIndicator, rangesToClass, scriptsOf } from '../unicode-utils.js';
+import { describeCodePoint, type PositionLookup } from './position.js';
 import { BIDI_MARKS, EXPLICIT_FORMATTING } from './bidi.js';
 import { TAG_BASE, TAG_CANCEL } from '../decodeTags.js';
 import { isVariationSelector } from '../decodeVariationSelectors.js';
@@ -74,24 +75,30 @@ function isOwnedElsewhere(cp: number): boolean {
   );
 }
 
-export function scanInvisible(codePoints: CodePointInfo[]): Finding[] {
+// Default_Ignorable_Code_Point, as one expression: the scan visits these characters and
+// nothing else, instead of holding every code point of the text in memory to find them.
+const DEFAULT_IGNORABLE_RE = new RegExp(rangesToClass(defaultIgnorableRanges), 'gu');
+
+export function scanInvisible(text: string, positionAt: PositionLookup): Finding[] {
   const findings: Finding[] = [];
 
-  for (let idx = 0; idx < codePoints.length; idx++) {
-    const cp = codePoints[idx];
-    if (!cp) continue;
-    if (!isDefaultIgnorable(cp.codePoint) || isOwnedElsewhere(cp.codePoint)) continue;
+  DEFAULT_IGNORABLE_RE.lastIndex = 0;
+  for (let match = DEFAULT_IGNORABLE_RE.exec(text); match !== null; match = DEFAULT_IGNORABLE_RE.exec(text)) {
+    const index = match.index;
+    const codePoint = text.codePointAt(index)!;
+    if (isOwnedElsewhere(codePoint)) continue;
 
-    if (cp.codePoint === BOM && cp.index === 0) continue; // BOM at file start is a legitimate encoding signature
+    if (codePoint === BOM && index === 0) continue; // BOM at file start is a legitimate encoding signature
 
-    if (cp.codePoint === ZWJ || cp.codePoint === ZWNJ) {
-      const prev = codePoints[idx - 1];
-      const next = codePoints[idx + 1];
-      if (cp.codePoint === ZWJ && isEmojiJoinContext(prev, next)) continue;
+    if (codePoint === ZWJ || codePoint === ZWNJ) {
+      const prev = codePointBefore(text, index);
+      const next = text.codePointAt(index + 1);
+      if (codePoint === ZWJ && isEmojiJoinContext(prev, next)) continue;
       if (isJoiningScriptContext(prev, next)) continue;
-      if (prev !== undefined && VIRAMAS.has(prev.codePoint)) continue;
+      if (prev !== undefined && VIRAMAS.has(prev)) continue;
     }
 
+    const cp = describeCodePoint(text, index, positionAt);
     findings.push({
       rule: 'invisible',
       severity: 'warning',
@@ -108,12 +115,12 @@ export function scanInvisible(codePoints: CodePointInfo[]): Finding[] {
   return findings;
 }
 
-function isEmojiJoinContext(prev: CodePointInfo | undefined, next: CodePointInfo | undefined): boolean {
-  const isEmojiLike = (c: CodePointInfo | undefined) => c !== undefined && (isEmoji(c.codePoint) || isRegionalIndicator(c.codePoint) || c.codePoint === 0xfe0f);
+function isEmojiJoinContext(prev: number | undefined, next: number | undefined): boolean {
+  const isEmojiLike = (c: number | undefined) => c !== undefined && (isEmoji(c) || isRegionalIndicator(c) || c === 0xfe0f);
   return isEmojiLike(prev) && isEmojiLike(next);
 }
 
-function isJoiningScriptContext(prev: CodePointInfo | undefined, next: CodePointInfo | undefined): boolean {
-  const inJoiningScript = (c: CodePointInfo | undefined) => c !== undefined && scriptsOf(c.codePoint).some((s) => JOINING_SCRIPTS.has(s));
+function isJoiningScriptContext(prev: number | undefined, next: number | undefined): boolean {
+  const inJoiningScript = (c: number | undefined) => c !== undefined && scriptsOf(c).some((s) => JOINING_SCRIPTS.has(s));
   return inJoiningScript(prev) && inJoiningScript(next);
 }

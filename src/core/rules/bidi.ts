@@ -1,6 +1,7 @@
 import { unicodeName } from '../names.js';
 import type { Finding } from '../types.js';
 import type { CodePointInfo } from '../unicode-utils.js';
+import { describeCodePoint, type PositionLookup } from './position.js';
 
 // Trojan Source (Boucher & Anderson, "Trojan Source: Invisible Vulnerabilities",
 // USENIX Security 2023 / arXiv:2111.00169, first disclosed as CVE-2021-42574)
@@ -16,6 +17,8 @@ const EMBED_OR_OVERRIDE = new Set([0x202a, 0x202b, 0x202d, 0x202e]); // LRE RLE 
 const ISOLATE_INITIATOR = new Set([0x2066, 0x2067, 0x2068]); // LRI RLI FSI
 const PDF = 0x202c;
 const PDI = 0x2069;
+// Every code point in EXPLICIT_FORMATTING and BIDI_MARKS.
+const BIDI_RE = /[\u061c\u200e\u200f\u202a-\u202e\u2066-\u2069]/g;
 
 interface StackEntry {
   codePoint: number;
@@ -36,9 +39,12 @@ interface StackEntry {
  * to make that line lie about its own content -- which is the property this
  * tool cares about.
  */
-export function scanBidi(codePoints: CodePointInfo[], text: string): Finding[] {
+export function scanBidi(text: string, positionAt: PositionLookup): Finding[] {
   const findings: Finding[] = [];
   let stack: StackEntry[] = [];
+  // Only the bidi characters are visited. Whether a line ended since the last one shows in
+  // its line number, so the rest of the text needn't be walked to find the breaks.
+  BIDI_RE.lastIndex = 0;
 
   const flushUnterminated = () => {
     for (const entry of stack) {
@@ -47,7 +53,10 @@ export function scanBidi(codePoints: CodePointInfo[], text: string): Finding[] {
     stack = [];
   };
 
-  for (const cp of codePoints) {
+  for (let match = BIDI_RE.exec(text); match !== null; match = BIDI_RE.exec(text)) {
+    const cp = describeCodePoint(text, match.index, positionAt);
+    if (stack.length > 0 && stack[0]!.info.line !== cp.line) flushUnterminated();
+
     if (EXPLICIT_FORMATTING.has(cp.codePoint)) {
       findings.push(
         makeFinding(
@@ -81,8 +90,6 @@ export function scanBidi(codePoints: CodePointInfo[], text: string): Finding[] {
       } else {
         stack.length = stack.length - 1 - idx;
       }
-    } else if (cp.codePoint === 0x0a || cp.codePoint === 0x0d) {
-      flushUnterminated();
     }
   }
   flushUnterminated();

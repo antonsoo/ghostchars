@@ -184,19 +184,21 @@ Every rule in this tool is triggered by either a code point ≥ U+0080 or a C0/D
 
 Measured on this machine (14 vCPU / 48 GB RAM, WSL2 Linux; numbers vary with concurrent load on this box, run `npm run bench` for a live measurement):
 
-- **Pure-ASCII fast path**: `scanText()` on 30 MiB of pure-ASCII, code-shaped synthetic text: **21ms, ~1.4 GiB/s**, 0 findings.
-- **Mixed content** (the fast path can't apply -- every rule actually runs): `scanText()` on 30 MiB of synthetic text with non-ASCII/bidi/confusable content scattered through it (labelled synthetic; not sampled from a real project): **~7s, ~4 MiB/s**, 1,321 findings. The confusables rule dominates this cost (per-token skeleton/script lookups over every identifier-shaped run once the file isn't 100% clean).
-- **Real-world**: `scanText()` over this repo's own `node_modules/` (3,353 files, 34.1 MiB, walked directly -- `ghostchars` itself would never scan a gitignored `node_modules/` in normal use, but it's a convenient stand-in for "a big, messy, real tree"): **2.3s, ~15 MiB/s**, 1,599 findings:
+- **Pure-ASCII fast path**: `scanText()` on 50 MiB of pure-ASCII, code-shaped synthetic text: **35ms, ~1.4 GiB/s**, 0 findings.
+- **Mixed content** (the fast path can't apply -- every rule actually runs): `scanText()` on 50 MiB of synthetic text with non-ASCII/bidi/confusable content scattered through it (labelled synthetic; not sampled from a real project): **~3s, ~17 MiB/s**, 2,191 findings. The confusables rule dominates this cost: once a file has an identifier with a non-ASCII character in it, every other identifier is reduced to its skeleton to look for a collision.
+- **Real-world**: `scanText()` over this repo's own `node_modules/` (3,353 files, 34.1 MiB, walked directly -- `ghostchars` itself would never scan a gitignored `node_modules/` in normal use, but it's a convenient stand-in for "a big, messy, real tree"): **~0.8s, ~45 MiB/s**, 759 findings:
 
   | count | rule |
   |---:|---|
-  | 1,002 | `unusual-whitespace` |
   | 577 | `confusable` |
+  | 162 | `unusual-whitespace` |
   | 9 | `invisible` |
   | 8 | `control-character` |
   | 3 | `variation-selector-stray` |
 
-  Spot-checked 20+ of each category by hand. The `unusual-whitespace` majority is real, correct NBSP detections inside TypeScript's own French/German/Polish/Portuguese localization JSON (the trade-off described above, not a bug). The remainder were genuine, if usually benign, anomalies: a duplicated variation selector and a stray one in two READMEs/package.json descriptions, two ZWJ characters sitting either side of a minus sign in a numeric exponent in TypeScript's own `.d.ts` ("10" + U+200D + U+2212 + U+200D + "16", almost certainly a copy-paste artifact from another document), literal BEL/ESC bytes in `js-yaml`'s own escape-sequence tables, and C1 control bytes in two CLI libraries' own keypress-handling code -- all true positives, none of them attacks. Before the confusables fix above, this same scan reported 9,441 findings, the great majority of it Han+Hiragana+Katakana "mixed script" noise across TypeScript's `ja`/`ko`/`zh` localization files.
+  Nearly all the `confusable` findings sit in three files: Vite's bundled `node.js` chunk (360) and TypeScript's Korean and Turkish message catalogs (156 and 51). The `unusual-whitespace` findings are NBSPs (159 of 162), most of them in TypeScript's Portuguese, Polish, Russian, French, German and Spanish catalogs -- real detections of a real character, and the trade-off described above rather than a bug (a NBSP in the places French typography puts one is not flagged, which is why this count is no longer in the thousands). The rest are genuine, if benign, oddities: zero-width spaces and joiners in TypeScript's Korean catalog and two `.d.ts` files, literal control bytes in `js-yaml`'s escape-sequence tables and in the prompt code bundled with Rolldown and Vitest, a doubled variation selector in `ts-api-utils`' README and manifest and a stray one in `ajv`'s README -- true positives, none of them attacks.
+
+Memory grows with what is found, not with the size of the text: each rule looks for its own characters and builds a record only for those. The whole benchmark, its three 50 MiB strings included, peaks at about 670 MB. (Until 0.1.3 every code point of a non-ASCII file was held as an object, well over a hundred bytes per character, and this benchmark ran out of heap at its own default size.)
 
 ## Comparison
 
@@ -211,7 +213,7 @@ ghostchars overlaps both at the bidi layer and adds tag/variation-selector decod
 npm test
 ```
 
-67 tests across every rule (positive and negative cases -- legitimate emoji ZWJ sequences, RGI flag tag sequences, Persian ZWNJ, CJK variation sequences, real Japanese/Korean CJK-script text, and plain-ASCII/single-script/ASCII-vs-ASCII-only identifiers all must **not** fire), plus `sanitize()`/`reveal()`, the ASCII fast path, CLI/config/file-discovery coverage, and a fuzz test of `sanitize()` on hostile strings (it never throws, its output scans clean, and it never deletes a visible character).
+69 tests across every rule (positive and negative cases -- legitimate emoji ZWJ sequences, RGI flag tag sequences, Persian ZWNJ, CJK variation sequences, real Japanese/Korean CJK-script text, and plain-ASCII/single-script/ASCII-vs-ASCII-only identifiers all must **not** fire), plus `sanitize()`/`reveal()`, the ASCII fast path, CLI/config/file-discovery coverage, and a fuzz test of `sanitize()` on hostile strings (it never throws, its output scans clean, and it never deletes a visible character), with a check that 30,000 findings in one text are scanned and removed in well under a second.
 
 ## Contributing
 

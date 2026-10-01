@@ -5,7 +5,8 @@ import { scanTags } from './rules/tags.js';
 import { scanVariationSelectors } from './rules/variationSelectors.js';
 import { scanWhitespaceAndControl } from './rules/whitespaceControl.js';
 import type { Finding, ScanOptions, ScanResult, Severity } from './types.js';
-import { iterateCodePoints } from './unicode-utils.js';
+import { positionIndex } from './rules/position.js';
+import { countCodePoints } from './unicode-utils.js';
 
 // Every rule ghostchars implements is triggered by either a code point
 // >= 0x80, or a C0/DEL control character other than tab/LF/CR. If neither
@@ -23,9 +24,18 @@ export function scanText(text: string, options: ScanOptions = {}): ScanResult {
     return { findings: [], codePointCount: text.length };
   }
 
-  const codePoints = iterateCodePoints(text);
-
-  const findings = [...scanBidi(codePoints, text), ...scanTags(text), ...scanVariationSelectors(text), ...scanInvisible(codePoints), ...scanConfusables(text), ...scanWhitespaceAndControl(codePoints)];
+  // Each rule looks for its own characters and reports only those: memory grows with the
+  // findings, not with the text. (Holding every code point as an object, as this once did,
+  // took over a hundred bytes per character and ran out of heap on a 50 MiB file.)
+  const positionAt = positionIndex(text);
+  const findings = [
+    ...scanBidi(text, positionAt),
+    ...scanTags(text, positionAt),
+    ...scanVariationSelectors(text, positionAt),
+    ...scanInvisible(text, positionAt),
+    ...scanConfusables(text),
+    ...scanWhitespaceAndControl(text, positionAt),
+  ];
 
   const allow = new Set(options.allowCodePoints ?? []);
   const filtered = findings
@@ -36,7 +46,7 @@ export function scanText(text: string, options: ScanOptions = {}): ScanResult {
 
   filtered.sort((a, b) => a.start.offset - b.start.offset || a.rule.localeCompare(b.rule));
 
-  return { findings: filtered, codePointCount: codePoints.length };
+  return { findings: filtered, codePointCount: countCodePoints(text) };
 }
 
 function applySeverityOverride(finding: Finding, options: ScanOptions): Finding | null {

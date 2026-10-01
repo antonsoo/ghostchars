@@ -4,6 +4,7 @@
 // visible one. The strings are random draws from the code points the rules care about.
 import { describe, expect, it } from 'vitest';
 import { reveal, sanitize, scanText } from '../src/core/index.js';
+import { indexToPosition, positionIndex } from '../src/core/rules/position.js';
 
 function rng(seed: number): () => number {
   let s = seed >>> 0;
@@ -86,5 +87,47 @@ describe('sanitize keeps the visible text', () => {
     const result = sanitize(text);
     expect(result.text).toBe(':\u0644');
     expect(scanText(result.text).findings.filter((f) => f.fixable)).toEqual([]);
+  });
+});
+
+describe('positions and scale', () => {
+  // The straightforward definition: walk the text from its start.
+  function positionByWalking(text: string, index: number): { line: number; column: number; offset: number } {
+    let line = 1;
+    let lastNewline = -1;
+    for (let i = 0; i < index; i++) {
+      const c = text.charCodeAt(i);
+      if (c === 0x0a || (c === 0x0d && text.charCodeAt(i + 1) !== 0x0a)) {
+        line++;
+        lastNewline = i;
+      }
+    }
+    return { line, column: index - lastNewline, offset: index };
+  }
+
+  it('the indexed position lookup agrees with walking the text', () => {
+    const pieces = ['a', '\n', '\r', '\r\n', '\u{1f600}', ' ', '️'];
+    for (let seed = 0; seed < 500; seed++) {
+      const r = rng(seed);
+      let text = '';
+      for (let n = Math.floor(r() * 30); n > 0; n--) text += pieces[Math.floor(r() * pieces.length)];
+      const at = positionIndex(text);
+      for (let index = 0; index <= text.length; index++) {
+        expect(at(index), `${JSON.stringify(text)} @ ${index}`).toEqual(positionByWalking(text, index));
+        expect(indexToPosition(text, index)).toEqual(positionByWalking(text, index));
+      }
+    }
+  });
+
+  it('thirty thousand stray selectors are scanned and removed in well under a second each', () => {
+    // Each finding used to rescan the text from its start for its line and column, and each
+    // removal used to copy the rest of the text: 2.7 s to scan this and 3.6 s to sanitize it.
+    const text = 'a︀'.repeat(30_000);
+    let started = performance.now();
+    expect(scanText(text).findings).toHaveLength(30_000);
+    expect(performance.now() - started).toBeLessThan(1500);
+    started = performance.now();
+    expect(sanitize(text).text).toBe('a'.repeat(30_000));
+    expect(performance.now() - started).toBeLessThan(1500);
   });
 });
