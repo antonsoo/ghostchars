@@ -1,6 +1,6 @@
 {
-  "name": "ghostchars",
-  "version": "0.1.1",
+  "name": "@antonsoloviev/ghostchars",
+  "version": "0.1.2",
   "description": "Catch invisible and deceptive Unicode (bidi control smuggling, zero-width characters, tag/variation-selector payload smuggling, homoglyph confusables) in code, docs, and LLM prompts.",
   "keywords": [
     "unicode",
@@ -15,6 +15,9 @@
   ],
   "homepage": "https://antonsoo.github.io/ghostchars/",
   "bugs": "https://github.com/antonsoo/ghostchars/issues",
+  "publishConfig": {
+    "access": "public"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/antonsoo/ghostchars.git"
@@ -38,7 +41,6 @@
   },
   "files": [
     "dist",
-    "src",
     "LICENSE",
     "LICENSE-UNICODE"
   ],

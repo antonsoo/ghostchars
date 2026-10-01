@@ -2,6 +2,14 @@
 
 All notable changes to this project are documented in this file.
 
+## [0.1.2] - 2026-10-01
+
+### Added
+
+- Published to npm as `@antonsoloviev/ghostchars`: `npx @antonsoloviev/ghostchars .`
+  for the CLI, `npm install @antonsoloviev/ghostchars` for the library. (The
+  unscoped `ghostchars` name belongs to an unrelated project.)
+
 ## [0.1.1] - 2026-09-30
 
 ### Fixed
