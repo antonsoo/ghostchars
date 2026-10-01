@@ -11,34 +11,37 @@ const DEFAULT_FIXABLE_RULES: RuleId[] = ['bidi-control', 'bidi-mark', 'bidi-unba
  */
 export function sanitize(text: string, policy: SanitizePolicy = {}): SanitizeResult {
   const rules = new Set(policy.rules ?? DEFAULT_FIXABLE_RULES);
-  const mode = policy.mode ?? 'remove';
+  if ((policy.mode ?? 'remove') === 'keep') {
+    return { text, fixed: [], remaining: scanText(text).findings };
+  }
 
-  const { findings } = scanText(text);
+  // Removing one character can turn its neighbor into a finding (see SanitizeResult.fixed), so
+  // scan and remove until a scan comes back clean. Every pass that continues deletes at least
+  // one code unit, so this ends.
+  let current = text;
   const fixed: Finding[] = [];
-  const remaining: Finding[] = [];
-  const spans: Array<[number, number]> = [];
-
-  for (const finding of findings) {
-    if (finding.fixable && rules.has(finding.rule)) {
-      fixed.push(finding);
-      spans.push([finding.start.offset, finding.end.offset]);
-    } else {
-      remaining.push(finding);
+  for (;;) {
+    const remaining: Finding[] = [];
+    const spans: Array<[number, number]> = [];
+    for (const finding of scanText(current).findings) {
+      if (finding.fixable && rules.has(finding.rule)) {
+        fixed.push(finding);
+        spans.push(finding.removal ? [finding.removal.start, finding.removal.end] : [finding.start.offset, finding.end.offset]);
+      } else {
+        remaining.push(finding);
+      }
     }
-  }
+    if (spans.length === 0) return { text: current, fixed, remaining };
 
-  if (mode === 'keep' || spans.length === 0) {
-    return { text, fixed: mode === 'keep' ? [] : fixed, remaining: mode === 'keep' ? findings : remaining };
+    const merged = mergeSpans(spans);
+    let out = current;
+    for (let i = merged.length - 1; i >= 0; i--) {
+      const [start, end] = merged[i]!;
+      out = out.slice(0, start) + out.slice(end);
+    }
+    if (out.length === current.length) return { text: current, fixed, remaining };
+    current = out;
   }
-
-  const merged = mergeSpans(spans);
-  let out = text;
-  for (let i = merged.length - 1; i >= 0; i--) {
-    const [start, end] = merged[i]!;
-    out = out.slice(0, start) + out.slice(end);
-  }
-
-  return { text: out, fixed, remaining };
 }
 
 function mergeSpans(spans: Array<[number, number]>): Array<[number, number]> {

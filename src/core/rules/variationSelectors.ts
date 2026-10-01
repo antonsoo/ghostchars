@@ -26,6 +26,8 @@ export function scanVariationSelectors(text: string): Finding[] {
       suggestion: 'Remove these characters unless selecting a real registered variation sequence (see the Unicode IVD / StandardizedVariants.txt).',
       decoded: run.decodedText,
       fixable: true,
+      // The finding points at the base character, but only the selectors are removed.
+      ...(run.selectorsStart > run.start ? { removal: { start: run.selectorsStart, end: run.end } } : {}),
     });
   }
   return findings;

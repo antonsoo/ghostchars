@@ -10,6 +10,19 @@ All notable changes to this project are documented in this file.
   for the CLI, `npm install @antonsoloviev/ghostchars` for the library. (The
   unscoped `ghostchars` name belongs to an unrelated project.)
 
+### Fixed
+
+- `sanitize()` and `ghostchars --fix` deleted the visible character before a
+  stray or smuggling variation selector: `ok` + U+FE00 + `!` became `o!`, and an
+  emoji carrying a smuggled payload was removed along with it. A
+  variation-selector finding is located at its base character; the fix now
+  removes only the selectors (`Finding.removal`).
+- One `sanitize()` pass could leave characters a second scan would flag, because
+  removing a character changes what its neighbor is (a zero-width joiner that
+  was legitimate next to an Arabic letter mark isn't, once the mark is gone).
+  It now rescans until the text is clean, so the output always passes its own
+  scanner and sanitizing twice changes nothing.
+
 ## [0.1.1] - 2026-09-30
 
 ### Fixed

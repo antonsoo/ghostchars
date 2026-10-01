@@ -39,6 +39,8 @@ function selectorToByte(cp: number): number {
 export interface VariationSelectorRun {
   /** UTF-16 index of the base character (or of the first selector, if stray). */
   start: number;
+  /** UTF-16 index of the first selector: `start`, or just after the base character. */
+  selectorsStart: number;
   /** UTF-16 index one past the last selector in the run. */
   end: number;
   baseCodePoint: number | undefined;
@@ -76,6 +78,7 @@ export function decodeVariationSelectors(text: string): VariationSelectorRun[] {
       const isOrdinaryPresentationSelector = bytes.length === 1 && base !== undefined && ((isEmoji(base) && (bytes[0] === 14 || bytes[0] === 15)) || isCjkIdeograph(base));
       runs.push({
         start: runStart,
+        selectorsStart: i,
         end: j,
         baseCodePoint: base,
         bytes,

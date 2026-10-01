@@ -6800,6 +6800,7 @@ function decodeVariationSelectors(text) {
       const isOrdinaryPresentationSelector = bytes.length === 1 && base !== void 0 && (isEmoji(base) && (bytes[0] === 14 || bytes[0] === 15) || isCjkIdeograph(base));
       runs.push({
         start: runStart,
+        selectorsStart: i,
         end: j,
         baseCodePoint: base,
         bytes,
@@ -6979,7 +6980,9 @@ function scanVariationSelectors(text) {
       message: isSmuggling ? `${run.bytes.length} variation selectors decode as hidden UTF-8 text via the byte-per-selector smuggling scheme (VS1-16 -> 0-15, VS17-256 -> 16-255): ${JSON.stringify(run.decodedText)}.` : run.baseCodePoint === void 0 ? "Variation selector with no preceding base character to apply a glyph variant to." : `Variation selector on U+${run.baseCodePoint.toString(16).toUpperCase()} (${unicodeName(run.baseCodePoint)}), which has no registered variation sequence for it.`,
       suggestion: "Remove these characters unless selecting a real registered variation sequence (see the Unicode IVD / StandardizedVariants.txt).",
       decoded: run.decodedText,
-      fixable: true
+      fixable: true,
+      // The finding points at the base character, but only the selectors are removed.
+      ...run.selectorsStart > run.start ? { removal: { start: run.selectorsStart, end: run.end } } : {}
     });
   }
   return findings;
@@ -7072,29 +7075,32 @@ function applySeverityOverride(finding2, options) {
 var DEFAULT_FIXABLE_RULES = ["bidi-control", "bidi-mark", "bidi-unbalanced", "tag-smuggling", "variation-selector-smuggling", "variation-selector-stray", "invisible", "unusual-whitespace", "control-character"];
 function sanitize(text, policy = {}) {
   const rules = new Set(policy.rules ?? DEFAULT_FIXABLE_RULES);
-  const mode = policy.mode ?? "remove";
-  const { findings } = scanText(text);
+  if ((policy.mode ?? "remove") === "keep") {
+    return { text, fixed: [], remaining: scanText(text).findings };
+  }
+  let current = text;
   const fixed = [];
-  const remaining = [];
-  const spans = [];
-  for (const finding2 of findings) {
-    if (finding2.fixable && rules.has(finding2.rule)) {
-      fixed.push(finding2);
-      spans.push([finding2.start.offset, finding2.end.offset]);
-    } else {
-      remaining.push(finding2);
+  for (; ; ) {
+    const remaining = [];
+    const spans = [];
+    for (const finding2 of scanText(current).findings) {
+      if (finding2.fixable && rules.has(finding2.rule)) {
+        fixed.push(finding2);
+        spans.push(finding2.removal ? [finding2.removal.start, finding2.removal.end] : [finding2.start.offset, finding2.end.offset]);
+      } else {
+        remaining.push(finding2);
+      }
     }
+    if (spans.length === 0) return { text: current, fixed, remaining };
+    const merged = mergeSpans(spans);
+    let out = current;
+    for (let i = merged.length - 1; i >= 0; i--) {
+      const [start, end] = merged[i];
+      out = out.slice(0, start) + out.slice(end);
+    }
+    if (out.length === current.length) return { text: current, fixed, remaining };
+    current = out;
   }
-  if (mode === "keep" || spans.length === 0) {
-    return { text, fixed: mode === "keep" ? [] : fixed, remaining: mode === "keep" ? findings : remaining };
-  }
-  const merged = mergeSpans(spans);
-  let out = text;
-  for (let i = merged.length - 1; i >= 0; i--) {
-    const [start, end] = merged[i];
-    out = out.slice(0, start) + out.slice(end);
-  }
-  return { text: out, fixed, remaining };
 }
 function mergeSpans(spans) {
   const sorted = [...spans].sort((a, b) => a[0] - b[0]);

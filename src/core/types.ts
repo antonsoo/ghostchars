@@ -45,6 +45,12 @@ export interface Finding {
   skeleton?: string;
   /** True if `sanitize()` knows how to safely auto-fix this finding. */
   fixable: boolean;
+  /**
+   * The part of the span `sanitize()` deletes, as UTF-16 offsets, when that is less than the
+   * whole span: a variation-selector finding is located at its base character, which is visible
+   * text and stays. Absent means the whole span is removed.
+   */
+  removal?: { start: number; end: number };
 }
 
 export interface ScanOptions {
@@ -74,8 +80,14 @@ export interface SanitizePolicy {
 }
 
 export interface SanitizeResult {
+  /** The text with every fixable finding removed: scanning it again finds none of them. */
   text: string;
-  /** Findings that were fixed. */
+  /**
+   * Findings that were fixed. Removing a character can change what its neighbor is (a joiner
+   * that was legitimate next to a letter isn't, once that letter's bidi mark is gone), so the
+   * text is rescanned until it is clean; a finding from a later pass is positioned in the text
+   * as it stood after the earlier ones.
+   */
   fixed: Finding[];
   /** Findings that were left alone (not in policy, or not fixable). */
   remaining: Finding[];
