@@ -6,9 +6,9 @@ All notable changes to this project are documented in this file.
 
 ### Added
 
-- Published to npm as `@antonsoloviev/ghostchars`: `npx @antonsoloviev/ghostchars .`
-  for the CLI, `npm install @antonsoloviev/ghostchars` for the library. (The
-  unscoped `ghostchars` name belongs to an unrelated project.)
+- The package is named `@antonsoloviev/ghostchars`, ready for npm (the unscoped
+  `ghostchars` name belongs to an unrelated project). It isn't published yet;
+  until it is, install from GitHub as before.
 
 ### Fixed
 

@@ -20,13 +20,12 @@ Different tools catch pieces of this (an editor might warn about ambiguous chara
 ## Quickstart
 
 ```sh
-npx @antonsoloviev/ghostchars .
+npx --allow-git=root github:antonsoo/ghostchars .
 ```
 
-That runs the published package
-([`@antonsoloviev/ghostchars`](https://www.npmjs.com/package/@antonsoloviev/ghostchars)
-on npm; the command it installs is `ghostchars`). The unscoped `ghostchars`
-package on npm is a different, unrelated project.
+That installs straight from GitHub: the npm package, `@antonsoloviev/ghostchars`,
+isn't published yet (npm 12 needs `--allow-git=root` for a git-hosted package). The unscoped `ghostchars` package on npm is a
+different, unrelated project.
 
 Or install from source:
 
@@ -82,7 +81,7 @@ ghostchars . --fix                  # apply safe removals in place
 ### As an LLM input filter
 
 ```sh
-npm install @antonsoloviev/ghostchars
+npm install --allow-git=root github:antonsoo/ghostchars
 ```
 
 ```ts
