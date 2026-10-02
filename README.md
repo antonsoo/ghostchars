@@ -43,7 +43,7 @@ node dist/cli.js .
 - **CLI** (`ghostchars`): scans a path or a `git`-tracked repo, `pretty`/`json`/`sarif`/`github` output, `--fix`/`--dry-run`, `.ghostcharsrc.json` config, a `reveal` subcommand.
 - **GitHub Action** (`action.yml`): inline PR annotations or SARIF upload to code scanning.
 - **pre-commit hook** (`.pre-commit-hooks.yaml`).
-- **Web app**, "the UV lamp": paste text, watch hidden characters glow, entirely client-side. <https://antonsoo.github.io/ghostchars/>
+- **Web app**, "the UV lamp": paste text, watch hidden characters glow, entirely client-side (the page's Content-Security-Policy, `connect-src 'self'`, has the browser refuse to send the text anywhere). <https://antonsoo.github.io/ghostchars/>
 
 ## What it detects
 
