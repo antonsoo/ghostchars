@@ -152,7 +152,7 @@ function render() {
           counts.error ? `<span class="chip-stat err">${counts.error} error${counts.error === 1 ? '' : 's'}</span>` : '',
           counts.warning ? `<span class="chip-stat warn">${counts.warning} warning${counts.warning === 1 ? '' : 's'}</span>` : '',
           counts.info ? `<span class="chip-stat">${counts.info} info</span>` : '',
-          `<span class="chip-stat">${text.length.toLocaleString()} code units scanned</span>`,
+          `<span class="chip-stat">${text.length.toLocaleString("en-US")} code units scanned</span>`,
         ].join('');
 
   if (lampOn) {

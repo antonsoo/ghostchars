@@ -6,6 +6,8 @@ All notable changes to this project are documented in this file.
 
 ### Fixed
 
+- The web page's "code units scanned" count no longer follows the browser's
+  locale.
 - UTF-16 files were not scanned. A file saved as UTF-16 with a byte-order mark
   (a PowerShell script from the ISE, a `.reg` file, anything redirected with
   `>` in Windows PowerShell) is half zero bytes, so it was listed as "skipped
