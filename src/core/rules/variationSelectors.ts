@@ -22,8 +22,12 @@ export function scanVariationSelectors(text: string, positionAt: PositionLookup)
         ? `${run.bytes.length} variation selectors decode as hidden UTF-8 text via the byte-per-selector smuggling scheme (VS1-16 -> 0-15, VS17-256 -> 16-255): ${JSON.stringify(run.decodedText)}.`
         : run.baseCodePoint === undefined
           ? 'Variation selector with no preceding base character to apply a glyph variant to.'
+          : run.afterPresentationSelector
+            ? `${run.bytes.length} extra variation selector${run.bytes.length === 1 ? '' : 's'} after U+${run.baseCodePoint.toString(16).toUpperCase()} (${unicodeName(run.baseCodePoint)}) and the selector that already picks its presentation: ${run.bytes.length === 1 ? 'it does' : 'they do'} nothing and cannot be seen.`
           : `Variation selector on U+${run.baseCodePoint.toString(16).toUpperCase()} (${unicodeName(run.baseCodePoint)}), which has no registered variation sequence for it.`,
-      suggestion: 'Remove these characters unless selecting a real registered variation sequence (see the Unicode IVD / StandardizedVariants.txt).',
+      suggestion: run.afterPresentationSelector
+        ? 'Remove the extra selectors; the first one, which keeps the emoji presentation, stays.'
+        : 'Remove these characters unless selecting a real registered variation sequence (see the Unicode IVD / StandardizedVariants.txt).',
       decoded: run.decodedText,
       fixable: true,
       // The finding points at the base character, but only the selectors are removed.

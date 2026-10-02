@@ -49,6 +49,11 @@ export interface VariationSelectorRun {
   decodedText: string | undefined;
   /** True for an ordinary single presentation-selector use that should not be flagged. */
   isOrdinaryPresentationSelector: boolean;
+  /**
+   * True when the run follows an emoji whose first selector already picked its presentation:
+   * `selectorsStart` is then the first selector after that one, and only those are stray.
+   */
+  afterPresentationSelector?: boolean;
 }
 
 export function decodeVariationSelectors(text: string): VariationSelectorRun[] {
@@ -76,14 +81,20 @@ export function decodeVariationSelectors(text: string): VariationSelectorRun[] {
       // we don't vendor, so a single selector on a CJK base is treated as
       // an ordinary (if unverified) IVS rather than flagged.
       const isOrdinaryPresentationSelector = bytes.length === 1 && base !== undefined && ((isEmoji(base) && (bytes[0] === 14 || bytes[0] === 15)) || isCjkIdeograph(base));
+      const decodedText = tryDecodeUtf8(bytes);
+      // A heart followed by VS16 twice, as editors and copy-paste leave it: the first selector
+      // is the registered emoji presentation and stays; the rest are the stray ones. Not when
+      // the run decodes as text, which is a payload that happens to begin with that byte.
+      const keepsFirst = bytes.length > 1 && decodedText === undefined && base !== undefined && isEmoji(base) && (bytes[0] === 14 || bytes[0] === 15);
       runs.push({
         start: runStart,
-        selectorsStart: i,
+        selectorsStart: keepsFirst ? i + 1 : i,
         end: j,
         baseCodePoint: base,
-        bytes,
-        decodedText: tryDecodeUtf8(bytes),
+        bytes: keepsFirst ? bytes.slice(1) : bytes,
+        decodedText,
         isOrdinaryPresentationSelector,
+        ...(keepsFirst ? { afterPresentationSelector: true } : {}),
       });
       i = j;
       prevCp = undefined;

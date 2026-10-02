@@ -1,5 +1,6 @@
 #!/usr/bin/env node
-import { readFileSync, realpathSync, writeFileSync } from 'node:fs';
+import { existsSync, readFileSync, realpathSync, writeFileSync } from 'node:fs';
+import { resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { scanText } from '../core/index.js';
 import type { ScanOptions } from '../core/index.js';
@@ -93,6 +94,14 @@ export function main(argv: string[]): number {
     console.error(colors.red((err as Error).message));
     return 2;
   }
+  // A path named on the command line that isn't there is a mistake in the command (a typo in
+  // a CI step), not a file to skip: "no findings in 0 files" and exit 0 would pass the check
+  // without having scanned anything.
+  const missing = args.paths.filter((path) => !existsSync(resolve(cwd, path)));
+  if (missing.length > 0) {
+    console.error(colors.red(`ghostchars: no such file or directory: ${missing.join(', ')}`));
+    return 2;
+  }
   const start = performance.now();
   const { files, skipped } = discoverFiles(args.paths, cwd);
 
@@ -153,5 +162,7 @@ function invokedDirectly(): boolean {
 }
 
 if (invokedDirectly()) {
-  process.exit(main(process.argv.slice(2)));
+  // Not process.exit(): a report written to a pipe (a CI log, `| jq`) is still on its way out
+  // when main() returns, and exiting at once cut everything past the pipe's 64 KB buffer.
+  process.exitCode = main(process.argv.slice(2));
 }

@@ -2,6 +2,51 @@
 
 All notable changes to this project are documented in this file.
 
+## [0.1.4] - 2026-10-02
+
+Run on real multilingual text for the first time: sixty translated documents
+from two public repositories, in 45 languages. They produced 279 findings in
+23 files, nearly all on ordinary words; they produce 29 now, every one a real
+character.
+
+### Fixed
+
+- **A long report was cut off at 64 KB when piped.** The CLI called
+  `process.exit()` with its output still on the way: redirected to a file a
+  3,000-finding report was 2.26 MB, and through a pipe exactly 65,536 bytes,
+  in every format. A CI log, `--format sarif | ...` and `--format json | jq`
+  lost everything past that point, and the JSON was not valid. The exit code
+  is now set and the process ends when the output has drained.
+- **A path that does not exist passed the check.** `ghostchars scr` printed
+  "no findings in 0 file(s)" and exited 0. A path named on the command line
+  that is not there is now an error, exit 2.
+- **Latin inside Japanese, Chinese or Korean was a "homoglyph-attack shape".**
+  These languages have no spaces, so `JavaScript` followed by the katakana
+  for "algorithm" is one word, and every such word was a mixed-script
+  warning: 99 in one Japanese document. The rule now follows UTS #39's
+  restriction levels: Latin with Han, Hiragana and Katakana, with Han and
+  Bopomofo, or with Han and Hangul is ordinary, and so is Latin with one other
+  script in general use except Cyrillic and Greek (an Arabic or Hebrew prefix
+  on a Latin term).
+- **A Greek letter used as a symbol was a mixed-script warning**: `LaTeX2ε`,
+  `Δt`, `10μs`, `πr`. A word outside the allowed mixes is reported when it
+  holds an actual lookalike: a character that `confusables.txt` reduces to
+  ASCII letters (Cyrillic `а`, Greek omicron), or an ASCII letter planted in
+  a word of a script that has a double for it. The words of a `snake_case`
+  name or a URL slug are judged one by one.
+- **Ordinary Hebrew words were errors.** `confusables.txt` reduces vav and
+  final nun to the same letter, so two common words "shared a skeleton".
+  A collision between two words of one non-Latin script is no longer
+  reported; a cross-script one is, and it found a real one in the corpus (a
+  Russian word spelled with a Latin `c`).
+- **A doubled emoji selector was described wrongly, and `--fix` changed the
+  emoji.** A heart followed by VS16 twice was reported as a selector with "no
+  registered variation sequence", and fixing it removed both, turning the red
+  heart into its text form. The first selector is the registered emoji
+  presentation and stays; the finding names the extra one.
+- The ideographic space (U+3000) next to Chinese, Japanese or Korean text is
+  ordinary typography and is not reported.
+
 ## [0.1.3] - 2026-10-01
 
 ### Fixed

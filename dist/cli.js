@@ -1,7 +1,8 @@
 #!/usr/bin/env node
 
 // src/cli/index.ts
-import { readFileSync as readFileSync4, realpathSync, writeFileSync } from "node:fs";
+import { existsSync as existsSync2, readFileSync as readFileSync4, realpathSync, writeFileSync } from "node:fs";
+import { resolve as resolve2 } from "node:path";
 import { fileURLToPath } from "node:url";
 
 // src/core/names.ts
@@ -6633,21 +6634,121 @@ function skeletonOf(token) {
   }
   return out;
 }
-function scriptsOfToken(token) {
-  if (ASCII_RE.test(token)) return /* @__PURE__ */ new Set();
-  const scripts = /* @__PURE__ */ new Set();
+function scriptSetsOfToken(token) {
+  if (ASCII_RE.test(token)) return [];
+  const sets = [];
   for (const ch of token) {
-    const cp = ch.codePointAt(0);
-    for (const s of scriptsOf(cp)) {
-      if (!SCRIPT_NEUTRAL.has(s)) scripts.add(s);
+    const scripts = scriptsOf(ch.codePointAt(0)).filter((s) => !SCRIPT_NEUTRAL.has(s));
+    if (scripts.length > 0) sets.push(scripts);
+  }
+  return sets;
+}
+var EAST_ASIAN_SETS = [
+  /* @__PURE__ */ new Set(["Latin", "Han", "Hiragana", "Katakana"]),
+  /* @__PURE__ */ new Set(["Latin", "Han", "Bopomofo"]),
+  /* @__PURE__ */ new Set(["Latin", "Han", "Hangul"])
+];
+var RECOMMENDED_SCRIPTS = /* @__PURE__ */ new Set([
+  "Arabic",
+  "Armenian",
+  "Bengali",
+  "Bopomofo",
+  "Cyrillic",
+  "Devanagari",
+  "Ethiopic",
+  "Georgian",
+  "Greek",
+  "Gujarati",
+  "Gurmukhi",
+  "Hangul",
+  "Han",
+  "Hebrew",
+  "Hiragana",
+  "Kannada",
+  "Katakana",
+  "Khmer",
+  "Lao",
+  "Latin",
+  "Malayalam",
+  "Myanmar",
+  "Oriya",
+  "Sinhala",
+  "Tamil",
+  "Telugu",
+  "Thaana",
+  "Thai",
+  "Tibetan"
+]);
+var LATIN_LOOKALIKE_SCRIPTS = /* @__PURE__ */ new Set(["Cyrillic", "Greek"]);
+function allowedScriptMix(sets) {
+  if (sets.length === 0) return true;
+  const first = sets[0];
+  if (first.length === 1 && sets.every((scripts) => scripts.length === 1 && scripts[0] === first[0])) return true;
+  const covers = (allowed) => sets.every((scripts) => scripts.some((s) => allowed.has(s)));
+  const candidates = new Set(sets.flat());
+  for (const script of candidates) if (covers(/* @__PURE__ */ new Set([script]))) return true;
+  if (EAST_ASIAN_SETS.some(covers)) return true;
+  for (const script of candidates) {
+    if (script === "Latin" || !RECOMMENDED_SCRIPTS.has(script) || LATIN_LOOKALIKE_SCRIPTS.has(script)) continue;
+    if (covers(/* @__PURE__ */ new Set(["Latin", script]))) return true;
+  }
+  return false;
+}
+function isAsciiAlnum(cp) {
+  return cp >= 48 && cp <= 57 || cp >= 65 && cp <= 90 || cp >= 97 && cp <= 122;
+}
+function passesForAscii(cp) {
+  if (cp < 128) return false;
+  const mapped = getConfusableMap().get(cp);
+  return mapped !== void 0 && mapped.every(isAsciiAlnum);
+}
+var asciiImitators;
+function scriptsImitating(ascii) {
+  if (!asciiImitators) {
+    asciiImitators = /* @__PURE__ */ new Map();
+    for (const [source, target] of getConfusableMap()) {
+      if (source < 128 || target.length !== 1 || !isAsciiAlnum(target[0])) continue;
+      let scripts = asciiImitators.get(target[0]);
+      if (!scripts) asciiImitators.set(target[0], scripts = /* @__PURE__ */ new Set());
+      for (const script of scriptsOf(source)) if (!SCRIPT_NEUTRAL.has(script)) scripts.add(script);
     }
   }
-  return scripts;
+  return asciiImitators.get(ascii) ?? /* @__PURE__ */ new Set();
 }
-var COHESIVE_SCRIPT_GROUPS = [/* @__PURE__ */ new Set(["Han", "Hiragana", "Katakana"]), /* @__PURE__ */ new Set(["Han", "Bopomofo"]), /* @__PURE__ */ new Set(["Han", "Hangul"])];
-function isCohesiveScriptSet(scripts) {
-  if (scripts.size <= 1) return true;
-  return COHESIVE_SCRIPT_GROUPS.some((group) => [...scripts].every((s) => group.has(s)));
+function holdsLookalike(word, sets) {
+  let ascii = 0;
+  let other = 0;
+  for (const ch of word) {
+    const cp = ch.codePointAt(0);
+    if (passesForAscii(cp) && !scriptsOf(cp).includes("Latin")) return true;
+    if (cp < 128) ascii += isAsciiAlnum(cp) ? 1 : 0;
+    else other++;
+  }
+  if (ascii >= other) return false;
+  const perScript = /* @__PURE__ */ new Map();
+  for (const scripts of sets) for (const script of scripts) if (script !== "Latin") perScript.set(script, (perScript.get(script) ?? 0) + 1);
+  const main2 = [...perScript].filter(([, count]) => count * 2 >= other).map(([script]) => script);
+  for (const ch of word) {
+    const cp = ch.codePointAt(0);
+    if (cp >= 128 || !isAsciiAlnum(cp)) continue;
+    const imitators = scriptsImitating(cp);
+    if (main2.some((script) => imitators.has(script))) return true;
+  }
+  return false;
+}
+var CONNECTOR_RE = new RegExp("\\p{Pc}+", "u");
+function isSuspiciousMix(token) {
+  if (ASCII_RE.test(token)) return false;
+  const words = CONNECTOR_RE.test(token) ? token.split(CONNECTOR_RE) : [token];
+  for (const word of words) {
+    const sets = scriptSetsOfToken(word);
+    if (!allowedScriptMix(sets) && holdsLookalike(word, sets)) return true;
+  }
+  return false;
+}
+function scriptSignature(token) {
+  if (ASCII_RE.test(token)) return "Latin";
+  return [...new Set(scriptSetsOfToken(token).flat())].sort().join("+") || "Latin";
 }
 function forEachToken(text, visit) {
   IDENTIFIER_RE.lastIndex = 0;
@@ -6691,15 +6792,15 @@ function scanConfusables(text) {
   forEachToken(text, (token) => {
     if (token.text.length < 2 || isAscii(token.text)) return;
     const skeleton = skeletonOf(token.text);
-    const scripts = scriptsOfToken(token.text);
-    if (scripts.size > 1 && !isCohesiveScriptSet(scripts)) {
+    if (isSuspiciousMix(token.text)) {
+      const scripts = new Set(scriptSetsOfToken(token.text).flat());
       findings.push({
         rule: "confusable",
         severity: "warning",
         ...span(token),
         codePoints: [...token.text].map((c) => c.codePointAt(0)),
         names: [...token.text].map((c) => unicodeName(c.codePointAt(0))),
-        message: `Identifier "${token.text}" mixes scripts (${[...scripts].join(", ")}) in one word -- a common homoglyph-attack shape. Skeleton: "${skeleton}".`,
+        message: `"${token.text}" mixes scripts (${[...scripts].join(", ")}) in one word -- a common homoglyph-attack shape. Skeleton: "${skeleton}".`,
         suggestion: "Confirm every character is intentional (e.g. a Greek variable name is fine on its own, but Latin+Cyrillic in one identifier rarely is), or rename to a single script.",
         skeleton,
         fixable: false
@@ -6726,6 +6827,8 @@ function scanConfusables(text) {
     const distinctSpellings = new Set(group.map((t) => t.text));
     if (distinctSpellings.size < 2) continue;
     if (![...distinctSpellings].some((s) => !isAscii(s))) continue;
+    const signatures = new Set([...distinctSpellings].map(scriptSignature));
+    if (signatures.size === 1 && !signatures.has("Latin") && ![...signatures][0].includes("+")) continue;
     for (const token of group) {
       const others = distinctSpellings.size - (distinctSpellings.has(token.text) ? 1 : 0);
       findings.push({
@@ -6848,14 +6951,17 @@ function decodeVariationSelectors(text) {
         j += c > 65535 ? 2 : 1;
       }
       const isOrdinaryPresentationSelector = bytes.length === 1 && base !== void 0 && (isEmoji(base) && (bytes[0] === 14 || bytes[0] === 15) || isCjkIdeograph(base));
+      const decodedText = tryDecodeUtf8(bytes);
+      const keepsFirst = bytes.length > 1 && decodedText === void 0 && base !== void 0 && isEmoji(base) && (bytes[0] === 14 || bytes[0] === 15);
       runs.push({
         start: runStart,
-        selectorsStart: i,
+        selectorsStart: keepsFirst ? i + 1 : i,
         end: j,
         baseCodePoint: base,
-        bytes,
-        decodedText: tryDecodeUtf8(bytes),
-        isOrdinaryPresentationSelector
+        bytes: keepsFirst ? bytes.slice(1) : bytes,
+        decodedText,
+        isOrdinaryPresentationSelector,
+        ...keepsFirst ? { afterPresentationSelector: true } : {}
       });
       i = j;
       prevCp = void 0;
@@ -7013,8 +7119,8 @@ function scanVariationSelectors(text, positionAt) {
       end: positionAt(run.end),
       codePoints,
       names: codePoints.map(unicodeName),
-      message: isSmuggling ? `${run.bytes.length} variation selectors decode as hidden UTF-8 text via the byte-per-selector smuggling scheme (VS1-16 -> 0-15, VS17-256 -> 16-255): ${JSON.stringify(run.decodedText)}.` : run.baseCodePoint === void 0 ? "Variation selector with no preceding base character to apply a glyph variant to." : `Variation selector on U+${run.baseCodePoint.toString(16).toUpperCase()} (${unicodeName(run.baseCodePoint)}), which has no registered variation sequence for it.`,
-      suggestion: "Remove these characters unless selecting a real registered variation sequence (see the Unicode IVD / StandardizedVariants.txt).",
+      message: isSmuggling ? `${run.bytes.length} variation selectors decode as hidden UTF-8 text via the byte-per-selector smuggling scheme (VS1-16 -> 0-15, VS17-256 -> 16-255): ${JSON.stringify(run.decodedText)}.` : run.baseCodePoint === void 0 ? "Variation selector with no preceding base character to apply a glyph variant to." : run.afterPresentationSelector ? `${run.bytes.length} extra variation selector${run.bytes.length === 1 ? "" : "s"} after U+${run.baseCodePoint.toString(16).toUpperCase()} (${unicodeName(run.baseCodePoint)}) and the selector that already picks its presentation: ${run.bytes.length === 1 ? "it does" : "they do"} nothing and cannot be seen.` : `Variation selector on U+${run.baseCodePoint.toString(16).toUpperCase()} (${unicodeName(run.baseCodePoint)}), which has no registered variation sequence for it.`,
+      suggestion: run.afterPresentationSelector ? "Remove the extra selectors; the first one, which keeps the emoji presentation, stays." : "Remove these characters unless selecting a real registered variation sequence (see the Unicode IVD / StandardizedVariants.txt).",
       decoded: run.decodedText,
       fixable: true,
       // The finding points at the base character, but only the selectors are removed.
@@ -7048,6 +7154,30 @@ function isFrenchTypography(prev, cp, next) {
   if (cp !== NBSP && cp !== NARROW_NBSP) return false;
   return next !== void 0 && FRENCH_SPACED_AFTER.has(next) || prev === GUILLEMET_OPEN;
 }
+var IDEOGRAPHIC_SPACE = 12288;
+var CJK_RANGES = [
+  [11904, 12351],
+  // CJK radicals, symbols and punctuation (the ideographic space is here)
+  [12352, 12543],
+  // Hiragana, Katakana
+  [12544, 12687],
+  // Bopomofo, Hangul compatibility jamo
+  [12704, 12799],
+  // Bopomofo extended, CJK strokes, Katakana phonetic extensions
+  [13312, 19903],
+  [19968, 40959],
+  [44032, 55215],
+  // Hangul syllables
+  [63744, 64255],
+  [65072, 65103],
+  // CJK compatibility forms
+  [65280, 65519],
+  // halfwidth and fullwidth forms
+  [131072, 195103]
+];
+function isCjk(cp) {
+  return cp !== void 0 && CJK_RANGES.some(([lo, hi]) => cp >= lo && cp <= hi);
+}
 var CANDIDATE_RE = /[\x00-\x08\x0b\x0c\x0e-\x1f\x80-\x9f\u00a0\u2000-\u200a\u2028\u2029\u202f\u205f\u2800\u3000]/g;
 function scanWhitespaceAndControl(text, positionAt) {
   const findings = [];
@@ -7059,6 +7189,7 @@ function scanWhitespaceAndControl(text, positionAt) {
     const next = () => text.codePointAt(index + 1);
     if (UNUSUAL_WHITESPACE.has(codePoint) && isFrenchTypography(prev(), codePoint, next())) continue;
     if (codePoint === BRAILLE_BLANK && (isBraillePattern(prev()) || isBraillePattern(next()))) continue;
+    if (codePoint === IDEOGRAPHIC_SPACE && (isCjk(prev()) || isCjk(next()))) continue;
     const cp = describeCodePoint(text, index, positionAt);
     if (UNUSUAL_WHITESPACE.has(cp.codePoint)) {
       findings.push(finding(cp, "unusual-whitespace", "warning", `${unicodeName(cp.codePoint)} looks like a normal space or line break but is a distinct code point -- it can split tokens, defeat string/keyword matching, or hide in a diff.`, "Replace with a regular space (U+0020) or ASCII newline."));
@@ -7539,7 +7670,7 @@ function msToStr(ms) {
 }
 
 // src/cli/version.ts
-var VERSION = "0.1.3";
+var VERSION = "0.1.4";
 
 // src/cli/formatters/sarif.ts
 var SARIF_LEVEL = { error: "error", warning: "warning", info: "note" };
@@ -7726,6 +7857,11 @@ function main(argv) {
     console.error(colors.red(err.message));
     return 2;
   }
+  const missing = args.paths.filter((path) => !existsSync2(resolve2(cwd, path)));
+  if (missing.length > 0) {
+    console.error(colors.red(`ghostchars: no such file or directory: ${missing.join(", ")}`));
+    return 2;
+  }
   const start = performance.now();
   const { files, skipped } = discoverFiles(args.paths, cwd);
   const report = { files: [], skipped, durationMs: 0 };
@@ -7775,7 +7911,7 @@ function invokedDirectly() {
   }
 }
 if (invokedDirectly()) {
-  process.exit(main(process.argv.slice(2)));
+  process.exitCode = main(process.argv.slice(2));
 }
 export {
   main

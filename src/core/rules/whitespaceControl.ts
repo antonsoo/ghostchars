@@ -43,6 +43,29 @@ function isFrenchTypography(prev: number | undefined, cp: number, next: number |
   return (next !== undefined && FRENCH_SPACED_AFTER.has(next)) || prev === GUILLEMET_OPEN;
 }
 
+const IDEOGRAPHIC_SPACE = 0x3000;
+// Chinese, Japanese and Korean text is set with the ideographic space: it is the space of the
+// full-width grid (a paragraph indent, the gap between a title and its volume number), not a
+// stand-in for U+0020. It is ordinary next to a character of those scripts or their
+// punctuation, another ideographic space included.
+const CJK_RANGES: ReadonlyArray<readonly [number, number]> = [
+  [0x2e80, 0x303f], // CJK radicals, symbols and punctuation (the ideographic space is here)
+  [0x3040, 0x30ff], // Hiragana, Katakana
+  [0x3100, 0x318f], // Bopomofo, Hangul compatibility jamo
+  [0x31a0, 0x31ff], // Bopomofo extended, CJK strokes, Katakana phonetic extensions
+  [0x3400, 0x4dbf],
+  [0x4e00, 0x9fff],
+  [0xac00, 0xd7af], // Hangul syllables
+  [0xf900, 0xfaff],
+  [0xfe30, 0xfe4f], // CJK compatibility forms
+  [0xff00, 0xffef], // halfwidth and fullwidth forms
+  [0x20000, 0x2fa1f],
+];
+
+function isCjk(cp: number | undefined): boolean {
+  return cp !== undefined && CJK_RANGES.some(([lo, hi]) => cp >= lo && cp <= hi);
+}
+
 // Everything this rule can flag: the C0 controls other than tab, LF and CR, the C1 controls
 // (U+0085 among them), the unusual spaces above and the braille blank. All in the BMP.
 // eslint-disable-next-line no-control-regex -- intentional: control characters are what this rule looks for.
@@ -58,6 +81,7 @@ export function scanWhitespaceAndControl(text: string, positionAt: PositionLooku
     const next = (): number | undefined => text.codePointAt(index + 1);
     if (UNUSUAL_WHITESPACE.has(codePoint) && isFrenchTypography(prev(), codePoint, next())) continue;
     if (codePoint === BRAILLE_BLANK && (isBraillePattern(prev()) || isBraillePattern(next()))) continue;
+    if (codePoint === IDEOGRAPHIC_SPACE && (isCjk(prev()) || isCjk(next()))) continue;
 
     const cp = describeCodePoint(text, index, positionAt);
     if (UNUSUAL_WHITESPACE.has(cp.codePoint)) {

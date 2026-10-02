@@ -111,10 +111,11 @@ describe('main() end-to-end', () => {
     expect(code).toBe(2);
   });
 
-  it('handles an empty file and a missing path without crashing', () => {
+  it('scans an empty file, and refuses a path that is not there', () => {
     writeFileSync(join(dir, 'empty.js'), '');
-    const code = withSilencedConsole(() => main(['empty.js', 'does-not-exist.js']));
-    expect(code).toBe(0);
+    expect(withSilencedConsole(() => main(['empty.js']))).toBe(0);
+    // Exit 2, the usage-error code: a check that scanned nothing must not pass.
+    expect(withSilencedConsole(() => main(['empty.js', 'does-not-exist.js']))).toBe(2);
   });
 });
 
