@@ -1,5 +1,6 @@
 import { execFileSync } from 'node:child_process';
 import { readFileSync, readdirSync, statSync } from 'node:fs';
+import { decodeFile, fileEncoding } from './encoding.js';
 import { join, relative, resolve, sep } from 'node:path';
 
 export const MAX_FILE_BYTES = 5 * 1024 * 1024; // 5 MiB: past this, "scan a file" stops being interactive-CLI-fast.
@@ -76,6 +77,13 @@ function isLikelyBinary(absPath: string): boolean {
   try {
     const buf = readFileSync(absPath);
     const sample = buf.subarray(0, Math.min(buf.length, 8192));
+    if (fileEncoding(sample) !== 'utf-8') {
+      // UTF-16 text is half zero bytes; judge the characters, not the bytes. (An odd last
+      // byte of the sample is dropped so a character isn't cut in half.)
+      const text = decodeFile(sample.subarray(0, sample.length - (sample.length % 2))).text;
+      // eslint-disable-next-line no-control-regex
+      return /[\u0000-\u0008\u000e-\u001a\u001c-\u001f]/.test(text);
+    }
     if (sample.includes(0)) return true;
     // A high proportion of non-text bytes (outside common control chars) also indicates binary.
     let suspicious = 0;

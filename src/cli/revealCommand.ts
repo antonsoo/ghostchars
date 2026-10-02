@@ -1,6 +1,7 @@
 import { readFileSync } from 'node:fs';
 import { reveal, scanText } from '../core/index.js';
 import { colors } from './colors.js';
+import { decodeFile } from './encoding.js';
 
 export function revealCommand(target: string | undefined): number {
   if (!target) {
@@ -10,7 +11,7 @@ export function revealCommand(target: string | undefined): number {
 
   let text: string;
   try {
-    text = target === '-' ? readFileSync(0, 'utf8') : readFileSync(target, 'utf8');
+    text = target === '-' ? readFileSync(0, 'utf8') : decodeFile(readFileSync(target)).text;
   } catch (err) {
     console.error(colors.red(`Could not read ${target === '-' ? 'stdin' : target}: ${(err as Error).message}`));
     return 2;

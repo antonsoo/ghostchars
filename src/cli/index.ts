@@ -5,6 +5,7 @@ import { fileURLToPath } from 'node:url';
 import { scanText } from '../core/index.js';
 import type { ScanOptions } from '../core/index.js';
 import { loadConfig, scanOptionsForFile } from './config.js';
+import { decodeFile, encodeFile, type FileEncoding } from './encoding.js';
 import { formatGithub } from './formatters/github.js';
 import { formatJson } from './formatters/json.js';
 import { formatPretty } from './formatters/pretty.js';
@@ -110,8 +111,9 @@ export function main(argv: string[]): number {
 
   for (const file of files) {
     let source: string;
+    let encoding: FileEncoding;
     try {
-      source = readFileSync(file.absPath, 'utf8');
+      ({ text: source, encoding } = decodeFile(readFileSync(file.absPath)));
     } catch (err) {
       report.skipped.push({ path: file.path, reason: `read error: ${(err as Error).message}` });
       continue;
@@ -129,7 +131,7 @@ export function main(argv: string[]): number {
           const preview = formatDryRun(outcome, source);
           if (preview) console.log(preview + '\n');
         } else {
-          writeFileSync(file.absPath, outcome.newText, 'utf8');
+          writeFileSync(file.absPath, encodeFile(outcome.newText, encoding));
         }
       }
     }

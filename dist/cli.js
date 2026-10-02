@@ -7362,6 +7362,25 @@ import { join as join2 } from "node:path";
 // src/cli/walk.ts
 import { execFileSync } from "node:child_process";
 import { readFileSync, readdirSync, statSync } from "node:fs";
+
+// src/cli/encoding.ts
+function fileEncoding(bytes) {
+  if (bytes[0] === 255 && bytes[1] === 254) return "utf-16le";
+  if (bytes[0] === 254 && bytes[1] === 255) return "utf-16be";
+  return "utf-8";
+}
+function decodeFile(bytes) {
+  const encoding = fileEncoding(bytes);
+  if (encoding === "utf-8") return { text: bytes.toString("utf8"), encoding };
+  return { text: new TextDecoder(encoding).decode(bytes), encoding };
+}
+function encodeFile(text, encoding) {
+  if (encoding === "utf-8") return Buffer.from(text, "utf8");
+  const bytes = Buffer.from(String.fromCharCode(65279) + text, "utf16le");
+  return encoding === "utf-16be" ? bytes.swap16() : bytes;
+}
+
+// src/cli/walk.ts
 import { join, relative, resolve, sep } from "node:path";
 var MAX_FILE_BYTES = 5 * 1024 * 1024;
 function discoverFiles(inputPaths, cwd = process.cwd()) {
@@ -7415,6 +7434,10 @@ function isLikelyBinary(absPath) {
   try {
     const buf = readFileSync(absPath);
     const sample = buf.subarray(0, Math.min(buf.length, 8192));
+    if (fileEncoding(sample) !== "utf-8") {
+      const text = decodeFile(sample.subarray(0, sample.length - sample.length % 2)).text;
+      return /[\u0000-\u0008\u000e-\u001a\u001c-\u001f]/.test(text);
+    }
     if (sample.includes(0)) return true;
     let suspicious = 0;
     for (const byte of sample) {
@@ -7670,7 +7693,7 @@ function msToStr(ms) {
 }
 
 // src/cli/version.ts
-var VERSION = "0.1.4";
+var VERSION = "0.1.5";
 
 // src/cli/formatters/sarif.ts
 var SARIF_LEVEL = { error: "error", warning: "warning", info: "note" };
@@ -7768,7 +7791,7 @@ function revealCommand(target) {
   }
   let text;
   try {
-    text = target === "-" ? readFileSync3(0, "utf8") : readFileSync3(target, "utf8");
+    text = target === "-" ? readFileSync3(0, "utf8") : decodeFile(readFileSync3(target)).text;
   } catch (err) {
     console.error(colors.red(`Could not read ${target === "-" ? "stdin" : target}: ${err.message}`));
     return 2;
@@ -7868,8 +7891,9 @@ function main(argv) {
   let hadFixes = false;
   for (const file of files) {
     let source;
+    let encoding;
     try {
-      source = readFileSync4(file.absPath, "utf8");
+      ({ text: source, encoding } = decodeFile(readFileSync4(file.absPath)));
     } catch (err) {
       report.skipped.push({ path: file.path, reason: `read error: ${err.message}` });
       continue;
@@ -7885,7 +7909,7 @@ function main(argv) {
           const preview = formatDryRun(outcome, source);
           if (preview) console.log(preview + "\n");
         } else {
-          writeFileSync(file.absPath, outcome.newText, "utf8");
+          writeFileSync(file.absPath, encodeFile(outcome.newText, encoding));
         }
       }
     }

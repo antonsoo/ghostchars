@@ -2,6 +2,20 @@
 
 All notable changes to this project are documented in this file.
 
+## [0.1.5] - 2026-10-02
+
+### Fixed
+
+- UTF-16 files were not scanned. A file saved as UTF-16 with a byte-order mark
+  (a PowerShell script from the ISE, a `.reg` file, anything redirected with
+  `>` in Windows PowerShell) is half zero bytes, so it was listed as "skipped
+  (binary)" and the run exited 0: a bidi override in such a file passed the
+  check. The mark now decides the encoding and the text is scanned like any
+  other; a UTF-16 copy of `examples/trojan-source.c` gives the findings of the
+  original, at the same lines and columns. `--fix` writes the file back in the
+  encoding it came in, and `reveal` reads it too. Files that only start like
+  UTF-16 (control bytes after the mark, UTF-32) are still skipped as binary.
+
 ## [0.1.4] - 2026-10-02
 
 Run on real multilingual text for the first time: sixty translated documents
