@@ -2,6 +2,7 @@ import { reveal, sanitize, scanText } from '../../src/core/index.js';
 import type { Finding } from '../../src/core/index.js';
 import { gallery } from './gallery.js';
 import { renderRevealedHtml } from './renderRevealed.js';
+import './fonts/fonts.css';
 import './style.css';
 
 const DEFAULT_TEXT = gallery[0]!.text;
