@@ -218,7 +218,7 @@ ghostchars overlaps both at the bidi layer and adds tag/variation-selector decod
 npm test
 ```
 
-69 tests across every rule (positive and negative cases -- legitimate emoji ZWJ sequences, RGI flag tag sequences, Persian ZWNJ, CJK variation sequences, real Japanese/Korean CJK-script text, and plain-ASCII/single-script/ASCII-vs-ASCII-only identifiers all must **not** fire), plus `sanitize()`/`reveal()`, the ASCII fast path, CLI/config/file-discovery coverage, and a fuzz test of `sanitize()` on hostile strings (it never throws, its output scans clean, and it never deletes a visible character), with a check that 30,000 findings in one text are scanned and removed in well under a second.
+Tests cover every rule (positive and negative cases -- legitimate emoji ZWJ sequences, RGI flag tag sequences, Persian ZWNJ, CJK variation sequences, real Japanese/Korean CJK-script text, and plain-ASCII/single-script/ASCII-vs-ASCII-only identifiers all must **not** fire), plus `sanitize()`/`reveal()`, the ASCII fast path, CLI/config/file-discovery coverage, and a fuzz test of `sanitize()` on hostile strings (it never throws, its output scans clean, and it never deletes a visible character), with a check that 30,000 findings in one text are scanned and removed in well under a second.
 
 ## Contributing
 
