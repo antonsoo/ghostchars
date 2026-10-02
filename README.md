@@ -2,6 +2,7 @@
 
 **See the characters you can't.** Catch invisible and deceptive Unicode in code, docs, and LLM prompts.
 
+[![npm](https://img.shields.io/npm/v/@antonsoloviev/ghostchars)](https://www.npmjs.com/package/@antonsoloviev/ghostchars)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![Live demo](https://img.shields.io/badge/demo-the%20UV%20lamp-8f73ff)](https://antonsoo.github.io/ghostchars/)
 
@@ -20,12 +21,13 @@ Different tools catch pieces of this (an editor might warn about ambiguous chara
 ## Quickstart
 
 ```sh
-npx --allow-git=root github:antonsoo/ghostchars .
+npx @antonsoloviev/ghostchars .
 ```
 
-That installs straight from GitHub: the npm package, `@antonsoloviev/ghostchars`,
-isn't published yet (npm 12 needs `--allow-git=root` for a git-hosted package). The unscoped `ghostchars` package on npm is a
-different, unrelated project.
+That runs the published package
+([`@antonsoloviev/ghostchars`](https://www.npmjs.com/package/@antonsoloviev/ghostchars)
+on npm; the command it installs is `ghostchars`). The unscoped `ghostchars`
+package on npm is a different, unrelated project.
 
 Or install from source:
 
@@ -81,7 +83,7 @@ ghostchars . --fix                  # apply safe removals in place
 ### As an LLM input filter
 
 ```sh
-npm install --allow-git=root github:antonsoo/ghostchars
+npm install @antonsoloviev/ghostchars
 ```
 
 ```ts

@@ -4,6 +4,13 @@ All notable changes to this project are documented in this file.
 
 ## [0.1.5] - 2026-10-02
 
+### Added
+
+- Published to npm as `@antonsoloviev/ghostchars`: `npx @antonsoloviev/ghostchars .`
+  for the CLI, `npm install @antonsoloviev/ghostchars` for the library. The
+  README uses the registry package instead of the GitHub install, which npm 12
+  blocks by default.
+
 ### Fixed
 
 - The web page's "code units scanned" count no longer follows the browser's
@@ -115,9 +122,9 @@ character.
 
 ### Added
 
-- The package is named `@antonsoloviev/ghostchars`, ready for npm (the unscoped
-  `ghostchars` name belongs to an unrelated project). It isn't published yet;
-  until it is, install from GitHub as before.
+- The package is named `@antonsoloviev/ghostchars`, ready for npm (published
+  there from 0.1.5). The unscoped `ghostchars` name belongs to an unrelated
+  project.
 
 ### Fixed
 
