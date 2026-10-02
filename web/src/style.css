@@ -18,7 +18,7 @@
 
   --text: #e7e3f5;
   --text-dim: #a29cc4;
-  --text-faint: #6f6a92;
+  --text-faint: #8581a3;
 
   --uv: #8f73ff;
   --uv-strong: #b9a4ff;
@@ -605,4 +605,9 @@ footer a {
   .finding-row .sev {
     width: auto;
   }
+}
+
+/* The page's main landmark. It adds no box: its children lay out as children of the page. */
+.page-main {
+  display: contents;
 }

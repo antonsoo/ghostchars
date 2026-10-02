@@ -18,6 +18,8 @@ app.innerHTML = `
       </nav>
     </header>
 
+    <main class="page-main">
+
     <section class="hero">
       <h1>See the characters <span class="glow">you can't</span>.</h1>
       <p>Paste code, docs, or an LLM prompt. ghostchars finds bidi overrides, zero-width
@@ -83,6 +85,7 @@ app.innerHTML = `
       <p class="desc">Four real attack shapes. Click one to load it above.</p>
       <div class="gallery" id="gallery"></div>
     </section>
+    </main>
 
     <footer>
       <span>ghostchars -- MIT licensed -- <a href="https://github.com/antonsoo/ghostchars">github.com/antonsoo/ghostchars</a></span>
