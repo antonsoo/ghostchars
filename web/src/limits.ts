@@ -1,0 +1,3 @@
+export const MAX_INPUT_CODE_UNITS = 100_000;
+export const MAX_PREVIEW_CODE_UNITS = 10_000;
+export const MAX_DISPLAY_FINDINGS = 300;

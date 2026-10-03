@@ -121,11 +121,24 @@ See [`examples/workflows/ghostchars.yml`](examples/workflows/ghostchars.yml) and
 
 ## The web app: "the UV lamp"
 
-<https://antonsoo.github.io/ghostchars/> -- paste or type text and hidden characters glow as labelled chips; a panel decodes smuggled tag/variation-selector payloads; a side-by-side bidi view shows "what you see" (your real browser rendering the bytes, reordering included) against "what the compiler sees" (logical order, every control character made visible); confusable identifiers are underlined with their skeleton on hover; one click copies the sanitized text. Everything runs client-side: the text you inspect is never sent anywhere. (Google Fonts loads over the network for the typeface; nothing else does.)
+<https://antonsoo.github.io/ghostchars/> -- paste text to reveal hidden characters as labelled chips, including controls inside confusable identifiers. Decoded payloads show escaped controls so they cannot reorder or conceal their own diagnostics. The bidi comparison keeps the real browser rendering beside the annotated logical order; finding locations select the exact source range, including after astral characters.
+
+Review the sanitized text before copying it. Fixable characters are removed, while lookalike identifiers stay in the output and appear in a remaining-findings list. A successful scan or sanitize operation is **not a safety guarantee**. If clipboard access fails, the sanitized output is selected for manual copying.
+
+Scanning runs in a local worker. Editing, clearing, or cancelling discards the previous scan and its output; a failed worker can be retried. A settled worker is reused for ordinary offline edits. Restarting after cancellation or a worker failure may require connectivity to reload the scanner. Fonts, code, and workers load from this site, with no analytics or third-party requests. Inspected text is never uploaded.
+
+| Browser boundary | Behavior |
+|---|---|
+| Input | At most 100,000 UTF-16 code units; larger text is rejected before scanning. Use the CLI for larger files. |
+| Text previews | At most 10,000 code units and 300 findings, stopping before a finding or surrogate pair would be split. A long overlapping finding can leave the preview empty; the notice explains what was omitted. |
+| Finding lists | First 300 entries per list; first 20 remaining findings after sanitizing. Long diagnostic messages are visibly shortened. |
+| Counts and sanitized output | Always cover the complete accepted input. Display limits never truncate copied text. |
 
 ![The web app comparing "what you see" vs. the decoded logical order of a tag-smuggled prompt injection, with the hidden instruction revealed](docs/assets/web-tags.png)
 
-![The web app underlining two visually-identical "admin" identifiers -- one Latin, one with a Cyrillic а -- as confusable](docs/assets/web-revealed-confusable.png)
+![Reviewing sanitized output with an unresolved lookalike and a revealed hidden joiner](docs/assets/web-review-desktop.png)
+
+[Phone-width review screenshot](docs/assets/web-review-mobile.png)
 
 ## How it works
 
@@ -221,6 +234,16 @@ npm test
 ```
 
 Tests cover every rule (positive and negative cases -- legitimate emoji ZWJ sequences, RGI flag tag sequences, Persian ZWNJ, CJK variation sequences, real Japanese/Korean CJK-script text, and plain-ASCII/single-script/ASCII-vs-ASCII-only identifiers all must **not** fire), plus `sanitize()`/`reveal()`, the ASCII fast path, CLI/config/file-discovery coverage, and a fuzz test of `sanitize()` on hostile strings (it never throws, its output scans clean, and it never deletes a visible character), with a check that 30,000 findings in one text are scanned and removed in well under a second.
+
+Browser regressions exercise real workers in Chromium and Firefox: cancellation, retries, stale results, clipboard denial, source selection, oversized and dense inputs, and the example gallery at 1440px and 375px with axe accessibility checks. Each workflow also checks for uncaught errors, CSP violations, and off-origin requests.
+
+```sh
+npm --prefix web ci
+npm --prefix web run build
+npm --prefix web run test:browser
+```
+
+For a first-time browser test setup, run `npm --prefix web exec -- playwright install chromium firefox` (on Linux CI, add `--with-deps`).
 
 ## Contributing
 

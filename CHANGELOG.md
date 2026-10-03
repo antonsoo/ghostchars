@@ -2,6 +2,23 @@
 
 All notable changes to this project are documented in this file.
 
+## [Unreleased]
+
+### Fixed
+
+- Revealed text now shows invisible characters inside confusable identifiers instead of letting the identifier highlight hide them. Overlapping findings at the same offset use the complete span, so variation-selector tails cannot remain invisible.
+- Decoded payload controls are escaped in `reveal()` and browser diagnostics; decoding a hidden bidi override no longer reactivates it in the diagnostic.
+- Sanitized text is visible before copying, with remaining lookalike findings and manual-copy fallback when clipboard access fails. A delayed clipboard result cannot announce success for newly edited text.
+
+### Changed
+
+- Browser scanning runs in a cancellable worker with retry, immediate stale-result clearing, and a 100,000 UTF-16 code-unit input limit. Evidence previews and finding lists are bounded; totals and sanitized output still cover the full accepted input.
+- Finding location buttons select the corresponding source range. The page includes a clear-text action, keyboard-accessible evidence panes, and locally hosted fonts described accurately in the privacy note.
+
+### Tests
+
+- Added regressions for overlapping findings, inert decoded controls, source offsets, complete sanitized output, and preview boundaries. Production browser workflows run in Chromium and Firefox, including desktop and phone accessibility audits, clipboard failures, and cancelled or failed workers.
+
 ## [0.1.5] - 2026-10-02
 
 ### Added

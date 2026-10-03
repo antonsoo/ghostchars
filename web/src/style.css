@@ -314,16 +314,12 @@ a {
   outline-offset: 2px;
 }
 .btn.primary {
-  background: linear-gradient(180deg, var(--uv), var(--uv-dim));
+  background: #6652b8;
   border-color: transparent;
   color: #fff;
 }
 .btn.primary:hover {
-  filter: brightness(1.08);
-}
-.btn[data-copied='true'] {
-  border-color: var(--glow);
-  color: var(--glow);
+  background: #705bc2;
 }
 
 .example-select {
@@ -498,7 +494,7 @@ a {
 
 .bidi-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   gap: 1px;
   background: var(--line-soft);
   border-radius: var(--radius-sm);
@@ -506,7 +502,7 @@ a {
 }
 @media (max-width: 720px) {
   .bidi-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
 }
 .bidi-pane {
@@ -610,4 +606,151 @@ footer a {
 /* The page's main landmark. It adds no box: its children lay out as children of the page. */
 .page-main {
   display: contents;
+}
+
+/* Reviewable output and bounded evidence. */
+.input-limit, .scan-status, #sanitized-summary, #copy-status, .list-limit, .preview-note {
+  font-size: 0.85rem;
+  color: var(--text-dim);
+}
+
+.scan-status, .output-toolbar {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.scan-status p {
+  flex: 1;
+}
+
+.scan-status button[hidden], [hidden] {
+  display: none;
+}
+
+.output-section {
+  padding: 20px;
+  background: var(--bg-raised);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+}
+
+#sanitized-output {
+  width: 100%;
+  min-height: 120px;
+  max-height: 400px;
+  resize: vertical;
+  padding: 14px;
+  font: 0.9rem/1.6 var(--font-mono);
+  color: var(--text);
+  background: var(--bg-inset);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+}
+
+#sanitized-output:focus-visible {
+  outline: 2px solid var(--uv-strong);
+  outline-offset: 2px;
+}
+
+.output-toolbar {
+  margin-top: 12px;
+}
+
+.btn:disabled {
+  opacity: 0.55;
+  cursor: default;
+  transform: none;
+}
+
+.finding-row .loc {
+  background: none;
+  border: 0;
+  padding: 0;
+  align-self: flex-start;
+  text-align: left;
+}
+
+button.loc {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+button.loc:focus-visible {
+  outline: 2px solid var(--uv-strong);
+  outline-offset: 4px;
+}
+
+.finding-row .msg {
+  min-width: 0;
+  overflow-wrap: anywhere;
+  unicode-bidi: isolate;
+}
+
+.suggestion {
+  display: block;
+  margin-top: 6px;
+  font-size: 0.8rem;
+  color: var(--text-faint);
+}
+
+.findings {
+  max-height: 520px;
+  overflow: auto;
+}
+
+#remaining-findings {
+  max-height: 300px;
+  overflow: auto;
+  margin-top: 16px;
+}
+
+.code-view, .bidi-pane .content {
+  max-height: 460px;
+  overflow: auto;
+}
+
+.bidi-pane {
+  min-width: 0;
+}
+
+.preview-note {
+  padding: 14px;
+  border-left: 3px solid var(--warn);
+  background: var(--bg-raised);
+}
+
+.list-limit {
+  padding: 12px 20px;
+}
+
+.specimen .title, .specimen .desc {
+  display: block;
+}
+
+.example-select {
+  max-width: 100%;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+@media (max-width: 560px) {
+  .output-section {
+    padding: 14px;
+  }
+  .output-section h2 {
+    flex-wrap: wrap;
+  }
+  .finding-row {
+    padding: 12px 14px;
+  }
 }

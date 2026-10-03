@@ -78,7 +78,7 @@ jobs:
           echo "ok: the Action correctly failed on examples/fixtures/bad.js"
 
   web:
-    name: web app (build)
+    name: web app (build and browser workflows)
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -96,6 +96,9 @@ jobs:
       - run: npm run typecheck
       - run: npm run lint
       - run: npm run build
+
+      - run: npx playwright install --with-deps chromium firefox
+      - run: npm run test:browser
 
   minimum-node:
     name: the built CLI on the oldest supported Node

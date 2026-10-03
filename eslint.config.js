@@ -8,7 +8,7 @@ export default tseslint.config(
   {
     // examples/ is a gallery of deliberately bad/unusual input (that's the
     // point -- ghostchars is meant to flag it), not code meant to pass lint.
-    ignores: ['dist/**', 'web/dist/**', 'web/node_modules/**', 'node_modules/**', 'src/generated/**', 'examples/**'],
+    ignores: ['dist/**', 'web/dist/**', 'web/node_modules/**', 'web/test-results/**', 'web/playwright-report/**', 'node_modules/**', 'src/generated/**', 'examples/**'],
   },
   {
     files: ['**/*.ts'],

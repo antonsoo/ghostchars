@@ -1,5 +1,5 @@
 import { defineConfig } from 'vite';
-import { contentSecurityPolicy } from './vite.csp';
+import { contentSecurityPolicy } from './vite.csp.ts';
 import { resolve } from 'node:path';
 
 // Served at https://antonsoo.github.io/ghostchars/

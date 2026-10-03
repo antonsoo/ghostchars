@@ -9,5 +9,7 @@ dist/*
 
 web/dist/
 web/node_modules/
+web/test-results/
+web/playwright-report/
 *.log
 .DS_Store
