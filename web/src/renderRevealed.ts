@@ -1,4 +1,5 @@
 import type { Finding } from '../../src/core/index.js';
+import { diagnosticText } from '../../src/core/diagnosticText.js';
 
 const ABBR: Record<number, string> = {
   0x202a: 'LRE',
@@ -46,7 +47,7 @@ export function renderRevealedHtml(text: string, findings: Finding[]): string {
       confusables.push(f);
       continue;
     }
-    if (!byStart.has(f.start.offset)) byStart.set(f.start.offset, f);
+    if ((byStart.get(f.start.offset)?.end.offset ?? -1) < f.end.offset) byStart.set(f.start.offset, f);
   }
   // Only keep the first confusable finding covering any given start offset,
   // so overlapping "mixes scripts" + "collides with" findings on the same
@@ -56,27 +57,30 @@ export function renderRevealedHtml(text: string, findings: Finding[]): string {
 
   let html = '';
   let i = 0;
+  let markedUntil = -1;
   while (i < text.length) {
+    if (markedUntil >= 0 && i >= markedUntil) {
+      html += '</mark>';
+      markedUntil = -1;
+    }
+    const confusable = confusableStarts.get(i);
+    if (confusable && markedUntil < 0) {
+      html += `<mark class="gc-confusable" title="${escapeHtml(diagnosticText(confusable.message))}">`;
+      markedUntil = confusable.end.offset;
+    }
     const chip = byStart.get(i);
     if (chip) {
       const sevClass = `sev-${chip.severity}`;
       const label = chip.codePoints.length > 3 ? `${codeLabel(chip.codePoints[0]!)}…(${chip.codePoints.length})` : chip.codePoints.map((cp) => ABBR[cp] ?? codeLabel(cp)).join(' ');
-      const title = escapeHtml(chip.decoded ? `${chip.message} -> "${chip.decoded}"` : chip.message);
+      const title = escapeHtml(diagnosticText(chip.decoded ? `${chip.message} -> ${JSON.stringify(chip.decoded)}` : chip.message));
       html += `<span class="gc-chip ${sevClass}" title="${title}">${escapeHtml(label)}</span>`;
       i = Math.max(chip.end.offset, i + 1);
-      continue;
-    }
-    const confusable = confusableStarts.get(i);
-    if (confusable) {
-      const original = text.slice(confusable.start.offset, confusable.end.offset);
-      const title = escapeHtml(`${confusable.message}`);
-      html += `<mark class="gc-confusable" title="${title}">${escapeHtml(original)}</mark>`;
-      i = confusable.end.offset;
       continue;
     }
     const cp = text.codePointAt(i)!;
     html += escapeHtml(String.fromCodePoint(cp));
     i += cp > 0xffff ? 2 : 1;
   }
+  if (markedUntil >= 0) html += '</mark>';
   return html || '<span class="empty">(empty)</span>';
 }

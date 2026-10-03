@@ -1,5 +1,6 @@
 import { scanText } from './scanText.js';
 import type { Finding } from './types.js';
+import { diagnosticText } from './diagnosticText.js';
 
 const ABBR: ReadonlyMap<number, string> = new Map([
   [0x202a, 'LRE'],
@@ -39,6 +40,11 @@ const ABBR: ReadonlyMap<number, string> = new Map([
  */
 export function reveal(text: string): string {
   const { findings } = scanText(text);
+  return revealWithFindings(text, findings);
+}
+
+/** Reuse findings from the complete input when rendering a bounded preview. */
+export function revealWithFindings(text: string, findings: readonly Finding[]): string {
   const byStart = new Map<number, Finding>();
   for (const f of findings) {
     // Confusables stay as ordinary visible text here -- the point of reveal()
@@ -46,7 +52,7 @@ export function reveal(text: string): string {
     // identifier into one opaque chip would defeat that. The confusable
     // rule's own message/skeleton already carries the useful detail.
     if (f.rule === 'confusable') continue;
-    if (!byStart.has(f.start.offset)) byStart.set(f.start.offset, f);
+    if ((byStart.get(f.start.offset)?.end.offset ?? -1) < f.end.offset) byStart.set(f.start.offset, f);
   }
 
   let out = '';
@@ -60,7 +66,7 @@ export function reveal(text: string): string {
           ? `${describe(finding.codePoints[0]!)} .. ${describe(finding.codePoints[finding.codePoints.length - 1]!)} (${finding.codePoints.length} code points)`
           : finding.codePoints.map(describe).join(' ');
       out += `⟦${label}⟧`;
-      if (finding.decoded) out += ` → "${finding.decoded}"`;
+      if (finding.decoded) out += ` → ${diagnosticText(JSON.stringify(finding.decoded))}`;
       i = Math.max(finding.end.offset, i + 1);
       continue;
     }

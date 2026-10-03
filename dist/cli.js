@@ -6592,6 +6592,9 @@ function rangeSearch(ranges, cp) {
 function inRanges(ranges, cp) {
   return rangeSearch(ranges, cp) >= 0;
 }
+function isDefaultIgnorable(cp) {
+  return inRanges(defaultIgnorableRanges, cp);
+}
 function isEmoji(cp) {
   return inRanges(emojiRanges, cp);
 }
@@ -7295,6 +7298,16 @@ function mergeSpans(spans) {
   return out;
 }
 
+// src/core/diagnosticText.ts
+function diagnosticText(text) {
+  let out = "";
+  for (const char of text) {
+    const cp = char.codePointAt(0);
+    out += cp < 32 || cp >= 127 && cp <= 159 || cp === 8232 || cp === 8233 || isDefaultIgnorable(cp) ? `\\u{${cp.toString(16).toUpperCase().padStart(4, "0")}}` : char;
+  }
+  return out;
+}
+
 // src/core/reveal.ts
 var ABBR = /* @__PURE__ */ new Map([
   [8234, "LRE"],
@@ -7327,10 +7340,13 @@ var ABBR = /* @__PURE__ */ new Map([
 ]);
 function reveal(text) {
   const { findings } = scanText(text);
+  return revealWithFindings(text, findings);
+}
+function revealWithFindings(text, findings) {
   const byStart = /* @__PURE__ */ new Map();
   for (const f of findings) {
     if (f.rule === "confusable") continue;
-    if (!byStart.has(f.start.offset)) byStart.set(f.start.offset, f);
+    if ((byStart.get(f.start.offset)?.end.offset ?? -1) < f.end.offset) byStart.set(f.start.offset, f);
   }
   let out = "";
   let i = 0;
@@ -7340,7 +7356,7 @@ function reveal(text) {
       const describe = (cp2) => `U+${cp2.toString(16).toUpperCase().padStart(4, "0")} ${ABBR.get(cp2) ?? shortName(finding2, cp2)}`;
       const label = finding2.codePoints.length > 4 ? `${describe(finding2.codePoints[0])} .. ${describe(finding2.codePoints[finding2.codePoints.length - 1])} (${finding2.codePoints.length} code points)` : finding2.codePoints.map(describe).join(" ");
       out += `\u27E6${label}\u27E7`;
-      if (finding2.decoded) out += ` \u2192 "${finding2.decoded}"`;
+      if (finding2.decoded) out += ` \u2192 ${diagnosticText(JSON.stringify(finding2.decoded))}`;
       i = Math.max(finding2.end.offset, i + 1);
       continue;
     }
