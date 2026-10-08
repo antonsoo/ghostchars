@@ -1,0 +1,64 @@
+{
+ "documents": 481,
+ "released": {
+  "findings": 109,
+  "by_rule_severity": {
+   "bidi-mark:warning": 2,
+   "confusable:error": 19,
+   "confusable:warning": 16,
+   "invisible:warning": 26,
+   "unusual-whitespace:warning": 25,
+   "variation-selector-stray:warning": 21
+  }
+ },
+ "checkout": {
+  "findings": 103,
+  "by_rule_severity": {
+   "bidi-mark:warning": 2,
+   "confusable:error": 13,
+   "confusable:warning": 16,
+   "invisible:warning": 26,
+   "unusual-whitespace:warning": 25,
+   "variation-selector-stray:warning": 21
+  }
+ },
+ "only_released": [
+  {
+   "file": "courses/free-courses-tr.md",
+   "rule": "confusable",
+   "severity": "error",
+   "excerpt": "52cRJnit4AEEugn4) - [[Yazılım]] Teknolojileri Akademisi\\n\\n\\"
+  },
+  {
+   "file": "courses/free-courses-tr.md",
+   "rule": "confusable",
+   "severity": "error",
+   "excerpt": "xXw1j9ZAKzYyiQAq) - [[Yazılım]] Bilimi\\n\\n\\n### HTML and CSS"
+  },
+  {
+   "file": "courses/free-courses-tr.md",
+   "rule": "confusable",
+   "severity": "error",
+   "excerpt": "afa Murat Coşkun\\n* [[[Yazılım]] Geliştirici Yetiştirme Kamp"
+  },
+  {
+   "file": "courses/free-courses-tr.md",
+   "rule": "confusable",
+   "severity": "error",
+   "excerpt": " Profesyonel Python [[Yazılım]] Geliştiricisi Olma Kursu (20"
+  },
+  {
+   "file": "courses/free-courses-tr.md",
+   "rule": "confusable",
+   "severity": "error",
+   "excerpt": "bgZvVdl1cBy) - Arin [[Yazilim]]\\n* [Yeni Başlayanlar İçin Sı"
+  },
+  {
+   "file": "courses/free-courses-tr.md",
+   "rule": "confusable",
+   "severity": "error",
+   "excerpt": "1x6d7akLpsy) - Arin [[Yazilim]]\\n\\n\\n### SQL\\n\\n* [Her Yönüy"
+  }
+ ],
+ "only_checkout": []
+}

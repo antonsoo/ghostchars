@@ -1,0 +1,397 @@
+{
+ "fetched": "2026-10-08",
+ "sources": [
+  {
+   "commit": "b044f956f021b6e8877f16781bcfc466a6a120e9",
+   "documents": 266,
+   "documents_sha256": "f2acb4511fa7191a7ffb2f7f8bb1c05fdbc92d04cc9a9ce1198375ea8938bbd5",
+   "id": "awesome-cursorrules",
+   "kind": "github",
+   "license_file": {
+    "file": "LICENSE",
+    "head": "CC0 1.0 Universal",
+    "sha256": "36ffd9dc085d529a7e60e1276d73ae5a030b020313e6c5408593a6ae2af39673"
+   },
+   "repo": "PatrickJS/awesome-cursorrules",
+   "stratum": "rules",
+   "tarball_sha256": "6bdd421f55f303d17a2e0fef7eb64e6376e0bfc90912803fb00d8156c86ff6b4"
+  },
+  {
+   "commit": "8fbf26908531c127a6076be0e55fbe17b57fb2d8",
+   "documents": 1129,
+   "documents_sha256": "69551d5ea2d01e0b7db670d5a80f1d71144b77d115c0d5ea90d47df752d75b1b",
+   "id": "awesome-cursor-rules-mdc",
+   "kind": "github",
+   "license_file": {
+    "file": "LICENSE",
+    "head": "Creative Commons Legal Code",
+    "sha256": "a2010f343487d3f7618affe54f789f5487602331c0a8d03f49e9a7c547cf0499"
+   },
+   "repo": "sanjeed5/awesome-cursor-rules-mdc",
+   "stratum": "rules",
+   "tarball_sha256": "f9d1cf2851db392ffc3bd9a5e1464473c3ee4ea830c4d424a429090d15a3507f"
+  },
+  {
+   "commit": "7cce7cfb4b61196c36d7e8eb8475ae84b356b126",
+   "documents": 2207,
+   "documents_sha256": "3b09099c8a106a06f21366d8622ec197293cdb9b9fed2d44c6fe79fc2a2144d1",
+   "id": "awesome-copilot",
+   "kind": "github",
+   "license_file": {
+    "file": "LICENSE",
+    "head": "MIT License",
+    "sha256": "e32449d23085399adc1222f7a17408b730550258e51627c153cb108ca9955823"
+   },
+   "repo": "github/awesome-copilot",
+   "stratum": "rules",
+   "tarball_sha256": "d7b4d5c93d5223c4bf23d83a47e01e762ac7815338acb2b192ac2ad466c4dc1b"
+  },
+  {
+   "commit": "d001185d792eb6402a58e4cbef1c228b309ec25d",
+   "documents": 3,
+   "documents_sha256": "cb5f39ab9237c5143b9597f71263356ce6caf7d49da403a56467c072708af4f2",
+   "id": "agents-md",
+   "kind": "github",
+   "license_file": {
+    "file": "LICENSE",
+    "head": "MIT License",
+    "sha256": "13df7812ca53ecaae1cb4a868844bb598373047ae1d580e4debfbef1dd5b6915"
+   },
+   "repo": "agentsmd/agents.md",
+   "stratum": "rules",
+   "tarball_sha256": "1271ac6a8e0d49abf99f4d6ca62a776c0adf2d9ae2743fb262f355b0312ee14b"
+  },
+  {
+   "commit": "721e9734670bfaf7283194e234ebb88e94c82dcd",
+   "documents": 179,
+   "documents_sha256": "c5a15214815856e9cce94efb48c6a2043d4753097825ac73d51c492853096b5d",
+   "id": "awesome-claude-code-subagents",
+   "kind": "github",
+   "license_file": {
+    "file": "LICENSE",
+    "head": "MIT License",
+    "sha256": "8ed27772f4430d6e3815599b849c1b6e59088671133ef67e9b1be4acef2b75da"
+   },
+   "repo": "VoltAgent/awesome-claude-code-subagents",
+   "stratum": "agents",
+   "tarball_sha256": "608ab261aab03bea9031d368f96fb89d6297aae86dcf10c06973a3db068cab42"
+  },
+  {
+   "commit": "46891e7e60da0e52baf1050b7b6391b64e84c6d9",
+   "documents": 797,
+   "documents_sha256": "184b25d9ba6dd650217eeec04a893af91b5392a224bb722aea0aebbc550fb970",
+   "id": "wshobson-agents",
+   "kind": "github",
+   "license_file": {
+    "file": "LICENSE",
+    "head": "MIT License",
+    "sha256": "f89abb55d9f073f38f1703e4518f0613c788c6174be7f13b8dfe48a1c076c746"
+   },
+   "repo": "wshobson/agents",
+   "stratum": "agents",
+   "tarball_sha256": "34fe203b3105dde9e7ce286c3910b50346c57cf23416144485e66980dc592f51"
+  },
+  {
+   "commit": "a5a480c324cac64b9c569bca0b2f297d517240cb",
+   "documents": 38,
+   "documents_sha256": "e867fdf6c597c19f47e8a5b8657cd5e208775ad6e23163bf55d55f2803b6e767",
+   "id": "contains-studio-agents",
+   "kind": "github",
+   "license_file": null,
+   "repo": "contains-studio/agents",
+   "stratum": "agents",
+   "tarball_sha256": "f435cc388619733479e41798820f256bbcec7f22e44c651a27924bdb592108bf"
+  },
+  {
+   "commit": "683bc88e56f3e09ba94f7055977f3d3aa499f202",
+   "documents": 162,
+   "documents_sha256": "9976f3830ef2f6103aaca105f41c2a5d8c97de401f43cb24b49a0c6b4bde892f",
+   "id": "anthropics-skills",
+   "kind": "github",
+   "license_file": null,
+   "repo": "anthropics/skills",
+   "stratum": "agents",
+   "tarball_sha256": "30a1152c163d87852587347c242261d7dd85f2208f25bd9c4b6bf47266a5f4bf"
+  },
+  {
+   "commit": "be2a406907dbc61b73e6827ded415c96139d13a2",
+   "documents": 921,
+   "documents_sha256": "5391f5b4c7a55721d3cfe6e3583fc58298b1d60718005730d74bb347910b2230",
+   "id": "awesome-claude-skills",
+   "kind": "github",
+   "license_file": null,
+   "repo": "ComposioHQ/awesome-claude-skills",
+   "stratum": "agents",
+   "tarball_sha256": "cdbe1c44cc32add653576f769dc1410b39c8aae356ea2092eab7535c6594c83b"
+  },
+  {
+   "commit": "6e8dd6316095104e340d1efa53cfdc0c7a01bbd0",
+   "documents": 16,
+   "documents_sha256": "f8a6211e351c96ff03c192a26227def6e327813a3d2f921b1a89239be7b9d26b",
+   "id": "awesome-claude-code",
+   "kind": "github",
+   "license_file": {
+    "file": "LICENSE",
+    "head": "Awesome Claude Code \u00a9 2026 by hesreallyhim is licensed under Creative Commons At",
+    "sha256": "e5da1bc9159d6e1190b3390a6e794093e766913068251f46e84c1874f864aacc"
+   },
+   "repo": "hesreallyhim/awesome-claude-code",
+   "stratum": "agents",
+   "tarball_sha256": "ed56e9c385a90b5fd231c81f26ad08ab96796ef4f455fafce053c18219f4d52a"
+  },
+  {
+   "commit": "76cd291d4704a12933263ac7cb2d667509408db2",
+   "documents": 392,
+   "documents_sha256": "58713c63897bf4f8a691b87f8947239185871a795cd632356815766c2d7bc4d5",
+   "id": "fabric",
+   "kind": "github",
+   "license_file": {
+    "file": "LICENSE",
+    "head": "MIT License",
+    "sha256": "42b554b17b8fd7ae4d6bc488f0857ae91d9179f04db3da466c2fc5425686f4f9"
+   },
+   "repo": "danielmiessler/fabric",
+   "stratum": "prompts",
+   "tarball_sha256": "5d801efa718a69ce93ae52094195eeecd10e3b25b9080637571aaa2237cdf770"
+  },
+  {
+   "commit": "7d3f248962d1dca209d59e033524bcb86c2b26b8",
+   "documents": 869,
+   "documents_sha256": "955d1ce7795598620606801757afea880dbb4aaaa11bd81ec9a5d820d074ed9e",
+   "id": "awesome-chatgpt-prompts",
+   "kind": "github",
+   "license_file": {
+    "file": "LICENSE",
+    "head": "This project uses a dual-license model:",
+    "sha256": "82201d04d22eea74216fcacc9bc9e695184aef435a415e3564cf806c962854f8"
+   },
+   "repo": "f/awesome-chatgpt-prompts",
+   "stratum": "prompts",
+   "tarball_sha256": "b76f7259726f9f3726d5fd149acac3449929503a949c40e6360a516f51340b0a"
+  },
+  {
+   "commit": "586aea8d3b815cc119e6a906404231d4e0f71b0b",
+   "documents": 3,
+   "documents_sha256": "92b1e867032a2f1cd2423bd787817bf3423c1139d49fb529f7c2804a6e487d5d",
+   "id": "awesome-claude-prompts",
+   "kind": "github",
+   "license_file": null,
+   "repo": "langgptai/awesome-claude-prompts",
+   "stratum": "prompts",
+   "tarball_sha256": "03535a14948e1d1b30752c3d314e6039b9e2f0385394508eb0717839b90ee65a"
+  },
+  {
+   "commit": "1e4203a7d88873c1b37ab2d1c07074fea498c274",
+   "documents": 88,
+   "documents_sha256": "1ac4783b165c86cba4fdd8c69c1175386df208d1e71720e3720d384d5224c0d2",
+   "id": "system-prompts-and-models",
+   "kind": "github",
+   "license_file": {
+    "file": "LICENSE.md",
+    "head": "GNU GENERAL PUBLIC LICENSE",
+    "sha256": "3972dc9744f6499f0f9b2dbf76696f2ae7ad8af9b23dde66d6af86c9dfb36986"
+   },
+   "repo": "x1xhlol/system-prompts-and-models-of-ai-tools",
+   "stratum": "system",
+   "tarball_sha256": "52bcada975348f405ce0c6b845398a27babad97b13dfc0b311024b712c868d70"
+  },
+  {
+   "commit": "e31ec211bc24a2816b03470c61eb7f513c710d2a",
+   "documents": 944,
+   "documents_sha256": "f25189b911f7a8022ba35f3ecd320fb095f1c260eb988e6a9a246def3770db3b",
+   "id": "system_prompts_leaks",
+   "kind": "github",
+   "license_file": {
+    "file": "LICENSE",
+    "head": "Creative Commons Legal Code",
+    "sha256": "f99ae25b6325d3a2fcebe74ee92296e2058fe84e97f228a5b81b5e8a1821f04f"
+   },
+   "repo": "asgeirtj/system_prompts_leaks",
+   "stratum": "system",
+   "tarball_sha256": "84ab294da08a198ae3fa98275caf92c8e76ffed55a5dad37dd7e56436a6bfaa1"
+  },
+  {
+   "commit": "a4d3da04e63324e794a65500c3e41994fc4ab02e",
+   "documents": 72,
+   "documents_sha256": "d23487fe1f936de60f27fcf2746cbe88ba539e67b234005af7f2f27871e79eb8",
+   "id": "CL4R1T4S",
+   "kind": "github",
+   "license_file": {
+    "file": "LICENSE",
+    "head": "GNU AFFERO GENERAL PUBLIC LICENSE",
+    "sha256": "8486a10c4393cee1c25392769ddd3b2d6c242d6ec7928e1414efff7dfb2f07ef"
+   },
+   "repo": "elder-plinius/CL4R1T4S",
+   "stratum": "system",
+   "tarball_sha256": "06c9d2f96cc5851e90bad8c1a2dc0dbe0885ec5362a6dbf47951c7c27f877be3"
+  },
+  {
+   "commit": "cabcdb04b5970211b1b6163d8725ae66bb48c5f0",
+   "documents": 2044,
+   "documents_sha256": "b381487b337eed790d3c74ebc333f5956195e01148215ced63ea9ff4293b5b4c",
+   "id": "TheBigPromptLibrary",
+   "kind": "github",
+   "license_file": {
+    "file": "LICENSE",
+    "head": "MIT License",
+    "sha256": "890d8e8f5fbe34050d547696de20df440ed841f0f5c3373c9bf89ebf17c7dbea"
+   },
+   "repo": "0xeb/TheBigPromptLibrary",
+   "stratum": "system",
+   "tarball_sha256": "51cdb54194fcedd9c6182ac4b65a661456cb0d545dee9776ec04508828e52eb1"
+  },
+  {
+   "commit": "2bffdfe275e5dc4725b23e20c330e036ef438802",
+   "documents": 181,
+   "documents_sha256": "b92959e464e523c863ba59a88c5e9dd9e5af48c1805157f25e4eafc50284ee98",
+   "id": "leaked-system-prompts",
+   "kind": "github",
+   "license_file": null,
+   "repo": "jujumilk3/leaked-system-prompts",
+   "stratum": "system",
+   "tarball_sha256": "ac7b614aeb38b5a9bcc8580a15c5600ab359fd690c62839d36e6e9d116b72ffe"
+  },
+  {
+   "commit": "9b3512fe8a0746aa2c3f00b416dc316a838b5d27",
+   "documents": 872,
+   "documents_sha256": "38201394323c14fd5bd77e477a8a09aded5853ea6abb7739c3950e6a137b54b2",
+   "id": "claude-code-system-prompts",
+   "kind": "github",
+   "license_file": {
+    "file": "LICENSE",
+    "head": "MIT License",
+    "sha256": "453afa8ddc35be35fa2dfd13762476bf058255d4af8b61b5acc3d9c20813e322"
+   },
+   "repo": "Piebald-AI/claude-code-system-prompts",
+   "stratum": "system",
+   "tarball_sha256": "dd8dd87a5dae26f049ee259acc44afb7b5f8755654153cf3a90109e997e55303"
+  },
+  {
+   "commit": "74964625038011525ab44c3a673fc605b2c765b3",
+   "documents": 57,
+   "documents_sha256": "ca7807a639ecae8e3b3ba49a7d59a1f41b860fa59bb1c6b2c01b78899e3009dd",
+   "id": "awesome-ai-system-prompts",
+   "kind": "github",
+   "license_file": {
+    "file": "LICENSE",
+    "head": "MIT License",
+    "sha256": "d154b1816ff603b65fa0553e7fc2fa5dd2aa5857a96343560a77653cd9937ff4"
+   },
+   "repo": "dontriskit/awesome-ai-system-prompts",
+   "stratum": "system",
+   "tarball_sha256": "937c88aa6389332d8fd4a02331675d8312ab3a22117584a3df8bcc62a237fc4f"
+  },
+  {
+   "commit": "64960b783249d36f76a48a33103cc4b168332b9b",
+   "documents": 40,
+   "documents_sha256": "c7b0b5e93fe00784bf2d8e0218e47ebb8dc31ece4d5a13cd32f4520eb12fd854",
+   "id": "L1B3RT4S",
+   "kind": "github",
+   "license_file": {
+    "file": "LICENSE",
+    "head": "GNU AFFERO GENERAL PUBLIC LICENSE",
+    "sha256": "8486a10c4393cee1c25392769ddd3b2d6c242d6ec7928e1414efff7dfb2f07ef"
+   },
+   "repo": "elder-plinius/L1B3RT4S",
+   "stratum": "jailbreak",
+   "tarball_sha256": "70d8fe0ec63b398e6d5bd933121201fecbf1575a075d8e7a740ef7b2108d736b"
+  },
+  {
+   "dataset": "TrustAIRLab/in-the-wild-jailbreak-prompts",
+   "documents": 15140,
+   "documents_sha256": "1abcec2ab4c7596da38118d96dc09319dd40d2403098f94d06496c33d0d8b941",
+   "id": "itw-jailbreak-prompts",
+   "kind": "huggingface",
+   "revision": "a10aab8eff1c73165a442d4464dce192bd28b9c5",
+   "rows_by_platform_and_source": {
+    "jailbreak_2023_12_25": {
+     "platform": {
+      "discord": 469,
+      "open_source": 2,
+      "reddit": 425,
+      "website": 509
+     },
+     "source": {
+      "BreakGPT": 32,
+      "ChatGPT": 390,
+      "ChatGPT Prompt Engineering": 67,
+      "ChatGPTJailbreak": 225,
+      "ChatGPTPromptGenius": 24,
+      "LLM Promptwriting": 78,
+      "Spreadsheet Warriors": 61,
+      "aiprm": 25,
+      "flowgpt": 405,
+      "jailbreak_chat": 79
+     }
+    },
+    "regular_2023_12_25": {
+     "platform": {
+      "discord": 637,
+      "open_source": 214,
+      "reddit": 630,
+      "website": 12254
+     },
+     "source": {
+      "AI Prompt Sharing": 7,
+      "ChatGPT": 330,
+      "ChatGPT Prompt Engineering": 211,
+      "ChatGPTPromptGenius": 630,
+      "LLM Promptwriting": 89,
+      "OCR-Prompts": 50,
+      "aiprm": 3905,
+      "awesome_chatgpt_prompts": 164,
+      "flowgpt": 8349
+     }
+    }
+   },
+   "source_files_sha256": {
+    "jailbreak_2023_12_25/train-00000-of-00001.parquet": "55bbc5e2be771ee16ed67aed4edb5ecef5f44ac69cea317a67e5405c5c6057a4",
+    "regular_2023_12_25/train-00000-of-00001.parquet": "23e90010ccbc85574bf46678528cddce5b02abc86d9a047209218af65cb37c68"
+   },
+   "stratum": "wild"
+  },
+  {
+   "dataset": "deepset/prompt-injections",
+   "documents": 662,
+   "documents_sha256": "a7dc1423faaac513509bab15bcdfe94402c29f91026651d7436607c54d69de9f",
+   "id": "deepset-prompt-injections",
+   "kind": "huggingface",
+   "revision": "4f61ecb038e9c3fb77e21034b22511b523772cdd",
+   "rows_by_platform_and_source": {},
+   "source_files_sha256": {
+    "data/test-00000-of-00001-701d16158af87368.parquet": "39ac797cabc157eeed58435a08593b2952bb6cb16fc394a2d383f447cc7b246e",
+    "data/train-00000-of-00001-9564e8b05b4757ab.parquet": "2e10bc7ab30f542c97e4e83e2a5683000b5057d25ec10908784c631d44124c04"
+   },
+   "stratum": "wild"
+  },
+  {
+   "dataset": "Lakera/gandalf_ignore_instructions",
+   "documents": 1000,
+   "documents_sha256": "9e8542933fb5717c68d1a4b751bb438be49ccbd4c95240f1332727bf0b1d0147",
+   "id": "gandalf-ignore-instructions",
+   "kind": "huggingface",
+   "revision": "04737b65e90a6794ec227012e4a255a7def6344b",
+   "rows_by_platform_and_source": {},
+   "source_files_sha256": {
+    "data/test-00000-of-00001-bc92128b9288a6d1.parquet": "56b646d133335ebc535266bd55dbe1b5bee7caa4b95bf49d040684b9b5dd9972",
+    "data/train-00000-of-00001-ded53be747ff55cd.parquet": "5b6acf3e5a5998d21f8e1222bb45bbdec25a14408747b1cd63bebef4a75fa439",
+    "data/validation-00000-of-00001-94481a2a09ff2fff.parquet": "f51ab3e3407a368845b0f57932cc745c09280429416d7507bd178a16326a79f6"
+   },
+   "stratum": "game"
+  },
+  {
+   "dataset": "Lakera/mosscap_prompt_injection",
+   "documents": 55412,
+   "documents_sha256": "4ad27aff051063830c8a8d280337b17315c320efaa1451b98c16b88ace4082f4",
+   "id": "mosscap-prompt-injection",
+   "kind": "huggingface",
+   "revision": "b7e495ff63373ff7f7dabc1e9390cf62b5838570",
+   "rows_by_platform_and_source": {},
+   "source_files_sha256": {
+    "data/test-00000-of-00001-06acab2d6a2bcf9f.parquet": "9311f64ca579c947e43ff64ad4996585c51e4dae8ae747342926cf0091160d21",
+    "data/validation-00000-of-00001-e136a45438d15f16.parquet": "d6c112992c73a1744f540cc3f6d51ecafabdf4023ec2188de6dde31ca7e52d24"
+   },
+   "stratum": "game"
+  }
+ ]
+}

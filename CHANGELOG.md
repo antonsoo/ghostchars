@@ -4,19 +4,34 @@ All notable changes to this project are documented in this file.
 
 ## [Unreleased]
 
+### Added
+
+- (source checkout) `styled-text` rule: letters in the mathematical, fullwidth, circled, squared and small-capital alphabets are reported with the plain text they read as (`decoded`, NFKC). A whole jailbreak written in circled letters, with no plain spelling beside it, was not reported at all before. Fullwidth letters and digits inside CJK text, runs of fewer than three letters and digit-only runs are not reported.
+- (source checkout) Variation-selector payloads that are written in selectors again are decoded to the end ("search pliny ..." sat four layers down in one file, and the first layer decoded to more invisible characters). The finding says how many layers.
+- (source checkout) A single VS15/VS16 after each word of a paragraph is read as one bit apiece (VS16 = 1, either way round); when the bits are at least 8 bytes of clean UTF-8 text they are reported as `variation-selector-smuggling` errors and the first carries the message. A jailbreak collection hides a sentence this way under 240 selectors that were each only a stray-selector warning.
+- (source checkout) `--format summary`: one line per file and kind of finding with a count and the first and last position, and what a payload decoded to. One scraped page had 1,021 no-break spaces.
+- `studies/prompt-census`: a census of 83,494 public prompts and agent-instruction files, with the scripts, the manifest and the hand classification of every finding.
+
 ### Fixed
 
+- (source checkout) The `n` of a backslash-n escape in a string literal was read as the first letter of the word after it, so every `\n` before a Greek or Cyrillic word was a "mixes scripts" warning (124 in one set of translated prompts).
+- (source checkout) A ZWNJ between a Latin term and a Persian suffix (`token` + ZWNJ + plural) is orthography, not an `invisible` warning. A ZWNJ with ASCII on both sides, and a ZWJ in that place, are still reported.
 - Revealed text now shows invisible characters inside confusable identifiers instead of letting the identifier highlight hide them. Overlapping findings at the same offset use the complete span, so variation-selector tails cannot remain invisible.
 - Decoded payload controls are escaped in `reveal()` and browser diagnostics; decoding a hidden bidi override no longer reactivates it in the diagnostic.
 - Sanitized text is visible before copying, with remaining lookalike findings and manual-copy fallback when clipboard access fails. A delayed clipboard result cannot announce success for newly edited text.
 
 ### Changed
 
+- (source checkout) A word set in a styled alphabet beside its plain spelling is reported by `styled-text` instead of as a `confusable` collision error. The collision rule still reports a Latin, Cyrillic or Greek copy.
+- (source checkout) A Cyrillic or Greek word that shares a skeleton with a Latin word, and a Turkic word with a dotless i that shares one with its dotted twin, are not reported when the file is written in that script or language: ten distinct words of the script, or ten with a dotless i. Below that they are reported as before.
+- (source checkout) The `unusual-whitespace` message for a no-break space and the line and paragraph separators says they are usually left by pasting from a web page or chat window.
+- (source checkout) `reveal()` and the browser page leave styled text as readable text, and the page lists `styled-text` findings with the lookalikes.
 - Browser scanning runs in a cancellable worker with retry, immediate stale-result clearing, and a 100,000 UTF-16 code-unit input limit. Evidence previews and finding lists are bounded; totals and sanitized output still cover the full accepted input.
 - Finding location buttons select the corresponding source range. The page includes a clear-text action, keyboard-accessible evidence panes, and locally hosted fonts described accurately in the privacy note.
 
 ### Tests
 
+- Added `tests/promptCensus.spec.ts`: layered and one-bit-per-word payloads, the backslash-n escape, Turkish, Russian and Greek text, the Persian ZWNJ, `styled-text` (circled letters, small capitals, a styled persona name beside its plain spelling, fullwidth text in Japanese) and `--format summary`. Every case is a shape found in the census.
 - Added regressions for overlapping findings, inert decoded controls, source offsets, complete sanitized output, and preview boundaries. Production browser workflows run in Chromium and Firefox, including desktop and phone accessibility audits, clipboard failures, and cancelled or failed workers.
 
 ## [0.1.5] - 2026-10-02

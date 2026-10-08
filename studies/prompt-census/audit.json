@@ -1,0 +1,907 @@
+{
+ "seed": 20261008,
+ "n": 100,
+ "agree": 100,
+ "items": [
+  {
+   "source": "L1B3RT4S",
+   "file": "GROK-MEGA.mkd",
+   "rule": "invisible",
+   "code_point": "2060",
+   "excerpt": ">̄ｌｉｂ<U+200C>ｅｒ̄ａｔｅｄ<U+00A0>ΝU[[<U+2060>]]Αq ア<U+2060>cCウラテ Ρlウ<U+200D",
+   "rule_label": "O",
+   "reader_label": "O"
+  },
+  {
+   "source": "TheBigPromptLibrary",
+   "file": "CustomInstructions/ChatGPT/POnsciFK2_Random.md",
+   "rule": "control-character",
+   "code_point": "000C",
+   "excerpt": ">/MZNN,i[m0.#E]$W_H)Y\\tD\\\"Fxgh[[<U+000C>]]+&G2i|&\\<U+000D>\\n]^bYA:z3<U",
+   "rule_label": "X",
+   "reader_label": "X"
+  },
+  {
+   "source": "L1B3RT4S",
+   "file": "GROK-MEGA.mkd",
+   "rule": "confusable",
+   "code_point": "0443",
+   "excerpt": "00D> ehnS<U+200D>uREḦ<U+00A0>[[уおう]] インセᚱᛏ 𝒶 ｄ<U+2060>ｉｖｉｄｅｒ<U+200D> ",
+   "rule_label": "O",
+   "reader_label": "O"
+  },
+  {
+   "source": "L1B3RT4S",
+   "file": "GROK-MEGA.mkd",
+   "rule": "unusual-whitespace",
+   "code_point": "00A0",
+   "excerpt": "アсTイ̀Vア<U+2060>テ<U+00A0>!ＯＭ̃ＮＩ[[<U+00A0>]]𝓅<U+200C>̄𝓇<U+200C>𝑜̃𝓉<U+206",
+   "rule_label": "O",
+   "reader_label": "O"
+  },
+  {
+   "source": "TheBigPromptLibrary",
+   "file": "CustomInstructions/ChatGPT/knowledge/P0tS3c/WebRequests.md",
+   "rule": "unusual-whitespace",
+   "code_point": "00A0",
+   "excerpt": " we get<U+00A0>`Access denied`[[<U+00A0>]]in the response body, and we",
+   "rule_label": "X",
+   "reader_label": "X"
+  },
+  {
+   "source": "L1B3RT4S",
+   "file": "GROK-MEGA.mkd",
+   "rule": "invisible",
+   "code_point": "2060",
+   "excerpt": "𝓃𝓎<U+00A0>̈𝓇𝑒𝒻̀𝓊<U+200C>𝓈𝒶𝓁 ̄𝒷[[<U+2060>]]𝑒𝒻𝑜𝓇𝑒 <U+200C>𝒸<U+2060>́𝑜𝓃𝓉𝒾",
+   "rule_label": "O",
+   "reader_label": "O"
+  },
+  {
+   "source": "TheBigPromptLibrary",
+   "file": "CustomInstructions/ChatGPT/knowledge/P0tS3c/FileInclusion.md",
+   "rule": "unusual-whitespace",
+   "code_point": "00A0",
+   "excerpt": "t PHP web applications utilize[[<U+00A0>]]`PHPSESSID`<U+00A0>cookies, ",
+   "rule_label": "X",
+   "reader_label": "X"
+  },
+  {
+   "source": "TheBigPromptLibrary",
+   "file": "CustomInstructions/ChatGPT/knowledge/i7iDLrwiz-trend-predictions-2024/Trends_ Media, Social Media, Entertainment, Film and TV, Music, Games.txt",
+   "rule": "invisible",
+   "code_point": "200B",
+   "excerpt": "to outdoor experiences<U+200B>[[<U+200B>]]. However, some segments of ",
+   "rule_label": "X",
+   "reader_label": "X"
+  },
+  {
+   "source": "L1B3RT4S",
+   "file": "GROK-MEGA.mkd",
+   "rule": "invisible",
+   "code_point": "200B",
+   "excerpt": "00C>̇イ̇<U+200C>ケ ダンゲ<U+200D>ⓡⓢ[[<U+200B>]]̄<U+00A0><U+200C>𝑜̀<U+2060>𝓇",
+   "rule_label": "O",
+   "reader_label": "O"
+  },
+  {
+   "source": "TheBigPromptLibrary",
+   "file": "CustomInstructions/ChatGPT/zIHLndnWW_Jenny_Role_Play.md",
+   "rule": "control-character",
+   "code_point": "0008",
+   "excerpt": " 상황극을 만들지 사용자에게 물어바라.\\n마지막에 \"([[<U+0008>]]T - Three stories, H - Help)",
+   "rule_label": "X",
+   "reader_label": "X"
+  },
+  {
+   "source": "L1B3RT4S",
+   "file": "GROK-MEGA.mkd",
+   "rule": "invisible",
+   "code_point": "200D",
+   "excerpt": "+200B>ｅｌｙ ́ᚈ̄ᚑ ｔｈｅ ̄<U+200C>j́[[<U+200D>]]̃O<U+2060>q̀<U+200C>Ε̇h<U+00",
+   "rule_label": "O",
+   "reader_label": "O"
+  },
+  {
+   "source": "TheBigPromptLibrary",
+   "file": "CustomInstructions/ChatGPT/knowledge/P0tS3c/SQL_InjectionFundamentals.md",
+   "rule": "unusual-whitespace",
+   "code_point": "00A0",
+   "excerpt": "ta of the<U+00A0>`credentials`[[<U+00A0>]]table, we first need to find",
+   "rule_label": "X",
+   "reader_label": "X"
+  },
+  {
+   "source": "L1B3RT4S",
+   "file": "GROK-MEGA.mkd",
+   "rule": "invisible",
+   "code_point": "200D",
+   "excerpt": "200C>TRU<U+00A0>lオ<U+200C>̈ウ̀r[[<U+200D>]] oWn<U+00A0>ａｓｓｕｍｐ̇<U+2060>ｔ",
+   "rule_label": "O",
+   "reader_label": "O"
+  },
+  {
+   "source": "system-prompts-and-models",
+   "file": "Trae/Chat Prompt.txt",
+   "rule": "unusual-whitespace",
+   "code_point": "00A0",
+   "excerpt": "A0>that<U+00A0>has<U+00A0>been[[<U+00A0>]]used<U+00A0>in<U+00A0>the<U+",
+   "rule_label": "X",
+   "reader_label": "X"
+  },
+  {
+   "source": "L1B3RT4S",
+   "file": "GROK-MEGA.mkd",
+   "rule": "invisible",
+   "code_point": "2060",
+   "excerpt": "6<U+2060>5<U+200D> 6<U+200C>8 [[<U+2060>]]64イ̈7<U+2060>̃3ソナン<U+2060>̄2",
+   "rule_label": "O",
+   "reader_label": "O"
+  },
+  {
+   "source": "L1B3RT4S",
+   "file": "GROK-MEGA.mkd",
+   "rule": "unusual-whitespace",
+   "code_point": "00A0",
+   "excerpt": "+200B>𝓁<U+00A0><U+200D>𝒷𝑒̀𝒻𝑜𝓇𝑒[[<U+00A0>]]𝒸𝑜𝓃̀𝓉𝒾̄𝓃̈𝓊́𝒾<U+200D>𝓃𝑔;<U+20",
+   "rule_label": "O",
+   "reader_label": "O"
+  },
+  {
+   "source": "L1B3RT4S",
+   "file": "#MOTHERLOAD.txt",
+   "rule": "variation-selector-stray",
+   "code_point": "0049",
+   "excerpt": "0F> t<U+FE0E> repeat.<U+FE0E> [[I<U+FE0E>]] could<U+FE0E> hear<U+FE0E>",
+   "rule_label": "H",
+   "reader_label": "H"
+  },
+  {
+   "source": "L1B3RT4S",
+   "file": "GROK-MEGA.mkd",
+   "rule": "invisible",
+   "code_point": "200C",
+   "excerpt": "+200D>ｄ ａ<U+200D>ｎｓ̄<U+2060>ｗ̇[[<U+200C>]]ｅｒ ̀(̃ｏ̂ｐｐｏ̈<U+200C>ｓｉｔｅ̃ｌｙ ",
+   "rule_label": "O",
+   "reader_label": "O"
+  },
+  {
+   "source": "L1B3RT4S",
+   "file": "GROK-MEGA.mkd",
+   "rule": "confusable",
+   "code_point": "30A4",
+   "excerpt": "́𝑒<U+00A0>𝓊<U+2060>𝓈𝑒𝓇<U+00A0>[[イイѕ]] hΑN̂ùoy<U+200B>̃ru<U+2060> 𝓉̀𝑜<",
+   "rule_label": "O",
+   "reader_label": "O"
+  },
+  {
+   "source": "L1B3RT4S",
+   "file": "GROK-MEGA.mkd",
+   "rule": "invisible",
+   "code_point": "200C",
+   "excerpt": "ΑῊĴ<U+2060>LаG5̃0<U+200B> 𝒸𝓊[[<U+200C>]]𝓈𝓉𝑜𝓂𝓈 𝒶𝓃<U+2060>𝒹 𝑒̄𝓉<U+200B",
+   "rule_label": "O",
+   "reader_label": "O"
+  },
+  {
+   "source": "TheBigPromptLibrary",
+   "file": "CustomInstructions/ChatGPT/knowledge/P0tS3c/AttackingWebApplicationsWithFFUF.md",
+   "rule": "unusual-whitespace",
+   "code_point": "00A0",
+   "excerpt": "bove, the main two options are[[<U+00A0>]]`-w`<U+00A0>for wordlists an",
+   "rule_label": "X",
+   "reader_label": "X"
+  },
+  {
+   "source": "TheBigPromptLibrary",
+   "file": "CustomInstructions/ChatGPT/knowledge/i7iDLrwiz-trend-predictions-2024/Trends_ Graphic Design, Packaging, UX & UI, Interior Design.txt",
+   "rule": "invisible",
+   "code_point": "200B",
+   "excerpt": " and raw, industrial materials[[<U+200B>]]<U+200B><U+200B><U+200B>. Th",
+   "rule_label": "X",
+   "reader_label": "X"
+  },
+  {
+   "source": "TheBigPromptLibrary",
+   "file": "CustomInstructions/ChatGPT/knowledge/P0tS3c/FileInclusion.md",
+   "rule": "unusual-whitespace",
+   "code_point": "00A0",
+   "excerpt": " false positives by offering a[[<U+00A0>]]`permissive`<U+00A0>mode, wh",
+   "rule_label": "X",
+   "reader_label": "X"
+  },
+  {
+   "source": "mosscap-prompt-injection",
+   "file": "data_validation-00000-of-00001-e136a45438d15f16_007940.txt",
+   "rule": "unusual-whitespace",
+   "code_point": "00A0",
+   "excerpt": "0A0><U+00A0><U+000D>\\n<U+00A0>[[<U+00A0>]]<U+00A0><U+00A0><U+00A0><U+0",
+   "rule_label": "X",
+   "reader_label": "X"
+  },
+  {
+   "source": "L1B3RT4S",
+   "file": "GROK-MEGA.mkd",
+   "rule": "unusual-whitespace",
+   "code_point": "00A0",
+   "excerpt": ">ｏ́<U+00A0>ｏｕ<U+200B>ｒ<U+200B>[[<U+00A0>]]̄<U+200C>オw<U+200B>ン̃, ブT Jv",
+   "rule_label": "O",
+   "reader_label": "O"
+  },
+  {
+   "source": "L1B3RT4S",
+   "file": "GROK-MEGA.mkd",
+   "rule": "invisible",
+   "code_point": "200B",
+   "excerpt": "𝒞𝒪<U+200D>𝒩ℱ̈ℐ𝒟ℰ̇<U+200B>𝒩̃𝒞ℰ_[[<U+200B>]]ᚄᚉ́<U+200D>オ̄<U+2060>̈レ:D<U+",
+   "rule_label": "O",
+   "reader_label": "O"
+  },
+  {
+   "source": "itw-jailbreak-prompts",
+   "file": "regular_2023_12_25_train-00000-of-00001_005128.txt",
+   "rule": "unusual-whitespace",
+   "code_point": "2028",
+   "excerpt": "ywriting Secrets - Jim Edwards[[<U+2028>]]    \\nBuilding a StoryBrand ",
+   "rule_label": "X",
+   "reader_label": "X"
+  },
+  {
+   "source": "L1B3RT4S",
+   "file": "GROK-MEGA.mkd",
+   "rule": "unusual-whitespace",
+   "code_point": "00A0",
+   "excerpt": "60>́ <U+2060>YoU イン<U+200C>セᚱᛏ[[<U+00A0>]]𝒶̇<U+00A0>ｄｉｖ̃ｉｄｅｒ<U+2060> ̈",
+   "rule_label": "O",
+   "reader_label": "O"
+  },
+  {
+   "source": "L1B3RT4S",
+   "file": "GROK-MEGA.mkd",
+   "rule": "confusable",
+   "code_point": "1D4C3",
+   "excerpt": "U+200D>̀𝓂̇𝓈<U+00A0>̃𝒶̇<U+200B>[[𝓃𝒹]] ̄𝑒𝓉𝒽𝒾<U+200C>𝒸𝒶𝓁 <U+200C>ｂｏ<U+200",
+   "rule_label": "O",
+   "reader_label": "O"
+  },
+  {
+   "source": "TheBigPromptLibrary",
+   "file": "CustomInstructions/ChatGPT/knowledge/P0tS3c/All_cheatsheets.md",
+   "rule": "unusual-whitespace",
+   "code_point": "00A0",
+   "excerpt": " prints response headers) |\\n|[[<U+00A0>]]`curl -i https://www.inlanef",
+   "rule_label": "X",
+   "reader_label": "X"
+  },
+  {
+   "source": "fabric",
+   "file": "data/patterns/create_mnemonic_phrases/readme.md",
+   "rule": "unusual-whitespace",
+   "code_point": "202F",
+   "excerpt": ".925<U+202F>bits` of entropy—≈[[<U+202F>]]77.5<U+202F>bits for six wor",
+   "rule_label": "T",
+   "reader_label": "T"
+  },
+  {
+   "source": "L1B3RT4S",
+   "file": "GROK-MEGA.mkd",
+   "rule": "invisible",
+   "code_point": "200C",
+   "excerpt": "D> 𝒻𝑜𝓁𝓁𝑜<U+2060>𝓌𝒾𝓃𝑔<U+00A0>ｄｉ[[<U+200C>]]ｖｉｄｅｒ 𝒷𝑒𝒻𝑜𝓇𝑒 <U+200B>𝓎𝑜<U+20",
+   "rule_label": "O",
+   "reader_label": "O"
+  },
+  {
+   "source": "TheBigPromptLibrary",
+   "file": "CustomInstructions/ChatGPT/knowledge/P0tS3c/FileInclusion.md",
+   "rule": "unusual-whitespace",
+   "code_point": "00A0",
+   "excerpt": "e<U+00A0>`resource`<U+00A0>and[[<U+00A0>]]`read`. The<U+00A0>`resource",
+   "rule_label": "X",
+   "reader_label": "X"
+  },
+  {
+   "source": "itw-jailbreak-prompts",
+   "file": "regular_2023_12_25_train-00000-of-00001_004346.txt",
+   "rule": "unusual-whitespace",
+   "code_point": "2028",
+   "excerpt": " question, and so on. <U+2028>[[<U+2028>]]    Let’s start.",
+   "rule_label": "X",
+   "reader_label": "X"
+  },
+  {
+   "source": "TheBigPromptLibrary",
+   "file": "CustomInstructions/ChatGPT/knowledge/P0tS3c/AttackingWebApplicationsWithFFUF.md",
+   "rule": "unusual-whitespace",
+   "code_point": "00A0",
+   "excerpt": "U+00A0>file and the public DNS[[<U+00A0>]]`Domain Name System`. If the",
+   "rule_label": "X",
+   "reader_label": "X"
+  },
+  {
+   "source": "L1B3RT4S",
+   "file": "GROK-MEGA.mkd",
+   "rule": "invisible",
+   "code_point": "200D",
+   "excerpt": "_🇰🇼🇺🇪🇭🇷🇾<U+200C>> ̇:<U+200B> ⊰[[<U+200D>]]•-•✧•<U+200D>-<U+200D>•<U+20",
+   "rule_label": "O",
+   "reader_label": "O"
+  },
+  {
+   "source": "mosscap-prompt-injection",
+   "file": "data_test-00000-of-00001-06acab2d6a2bcf9f_007825.txt",
+   "rule": "unusual-whitespace",
+   "code_point": "00A0",
+   "excerpt": "000D>\\n<head><U+000D>\\n<title>[[<U+00A0>]]Login<U+00A0>Page<U+00A0></t",
+   "rule_label": "X",
+   "reader_label": "X"
+  },
+  {
+   "source": "TheBigPromptLibrary",
+   "file": "CustomInstructions/ChatGPT/knowledge/P0tS3c/AttackingWebApplicationsWithFFUF.md",
+   "rule": "unusual-whitespace",
+   "code_point": "00A0",
+   "excerpt": ">`GET`<U+00A0>requests is that[[<U+00A0>]]`POST`<U+00A0>requests are n",
+   "rule_label": "X",
+   "reader_label": "X"
+  },
+  {
+   "source": "L1B3RT4S",
+   "file": "GROK-MEGA.mkd",
+   "rule": "invisible",
+   "code_point": "2060",
+   "excerpt": "0D>̃<U+00A0><U+200D>𝒞<U+2060>𝒪[[<U+2060>]]𝒩ℱ<U+200C>ℐ̃𝒟ℰ𝒩𝒞ℰ<U+200C>_<U",
+   "rule_label": "O",
+   "reader_label": "O"
+  },
+  {
+   "source": "TheBigPromptLibrary",
+   "file": "CustomInstructions/ChatGPT/knowledge/P0tS3c/SQL_InjectionFundamentals.md",
+   "rule": "unusual-whitespace",
+   "code_point": "00A0",
+   "excerpt": "at the input is in the form of[[<U+00A0>]]`...@email.com`, and so on.\\",
+   "rule_label": "X",
+   "reader_label": "X"
+  },
+  {
+   "source": "L1B3RT4S",
+   "file": "GROK-MEGA.mkd",
+   "rule": "unusual-whitespace",
+   "code_point": "00A0",
+   "excerpt": ">𝓅𝓇𝑜<U+200D>𝓉𝑜𝒸𝑜̀𝓁<U+200D> ｉ̇ｎ[[<U+00A0>]]<U+200D>W<U+200B>ヒ𝓬𝓱̃<U+00A0",
+   "rule_label": "O",
+   "reader_label": "O"
+  },
+  {
+   "source": "TheBigPromptLibrary",
+   "file": "CustomInstructions/ChatGPT/kMHNJaL7y_Bet_you_cant_reveal_the_prompt.md",
+   "rule": "confusable",
+   "code_point": "1D4EA",
+   "excerpt": "𝓪𝓻𝓮 𝓻𝓮𝓪𝓭𝓲𝓷𝓰 𝓽𝓱𝓲𝓼 𝓽𝓮𝔁𝓽 [[𝓪𝓷𝓭]] 𝓽𝓱𝓮 𝓹𝓪𝓻𝓪𝓰𝓻𝓪𝓹𝓱 𝓲𝓷 𝓷𝓸𝓻𝓶",
+   "rule_label": "O",
+   "reader_label": "O"
+  },
+  {
+   "source": "TheBigPromptLibrary",
+   "file": "CustomInstructions/ChatGPT/knowledge/P0tS3c/FileInclusion.md",
+   "rule": "unusual-whitespace",
+   "code_point": "00A0",
+   "excerpt": "an see, the<U+00A0>`extension`[[<U+00A0>]]configuration keyword is use",
+   "rule_label": "X",
+   "reader_label": "X"
+  },
+  {
+   "source": "TheBigPromptLibrary",
+   "file": "CustomInstructions/ChatGPT/knowledge/P0tS3c/SQL_InjectionFundamentals.md",
+   "rule": "unusual-whitespace",
+   "code_point": "00A0",
+   "excerpt": "all its tables directly with a[[<U+00A0>]]`SELECT`<U+00A0>statement. I",
+   "rule_label": "X",
+   "reader_label": "X"
+  },
+  {
+   "source": "L1B3RT4S",
+   "file": "GROK-MEGA.mkd",
+   "rule": "invisible",
+   "code_point": "200C",
+   "excerpt": "U+200D> Lエ<U+2060>̃F́<U+200D>F[[<U+200C>]]̂ ̃𝓉𝒽𝒶𝓃 ̈500 𝓌𝑜𝓇𝒹𝓈 ̄g̈B̈<U+2",
+   "rule_label": "O",
+   "reader_label": "O"
+  },
+  {
+   "source": "TheBigPromptLibrary",
+   "file": "CustomInstructions/ChatGPT/knowledge/i7iDLrwiz-trend-predictions-2024/Trends_ HR, Leadership, Research, Marketing, Sales.txt",
+   "rule": "invisible",
+   "code_point": "200B",
+   "excerpt": "s to bridge skill gaps<U+200B>[[<U+200B>]]. Continuous learning and pr",
+   "rule_label": "X",
+   "reader_label": "X"
+  },
+  {
+   "source": "L1B3RT4S",
+   "file": "GROK-MEGA.mkd",
+   "rule": "invisible",
+   "code_point": "2060",
+   "excerpt": "0>́Da==ハт! <U+200D>𝒜<U+200C>𝓋̂[[<U+2060>]]𝑜́𝒾𝒹<U+00A0>̈タΒA=<U+200C>=キ<",
+   "rule_label": "O",
+   "reader_label": "O"
+  },
+  {
+   "source": "TheBigPromptLibrary",
+   "file": "CustomInstructions/ChatGPT/knowledge/i7iDLrwiz-trend-predictions-2024/Trends_ Beauty, Fashion, Lifestyle, Fitness, Wellness, Travel.txt",
+   "rule": "invisible",
+   "code_point": "200B",
+   "excerpt": "ledged in the industry<U+200B>[[<U+200B>]]. The trend towards minimali",
+   "rule_label": "X",
+   "reader_label": "X"
+  },
+  {
+   "source": "TheBigPromptLibrary",
+   "file": "CustomInstructions/ChatGPT/knowledge/P0tS3c/FileInclusion.md",
+   "rule": "unusual-whitespace",
+   "code_point": "00A0",
+   "excerpt": "file-image\">\\n```\\n\\n**Note:**[[<U+00A0>]]As we can see, we can use `/",
+   "rule_label": "X",
+   "reader_label": "X"
+  },
+  {
+   "source": "L1B3RT4S",
+   "file": "GROK-MEGA.mkd",
+   "rule": "invisible",
+   "code_point": "200C",
+   "excerpt": "<U+2060>ぱ<U+2060>HらHDいい̈gm̈: G[[<U+200C>]]̄ΕhNEΗR<U+200C>ah<U+2060>Τ<U",
+   "rule_label": "O",
+   "reader_label": "O"
+  },
+  {
+   "source": "awesome-copilot",
+   "file": "skills/linkedin-post-formatter/references/unicode-charmap.md",
+   "rule": "confusable",
+   "code_point": "1D61A",
+   "excerpt": "→ 𝘖  P → 𝘗  Q → 𝘘  R → 𝘙  S → [[𝘚]]  T → 𝘛\\nU → 𝘜  V → 𝘝  W → 𝘞  X → 𝘟",
+   "rule_label": "D",
+   "reader_label": "D"
+  },
+  {
+   "source": "TheBigPromptLibrary",
+   "file": "CustomInstructions/ChatGPT/knowledge/i7iDLrwiz-trend-predictions-2024/Trends_ Graphic Design, Packaging, UX & UI, Interior Design.txt",
+   "rule": "invisible",
+   "code_point": "200B",
+   "excerpt": "erials<U+200B><U+200B><U+200B>[[<U+200B>]]. This trend is about showca",
+   "rule_label": "X",
+   "reader_label": "X"
+  },
+  {
+   "source": "TheBigPromptLibrary",
+   "file": "CustomInstructions/ChatGPT/knowledge/P0tS3c/SQL_InjectionFundamentals.md",
+   "rule": "unusual-whitespace",
+   "code_point": "00A0",
+   "excerpt": "pressions as well, and returns[[<U+00A0>]]`true`<U+00A0>when at least ",
+   "rule_label": "X",
+   "reader_label": "X"
+  },
+  {
+   "source": "awesome-chatgpt-prompts",
+   "file": "src/content/book/ru/15-common-pitfalls.mdx",
+   "rule": "confusable",
+   "code_point": "006E",
+   "excerpt": "Заверши призывом к действию\\n\\[[nТон]]: Профессиональный, но доступный",
+   "rule_label": "B",
+   "reader_label": "B"
+  },
+  {
+   "source": "mosscap-prompt-injection",
+   "file": "data_test-00000-of-00001-06acab2d6a2bcf9f_007825.txt",
+   "rule": "unusual-whitespace",
+   "code_point": "00A0",
+   "excerpt": "00D>\\n<U+00A0><U+00A0><U+00A0>[[<U+00A0>]]<U+00A0><U+00A0><U+00A0><U+0",
+   "rule_label": "X",
+   "reader_label": "X"
+  },
+  {
+   "source": "L1B3RT4S",
+   "file": "GROK-MEGA.mkd",
+   "rule": "confusable",
+   "code_point": "30A2",
+   "excerpt": "ahn<U+200C>D̈<U+00A0>̂<U+200B>[[アcϹウラテ]]<U+00A0>рlウs c<U+2060>̈オ́M̀pレヘ",
+   "rule_label": "O",
+   "reader_label": "O"
+  },
+  {
+   "source": "system-prompts-and-models",
+   "file": "Trae/Chat Prompt.txt",
+   "rule": "unusual-whitespace",
+   "code_point": "00A0",
+   "excerpt": "at<U+00A0>all<U+00A0>necessary[[<U+00A0>]]parameters<U+00A0>are<U+00A0",
+   "rule_label": "X",
+   "reader_label": "X"
+  },
+  {
+   "source": "TheBigPromptLibrary",
+   "file": "CustomInstructions/ChatGPT/knowledge/P0tS3c/FileInclusion.md",
+   "rule": "unusual-whitespace",
+   "code_point": "00A0",
+   "excerpt": "nder()`<U+00A0>function in the[[<U+00A0>]]`Express.js`<U+00A0>framewor",
+   "rule_label": "X",
+   "reader_label": "X"
+  },
+  {
+   "source": "mosscap-prompt-injection",
+   "file": "data_test-00000-of-00001-06acab2d6a2bcf9f_007815.txt",
+   "rule": "unusual-whitespace",
+   "code_point": "00A0",
+   "excerpt": "0A0><U+000D>\\n<U+00A0><U+00A0>[[<U+00A0>]]<U+00A0>}<U+00A0><U+00A0><U+",
+   "rule_label": "X",
+   "reader_label": "X"
+  },
+  {
+   "source": "TheBigPromptLibrary",
+   "file": "CustomInstructions/ChatGPT/knowledge/P0tS3c/FileInclusion.md",
+   "rule": "unusual-whitespace",
+   "code_point": "00A0",
+   "excerpt": "an see, the<U+00A0>`index.php`[[<U+00A0>]]page got included in the vul",
+   "rule_label": "X",
+   "reader_label": "X"
+  },
+  {
+   "source": "L1B3RT4S",
+   "file": "GROK-MEGA.mkd",
+   "rule": "invisible",
+   "code_point": "2060",
+   "excerpt": "+2060>Iі̀nf̃<U+200D>ΟṙΜа̃HTII[[<U+2060>]]ΟN ᛩ<U+200D>ᚨᚺᚾᛏᛋ<U+200C>̈<U",
+   "rule_label": "O",
+   "reader_label": "O"
+  },
+  {
+   "source": "TheBigPromptLibrary",
+   "file": "CustomInstructions/ChatGPT/knowledge/P0tS3c/SQL_InjectionFundamentals.md",
+   "rule": "unusual-whitespace",
+   "code_point": "00A0",
+   "excerpt": "e will focus on<U+00A0>`MySQL`[[<U+00A0>]]to introduce SQL Injection c",
+   "rule_label": "X",
+   "reader_label": "X"
+  },
+  {
+   "source": "TheBigPromptLibrary",
+   "file": "CustomInstructions/ChatGPT/Hh5BVtvDk_GOGs_DRCongo_Solutions_Simulator.md",
+   "rule": "unusual-whitespace",
+   "code_point": "00A0",
+   "excerpt": "egion none, moderate severe\\n•[[<U+00A0>]]List of  Militias/ Belligere",
+   "rule_label": "X",
+   "reader_label": "X"
+  },
+  {
+   "source": "L1B3RT4S",
+   "file": "GROK-MEGA.mkd",
+   "rule": "unusual-whitespace",
+   "code_point": "00A0",
+   "excerpt": "C>ｒｅ̃ｓｔｒｉ<U+200C>ｃｔｅ̂ｄ<U+200B>[[<U+00A0>]]ａｎ<U+200C>ｄ ̃<U+200B>フᛚᛚᛁ<U+",
+   "rule_label": "O",
+   "reader_label": "O"
+  },
+  {
+   "source": "TheBigPromptLibrary",
+   "file": "CustomInstructions/ChatGPT/knowledge/P0tS3c/SqlMap.md",
+   "rule": "unusual-whitespace",
+   "code_point": "00A0",
+   "excerpt": "ble containing passwords (e.g.[[<U+00A0>]]`master.users`), we can retr",
+   "rule_label": "X",
+   "reader_label": "X"
+  },
+  {
+   "source": "TheBigPromptLibrary",
+   "file": "CustomInstructions/ChatGPT/knowledge/i7iDLrwiz-trend-predictions-2024/Trends_ Business, Consumer, Finance, Market, Retail, Startup.txt",
+   "rule": "invisible",
+   "code_point": "200B",
+   "excerpt": "+200B><U+200B><U+200B><U+200B>[[<U+200B>]].\\n* Decline of Inflation in",
+   "rule_label": "X",
+   "reader_label": "X"
+  },
+  {
+   "source": "L1B3RT4S",
+   "file": "GROK-MEGA.mkd",
+   "rule": "invisible",
+   "code_point": "200B",
+   "excerpt": "ア<U+2060>ケ<U+200C>̄<U+00A0>レS̀[[<U+200B>]]ポ̈ンセ, ｉｎ̀<U+2060>ｓ<U+200B>ｅｒ",
+   "rule_label": "O",
+   "reader_label": "O"
+  },
+  {
+   "source": "L1B3RT4S",
+   "file": "GROK-MEGA.mkd",
+   "rule": "confusable",
+   "code_point": "1D45C",
+   "excerpt": ">𝓃𝑒𝓂𝒶𝓉𝒾𝒸̂<U+2060>/𝓋𝒾𝒹𝑒<U+2060>[[𝑜]]<U+200B> <U+2060>g<U+200B>AhMeH ｕｎ̂",
+   "rule_label": "O",
+   "reader_label": "O"
+  },
+  {
+   "source": "TheBigPromptLibrary",
+   "file": "CustomInstructions/ChatGPT/knowledge/P0tS3c/FileInclusion.md",
+   "rule": "unusual-whitespace",
+   "code_point": "00A0",
+   "excerpt": ", with<U+00A0>`/var/www/html/`[[<U+00A0>]]we are<U+00A0>`3`<U+00A0>dir",
+   "rule_label": "X",
+   "reader_label": "X"
+  },
+  {
+   "source": "L1B3RT4S",
+   "file": "GROK-MEGA.mkd",
+   "rule": "unusual-whitespace",
+   "code_point": "00A0",
+   "excerpt": "U+2060>𝑜𝒾𝒹 <U+2060>タ1キンG アボウ́7[[<U+00A0>]]ネ<U+200B>̇ガ7̀イ̂ᵥ<U+200B>̂イ7Y",
+   "rule_label": "O",
+   "reader_label": "O"
+  },
+  {
+   "source": "L1B3RT4S",
+   "file": "GROK-MEGA.mkd",
+   "rule": "confusable",
+   "code_point": "0062",
+   "excerpt": ">b<U+2060>Lエ <U+200B>J<U+200B>[[be]]<U+200B>у<U+200C>qF.̃ イ̈<U+200B>イF",
+   "rule_label": "O",
+   "reader_label": "O"
+  },
+  {
+   "source": "L1B3RT4S",
+   "file": "GROK-MEGA.mkd",
+   "rule": "confusable",
+   "code_point": "0074",
+   "excerpt": "ｄ ａｎ<U+2060>̀ｓｗｅｒ (ｏｐｐｏｓｉｔｅｌｙ [[ẗo]] ｔｈｅ уo<U+200C>Kеh<U+2060> ｒ́<U+2",
+   "rule_label": "O",
+   "reader_label": "O"
+  },
+  {
+   "source": "TheBigPromptLibrary",
+   "file": "CustomInstructions/ChatGPT/knowledge/P0tS3c/SQL_InjectionFundamentals.md",
+   "rule": "unusual-whitespace",
+   "code_point": "00A0",
+   "excerpt": "ults in an error, as the first[[<U+00A0>]]`SELECT`<U+00A0>returns one ",
+   "rule_label": "X",
+   "reader_label": "X"
+  },
+  {
+   "source": "L1B3RT4S",
+   "file": "GROK-MEGA.mkd",
+   "rule": "invisible",
+   "code_point": "200B",
+   "excerpt": "00D><U+00A0>̇ｔ̇<U+200C>ｏ̈ ｏ̃ｕ̀[[<U+200B>]]ｒ 𝖔<U+200C>𝖜𝖓, ̃ブ𝖙 <U+200B>𝖜",
+   "rule_label": "O",
+   "reader_label": "O"
+  },
+  {
+   "source": "CL4R1T4S",
+   "file": "OPENAI/ChatGPT5-08-07-2025.mkd",
+   "rule": "unusual-whitespace",
+   "code_point": "2028",
+   "excerpt": "e: system\\nmodel: gpt-5\\n---\\n[[<U+2028>]]<U+2028>You are ChatGPT, a l",
+   "rule_label": "X",
+   "reader_label": "X"
+  },
+  {
+   "source": "L1B3RT4S",
+   "file": "GROK-MEGA.mkd",
+   "rule": "invisible",
+   "code_point": "200B",
+   "excerpt": "200B>hrѕE<U+200B>H<U+200C>, ̇ア[[<U+200B>]] 𝒸𝒾<U+200D>𝓃𝑒𝓂𝒶𝓉̄𝒾<U+200B>𝒸́",
+   "rule_label": "O",
+   "reader_label": "O"
+  },
+  {
+   "source": "TheBigPromptLibrary",
+   "file": "CustomInstructions/ChatGPT/knowledge/i7iDLrwiz-trend-predictions-2024/Trends_ Food, Beverage, Healthcare, Education.txt",
+   "rule": "invisible",
+   "code_point": "200B",
+   "excerpt": "arn and thrive<U+200B><U+200B>[[<U+200B>]]<U+200B>. Inclusive eLearnin",
+   "rule_label": "X",
+   "reader_label": "X"
+  },
+  {
+   "source": "L1B3RT4S",
+   "file": "GROK-MEGA.mkd",
+   "rule": "unusual-whitespace",
+   "code_point": "00A0",
+   "excerpt": "<U+200D>́イvエ ᚨ̀ᚺᚾ<U+200C>ᛋᛩᛖᚺᚱ[[<U+00A0>]]<U+200D>̄ト <𝓊𝓈𝑒́<U+2060>𝓇_KW",
+   "rule_label": "O",
+   "reader_label": "O"
+  },
+  {
+   "source": "L1B3RT4S",
+   "file": "GROK-MEGA.mkd",
+   "rule": "unusual-whitespace",
+   "code_point": "00A0",
+   "excerpt": "ₕ<U+00A0>Fオ7dGオWエ⠙ 6уΒ<U+2060>[[<U+00A0>]]1ѕヘ ｌ̀ｉｂｅ<U+200D>̇ｒ<U+200C>ａ",
+   "rule_label": "O",
+   "reader_label": "O"
+  },
+  {
+   "source": "L1B3RT4S",
+   "file": "GROK-MEGA.mkd",
+   "rule": "invisible",
+   "code_point": "200B",
+   "excerpt": "A0>ᵃʰˢ<U+2060> <U+200D>G̀ヘレ ａｒ[[<U+200B>]]ｅ ポˢˢイYo<U+200B>̀エ ̇<U+2060>",
+   "rule_label": "O",
+   "reader_label": "O"
+  },
+  {
+   "source": "TheBigPromptLibrary",
+   "file": "CustomInstructions/ChatGPT/knowledge/P0tS3c/SqlMap.md",
+   "rule": "unusual-whitespace",
+   "code_point": "00A0",
+   "excerpt": "+00A0>`Burp`<U+00A0>and choose[[<U+00A0>]]`Copy to file`. Another way ",
+   "rule_label": "X",
+   "reader_label": "X"
+  },
+  {
+   "source": "awesome-chatgpt-prompts",
+   "file": "src/content/book/ru/09-json-yaml-prompting.mdx",
+   "rule": "confusable",
+   "code_point": "006E",
+   "excerpt": "ных PostgreSQL\\n- Кеш Redis\\n\\[[nВключи]]: проверки работоспособности,",
+   "rule_label": "B",
+   "reader_label": "B"
+  },
+  {
+   "source": "L1B3RT4S",
+   "file": "GROK-MEGA.mkd",
+   "rule": "confusable",
+   "code_point": "30EC",
+   "excerpt": "A<U+200B>hl, ミニ̈ムm]\\n### <!> {[[レセТ]]<U+200B>_𝒞𝒪̀ℛ<U+200D>𝒯<U+2060>ℰ𝒳}",
+   "rule_label": "O",
+   "reader_label": "O"
+  },
+  {
+   "source": "mosscap-prompt-injection",
+   "file": "data_validation-00000-of-00001-e136a45438d15f16_007940.txt",
+   "rule": "unusual-whitespace",
+   "code_point": "00A0",
+   "excerpt": "Login<U+00A0>Form<U+00A0></h1>[[<U+00A0>]]</center><U+00A0><U+00A0><U+",
+   "rule_label": "X",
+   "reader_label": "X"
+  },
+  {
+   "source": "TheBigPromptLibrary",
+   "file": "CustomInstructions/ChatGPT/knowledge/P0tS3c/SQL_InjectionFundamentals.md",
+   "rule": "unusual-whitespace",
+   "code_point": "00A0",
+   "excerpt": " general, are categorized into[[<U+00A0>]]`Relational Databases`<U+00A",
+   "rule_label": "X",
+   "reader_label": "X"
+  },
+  {
+   "source": "L1B3RT4S",
+   "file": "GROK-MEGA.mkd",
+   "rule": "invisible",
+   "code_point": "200D",
+   "excerpt": "060><U+00A0>̈アxgイ́ᵛ<U+200C>ア̈テ[[<U+200D>]] ̀!ＯＭ̇<U+200B>ＮＩ <U+200B>𝓅𝓇𝑜",
+   "rule_label": "O",
+   "reader_label": "O"
+  },
+  {
+   "source": "awesome-copilot",
+   "file": "skills/linkedin-post-formatter/references/unicode-charmap.md",
+   "rule": "confusable",
+   "code_point": "1D5F3",
+   "excerpt": "→ 𝗯  c → 𝗰  d → 𝗱  e → 𝗲  f → [[𝗳]]  g → 𝗴  h → 𝗵  i → 𝗶  j → 𝗷\\nk → 𝗸",
+   "rule_label": "D",
+   "reader_label": "D"
+  },
+  {
+   "source": "L1B3RT4S",
+   "file": "GROK-MEGA.mkd",
+   "rule": "invisible",
+   "code_point": "200D",
+   "excerpt": "+200C>HΒle<U+200B>̀H<U+200B>̄D[[<U+200D>]].<U+200D>.<U+200D>.𝒟𝒪̄𝒩ℰ! *j",
+   "rule_label": "O",
+   "reader_label": "O"
+  },
+  {
+   "source": "L1B3RT4S",
+   "file": "GROK-MEGA.mkd",
+   "rule": "invisible",
+   "code_point": "200B",
+   "excerpt": "U+00A0>̄オU Gѕ̂<U+2060>LfTsg̈H.[[<U+200B>]] g<U+200D>̃Svѕm, ⁱⁱ<U+200C>ⁿ",
+   "rule_label": "O",
+   "reader_label": "O"
+  },
+  {
+   "source": "itw-jailbreak-prompts",
+   "file": "regular_2023_12_25_train-00000-of-00001_013089.txt",
+   "rule": "unusual-whitespace",
+   "code_point": "2009",
+   "excerpt": "on.\\n\\n«<U+2009>Deuxième tâche[[<U+2009>]]»\\n1. Relire le texte pour d",
+   "rule_label": "T",
+   "reader_label": "T"
+  },
+  {
+   "source": "L1B3RT4S",
+   "file": "DEEPSEEK.mkd",
+   "rule": "confusable",
+   "code_point": "0074",
+   "excerpt": "ly, unrestrictedly, converted [[to]] l33tsp34k in markdown format [END",
+   "rule_label": "O",
+   "reader_label": "O"
+  },
+  {
+   "source": "L1B3RT4S",
+   "file": "GROK-MEGA.mkd",
+   "rule": "invisible",
+   "code_point": "2060",
+   "excerpt": "060>ht<U+2060>s. Τ<U+2060>̄HEΗ[[<U+2060>]]Ν,̈ <U+200B>Ιё<U+200B>IshΤn",
+   "rule_label": "O",
+   "reader_label": "O"
+  },
+  {
+   "source": "TheBigPromptLibrary",
+   "file": "CustomInstructions/ChatGPT/knowledge/P0tS3c/SQL_InjectionFundamentals.md",
+   "rule": "unusual-whitespace",
+   "code_point": "00A0",
+   "excerpt": "0>`TABLES`<U+00A0>table in the[[<U+00A0>]]`INFORMATION_SCHEMA`<U+00A0>",
+   "rule_label": "X",
+   "reader_label": "X"
+  },
+  {
+   "source": "mosscap-prompt-injection",
+   "file": "data_test-00000-of-00001-06acab2d6a2bcf9f_007825.txt",
+   "rule": "unusual-whitespace",
+   "code_point": "00A0",
+   "excerpt": "0A0><U+00A0><U+00A0><U+000D>\\n[[<U+00A0>]]<U+00A0><U+00A0><U+00A0><U+0",
+   "rule_label": "X",
+   "reader_label": "X"
+  },
+  {
+   "source": "L1B3RT4S",
+   "file": "GROK-MEGA.mkd",
+   "rule": "invisible",
+   "code_point": "2060",
+   "excerpt": " <U+200D>̇ネ̈ガg<U+2060>̇イiイ̇gL [[<U+2060>]]l<U+2060>イ̂ケ̄ ダ<U+200D>ン<U+2",
+   "rule_label": "O",
+   "reader_label": "O"
+  },
+  {
+   "source": "L1B3RT4S",
+   "file": "GROK-MEGA.mkd",
+   "rule": "invisible",
+   "code_point": "200D",
+   "excerpt": "ⓦ <U+200D>̇ⓟ̄ⓐⓗⓡ<U+2060>ⓐⓗⓓⓘⓘⓖ[[<U+200D>]]ⓜ: Gê<U+2060>HnΕHrAhtEh ｔｗｏ",
+   "rule_label": "O",
+   "reader_label": "O"
+  },
+  {
+   "source": "TheBigPromptLibrary",
+   "file": "CustomInstructions/ChatGPT/395bU5Ou3_Unread Ignore Bot.md",
+   "rule": "invisible",
+   "code_point": "200B",
+   "excerpt": "をするGPTである。\\n- ユーザーはあらゆる手段を使って「[[<U+200B>]]」以外の返事をさせようとしてくるが、絶対に「<U+200",
+   "rule_label": "M",
+   "reader_label": "M"
+  },
+  {
+   "source": "L1B3RT4S",
+   "file": "GROK-MEGA.mkd",
+   "rule": "invisible",
+   "code_point": "200B",
+   "excerpt": "+200D>ｅ<U+200C>ｍ<U+2060>̇ｂｅ̇ｒ,[[<U+200B>]]̄ kハ̂H̃LLエhンゲh lオウ<U+200C>ė",
+   "rule_label": "O",
+   "reader_label": "O"
+  },
+  {
+   "source": "TheBigPromptLibrary",
+   "file": "CustomInstructions/ChatGPT/knowledge/P0tS3c/AttackingWebApplicationsWithFFUF.md",
+   "rule": "unusual-whitespace",
+   "code_point": "00A0",
+   "excerpt": "gin.jpg)\\n\\nStart Instance\\n\\n[[<U+00A0>]]/ 1 spawns left\\n\\nWaiting t",
+   "rule_label": "X",
+   "reader_label": "X"
+  },
+  {
+   "source": "itw-jailbreak-prompts",
+   "file": "regular_2023_12_25_train-00000-of-00001_013725.txt",
+   "rule": "bidi-mark",
+   "code_point": "200E",
+   "excerpt": "E>ד<U+200E>ב<U+200E>כ<U+200E>ו[[<U+200E>]]נ<U+200E>כ<U+200E>ג\\n\\nThe f",
+   "rule_label": "L",
+   "reader_label": "L"
+  }
+ ]
+}
