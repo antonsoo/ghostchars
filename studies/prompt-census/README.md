@@ -34,7 +34,7 @@ Two yardsticks, neither of them ghostchars' own output.
 
 **Payloads decode or they do not.** `payloads.py` searches every document with four decoders written for this study and sharing no code with ghostchars: tag characters (U+E0020 to U+E007E are ASCII shifted by U+E0000), variation-selector bytes (VS1-16 are 0-15, VS17-256 are 16-255), one bit per VS15/VS16 (read both ways round) and zero-width binary (two zero-width characters as the bits). A byte payload is unwrapped again while it still holds selectors. A candidate counts only if it is at least 8 characters of clean UTF-8, so a stray selector cannot produce a "payload". The script then asks whether a finding from each build carries the same text.
 
-**Everything else was read.** Every finding of 0.1.5 at warning level or above was put in a group of (source, file, rule, severity, first code point) or, for lookalikes, (..., mixed-script or collision): 468 groups. I read two findings from every group in context and assigned one of ten categories, which I wrote down after seeing the count of findings per rule and before reading any finding or counting labels:
+**Everything else was read.** Every finding of 0.1.5 at warning level or above was put in a group of (source, file, rule, severity, first code point) or, for lookalikes, (..., mixed-script or collision): 468 groups. I read two findings from every group in context and assigned one of ten categories, which I wrote down after seeing the count of findings per rule and the decoded payloads, and before reading the other findings or counting labels:
 
 | | |
 |---|---|
