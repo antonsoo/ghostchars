@@ -2,6 +2,7 @@ import { scanBidi } from './rules/bidi.js';
 import { scanConfusables } from './rules/confusables.js';
 import { scanInvisible } from './rules/invisible.js';
 import { scanTags } from './rules/tags.js';
+import { scanStyledText } from './rules/styledText.js';
 import { scanVariationSelectors } from './rules/variationSelectors.js';
 import { scanWhitespaceAndControl } from './rules/whitespaceControl.js';
 import type { Finding, ScanOptions, ScanResult, Severity } from './types.js';
@@ -34,6 +35,7 @@ export function scanText(text: string, options: ScanOptions = {}): ScanResult {
     ...scanVariationSelectors(text, positionAt),
     ...scanInvisible(text, positionAt),
     ...scanConfusables(text),
+    ...scanStyledText(text, positionAt),
     ...scanWhitespaceAndControl(text, positionAt),
   ];
 

@@ -8,6 +8,7 @@ export type RuleId =
   | 'variation-selector-stray'
   | 'invisible'
   | 'confusable'
+  | 'styled-text'
   | 'unusual-whitespace'
   | 'control-character';
 

@@ -10,6 +10,7 @@ import { formatGithub } from './formatters/github.js';
 import { formatJson } from './formatters/json.js';
 import { formatPretty } from './formatters/pretty.js';
 import { formatSarif } from './formatters/sarif.js';
+import { formatSummary } from './formatters/summary.js';
 import { computeFix, formatDryRun } from './fix.js';
 import { revealCommand } from './revealCommand.js';
 import type { ScanReport } from './report.js';
@@ -27,7 +28,7 @@ Usage:
   ghostchars --help | --version
 
 Options:
-  --format <pretty|json|sarif|github>  Output format (default: pretty)
+  --format <pretty|summary|json|sarif|github>  Output format (default: pretty; summary is one line per kind of finding in a file)
   --fix                                 Remove fixable findings in place
   --dry-run                             With --fix, preview changes instead of writing
   --config <path>                       Path to a .ghostcharsrc.json (default: ./.ghostcharsrc.json)
@@ -140,7 +141,7 @@ export function main(argv: string[]): number {
   report.durationMs = performance.now() - start;
 
   if (!(args.fix && args.dryRun)) {
-    const output = args.format === 'json' ? formatJson(report) : args.format === 'sarif' ? formatSarif(report) : args.format === 'github' ? formatGithub(report) : formatPretty(report);
+    const output = args.format === 'json' ? formatJson(report) : args.format === 'sarif' ? formatSarif(report) : args.format === 'github' ? formatGithub(report) : args.format === 'summary' ? formatSummary(report) : formatPretty(report);
     console.log(output);
   } else if (!hadFixes && !args.quiet) {
     console.log(colors.green('ghostchars: nothing to fix.'));

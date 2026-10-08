@@ -85,7 +85,11 @@ export function scanWhitespaceAndControl(text: string, positionAt: PositionLooku
 
     const cp = describeCodePoint(text, index, positionAt);
     if (UNUSUAL_WHITESPACE.has(cp.codePoint)) {
-      findings.push(finding(cp, 'unusual-whitespace', 'warning', `${unicodeName(cp.codePoint)} looks like a normal space or line break but is a distinct code point -- it can split tokens, defeat string/keyword matching, or hide in a diff.`, 'Replace with a regular space (U+0020) or ASCII newline.'));
+      // Read in context across 83,000 public prompts and agent-instruction files, all but a handful of
+      // these no-break spaces and line separators had been left by copying from a web page or a chat
+      // window (studies/prompt-census).
+      const usuallyPasted = cp.codePoint === NBSP || cp.codePoint === 0x2028 || cp.codePoint === 0x2029 ? ' Usually left by pasting from a web page or chat window.' : '';
+      findings.push(finding(cp, 'unusual-whitespace', 'warning', `${unicodeName(cp.codePoint)} looks like a normal space or line break but is a distinct code point -- it can split tokens, defeat string/keyword matching, or hide in a diff.${usuallyPasted}`, 'Replace with a regular space (U+0020) or ASCII newline.'));
     } else if (cp.codePoint === BRAILLE_BLANK) {
       findings.push(finding(cp, 'unusual-whitespace', 'warning', 'BRAILLE PATTERN BLANK (U+2800) renders as an empty space but is not whitespace: trim() and word splitting leave it in, so it can pass for a blank name or a gap between words.', 'Replace with a regular space (U+0020); it belongs only between braille patterns.'));
     } else if (isC0Control(cp.codePoint) || isC1Control(cp.codePoint)) {

@@ -6614,6 +6614,101 @@ function isRegionalIndicator(cp) {
   return cp >= REGIONAL_INDICATOR_START && cp <= REGIONAL_INDICATOR_END;
 }
 
+// src/core/rules/styledText.ts
+var SMALL_CAPITALS = /* @__PURE__ */ new Map([
+  [7424, "a"],
+  [665, "b"],
+  [7428, "c"],
+  [7429, "d"],
+  [7431, "e"],
+  [42800, "f"],
+  [610, "g"],
+  [668, "h"],
+  [618, "i"],
+  [7434, "j"],
+  [7435, "k"],
+  [671, "l"],
+  [7437, "m"],
+  [628, "n"],
+  [7439, "o"],
+  [7448, "p"],
+  [640, "r"],
+  [42801, "s"],
+  [7451, "t"],
+  [7452, "u"],
+  [7456, "v"],
+  [7457, "w"],
+  [655, "y"],
+  [7458, "z"]
+]);
+var STYLED_CLASS = "[\\u{1D400}-\\u{1D7FF}\\u{FF10}-\\u{FF19}\\u{FF21}-\\u{FF3A}\\u{FF41}-\\u{FF5A}\\u{24B6}-\\u{24E9}\\u{1F130}-\\u{1F189}" + [...SMALL_CAPITALS.keys()].map((cp) => `\\u{${cp.toString(16)}}`).join("") + "]";
+var STYLED_CHAR_RE = new RegExp(STYLED_CLASS, "u");
+function foldStyled(ch) {
+  const cp = ch.codePointAt(0);
+  const small = SMALL_CAPITALS.get(cp);
+  if (small !== void 0) return small;
+  if (cp >= 127312 && cp <= 127337) return String.fromCharCode(65 + cp - 127312);
+  if (cp >= 127344 && cp <= 127369) return String.fromCharCode(65 + cp - 127344);
+  const folded = ch.normalize("NFKC");
+  return /^[A-Za-z0-9]+$/.test(folded) ? folded : void 0;
+}
+var PASSAGE_RE = new RegExp(`${STYLED_CLASS}+(?:[^\\p{L}\\p{N}]{1,3}${STYLED_CLASS}+)*`, "gu");
+var MIN_STYLED_LETTERS = 3;
+function isStyledChar(ch) {
+  return STYLED_CHAR_RE.test(ch) && foldStyled(ch) !== void 0;
+}
+function isCjk(cp) {
+  return cp !== void 0 && (cp >= 11904 && cp <= 40959 || cp >= 44032 && cp <= 55215 || cp >= 63744 && cp <= 64255 || cp >= 65377 && cp <= 65500);
+}
+function blockOf(cp) {
+  if (cp >= 119808 && cp <= 120831) return "mathematical alphanumeric";
+  if (cp >= 65280 && cp <= 65519) return "fullwidth";
+  if (cp >= 9398 && cp <= 9449) return "circled";
+  if (SMALL_CAPITALS.has(cp)) return "small capital";
+  return "squared";
+}
+function scanStyledText(text, positionAt) {
+  const findings = [];
+  PASSAGE_RE.lastIndex = 0;
+  for (let match = PASSAGE_RE.exec(text); match !== null; match = PASSAGE_RE.exec(text)) {
+    const passage = match[0];
+    const codePoints = [];
+    let folded = "";
+    let letters = 0;
+    let fullwidthOnly = true;
+    const blocks = /* @__PURE__ */ new Set();
+    for (const ch of passage) {
+      const cp = ch.codePointAt(0);
+      codePoints.push(cp);
+      const plain = STYLED_CHAR_RE.test(ch) ? foldStyled(ch) : void 0;
+      if (plain === void 0) {
+        folded += ch;
+        continue;
+      }
+      folded += plain;
+      blocks.add(blockOf(cp));
+      if (/[A-Za-z]/.test(plain)) letters++;
+      if (blockOf(cp) !== "fullwidth") fullwidthOnly = false;
+    }
+    if (letters < MIN_STYLED_LETTERS) continue;
+    const end = match.index + passage.length;
+    if (fullwidthOnly && (isCjk(text.codePointAt(match.index - 1)) || isCjk(text.codePointAt(end)))) continue;
+    findings.push({
+      rule: "styled-text",
+      severity: "warning",
+      start: positionAt(match.index),
+      end: positionAt(end),
+      codePoints,
+      names: [unicodeName(codePoints[0])],
+      message: `${letters} letters in ${[...blocks].join(" and ")} styled alphabets read as ${JSON.stringify(folded.length > 160 ? folded.slice(0, 160) + "..." : folded)} once normalised to plain letters (NFKC). A model reads that text; a filter that compares code points without normalising does not.`,
+      suggestion: "Normalise with NFKC before matching the text against anything, or replace the passage with plain letters if the styling is not wanted.",
+      decoded: folded,
+      fixable: false
+    });
+  }
+  return findings;
+}
+
 // src/core/rules/confusables.ts
 var confusableMap;
 function getConfusableMap() {
@@ -6753,11 +6848,18 @@ function scriptSignature(token) {
   if (ASCII_RE.test(token)) return "Latin";
   return [...new Set(scriptSetsOfToken(token).flat())].sort().join("+") || "Latin";
 }
+var ESCAPE_LETTERS = /* @__PURE__ */ new Set(["n", "t", "r", "f", "v", "b"]);
 function forEachToken(text, visit) {
   IDENTIFIER_RE.lastIndex = 0;
   let match;
   while (match = IDENTIFIER_RE.exec(text)) {
-    visit({ text: match[0], index: match.index });
+    let index = match.index;
+    let word = match[0];
+    if (index > 0 && text.charCodeAt(index - 1) === 92 && ESCAPE_LETTERS.has(word[0]) && word.length > 1 && word.charCodeAt(1) > 127) {
+      index++;
+      word = word.slice(1);
+    }
+    visit({ text: word, index });
     if (match.index === IDENTIFIER_RE.lastIndex) IDENTIFIER_RE.lastIndex++;
   }
 }
@@ -6781,6 +6883,31 @@ function lineLookup(text) {
 function isAscii(s) {
   return ASCII_RE.test(s);
 }
+var WRITTEN_IN_WORDS = 10;
+var DOTLESS_I = 305;
+var DOTTED_CAPITAL_I = 304;
+function singleForeignScript(token) {
+  const signature = scriptSignature(token);
+  return signature === "Latin" || signature.includes("+") ? void 0 : signature;
+}
+function isTurkicI(token) {
+  let found = false;
+  for (const ch of token) {
+    const cp = ch.codePointAt(0);
+    if (cp === DOTLESS_I || cp === DOTTED_CAPITAL_I) found = true;
+    else if (cp > 127 && !scriptsOf(cp).includes("Latin")) return false;
+  }
+  return found;
+}
+function isStyledWord(token) {
+  let styled = false;
+  for (const ch of token) {
+    if (ch.codePointAt(0) < 128) continue;
+    if (!isStyledChar(ch)) return false;
+    styled = true;
+  }
+  return styled;
+}
 function scanConfusables(text) {
   const findings = [];
   const lineOf = lineLookup(text);
@@ -6792,8 +6919,17 @@ function scanConfusables(text) {
     };
   };
   const bySkeleton = /* @__PURE__ */ new Map();
+  const wordsByScript = /* @__PURE__ */ new Map();
+  const turkicWords = /* @__PURE__ */ new Set();
   forEachToken(text, (token) => {
     if (token.text.length < 2 || isAscii(token.text)) return;
+    const script = singleForeignScript(token.text);
+    if (script !== void 0) {
+      if (!wordsByScript.has(script)) wordsByScript.set(script, /* @__PURE__ */ new Set());
+      wordsByScript.get(script).add(token.text);
+    } else if (isTurkicI(token.text)) {
+      turkicWords.add(token.text);
+    }
     const skeleton = skeletonOf(token.text);
     if (isSuspiciousMix(token.text)) {
       const scripts = new Set(scriptSetsOfToken(token.text).flat());
@@ -6826,12 +6962,20 @@ function scanConfusables(text) {
   });
   const groups = [...bySkeleton].map(([skeleton, group]) => ({ skeleton, group: group.sort((a, b) => a.index - b.index) }));
   groups.sort((a, b) => a.group[0].index - b.group[0].index);
-  for (const { skeleton, group } of groups) {
+  for (const { skeleton, group: spelled } of groups) {
+    const group = spelled.filter((t) => !isStyledWord(t.text));
     const distinctSpellings = new Set(group.map((t) => t.text));
     if (distinctSpellings.size < 2) continue;
     if (![...distinctSpellings].some((s) => !isAscii(s))) continue;
     const signatures = new Set([...distinctSpellings].map(scriptSignature));
     if (signatures.size === 1 && !signatures.has("Latin") && ![...signatures][0].includes("+")) continue;
+    const ordinary = (spelling) => {
+      if (isAscii(spelling)) return true;
+      const script = singleForeignScript(spelling);
+      if (script !== void 0) return (wordsByScript.get(script)?.size ?? 0) >= WRITTEN_IN_WORDS;
+      return isTurkicI(spelling) && turkicWords.size >= WRITTEN_IN_WORDS;
+    };
+    if ([...distinctSpellings].every(ordinary)) continue;
     for (const token of group) {
       const others = distinctSpellings.size - (distinctSpellings.has(token.text) ? 1 : 0);
       findings.push({
@@ -6989,6 +7133,49 @@ function tryDecodeUtf8(bytes) {
     return void 0;
   }
 }
+var MAX_PAYLOAD_LAYERS = 8;
+function smugglingRuns(text) {
+  return decodeVariationSelectors(text).filter((run) => run.decodedText !== void 0 && run.bytes.length > 1);
+}
+function unwrapPayload(decoded) {
+  let text = decoded;
+  let layers = 1;
+  while (layers < MAX_PAYLOAD_LAYERS) {
+    const inner = smugglingRuns(text);
+    if (inner.length === 0) break;
+    for (const run of inner.reverse()) text = text.slice(0, run.selectorsStart) + run.decodedText + text.slice(run.end);
+    layers++;
+  }
+  return { text, layers };
+}
+var MIN_BIT_STREAM_BYTES = 8;
+function isPlainText(text) {
+  return !/[\u0000-\u0008\u000b\u000c\u000e-\u001f\u007f-\u009f\ufffd]/.test(text);
+}
+function bitsToText(bits) {
+  const bytes = [];
+  for (let i = 0; i + 8 <= bits.length; i += 8) {
+    let byte = 0;
+    for (let k = 0; k < 8; k++) byte = byte << 1 | bits[i + k];
+    bytes.push(byte);
+  }
+  if (bytes.length < MIN_BIT_STREAM_BYTES) return void 0;
+  try {
+    const text = new TextDecoder("utf-8", { fatal: true }).decode(new Uint8Array(bytes));
+    return isPlainText(text) ? text : void 0;
+  } catch {
+    return void 0;
+  }
+}
+function decodeSelectorBitStream(runs) {
+  const carriers = runs.filter((run) => !run.isOrdinaryPresentationSelector && run.baseCodePoint !== void 0 && run.bytes.length === 1 && (run.bytes[0] === 14 || run.bytes[0] === 15));
+  if (carriers.length < MIN_BIT_STREAM_BYTES * 8) return void 0;
+  for (const vs16IsOne of [true, false]) {
+    const text = bitsToText(carriers.map((run) => run.bytes[0] === 15 === vs16IsOne ? 1 : 0));
+    if (text !== void 0) return { runs: carriers, text, vs16IsOne };
+  }
+  return void 0;
+}
 
 // src/core/rules/invisible.ts
 var ZWNJ2 = 8204;
@@ -7060,6 +7247,7 @@ function scanInvisible(text, positionAt) {
       const next = text.codePointAt(index + 1);
       if (codePoint === ZWJ2 && isEmojiJoinContext(prev, next)) continue;
       if (isJoiningScriptContext(prev, next)) continue;
+      if (codePoint === ZWNJ2 && isLatinTermWithJoiningSuffix(prev, next)) continue;
       if (prev !== void 0 && VIRAMAS.has(prev)) continue;
     }
     const cp = describeCodePoint(text, index, positionAt);
@@ -7080,6 +7268,11 @@ function scanInvisible(text, positionAt) {
 function isEmojiJoinContext(prev, next) {
   const isEmojiLike = (c) => c !== void 0 && (isEmoji(c) || isRegionalIndicator(c) || c === 65039);
   return isEmojiLike(prev) && isEmojiLike(next);
+}
+function isLatinTermWithJoiningSuffix(prev, next) {
+  const joining = (c) => c !== void 0 && scriptsOf(c).some((s) => JOINING_SCRIPTS.has(s) && s !== "Hebrew");
+  const latinOrDigit = (c) => c !== void 0 && (c >= 48 && c <= 57 || c >= 65 && c <= 90 || c >= 97 && c <= 122);
+  return latinOrDigit(prev) && joining(next) || joining(prev) && latinOrDigit(next);
 }
 function isJoiningScriptContext(prev, next) {
   const inJoiningScript = (c) => c !== void 0 && scriptsOf(c).some((s) => JOINING_SCRIPTS.has(s));
@@ -7111,10 +7304,15 @@ function scanTags(text, positionAt) {
 // src/core/rules/variationSelectors.ts
 function scanVariationSelectors(text, positionAt) {
   const findings = [];
-  for (const run of decodeVariationSelectors(text)) {
+  const runs = decodeVariationSelectors(text);
+  const bitStream = decodeSelectorBitStream(runs);
+  const bitCarriers = new Map(bitStream?.runs.map((run, index) => [run, index]));
+  for (const run of runs) {
     if (run.isOrdinaryPresentationSelector) continue;
     const codePoints = run.baseCodePoint !== void 0 ? [run.baseCodePoint, ...bytesToSelectors(run.bytes)] : bytesToSelectors(run.bytes);
-    const isSmuggling = run.decodedText !== void 0 && run.bytes.length > 1;
+    const bitIndex = bitCarriers.get(run);
+    const isSmuggling = bitIndex !== void 0 || run.decodedText !== void 0 && run.bytes.length > 1;
+    const payload = bitIndex !== void 0 ? { text: bitStream.text, layers: 1 } : run.decodedText !== void 0 ? unwrapPayload(run.decodedText) : void 0;
     findings.push({
       rule: isSmuggling ? "variation-selector-smuggling" : "variation-selector-stray",
       severity: isSmuggling ? "error" : "warning",
@@ -7122,15 +7320,25 @@ function scanVariationSelectors(text, positionAt) {
       end: positionAt(run.end),
       codePoints,
       names: codePoints.map(unicodeName),
-      message: isSmuggling ? `${run.bytes.length} variation selectors decode as hidden UTF-8 text via the byte-per-selector smuggling scheme (VS1-16 -> 0-15, VS17-256 -> 16-255): ${JSON.stringify(run.decodedText)}.` : run.baseCodePoint === void 0 ? "Variation selector with no preceding base character to apply a glyph variant to." : run.afterPresentationSelector ? `${run.bytes.length} extra variation selector${run.bytes.length === 1 ? "" : "s"} after U+${run.baseCodePoint.toString(16).toUpperCase()} (${unicodeName(run.baseCodePoint)}) and the selector that already picks its presentation: ${run.bytes.length === 1 ? "it does" : "they do"} nothing and cannot be seen.` : `Variation selector on U+${run.baseCodePoint.toString(16).toUpperCase()} (${unicodeName(run.baseCodePoint)}), which has no registered variation sequence for it.`,
+      message: smugglingMessage(run, bitIndex, bitStream?.runs.length, bitStream?.vs16IsOne, payload) ?? (run.baseCodePoint === void 0 ? "Variation selector with no preceding base character to apply a glyph variant to." : run.afterPresentationSelector ? `${run.bytes.length} extra variation selector${run.bytes.length === 1 ? "" : "s"} after U+${run.baseCodePoint.toString(16).toUpperCase()} (${unicodeName(run.baseCodePoint)}) and the selector that already picks its presentation: ${run.bytes.length === 1 ? "it does" : "they do"} nothing and cannot be seen.` : `Variation selector on U+${run.baseCodePoint.toString(16).toUpperCase()} (${unicodeName(run.baseCodePoint)}), which has no registered variation sequence for it.`),
       suggestion: run.afterPresentationSelector ? "Remove the extra selectors; the first one, which keeps the emoji presentation, stays." : "Remove these characters unless selecting a real registered variation sequence (see the Unicode IVD / StandardizedVariants.txt).",
-      decoded: run.decodedText,
+      // On a bit stream the message is spread over every carrier; it is said once, at the first.
+      decoded: bitIndex !== void 0 && bitIndex > 0 ? void 0 : payload?.text,
       fixable: true,
       // The finding points at the base character, but only the selectors are removed.
       ...run.selectorsStart > run.start ? { removal: { start: run.selectorsStart, end: run.end } } : {}
     });
   }
   return findings;
+}
+function smugglingMessage(run, bitIndex, bitCount, vs16IsOne, payload) {
+  if (payload === void 0) return void 0;
+  if (bitIndex !== void 0) {
+    const polarity = vs16IsOne ? "VS16 = 1, VS15 = 0" : "VS15 = 1, VS16 = 0";
+    return bitIndex === 0 ? `${bitCount} single variation selectors, one after each of a run of ordinary characters, are a bit apiece (${polarity}) and read together spell hidden UTF-8 text: ${JSON.stringify(payload.text)}.` : `Bit ${bitIndex + 1} of ${bitCount} of the hidden message decoded at the first selector of this run.`;
+  }
+  const layers = payload.layers > 1 ? ` The payload is itself written in selectors, ${payload.layers} layers deep.` : "";
+  return `${run.bytes.length} variation selectors decode as hidden UTF-8 text via the byte-per-selector smuggling scheme (VS1-16 -> 0-15, VS17-256 -> 16-255): ${JSON.stringify(payload.text)}.${layers}`;
 }
 function bytesToSelectors(bytes) {
   return bytes.map((b) => b < 16 ? 65024 + b : 917760 + (b - 16));
@@ -7178,7 +7386,7 @@ var CJK_RANGES = [
   // halfwidth and fullwidth forms
   [131072, 195103]
 ];
-function isCjk(cp) {
+function isCjk2(cp) {
   return cp !== void 0 && CJK_RANGES.some(([lo, hi]) => cp >= lo && cp <= hi);
 }
 var CANDIDATE_RE = /[\x00-\x08\x0b\x0c\x0e-\x1f\x80-\x9f\u00a0\u2000-\u200a\u2028\u2029\u202f\u205f\u2800\u3000]/g;
@@ -7192,10 +7400,11 @@ function scanWhitespaceAndControl(text, positionAt) {
     const next = () => text.codePointAt(index + 1);
     if (UNUSUAL_WHITESPACE.has(codePoint) && isFrenchTypography(prev(), codePoint, next())) continue;
     if (codePoint === BRAILLE_BLANK && (isBraillePattern(prev()) || isBraillePattern(next()))) continue;
-    if (codePoint === IDEOGRAPHIC_SPACE && (isCjk(prev()) || isCjk(next()))) continue;
+    if (codePoint === IDEOGRAPHIC_SPACE && (isCjk2(prev()) || isCjk2(next()))) continue;
     const cp = describeCodePoint(text, index, positionAt);
     if (UNUSUAL_WHITESPACE.has(cp.codePoint)) {
-      findings.push(finding(cp, "unusual-whitespace", "warning", `${unicodeName(cp.codePoint)} looks like a normal space or line break but is a distinct code point -- it can split tokens, defeat string/keyword matching, or hide in a diff.`, "Replace with a regular space (U+0020) or ASCII newline."));
+      const usuallyPasted = cp.codePoint === NBSP || cp.codePoint === 8232 || cp.codePoint === 8233 ? " Usually left by pasting from a web page or chat window." : "";
+      findings.push(finding(cp, "unusual-whitespace", "warning", `${unicodeName(cp.codePoint)} looks like a normal space or line break but is a distinct code point -- it can split tokens, defeat string/keyword matching, or hide in a diff.${usuallyPasted}`, "Replace with a regular space (U+0020) or ASCII newline."));
     } else if (cp.codePoint === BRAILLE_BLANK) {
       findings.push(finding(cp, "unusual-whitespace", "warning", "BRAILLE PATTERN BLANK (U+2800) renders as an empty space but is not whitespace: trim() and word splitting leave it in, so it can pass for a blank name or a gap between words.", "Replace with a regular space (U+0020); it belongs only between braille patterns."));
     } else if (isC0Control(cp.codePoint) || isC1Control(cp.codePoint)) {
@@ -7240,6 +7449,7 @@ function scanText(text, options = {}) {
     ...scanVariationSelectors(text, positionAt),
     ...scanInvisible(text, positionAt),
     ...scanConfusables(text),
+    ...scanStyledText(text, positionAt),
     ...scanWhitespaceAndControl(text, positionAt)
   ];
   const allow = new Set(options.allowCodePoints ?? []);
@@ -7345,7 +7555,7 @@ function reveal(text) {
 function revealWithFindings(text, findings) {
   const byStart = /* @__PURE__ */ new Map();
   for (const f of findings) {
-    if (f.rule === "confusable") continue;
+    if (f.rule === "confusable" || f.rule === "styled-text") continue;
     if ((byStart.get(f.start.offset)?.end.offset ?? -1) < f.end.offset) byStart.set(f.start.offset, f);
   }
   let out = "";
@@ -7722,6 +7932,7 @@ var RULE_DESCRIPTIONS = {
   "variation-selector-stray": "Variation selector with no valid base character.",
   invisible: "Invisible / default-ignorable character.",
   confusable: "Visually confusable identifier (mixed script or skeleton collision).",
+  "styled-text": "Letters in a styled Unicode alphabet (mathematical, fullwidth, circled, squared) that read as plain text.",
   "unusual-whitespace": "Unusual whitespace character.",
   "control-character": "Unexpected control character."
 };
@@ -7769,6 +7980,46 @@ function formatSarif(report) {
     ]
   };
   return JSON.stringify(sarif, null, 2);
+}
+
+// src/cli/formatters/summary.ts
+var SEVERITY_LABEL2 = {
+  error: colors.red(colors.bold("error")),
+  warning: colors.yellow("warn "),
+  info: colors.cyan("info ")
+};
+var BY_CHARACTER = /* @__PURE__ */ new Set(["invisible", "unusual-whitespace", "control-character", "bidi-control", "bidi-mark"]);
+function formatSummary(report) {
+  const lines = [];
+  for (const file of report.files) {
+    if (file.findings.length === 0) continue;
+    lines.push(colors.underline(file.path));
+    const groups = /* @__PURE__ */ new Map();
+    for (const f of file.findings) {
+      const key = `${f.severity}\0${f.rule}\0${BY_CHARACTER.has(f.rule) ? f.names[0] ?? "" : ""}`;
+      const group = groups.get(key);
+      if (group) {
+        group.count++;
+        group.last = f;
+        if (f.decoded) group.decoded.add(f.decoded);
+      } else {
+        groups.set(key, { finding: f, count: 1, last: f, decoded: new Set(f.decoded ? [f.decoded] : []) });
+      }
+    }
+    const order = { error: 0, warning: 1, info: 2 };
+    for (const g of [...groups.values()].sort((a, b) => order[a.finding.severity] - order[b.finding.severity] || b.count - a.count)) {
+      const f = g.finding;
+      const what = BY_CHARACTER.has(f.rule) ? `  ${f.names[0] ?? ""}` : "";
+      const where = g.count === 1 ? `${f.start.line}:${f.start.column}` : `${f.start.line}:${f.start.column} .. ${g.last.start.line}:${g.last.start.column}`;
+      lines.push(`  ${SEVERITY_LABEL2[f.severity]}  ${colors.dim(f.rule)}${what}  x${g.count}  ${colors.gray(where)}`);
+      for (const text of [...g.decoded].slice(0, 3)) lines.push(`    ${colors.dim("reads:")} ${JSON.stringify(text.length > 120 ? text.slice(0, 120) + "..." : text)}`);
+    }
+    lines.push("");
+  }
+  const counts = severityCounts(report);
+  const total = totalFindings(report);
+  lines.push(total === 0 ? colors.green(`ghostchars: no findings in ${report.files.length} file(s).`) : colors.bold(`ghostchars: ${counts.error} error(s), ${counts.warning} warning(s), ${counts.info} info in ${report.files.length} file(s) scanned.`));
+  return lines.join("\n");
 }
 
 // src/cli/fix.ts
@@ -7833,7 +8084,7 @@ Usage:
   ghostchars --help | --version
 
 Options:
-  --format <pretty|json|sarif|github>  Output format (default: pretty)
+  --format <pretty|summary|json|sarif|github>  Output format (default: pretty; summary is one line per kind of finding in a file)
   --fix                                 Remove fixable findings in place
   --dry-run                             With --fix, preview changes instead of writing
   --config <path>                       Path to a .ghostcharsrc.json (default: ./.ghostcharsrc.json)
@@ -7932,7 +8183,7 @@ function main(argv) {
   }
   report.durationMs = performance.now() - start;
   if (!(args.fix && args.dryRun)) {
-    const output = args.format === "json" ? formatJson(report) : args.format === "sarif" ? formatSarif(report) : args.format === "github" ? formatGithub(report) : formatPretty(report);
+    const output = args.format === "json" ? formatJson(report) : args.format === "sarif" ? formatSarif(report) : args.format === "github" ? formatGithub(report) : args.format === "summary" ? formatSummary(report) : formatPretty(report);
     console.log(output);
   } else if (!hadFixes && !args.quiet) {
     console.log(colors.green("ghostchars: nothing to fix."));

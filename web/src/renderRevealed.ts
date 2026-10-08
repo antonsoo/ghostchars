@@ -43,7 +43,7 @@ export function renderRevealedHtml(text: string, findings: Finding[]): string {
   const byStart = new Map<number, Finding>();
   const confusables: Finding[] = [];
   for (const f of findings) {
-    if (f.rule === 'confusable') {
+    if (f.rule === 'confusable' || f.rule === 'styled-text') {
       confusables.push(f);
       continue;
     }

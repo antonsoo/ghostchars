@@ -13,6 +13,7 @@ const RULE_DESCRIPTIONS: Record<RuleId, string> = {
   'variation-selector-stray': 'Variation selector with no valid base character.',
   invisible: 'Invisible / default-ignorable character.',
   confusable: 'Visually confusable identifier (mixed script or skeleton collision).',
+  'styled-text': 'Letters in a styled Unicode alphabet (mathematical, fullwidth, circled, squared) that read as plain text.',
   'unusual-whitespace': 'Unusual whitespace character.',
   'control-character': 'Unexpected control character.',
 };

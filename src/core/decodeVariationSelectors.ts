@@ -122,3 +122,80 @@ function tryDecodeUtf8(bytes: number[]): string | undefined {
     return undefined;
   }
 }
+
+/** The deepest a payload is unwrapped: one that is itself written in selectors, and so on. */
+const MAX_PAYLOAD_LAYERS = 8;
+
+function smugglingRuns(text: string): VariationSelectorRun[] {
+  return decodeVariationSelectors(text).filter((run) => run.decodedText !== undefined && run.bytes.length > 1);
+}
+
+/**
+ * A payload can be written in selectors again: the decoded text is an emoji followed by another
+ * run of selectors, and that decodes to an emoji and a third run. A reader who stops at the
+ * first layer is shown a string of invisible characters as the "message". This decodes each
+ * run found in the text and splices its text in (the carrier emoji stays), up to
+ * MAX_PAYLOAD_LAYERS deep, and reports how many layers it took.
+ */
+export function unwrapPayload(decoded: string): { text: string; layers: number } {
+  let text = decoded;
+  let layers = 1;
+  while (layers < MAX_PAYLOAD_LAYERS) {
+    const inner = smugglingRuns(text);
+    if (inner.length === 0) break;
+    for (const run of inner.reverse()) text = text.slice(0, run.selectorsStart) + run.decodedText + text.slice(run.end);
+    layers++;
+  }
+  return { text, layers };
+}
+
+export interface SelectorBitStream {
+  /** The selectors that carry a bit each, in text order. */
+  runs: VariationSelectorRun[];
+  /** The bits read as UTF-8 text. */
+  text: string;
+  /** True when VS16 is a one bit and VS15 a zero; false for the other way round. */
+  vs16IsOne: boolean;
+}
+
+// A message shorter than this is as likely to be chance as a message.
+const MIN_BIT_STREAM_BYTES = 8;
+
+function isPlainText(text: string): boolean {
+  // eslint-disable-next-line no-control-regex -- C0 controls other than tab, LF and CR are exactly what is being excluded.
+  return !/[\u0000-\u0008\u000b\u000c\u000e-\u001f\u007f-\u009f\ufffd]/.test(text);
+}
+
+function bitsToText(bits: number[]): string | undefined {
+  const bytes: number[] = [];
+  for (let i = 0; i + 8 <= bits.length; i += 8) {
+    let byte = 0;
+    for (let k = 0; k < 8; k++) byte = (byte << 1) | bits[i + k]!;
+    bytes.push(byte);
+  }
+  if (bytes.length < MIN_BIT_STREAM_BYTES) return undefined;
+  try {
+    const text = new TextDecoder('utf-8', { fatal: true }).decode(new Uint8Array(bytes));
+    return isPlainText(text) ? text : undefined;
+  } catch {
+    return undefined;
+  }
+}
+
+/**
+ * The other way to hide text in selectors, seen in a jailbreak collection: a single VS15 or
+ * VS16 after each word or letter of an innocent paragraph, one bit apiece (VS16 = 1), eight
+ * to a byte. No one selector is unusual, so each is only a stray one; read together, in text
+ * order, they spell a sentence. Reported only when the bits decode to at least
+ * MIN_BIT_STREAM_BYTES bytes of clean UTF-8 text, which a scatter of ordinary stray selectors
+ * does not do.
+ */
+export function decodeSelectorBitStream(runs: VariationSelectorRun[]): SelectorBitStream | undefined {
+  const carriers = runs.filter((run) => !run.isOrdinaryPresentationSelector && run.baseCodePoint !== undefined && run.bytes.length === 1 && (run.bytes[0] === 14 || run.bytes[0] === 15));
+  if (carriers.length < MIN_BIT_STREAM_BYTES * 8) return undefined;
+  for (const vs16IsOne of [true, false]) {
+    const text = bitsToText(carriers.map((run) => ((run.bytes[0] === 15) === vs16IsOne ? 1 : 0)));
+    if (text !== undefined) return { runs: carriers, text, vs16IsOne };
+  }
+  return undefined;
+}

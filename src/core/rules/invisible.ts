@@ -95,6 +95,7 @@ export function scanInvisible(text: string, positionAt: PositionLookup): Finding
       const next = text.codePointAt(index + 1);
       if (codePoint === ZWJ && isEmojiJoinContext(prev, next)) continue;
       if (isJoiningScriptContext(prev, next)) continue;
+      if (codePoint === ZWNJ && isLatinTermWithJoiningSuffix(prev, next)) continue;
       if (prev !== undefined && VIRAMAS.has(prev)) continue;
     }
 
@@ -118,6 +119,16 @@ export function scanInvisible(text: string, positionAt: PositionLookup): Finding
 function isEmojiJoinContext(prev: number | undefined, next: number | undefined): boolean {
   const isEmojiLike = (c: number | undefined) => c !== undefined && (isEmoji(c) || isRegionalIndicator(c) || c === 0xfe0f);
   return isEmojiLike(prev) && isEmojiLike(next);
+}
+
+// Persian and Urdu put a ZWNJ between a foreign term and the native suffix that follows it, so
+// the suffix does not join to the Latin letter's side: "token" + ZWNJ + the plural "ha". One
+// side is a joining-script letter, the other a Latin letter or digit. Splitting an ASCII word
+// has ASCII on both sides, which this does not allow.
+function isLatinTermWithJoiningSuffix(prev: number | undefined, next: number | undefined): boolean {
+  const joining = (c: number | undefined) => c !== undefined && scriptsOf(c).some((s) => JOINING_SCRIPTS.has(s) && s !== 'Hebrew');
+  const latinOrDigit = (c: number | undefined) => c !== undefined && ((c >= 0x30 && c <= 0x39) || (c >= 0x41 && c <= 0x5a) || (c >= 0x61 && c <= 0x7a));
+  return (latinOrDigit(prev) && joining(next)) || (joining(prev) && latinOrDigit(next));
 }
 
 function isJoiningScriptContext(prev: number | undefined, next: number | undefined): boolean {

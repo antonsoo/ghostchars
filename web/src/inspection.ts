@@ -47,7 +47,7 @@ export function inspectText(text: string): Inspection {
   const counts: Record<Severity, number> = { error: 0, warning: 0, info: 0 };
   for (const finding of findings) counts[finding.severity]++;
   const decoded = findings.filter((finding) => finding.decoded !== undefined);
-  const confusables = findings.filter((finding) => finding.rule === 'confusable');
+  const confusables = findings.filter((finding) => finding.rule === 'confusable' || finding.rule === 'styled-text');
   let end = Math.min(text.length, MAX_PREVIEW_CODE_UNITS, findings[MAX_DISPLAY_FINDINGS]?.start.offset ?? Infinity);
   // Walk backwards so moving the cut before an overlapping span also visits its ancestors.
   for (let i = findings.length - 1; i >= 0; i--) {

@@ -50,8 +50,9 @@ export function revealWithFindings(text: string, findings: readonly Finding[]): 
     // Confusables stay as ordinary visible text here -- the point of reveal()
     // is surfacing what's invisible, and collapsing a whole lookalike
     // identifier into one opaque chip would defeat that. The confusable
-    // rule's own message/skeleton already carries the useful detail.
-    if (f.rule === 'confusable') continue;
+    // rule's own message/skeleton already carries the useful detail. Styled text is
+    // visible text as well, and its finding says what it reads as.
+    if (f.rule === 'confusable' || f.rule === 'styled-text') continue;
     if ((byStart.get(f.start.offset)?.end.offset ?? -1) < f.end.offset) byStart.set(f.start.offset, f);
   }
 

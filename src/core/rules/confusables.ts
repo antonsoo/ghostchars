@@ -2,6 +2,7 @@ import { confusablesTable } from '../../generated/confusables.js';
 import { unicodeName } from '../names.js';
 import type { Finding } from '../types.js';
 import { scriptsOf } from '../unicode-utils.js';
+import { isStyledChar } from './styledText.js';
 
 // Follows Unicode UTS #39 (Unicode Security Mechanisms) "skeleton" approach:
 // map every code point in an identifier through confusables.txt's prototype
@@ -200,12 +201,25 @@ interface Token {
   index: number;
 }
 
+// The letter of a backslash escape (\n, \t, \r, \f, \v, \b) that sits in front of the next word
+// when text carries code or JSON strings with the escape written out.
+const ESCAPE_LETTERS = new Set(['n', 't', 'r', 'f', 'v', 'b']);
+
 /** Calls `visit` with each identifier-shaped run in `text`, in order. */
 function forEachToken(text: string, visit: (token: Token) => void): void {
   IDENTIFIER_RE.lastIndex = 0;
   let match: RegExpExecArray | null;
   while ((match = IDENTIFIER_RE.exec(text))) {
-    visit({ text: match[0], index: match.index });
+    let index = match.index;
+    let word = match[0];
+    // "\nWord" in a string literal is a line break and then a word, not the word "nWord". Only
+    // told apart when a letter of another script follows, which is where it was misread: in
+    // an all-ASCII run the escape letter changes nothing that is reported.
+    if (index > 0 && text.charCodeAt(index - 1) === 0x5c && ESCAPE_LETTERS.has(word[0]!) && word.length > 1 && word.charCodeAt(1) > 0x7f) {
+      index++;
+      word = word.slice(1);
+    }
+    visit({ text: word, index });
     if (match.index === IDENTIFIER_RE.lastIndex) IDENTIFIER_RE.lastIndex++;
   }
 }
@@ -243,6 +257,43 @@ function isAscii(s: string): boolean {
   return ASCII_RE.test(s);
 }
 
+// How many distinct words of one script, or distinct words with a dotless i, make a file "written
+// in" that script or language. Below it, a Cyrillic or Greek word that has a Latin double is the
+// lookalike this rule exists for; above it, the file is a Russian, Greek or Turkish text, and such
+// words (Cyrillic "co" and Greek "To" beside the Latin ones, a Turkish "mi" and its dotless-i twin) are
+// ordinary words that happen to share letters.
+const WRITTEN_IN_WORDS = 10;
+const DOTLESS_I = 0x0131;
+const DOTTED_CAPITAL_I = 0x0130;
+
+/** The single non-Latin script a word is written in, or undefined for ASCII, Latin and mixed words. */
+function singleForeignScript(token: string): string | undefined {
+  const signature = scriptSignature(token);
+  return signature === 'Latin' || signature.includes('+') ? undefined : signature;
+}
+
+/** True for a Latin-script word whose only non-ASCII letters are the Turkic dotted and dotless I. */
+function isTurkicI(token: string): boolean {
+  let found = false;
+  for (const ch of token) {
+    const cp = ch.codePointAt(0)!;
+    if (cp === DOTLESS_I || cp === DOTTED_CAPITAL_I) found = true;
+    else if (cp > 127 && !scriptsOf(cp).includes('Latin')) return false;
+  }
+  return found;
+}
+
+/** True for a word whose every non-ASCII character is a styled letter (and which has at least one). */
+function isStyledWord(token: string): boolean {
+  let styled = false;
+  for (const ch of token) {
+    if (ch.codePointAt(0)! < 128) continue;
+    if (!isStyledChar(ch)) return false;
+    styled = true;
+  }
+  return styled;
+}
+
 export function scanConfusables(text: string): Finding[] {
   const findings: Finding[] = [];
   const lineOf = lineLookup(text);
@@ -259,8 +310,17 @@ export function scanConfusables(text: string): Finding[] {
   // their skeletons are the only ones worth keeping. A file with none is done after this pass,
   // without a skeleton computed or a token kept for any of its ordinary identifiers.
   const bySkeleton = new Map<string, Token[]>();
+  const wordsByScript = new Map<string, Set<string>>();
+  const turkicWords = new Set<string>();
   forEachToken(text, (token) => {
     if (token.text.length < 2 || isAscii(token.text)) return; // single characters can't "mix" scripts meaningfully
+    const script = singleForeignScript(token.text);
+    if (script !== undefined) {
+      if (!wordsByScript.has(script)) wordsByScript.set(script, new Set());
+      wordsByScript.get(script)!.add(token.text);
+    } else if (isTurkicI(token.text)) {
+      turkicWords.add(token.text);
+    }
     const skeleton = skeletonOf(token.text);
     if (isSuspiciousMix(token.text)) {
       const scripts = new Set(scriptSetsOfToken(token.text).flat());
@@ -300,7 +360,10 @@ export function scanConfusables(text: string): Finding[] {
   const groups = [...bySkeleton].map(([skeleton, group]) => ({ skeleton, group: group.sort((a, b) => a.index - b.index) }));
   groups.sort((a, b) => a.group[0]!.index - b.group[0]!.index);
 
-  for (const { skeleton, group } of groups) {
+  for (const { skeleton, group: spelled } of groups) {
+    // A word set in a styled alphabet beside its plain spelling is the styled-text rule's finding,
+    // which says what it reads as; it is decoration or disguise, not an identifier imitating another.
+    const group = spelled.filter((t) => !isStyledWord(t.text));
     const distinctSpellings = new Set(group.map((t) => t.text));
     if (distinctSpellings.size < 2) continue;
     if (![...distinctSpellings].some((s) => !isAscii(s))) continue; // ASCII-vs-ASCII: out of scope, see note above
@@ -310,6 +373,15 @@ export function scanConfusables(text: string): Finding[] {
     // fullwidth letter) are how an ASCII name is imitated without leaving the script.
     const signatures = new Set([...distinctSpellings].map(scriptSignature));
     if (signatures.size === 1 && !signatures.has('Latin') && ![...signatures][0]!.includes('+')) continue;
+    // A text that is written in Russian, Greek or Turkish: every non-ASCII spelling is an ordinary
+    // word of it, so sharing letters with an English word next to it is not an imitation.
+    const ordinary = (spelling: string): boolean => {
+      if (isAscii(spelling)) return true;
+      const script = singleForeignScript(spelling);
+      if (script !== undefined) return (wordsByScript.get(script)?.size ?? 0) >= WRITTEN_IN_WORDS;
+      return isTurkicI(spelling) && turkicWords.size >= WRITTEN_IN_WORDS;
+    };
+    if ([...distinctSpellings].every(ordinary)) continue;
 
     for (const token of group) {
       const others = distinctSpellings.size - (distinctSpellings.has(token.text) ? 1 : 0);
