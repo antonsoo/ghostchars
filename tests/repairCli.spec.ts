@@ -23,6 +23,18 @@ function captured(args: string[]) {
 }
 
 describe('configured file repairs', () => {
+  it('shows remaining findings when a dry run has no permitted automatic repair', () => {
+    const source = 'admin \u0430dmin';
+    writeFileSync('lookalike.txt', source);
+    const result = captured(['lookalike.txt', '--fix', '--dry-run']);
+    expect(result.code).toBe(1);
+    expect(result.out).toContain('Review the remaining findings');
+    expect(result.out).toContain('lookalike.txt');
+    expect(result.out).toContain('confusable');
+    expect(result.out).not.toContain('nothing to fix');
+    expect(readFileSync('lookalike.txt', 'utf8')).toBe(source);
+  });
+
   it('does not repair with defaults when an explicit config path is missing', () => {
     writeFileSync('keep.txt', 'a\u200bb');
     const result = captured(['keep.txt', '--fix', '--config', 'missing.json']);

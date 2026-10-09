@@ -8260,7 +8260,10 @@ function main(argv) {
     const output = args.format === "json" ? formatJson(report) : args.format === "sarif" ? formatSarif(report) : args.format === "github" ? formatGithub(report) : args.format === "summary" ? formatSummary(report) : formatPretty(report);
     console.log(output);
   } else if (!hadFixes && !args.quiet) {
-    console.log(runtimeError ? "ghostchars: some files could not be read; no fix preview is available for them." : colors.green("ghostchars: nothing to fix."));
+    if (runtimeError) console.log("ghostchars: some files could not be read; no fix preview is available for them.");
+    else if (report.files.some((file) => file.findings.length > 0)) {
+      console.log("ghostchars: no automatic removals under the current policy. Review the remaining findings.\n\n" + formatSummary(report));
+    } else console.log(colors.green("ghostchars: nothing to fix."));
   }
   if (args.fix && args.dryRun) for (const skip of report.skipped) console.error(diagnosticText(`skipped ${skip.path}: ${skip.reason}`));
   const counts = severityCounts(report);
