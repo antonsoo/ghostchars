@@ -8,7 +8,7 @@ export function formatGithub(report: ScanReport): string {
       const cmd = f.severity === 'error' ? 'error' : f.severity === 'warning' ? 'warning' : 'notice';
       const title = `ghostchars: ${f.rule}`;
       const message = escapeData(f.message);
-      lines.push(`::${cmd} file=${file.path},line=${f.start.line},col=${f.start.column},endLine=${f.end.line},endColumn=${f.end.column},title=${escapeProp(title)}::${message}`);
+      lines.push(`::${cmd} file=${escapeProp(file.path)},line=${f.start.line},col=${f.start.column},endLine=${f.end.line},endColumn=${f.end.column},title=${escapeProp(title)}::${message}`);
     }
   }
   return lines.join('\n');

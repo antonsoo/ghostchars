@@ -1,5 +1,6 @@
 import type { Finding } from '../../core/index.js';
 import { reveal } from '../../core/index.js';
+import { diagnosticText } from '../../core/diagnosticText.js';
 import { colors } from '../colors.js';
 import type { ScanReport } from '../report.js';
 import { severityCounts, totalFindings } from '../report.js';
@@ -15,18 +16,18 @@ export function formatPretty(report: ScanReport): string {
 
   for (const file of report.files) {
     if (file.findings.length === 0) continue;
-    lines.push(colors.underline(file.path));
+    lines.push(colors.underline(diagnosticText(file.path)));
     const sourceLines = file.source.split(/\r\n|\r|\n/);
 
     for (const f of file.findings) {
       const loc = colors.gray(`${f.start.line}:${f.start.column}`);
       lines.push(`  ${loc}  ${SEVERITY_LABEL[f.severity]}  ${colors.dim(f.rule)}`);
-      lines.push(`    ${f.message}`);
+      lines.push(`    ${diagnosticText(f.message)}`);
       const srcLine = sourceLines[f.start.line - 1] ?? '';
-      const revealedLine = reveal(srcLine);
+      const revealedLine = diagnosticText(reveal(srcLine));
       lines.push(`    ${colors.gray('|')} ${revealedLine}`);
       lines.push(`    ${colors.gray('|')} ${' '.repeat(Math.max(0, f.start.column - 1))}${colors.magenta('^'.repeat(Math.max(1, f.end.offset - f.start.offset)))}`);
-      lines.push(`    ${colors.dim('fix:')} ${f.suggestion}`);
+      lines.push(`    ${colors.dim('fix:')} ${diagnosticText(f.suggestion)}`);
       lines.push('');
     }
   }
@@ -39,7 +40,7 @@ export function formatPretty(report: ScanReport): string {
     lines.push(colors.bold(`ghostchars: ${counts.error} error(s), ${counts.warning} warning(s), ${counts.info} info in ${report.files.length} file(s) scanned (${msToStr(report.durationMs)}).`));
   }
   if (report.skipped.length) {
-    lines.push(colors.dim(`skipped ${report.skipped.length} file(s): ${report.skipped.slice(0, 5).map((s) => `${s.path} (${s.reason})`).join(', ')}${report.skipped.length > 5 ? ', …' : ''}`));
+    lines.push(colors.dim(`skipped ${report.skipped.length} file(s): ${report.skipped.slice(0, 5).map((s) => diagnosticText(`${s.path} (${s.reason})`)).join(', ')}${report.skipped.length > 5 ? ', …' : ''}`));
   }
 
   return lines.join('\n');

@@ -11,22 +11,31 @@ const DEFAULT_FIXABLE_RULES: RuleId[] = ['bidi-control', 'bidi-mark', 'bidi-unba
  */
 export function sanitize(text: string, policy: SanitizePolicy = {}): SanitizeResult {
   const rules = new Set(policy.rules ?? DEFAULT_FIXABLE_RULES);
+  // Materialize once: callers may supply a one-shot iterable, and later passes
+  // must retain exactly the same allowlist as the first scan.
+  const allowed = new Set(policy.scanOptions?.allowCodePoints ?? []);
+  const options = { ...policy.scanOptions, allowCodePoints: allowed };
   if ((policy.mode ?? 'remove') === 'keep') {
-    return { text, fixed: [], remaining: scanText(text).findings };
+    return { text, fixed: [], remaining: scanText(text, options).findings };
   }
 
   // Removing one character can turn its neighbor into a finding (see SanitizeResult.fixed), so
-  // scan and remove until a scan comes back clean. Every pass that continues deletes at least
-  // one code unit, so this ends.
+  // scan and remove until no permitted deletion remains. Every pass that continues deletes
+  // at least one code unit, so this ends even when protected findings remain.
   let current = text;
   const fixed: Finding[] = [];
   for (;;) {
     const remaining: Finding[] = [];
     const spans: Array<[number, number]> = [];
-    for (const finding of scanText(current).findings) {
+    for (const finding of scanText(current, options).findings) {
       if (finding.fixable && rules.has(finding.rule)) {
-        fixed.push(finding);
-        spans.push(finding.removal ? [finding.removal.start, finding.removal.end] : [finding.start.offset, finding.end.offset]);
+        const start = finding.removal?.start ?? finding.start.offset;
+        const end = finding.removal?.end ?? finding.end.offset;
+        const removable = unprotectedSpans(current, start, end, allowed);
+        if (removable.length) {
+          fixed.push(finding);
+          spans.push(...removable);
+        } else remaining.push(finding);
       } else {
         remaining.push(finding);
       }
@@ -46,6 +55,24 @@ export function sanitize(text: string, policy: SanitizePolicy = {}): SanitizeRes
     if (out.length === current.length) return { text: current, fixed, remaining };
     current = out;
   }
+}
+
+/** A compound finding can contain both allowed and disallowed scalars. */
+function unprotectedSpans(text: string, start: number, end: number, allowed: ReadonlySet<number>): Array<[number, number]> {
+  if (allowed.size === 0) return [[start, end]];
+  const spans: Array<[number, number]> = [];
+  let from = start;
+  for (let i = start; i < end;) {
+    const cp = text.codePointAt(i)!;
+    const next = i + (cp > 0xffff ? 2 : 1);
+    if (allowed.has(cp)) {
+      if (from < i) spans.push([from, i]);
+      from = next;
+    }
+    i = next;
+  }
+  if (from < end) spans.push([from, end]);
+  return spans;
 }
 
 function mergeSpans(spans: Array<[number, number]>): Array<[number, number]> {

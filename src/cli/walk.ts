@@ -1,6 +1,6 @@
 import { execFileSync } from 'node:child_process';
 import { readFileSync, readdirSync, statSync } from 'node:fs';
-import { decodeFile, fileEncoding } from './encoding.js';
+import { fileEncoding } from './encoding.js';
 import { join, relative, resolve, sep } from 'node:path';
 
 export const MAX_FILE_BYTES = 5 * 1024 * 1024; // 5 MiB: past this, "scan a file" stops being interactive-CLI-fast.
@@ -78,9 +78,10 @@ function isLikelyBinary(absPath: string): boolean {
     const buf = readFileSync(absPath);
     const sample = buf.subarray(0, Math.min(buf.length, 8192));
     if (fileEncoding(sample) !== 'utf-8') {
-      // UTF-16 text is half zero bytes; judge the characters, not the bytes. (An odd last
-      // byte of the sample is dropped so a character isn't cut in half.)
-      const text = decodeFile(sample.subarray(0, sample.length - (sample.length % 2))).text;
+      // UTF-16 text is half zero bytes; judge the characters, not the bytes.
+      // Sampling can end inside a surrogate pair. Full, strict decoding happens
+      // in the scan, so discovery must not label a cut sample as a binary file.
+      const text = new TextDecoder(fileEncoding(sample)).decode(sample, { stream: true });
       // eslint-disable-next-line no-control-regex
       return /[\u0000-\u0008\u000e-\u001a\u001c-\u001f]/.test(text);
     }

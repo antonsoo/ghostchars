@@ -17,8 +17,13 @@ export function fileEncoding(bytes: Uint8Array): FileEncoding {
 /** The file's text. A UTF-16 mark is the encoding's signature and is left out; UTF-8 is read as it always was. */
 export function decodeFile(bytes: Buffer): { text: string; encoding: FileEncoding } {
   const encoding = fileEncoding(bytes);
-  if (encoding === 'utf-8') return { text: bytes.toString('utf8'), encoding };
-  return { text: new TextDecoder(encoding).decode(bytes), encoding };
+  try {
+    // A replacement U+FFFD would destroy the original bytes on --fix. Preserve
+    // the UTF-8 signature as before; UTF-16's signature is restored by encodeFile.
+    return { text: new TextDecoder(encoding, { fatal: true, ignoreBOM: encoding === 'utf-8' }).decode(bytes), encoding };
+  } catch {
+    throw new Error(`Invalid ${encoding} byte sequence; decode the file correctly before scanning or fixing it.`);
+  }
 }
 
 /** `text` as bytes in `encoding`, with the mark a UTF-16 file starts with. */

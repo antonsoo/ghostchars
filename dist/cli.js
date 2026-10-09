@@ -7468,18 +7468,25 @@ function applySeverityOverride(finding2, options) {
 var DEFAULT_FIXABLE_RULES = ["bidi-control", "bidi-mark", "bidi-unbalanced", "tag-smuggling", "variation-selector-smuggling", "variation-selector-stray", "invisible", "unusual-whitespace", "control-character"];
 function sanitize(text, policy = {}) {
   const rules = new Set(policy.rules ?? DEFAULT_FIXABLE_RULES);
+  const allowed = new Set(policy.scanOptions?.allowCodePoints ?? []);
+  const options = { ...policy.scanOptions, allowCodePoints: allowed };
   if ((policy.mode ?? "remove") === "keep") {
-    return { text, fixed: [], remaining: scanText(text).findings };
+    return { text, fixed: [], remaining: scanText(text, options).findings };
   }
   let current = text;
   const fixed = [];
   for (; ; ) {
     const remaining = [];
     const spans = [];
-    for (const finding2 of scanText(current).findings) {
+    for (const finding2 of scanText(current, options).findings) {
       if (finding2.fixable && rules.has(finding2.rule)) {
-        fixed.push(finding2);
-        spans.push(finding2.removal ? [finding2.removal.start, finding2.removal.end] : [finding2.start.offset, finding2.end.offset]);
+        const start = finding2.removal?.start ?? finding2.start.offset;
+        const end = finding2.removal?.end ?? finding2.end.offset;
+        const removable = unprotectedSpans(current, start, end, allowed);
+        if (removable.length) {
+          fixed.push(finding2);
+          spans.push(...removable);
+        } else remaining.push(finding2);
       } else {
         remaining.push(finding2);
       }
@@ -7496,6 +7503,22 @@ function sanitize(text, policy = {}) {
     if (out.length === current.length) return { text: current, fixed, remaining };
     current = out;
   }
+}
+function unprotectedSpans(text, start, end, allowed) {
+  if (allowed.size === 0) return [[start, end]];
+  const spans = [];
+  let from = start;
+  for (let i = start; i < end; ) {
+    const cp = text.codePointAt(i);
+    const next = i + (cp > 65535 ? 2 : 1);
+    if (allowed.has(cp)) {
+      if (from < i) spans.push([from, i]);
+      from = next;
+    }
+    i = next;
+  }
+  if (from < end) spans.push([from, end]);
+  return spans;
 }
 function mergeSpans(spans) {
   const sorted = [...spans].sort((a, b) => a[0] - b[0]);
@@ -7597,8 +7620,11 @@ function fileEncoding(bytes) {
 }
 function decodeFile(bytes) {
   const encoding = fileEncoding(bytes);
-  if (encoding === "utf-8") return { text: bytes.toString("utf8"), encoding };
-  return { text: new TextDecoder(encoding).decode(bytes), encoding };
+  try {
+    return { text: new TextDecoder(encoding, { fatal: true, ignoreBOM: encoding === "utf-8" }).decode(bytes), encoding };
+  } catch {
+    throw new Error(`Invalid ${encoding} byte sequence; decode the file correctly before scanning or fixing it.`);
+  }
 }
 function encodeFile(text, encoding) {
   if (encoding === "utf-8") return Buffer.from(text, "utf8");
@@ -7661,7 +7687,7 @@ function isLikelyBinary(absPath) {
     const buf = readFileSync(absPath);
     const sample = buf.subarray(0, Math.min(buf.length, 8192));
     if (fileEncoding(sample) !== "utf-8") {
-      const text = decodeFile(sample.subarray(0, sample.length - sample.length % 2)).text;
+      const text = new TextDecoder(fileEncoding(sample)).decode(sample, { stream: true });
       return /[\u0000-\u0008\u000e-\u001a\u001c-\u001f]/.test(text);
     }
     if (sample.includes(0)) return true;
@@ -7771,24 +7797,55 @@ function toPosix(p) {
 
 // src/cli/config.ts
 var CONFIG_FILENAME = ".ghostcharsrc.json";
+var RULES = /* @__PURE__ */ new Set(["bidi-control", "bidi-mark", "bidi-unbalanced", "tag-smuggling", "variation-selector-smuggling", "variation-selector-stray", "invisible", "confusable", "styled-text", "unusual-whitespace", "control-character"]);
 function loadConfig(cwd, explicitPath) {
   const path = explicitPath ?? join2(cwd, CONFIG_FILENAME);
-  if (!existsSync(path)) return {};
+  if (!existsSync(path)) {
+    if (explicitPath !== void 0) throw new Error(`Config file does not exist: ${path}`);
+    return {};
+  }
   try {
     const raw = JSON.parse(readFileSync2(path, "utf8"));
+    validateConfig(raw);
     return raw;
   } catch (err) {
     throw new Error(`Failed to parse ${path}: ${err.message}`);
   }
 }
+function object(value, label) {
+  if (!value || typeof value !== "object" || Array.isArray(value)) throw new Error(`${label} must be an object`);
+  return value;
+}
+function validateBlock(value, label, override) {
+  const block = object(value, label);
+  const keys = override ? ["files", "rules", "allow"] : ["rules", "allow", "overrides"];
+  for (const key of Object.keys(block)) if (!keys.includes(key)) throw new Error(`Unknown ${label} option: ${key}`);
+  if (block.rules !== void 0) {
+    for (const [rule, severity] of Object.entries(object(block.rules, `${label}.rules`))) {
+      if (!RULES.has(rule)) throw new Error(`Unknown rule in ${label}: ${rule}`);
+      if (severity !== false && severity !== "info" && severity !== "warning" && severity !== "error") throw new Error(`Rule ${rule} must use false, "info", "warning", or "error"`);
+    }
+  }
+  if (block.allow !== void 0) {
+    if (!Array.isArray(block.allow) || block.allow.some((entry) => typeof entry !== "number" && typeof entry !== "string")) throw new Error(`${label}.allow must be an array of code points`);
+    parseAllow(block.allow);
+  }
+  if (override && (!Array.isArray(block.files) || !block.files.length || block.files.some((entry) => typeof entry !== "string" || !entry.trim()))) throw new Error(`${label}.files must be a nonempty array of glob strings`);
+  return block;
+}
+function validateConfig(value) {
+  const config = validateBlock(value, "config", false);
+  if (config.overrides !== void 0) {
+    if (!Array.isArray(config.overrides)) throw new Error("config.overrides must be an array");
+    config.overrides.forEach((entry, index) => validateBlock(entry, `overrides[${index}]`, true));
+  }
+}
 function parseAllow(entries) {
   if (!entries) return [];
   return entries.map((e) => {
-    if (typeof e === "number") return e;
-    const m = /^U\+([0-9a-fA-F]+)$/.exec(e.trim());
-    if (m) return parseInt(m[1], 16);
-    const n = Number(e);
-    if (!Number.isNaN(n)) return n;
+    const m = typeof e === "string" ? /^U\+([0-9a-fA-F]+)$/.exec(e.trim()) : null;
+    const n = m ? parseInt(m[1], 16) : typeof e === "string" && !e.trim() ? NaN : Number(e);
+    if (Number.isInteger(n) && n >= 0 && n <= 1114111 && !(n >= 55296 && n <= 57343)) return n;
     throw new Error(`Invalid code point in config allowlist: ${e}`);
   });
 }
@@ -7812,7 +7869,7 @@ function formatGithub(report) {
       const cmd = f.severity === "error" ? "error" : f.severity === "warning" ? "warning" : "notice";
       const title = `ghostchars: ${f.rule}`;
       const message = escapeData(f.message);
-      lines.push(`::${cmd} file=${file.path},line=${f.start.line},col=${f.start.column},endLine=${f.end.line},endColumn=${f.end.column},title=${escapeProp(title)}::${message}`);
+      lines.push(`::${cmd} file=${escapeProp(file.path)},line=${f.start.line},col=${f.start.column},endLine=${f.end.line},endColumn=${f.end.column},title=${escapeProp(title)}::${message}`);
     }
   }
   return lines.join("\n");
@@ -7888,17 +7945,17 @@ function formatPretty(report) {
   const lines = [];
   for (const file of report.files) {
     if (file.findings.length === 0) continue;
-    lines.push(colors.underline(file.path));
+    lines.push(colors.underline(diagnosticText(file.path)));
     const sourceLines = file.source.split(/\r\n|\r|\n/);
     for (const f of file.findings) {
       const loc = colors.gray(`${f.start.line}:${f.start.column}`);
       lines.push(`  ${loc}  ${SEVERITY_LABEL[f.severity]}  ${colors.dim(f.rule)}`);
-      lines.push(`    ${f.message}`);
+      lines.push(`    ${diagnosticText(f.message)}`);
       const srcLine = sourceLines[f.start.line - 1] ?? "";
-      const revealedLine = reveal(srcLine);
+      const revealedLine = diagnosticText(reveal(srcLine));
       lines.push(`    ${colors.gray("|")} ${revealedLine}`);
       lines.push(`    ${colors.gray("|")} ${" ".repeat(Math.max(0, f.start.column - 1))}${colors.magenta("^".repeat(Math.max(1, f.end.offset - f.start.offset)))}`);
-      lines.push(`    ${colors.dim("fix:")} ${f.suggestion}`);
+      lines.push(`    ${colors.dim("fix:")} ${diagnosticText(f.suggestion)}`);
       lines.push("");
     }
   }
@@ -7910,7 +7967,7 @@ function formatPretty(report) {
     lines.push(colors.bold(`ghostchars: ${counts.error} error(s), ${counts.warning} warning(s), ${counts.info} info in ${report.files.length} file(s) scanned (${msToStr(report.durationMs)}).`));
   }
   if (report.skipped.length) {
-    lines.push(colors.dim(`skipped ${report.skipped.length} file(s): ${report.skipped.slice(0, 5).map((s) => `${s.path} (${s.reason})`).join(", ")}${report.skipped.length > 5 ? ", \u2026" : ""}`));
+    lines.push(colors.dim(`skipped ${report.skipped.length} file(s): ${report.skipped.slice(0, 5).map((s) => diagnosticText(`${s.path} (${s.reason})`)).join(", ")}${report.skipped.length > 5 ? ", \u2026" : ""}`));
   }
   return lines.join("\n");
 }
@@ -7993,7 +8050,7 @@ function formatSummary(report) {
   const lines = [];
   for (const file of report.files) {
     if (file.findings.length === 0) continue;
-    lines.push(colors.underline(file.path));
+    lines.push(colors.underline(diagnosticText(file.path)));
     const groups = /* @__PURE__ */ new Map();
     for (const f of file.findings) {
       const key = `${f.severity}\0${f.rule}\0${BY_CHARACTER.has(f.rule) ? f.names[0] ?? "" : ""}`;
@@ -8012,40 +8069,46 @@ function formatSummary(report) {
       const what = BY_CHARACTER.has(f.rule) ? `  ${f.names[0] ?? ""}` : "";
       const where = g.count === 1 ? `${f.start.line}:${f.start.column}` : `${f.start.line}:${f.start.column} .. ${g.last.start.line}:${g.last.start.column}`;
       lines.push(`  ${SEVERITY_LABEL2[f.severity]}  ${colors.dim(f.rule)}${what}  x${g.count}  ${colors.gray(where)}`);
-      for (const text of [...g.decoded].slice(0, 3)) lines.push(`    ${colors.dim("reads:")} ${JSON.stringify(text.length > 120 ? text.slice(0, 120) + "..." : text)}`);
+      for (const text of [...g.decoded].slice(0, 3)) lines.push(`    ${colors.dim("reads:")} ${diagnosticText(JSON.stringify(text.length > 120 ? text.slice(0, 120) + "..." : text))}`);
     }
     lines.push("");
   }
   const counts = severityCounts(report);
   const total = totalFindings(report);
   lines.push(total === 0 ? colors.green(`ghostchars: no findings in ${report.files.length} file(s).`) : colors.bold(`ghostchars: ${counts.error} error(s), ${counts.warning} warning(s), ${counts.info} info in ${report.files.length} file(s) scanned.`));
+  if (report.skipped.length) lines.push(colors.dim(`skipped ${report.skipped.length} file(s): ${report.skipped.slice(0, 5).map((skip) => diagnosticText(`${skip.path} (${skip.reason})`)).join(", ")}${report.skipped.length > 5 ? ", \u2026" : ""}`));
   return lines.join("\n");
 }
 
 // src/cli/fix.ts
-function computeFix(path, source) {
-  const { text, fixed } = sanitize(source);
+function computeFix(path, source, options = {}) {
+  const { text, fixed } = sanitize(source, { scanOptions: options });
   return { path, fixed, newText: text };
 }
 function formatDryRun(outcome, source) {
   if (outcome.fixed.length === 0) return "";
-  const lines = [colors.underline(outcome.path)];
-  const sourceLines = source.split(/\r\n|\r|\n/);
-  const byLine = /* @__PURE__ */ new Map();
-  for (const f of outcome.fixed) {
-    if (!byLine.has(f.start.line)) byLine.set(f.start.line, []);
-    byLine.get(f.start.line).push(f);
+  const lines = [colors.underline(diagnosticText(outcome.path))];
+  const before = source.split(/\r\n|\r|\n/);
+  const after = outcome.newText.split(/\r\n|\r|\n/);
+  const emit = (lineNo, sign, text) => {
+    const marker = sign === "-" ? colors.red(sign) : colors.green(sign);
+    lines.push(`  ${colors.gray(`${lineNo}:`)} ${marker} ${diagnosticText(reveal(text))}`);
+  };
+  if (before.length === after.length) {
+    before.forEach((text, index) => {
+      if (text === after[index]) return;
+      emit(index + 1, "-", text);
+      emit(index + 1, "+", after[index] ?? "");
+    });
+  } else {
+    let start = 0;
+    while (start < before.length && start < after.length && before[start] === after[start]) start++;
+    let tail = 0;
+    while (tail < before.length - start && tail < after.length - start && before[before.length - 1 - tail] === after[after.length - 1 - tail]) tail++;
+    for (let i = start; i < before.length - tail; i++) emit(i + 1, "-", before[i] ?? "");
+    for (let i = start; i < after.length - tail; i++) emit(i + 1, "+", after[i] ?? "");
   }
-  for (const [lineNo, findings] of [...byLine.entries()].sort((a, b) => a[0] - b[0])) {
-    const original = sourceLines[lineNo - 1] ?? "";
-    let cleaned = original;
-    for (const f of [...findings].sort((a, b) => b.start.column - a.start.column)) {
-      cleaned = cleaned.slice(0, f.start.column - 1) + cleaned.slice(f.end.column - 1);
-    }
-    lines.push(`  ${colors.gray(`${lineNo}:`)} ${colors.red("-")} ${reveal(original)}`);
-    lines.push(`  ${colors.gray(`${lineNo}:`)} ${colors.green("+")} ${cleaned}`);
-  }
-  lines.push(colors.dim(`  ${outcome.fixed.length} finding(s) would be fixed.`));
+  lines.push(colors.dim(`  ${outcome.fixed.length} finding(s) affected. Preview only; no file was written.`));
   return lines.join("\n");
 }
 
@@ -8058,18 +8121,18 @@ function revealCommand(target) {
   }
   let text;
   try {
-    text = target === "-" ? readFileSync3(0, "utf8") : decodeFile(readFileSync3(target)).text;
+    text = decodeFile(readFileSync3(target === "-" ? 0 : target)).text;
   } catch (err) {
-    console.error(colors.red(`Could not read ${target === "-" ? "stdin" : target}: ${err.message}`));
+    console.error(colors.red(diagnosticText(`Could not read ${target === "-" ? "stdin" : target}: ${err.message}`)));
     return 2;
   }
-  console.log(reveal(text));
+  console.log(reveal(text).split(/\r\n|\r|\n/).map(diagnosticText).join("\n"));
   const { findings } = scanText(text);
   const decoded = findings.filter((f) => f.decoded);
   if (decoded.length > 0) {
     console.log("\n" + colors.bold("Decoded payloads:"));
     for (const f of decoded) {
-      console.log(`  ${colors.gray(`${f.start.line}:${f.start.column}`)} ${colors.dim(f.rule)} -> ${JSON.stringify(f.decoded)}`);
+      console.log(`  ${colors.gray(`${f.start.line}:${f.start.column}`)} ${colors.dim(f.rule)} -> ${diagnosticText(JSON.stringify(f.decoded))}`);
     }
   }
   return 0;
@@ -8110,11 +8173,15 @@ function parseArgs(argv) {
     else if (a === "--no-config") args.noConfig = true;
     else if (a === "--format") args.format = argv[++i] ?? "pretty";
     else if (a.startsWith("--format=")) args.format = a.slice("--format=".length);
-    else if (a === "--config") args.config = argv[++i];
-    else if (a.startsWith("--config=")) args.config = a.slice("--config=".length);
+    else if (a === "--config") {
+      const value = argv[++i];
+      if (!value || value.startsWith("--")) throw new UsageError("--config requires a file path");
+      args.config = value;
+    } else if (a.startsWith("--config=")) args.config = a.slice("--config=".length);
     else if (a !== "-" && a.startsWith("-")) throw new UsageError(`Unknown option: ${a}`);
     else args.paths.push(a);
   }
+  if (args.config === "") throw new UsageError("--config requires a file path");
   return args;
 }
 var UsageError = class extends Error {
@@ -8124,7 +8191,7 @@ function main(argv) {
   try {
     args = parseArgs(argv);
   } catch (err) {
-    console.error(colors.red(String(err.message)));
+    console.error(colors.red(diagnosticText(String(err.message))));
     console.error(HELP);
     return 2;
   }
@@ -8144,18 +8211,19 @@ function main(argv) {
   try {
     config = args.noConfig ? {} : loadConfig(cwd, args.config);
   } catch (err) {
-    console.error(colors.red(err.message));
+    console.error(colors.red(diagnosticText(err.message)));
     return 2;
   }
   const missing = args.paths.filter((path) => !existsSync2(resolve2(cwd, path)));
   if (missing.length > 0) {
-    console.error(colors.red(`ghostchars: no such file or directory: ${missing.join(", ")}`));
+    console.error(colors.red(diagnosticText(`ghostchars: no such file or directory: ${missing.join(", ")}`)));
     return 2;
   }
   const start = performance.now();
   const { files, skipped } = discoverFiles(args.paths, cwd);
   const report = { files: [], skipped, durationMs: 0 };
   let hadFixes = false;
+  let runtimeError = false;
   for (const file of files) {
     let source;
     let encoding;
@@ -8163,20 +8231,26 @@ function main(argv) {
       ({ text: source, encoding } = decodeFile(readFileSync4(file.absPath)));
     } catch (err) {
       report.skipped.push({ path: file.path, reason: `read error: ${err.message}` });
+      runtimeError = true;
       continue;
     }
     const options = scanOptionsForFile(config, file.path);
     const { findings } = scanText(source, options);
     report.files.push({ path: file.path, source, findings });
     if (args.fix && findings.some((f) => f.fixable)) {
-      const outcome = computeFix(file.path, source);
+      const outcome = computeFix(file.path, source, options);
       if (outcome.fixed.length > 0) {
         hadFixes = true;
         if (args.dryRun) {
           const preview = formatDryRun(outcome, source);
           if (preview) console.log(preview + "\n");
         } else {
-          writeFileSync(file.absPath, encodeFile(outcome.newText, encoding));
+          try {
+            writeFileSync(file.absPath, encodeFile(outcome.newText, encoding));
+          } catch (err) {
+            console.error(colors.red(diagnosticText(`Could not fix ${file.path}: ${err.message}`)));
+            runtimeError = true;
+          }
         }
       }
     }
@@ -8186,9 +8260,11 @@ function main(argv) {
     const output = args.format === "json" ? formatJson(report) : args.format === "sarif" ? formatSarif(report) : args.format === "github" ? formatGithub(report) : args.format === "summary" ? formatSummary(report) : formatPretty(report);
     console.log(output);
   } else if (!hadFixes && !args.quiet) {
-    console.log(colors.green("ghostchars: nothing to fix."));
+    console.log(runtimeError ? "ghostchars: some files could not be read; no fix preview is available for them." : colors.green("ghostchars: nothing to fix."));
   }
+  if (args.fix && args.dryRun) for (const skip of report.skipped) console.error(diagnosticText(`skipped ${skip.path}: ${skip.reason}`));
   const counts = severityCounts(report);
+  if (runtimeError) return 2;
   if (counts.error > 0) return 1;
   return 0;
 }

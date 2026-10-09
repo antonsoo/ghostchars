@@ -3,6 +3,7 @@ import { existsSync, readFileSync, realpathSync, writeFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { scanText } from '../core/index.js';
+import { diagnosticText } from '../core/diagnosticText.js';
 import type { ScanOptions } from '../core/index.js';
 import { loadConfig, scanOptionsForFile } from './config.js';
 import { decodeFile, encodeFile, type FileEncoding } from './encoding.js';
@@ -55,11 +56,16 @@ function parseArgs(argv: string[]) {
     else if (a === '--no-config') args.noConfig = true;
     else if (a === '--format') args.format = argv[++i] ?? 'pretty';
     else if (a.startsWith('--format=')) args.format = a.slice('--format='.length);
-    else if (a === '--config') args.config = argv[++i];
+    else if (a === '--config') {
+      const value = argv[++i];
+      if (!value || value.startsWith('--')) throw new UsageError('--config requires a file path');
+      args.config = value;
+    }
     else if (a.startsWith('--config=')) args.config = a.slice('--config='.length);
     else if (a !== '-' && a.startsWith('-')) throw new UsageError(`Unknown option: ${a}`);
     else args.paths.push(a);
   }
+  if (args.config === '') throw new UsageError('--config requires a file path');
   return args;
 }
 
@@ -70,7 +76,7 @@ export function main(argv: string[]): number {
   try {
     args = parseArgs(argv);
   } catch (err) {
-    console.error(colors.red(String((err as Error).message)));
+    console.error(colors.red(diagnosticText(String((err as Error).message))));
     console.error(HELP);
     return 2;
   }
@@ -93,7 +99,7 @@ export function main(argv: string[]): number {
   try {
     config = args.noConfig ? {} : loadConfig(cwd, args.config);
   } catch (err) {
-    console.error(colors.red((err as Error).message));
+    console.error(colors.red(diagnosticText((err as Error).message)));
     return 2;
   }
   // A path named on the command line that isn't there is a mistake in the command (a typo in
@@ -101,7 +107,7 @@ export function main(argv: string[]): number {
   // without having scanned anything.
   const missing = args.paths.filter((path) => !existsSync(resolve(cwd, path)));
   if (missing.length > 0) {
-    console.error(colors.red(`ghostchars: no such file or directory: ${missing.join(', ')}`));
+    console.error(colors.red(diagnosticText(`ghostchars: no such file or directory: ${missing.join(', ')}`)));
     return 2;
   }
   const start = performance.now();
@@ -109,6 +115,7 @@ export function main(argv: string[]): number {
 
   const report: ScanReport = { files: [], skipped, durationMs: 0 };
   let hadFixes = false;
+  let runtimeError = false;
 
   for (const file of files) {
     let source: string;
@@ -117,6 +124,7 @@ export function main(argv: string[]): number {
       ({ text: source, encoding } = decodeFile(readFileSync(file.absPath)));
     } catch (err) {
       report.skipped.push({ path: file.path, reason: `read error: ${(err as Error).message}` });
+      runtimeError = true;
       continue;
     }
 
@@ -125,14 +133,19 @@ export function main(argv: string[]): number {
     report.files.push({ path: file.path, source, findings });
 
     if (args.fix && findings.some((f) => f.fixable)) {
-      const outcome = computeFix(file.path, source);
+      const outcome = computeFix(file.path, source, options);
       if (outcome.fixed.length > 0) {
         hadFixes = true;
         if (args.dryRun) {
           const preview = formatDryRun(outcome, source);
           if (preview) console.log(preview + '\n');
         } else {
-          writeFileSync(file.absPath, encodeFile(outcome.newText, encoding));
+          try {
+            writeFileSync(file.absPath, encodeFile(outcome.newText, encoding));
+          } catch (err) {
+            console.error(colors.red(diagnosticText(`Could not fix ${file.path}: ${(err as Error).message}`)));
+            runtimeError = true;
+          }
         }
       }
     }
@@ -144,10 +157,13 @@ export function main(argv: string[]): number {
     const output = args.format === 'json' ? formatJson(report) : args.format === 'sarif' ? formatSarif(report) : args.format === 'github' ? formatGithub(report) : args.format === 'summary' ? formatSummary(report) : formatPretty(report);
     console.log(output);
   } else if (!hadFixes && !args.quiet) {
-    console.log(colors.green('ghostchars: nothing to fix.'));
+    console.log(runtimeError ? 'ghostchars: some files could not be read; no fix preview is available for them.' : colors.green('ghostchars: nothing to fix.'));
   }
 
+  if (args.fix && args.dryRun) for (const skip of report.skipped) console.error(diagnosticText(`skipped ${skip.path}: ${skip.reason}`));
+
   const counts = severityCounts(report);
+  if (runtimeError) return 2;
   if (counts.error > 0) return 1;
   return 0;
 }

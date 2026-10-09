@@ -59,9 +59,9 @@ export interface ScanOptions {
   file?: string;
   /** Per-rule severity overrides (e.g. downgrade a rule to 'info' or disable with false). */
   severityOverrides?: Partial<Record<RuleId, Severity | false>>;
-  /** Code points to never flag, anywhere. */
+  /** Suppress findings made entirely of these code points. sanitize() also protects each allowed scalar from removal. */
   allowCodePoints?: Iterable<number>;
-  /** Treat this scan as "code" (identifiers matter, stricter bidi/invisible defaults) vs free text. Default true. */
+  /** Reserved for compatibility; currently does not change rule behavior. */
   isCode?: boolean;
 }
 
@@ -78,18 +78,21 @@ export interface SanitizePolicy {
   rules?: RuleId[];
   /** 'remove' deletes the offending code points; 'keep' leaves them (dry inspection). Default 'remove'. */
   mode?: FixPolicyMode;
+  /** Apply the same severity/allowlist policy on every rescan. Allowed scalars are never removed. */
+  scanOptions?: ScanOptions;
 }
 
 export interface SanitizeResult {
-  /** The text with every fixable finding removed: scanning it again finds none of them. */
+  /** Text after permitted removals; unfixable or protected findings may remain. */
   text: string;
   /**
    * Findings that were fixed. Removing a character can change what its neighbor is (a joiner
    * that was legitimate next to a letter isn't, once that letter's bidi mark is gone), so the
-   * text is rescanned until it is clean; a finding from a later pass is positioned in the text
-   * as it stood after the earlier ones.
+   * text is rescanned until no permitted deletion remains; a finding from a later pass is
+   * positioned in the text as it stood after the earlier ones. A compound finding can be
+   * only partly removed when some of its code points are allowlisted.
    */
   fixed: Finding[];
-  /** Findings that were left alone (not in policy, or not fixable). */
+  /** Findings in the final text (not in policy, not fixable, or protected by the allowlist). */
   remaining: Finding[];
 }
