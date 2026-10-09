@@ -1,0 +1,16 @@
+Machine: x64, linux, Node v24.21.0, 14 logical CPUs
+
+[1] scanText() on 50.0 MiB of pure-ASCII, code-shaped synthetic text:
+    53.3ms (938.3 MiB/s, 52,428,861 code points, 0 findings)
+
+[2] scanText() on 50.0 MiB of synthetic text with scattered non-ASCII content (labelled synthetic; not sampled from a real project):
+    4.45s (11.2 MiB/s, 52,428,885 code points, 2,191 findings)
+
+[3] scanText() over 3,353 real files in this repo's node_modules/ (34.1 MiB total):
+    1.49s (23.0 MiB/s, 189 findings)
+         162  unusual-whitespace
+           9  invisible
+           8  control-character
+           5  confusable
+           3  variation-selector-stray
+           2  styled-text

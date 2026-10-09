@@ -18,9 +18,9 @@ Unicode gives text producers three ways to make a human and a machine read the s
 
 1. **Bidirectional control characters** can reorder how text *displays* without touching how it's *stored* or *compiled*. Boucher & Anderson's "Trojan Source: Invisible Vulnerabilities" (USENIX Security 2023; disclosed as **CVE-2021-42574**) showed this can hide malicious code inside what looks like a comment or string, across every language they tried.
 2. **Invisible and zero-width characters** (zero-width space, Hangul filler, soft hyphen, ...) can split or hide identifiers with no visible trace, and homoglyphs (Cyrillic `а` vs Latin `a`) let one name masquerade as another -- both covered by Unicode's own [UTS #39: Unicode Security Mechanisms](https://www.unicode.org/reports/tr39/).
-3. **In the LLM era**, two more encodings let text carry a payload no human reader will ever see: Unicode tag characters (U+E0000-U+E007F, "ASCII smuggling") and variation-selector runs can encode arbitrary hidden bytes inside what looks like an empty flag emoji or an ordinary character. Copy-pasted into a chat UI or a scraped web page, that payload is invisible to the person reviewing the prompt but perfectly legible to the model reading the raw text.
+3. **Hidden payload encodings**: Unicode tag characters (U+E0000-U+E007F, "ASCII smuggling") and variation-selector runs can encode bytes inside what looks like an empty flag emoji or an ordinary character. A raw-text pipeline receives those code points even when its review interface does not display them.
 
-Different tools catch pieces of this (an editor might warn about ambiguous characters, GitHub's web UI banners bidi text), but there wasn't one small thing that catches all of it, runs the same way in CI and inside an LLM input pipeline, and tells you exactly what's hiding and how to remove it. That's ghostchars.
+ghostchars combines these detectors in a dependency-free library, CLI and browser inspector. The findings name the characters and show decoded payloads so a reviewer can decide what to retain or remove.
 
 ## Quickstart
 
@@ -85,8 +85,14 @@ ghostchars . --format github        # ::error file=...,line=...::... annotations
 # See (and fix) what's hiding
 ghostchars reveal suspicious.txt
 ghostchars . --fix --dry-run        # preview
-ghostchars . --fix                  # apply safe removals in place
+ghostchars . --fix                  # apply configured removals in place
 ```
+
+The source checkout includes an **unreleased repair fix**: `--fix` now honors
+the same rules, allowlist and matching file overrides as the scan, including
+later passes. Its preview shows the actual proposed text; invalid encodings or
+invalid explicit configuration stop with exit 2 instead of being rewritten.
+See [repair behavior and before/after evidence](studies/repair-policy/README.md).
 
 ### As an LLM input filter
 
@@ -102,8 +108,13 @@ const { findings } = scanText(userInput);
 if (findings.some((f) => f.severity === 'error')) {
   // e.g. tag-smuggling or a bidi override: log it, reject it, or...
 }
-const { text: clean } = sanitize(userInput); // strip everything safely fixable before it reaches the model
+const { text: clean, remaining } = sanitize(userInput); // review both before using the result
 ```
+
+Removal is textual: it can join words, change typography or affect code. It does
+not establish that a prompt is trustworthy. The source checkout also accepts
+`sanitize(text, { scanOptions: { allowCodePoints: [0xA0], severityOverrides:
+{ invisible: false } } })` to apply the same policy on every pass.
 
 ### GitHub Action
 
@@ -126,6 +137,18 @@ See [`examples/workflows/ghostchars.yml`](examples/workflows/ghostchars.yml) and
   ]
 }
 ```
+
+In the source checkout, `allow` protects each listed Unicode scalar even inside
+a compound finding. A disabled rule cannot remove text, but another enabled rule
+may still cover the same character; disabling `bidi-control` alone does not
+disable `bidi-unbalanced`. Severity changes (`info`, `warning`, `error`) change
+reporting, not whether an enabled fixable rule can remove its characters.
+All matching overrides merge in order; allowlists accumulate.
+
+`--fix` reports findings and the exit code from the **original** scan. Run a
+second scan to check what remains. Review a dry run before applying changes;
+the CLI writes files in place and does not create backups or a transaction
+across files.
 
 ## The web app: "the UV lamp"
 
@@ -199,7 +222,6 @@ A fixed list of Unicode space separators and line/paragraph separators that aren
 - **A single character type is sometimes both a real signal and commonly legitimate at once.** NBSP is the clearest case: French typography requires it before `:`/`;`/`!`/`?`, so any French-localized string will contain plenty of "findings" that are correct detections of a real, intentional NBSP -- not an attack. This is a known, honest trade-off of not being format-aware (see the `node_modules` breakdown below); `.ghostcharsrc.json` per-glob overrides exist specifically to quiet a known-legitimate path (e.g. a translations directory) without touching the default elsewhere.
 - **CJK variation sequences are accepted, not verified.** A single variation selector on a CJK ideograph is treated as an ordinary Ideographic Variation Sequence rather than checked against the real IVD registry (not vendored here), so an invalid but structurally-single selector on a CJK base won't be flagged.
 - **The bidi-balance check is per-line by design** (see above); a payload that only becomes unbalanced when reasoned about across an entire multi-line paragraph, rather than within one rendered line, is out of scope.
-- **NFKC-instability detection (optional in the brief) is not implemented.** Everything else in the brief is.
 - Every detector was checked against an independent oracle where one exists: bidi/tag/variation-selector/invisible ranges are cross-checked against literal code points from the Unicode spec text (not re-derived from the generated tables), and the confusables skeleton is verified against `confusables.txt` entries directly (see `tests/`).
 
 ## Performance
@@ -210,23 +232,39 @@ npm run bench
 
 Every rule in this tool is triggered by either a code point ≥ U+0080 or a C0/DEL control character -- so `scanText()` opens with one linear regex test (`/[^\t\n\r\x20-\x7E]/`) over the whole input, and if it finds nothing, returns immediately: no code point iteration, no tokenizing, nothing. Plain ASCII, the overwhelming majority of real source, takes that path.
 
-Measured on this machine (14 vCPU / 48 GB RAM, WSL2 Linux; numbers vary with concurrent load on this box, run `npm run bench` for a live measurement):
+Measured once on Node 24.21.0, x64 WSL2 Linux, 14 logical CPUs and 48 GB RAM,
+after a fresh locked install. These are current-checkout measurements, not a
+before/after speedup claim. [Captured output](docs/benchmark.txt); timing varies
+with machine load.
 
-- **Pure-ASCII fast path**: `scanText()` on 50 MiB of pure-ASCII, code-shaped synthetic text: **35ms, ~1.4 GiB/s**, 0 findings.
-- **Mixed content** (the fast path can't apply -- every rule actually runs): `scanText()` on 50 MiB of synthetic text with non-ASCII/bidi/confusable content scattered through it (labelled synthetic; not sampled from a real project): **~3s, ~17 MiB/s**, 2,191 findings. The confusables rule dominates this cost: once a file has an identifier with a non-ASCII character in it, every other identifier is reduced to its skeleton to look for a collision.
-- **Real-world**: `scanText()` over this repo's own `node_modules/` (3,353 files, 34.1 MiB, walked directly -- `ghostchars` itself would never scan a gitignored `node_modules/` in normal use, but it's a convenient stand-in for "a big, messy, real tree"): **~0.8s, ~45 MiB/s**, 598 findings:
+| Input | Time | Throughput | Findings |
+|---|---:|---:|---:|
+| 50 MiB generated ASCII source | 53.3 ms | 938.3 MiB/s | 0 |
+| 50 MiB generated mixed Unicode source | 4.45 s | 11.2 MiB/s | 2,191 |
+| 3,353 dependency files, 34.1 MiB | 1.49 s | 23.0 MiB/s | 189 |
 
-  | count | rule |
-  |---:|---|
-  | 416 | `confusable` |
-  | 162 | `unusual-whitespace` |
-  | 9 | `invisible` |
-  | 8 | `control-character` |
-  | 3 | `variation-selector-stray` |
+Both generated inputs are synthetic. The dependency scan walks `node_modules`
+directly for a throughput workload; normal CLI discovery respects `.gitignore`.
+Its 189 findings break down as follows:
 
-  Nearly all the `confusable` findings sit in two files: Vite's bundled `node.js` chunk (360) and TypeScript's Turkish message catalog (51, the dotless-i case above; the source checkout reports none of them). The other five are real: the homograph examples in punycode's README, and `js` followed by a Cyrillic es (U+0441) where `jsc` was meant, in TypeScript's Russian catalog. The `unusual-whitespace` findings are NBSPs (159 of 162), most of them in TypeScript's Portuguese, Polish, Russian, French, German and Spanish catalogs -- real detections of a real character, and the trade-off described above rather than a bug (a NBSP in the places French typography puts one is not flagged, which is why this count is no longer in the thousands). The rest are genuine, if benign, oddities: zero-width spaces and joiners in TypeScript's Korean catalog and two `.d.ts` files, literal control bytes in `js-yaml`'s escape-sequence tables and in the prompt code bundled with Rolldown and Vitest, a doubled variation selector in `ts-api-utils`' README and manifest and a stray one in `ajv`'s README -- true positives, none of them attacks.
+| Rule | Count |
+|---|---:|
+| `unusual-whitespace` | 162 |
+| `invisible` | 9 |
+| `control-character` | 8 |
+| `confusable` | 5 |
+| `variation-selector-stray` | 3 |
+| `styled-text` | 2 |
 
-Memory grows with what is found, not with the size of the text: each rule looks for its own characters and builds a record only for those. The whole benchmark, its three 50 MiB strings included, peaks at about 670 MB. (Until 0.1.3 every code point of a non-ASCII file was held as an object, well over a hundred bytes per character, and this benchmark ran out of heap at its own default size.)
+These are detected characters and patterns, not a count of attacks. For example,
+translation catalogs contain intentional no-break spaces; the
+[repair study](studies/repair-policy/README.md) checks that configuration can
+retain their original text during an unrelated fix.
+
+The scanner keeps the input and a line index, plus findings, without creating an
+object for every code point. The whole benchmark, including generated inputs,
+peaked at 636 MiB resident memory (`/usr/bin/time -v`: 651,032 KiB). This is a
+measurement of that run, not a general memory bound.
 
 ## Comparison
 

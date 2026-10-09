@@ -13,5 +13,5 @@ Please open a [GitHub Security Advisory](https://github.com/antonsoo/ghostchars/
 ## Scope notes
 
 - ghostchars flags suspicious Unicode; it does not sandbox, execute, or otherwise act on the files it scans.
-- `sanitize()` / `--fix` perform textual removal only (no code execution, no network access).
-- The web app (`web/`) does all text processing client-side; the only network request it makes is loading its Google Fonts typeface, and the text you inspect is never sent anywhere.
+- `sanitize()` / `--fix` perform textual removal only (no code execution, no network access). Review the proposed output: removing a character can change a word or code. Configured repairs preserve allowlisted scalars; they do not create backups or make a set of file writes transactional.
+- The web app (`web/`) processes text in a local worker. Its code and fonts load from the page's own origin; inspected text is not uploaded. The page's Content-Security-Policy restricts network connections to that origin.

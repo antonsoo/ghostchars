@@ -14,6 +14,11 @@ All notable changes to this project are documented in this file.
 
 ### Fixed
 
+- Configured repairs use the scan's allowlist, disabled rules and per-file overrides on every sanitizer pass. Previously an unrelated fix triggered default-policy removal of characters the user had explicitly retained. Allowlisted scalars are also protected inside compound findings.
+- `--fix --dry-run` renders the proposed text instead of replaying overlapping or shifted diagnostic spans. Bidi overlap, retained variation-selector carriers and later sanitizer passes now preview the same output that is written.
+- A dry run with unfixable or protected findings and no permitted removal shows those findings for review instead of a green "nothing to fix" message.
+- Missing explicit configuration and malformed policy entries fail before repair. Invalid UTF-8 or BOM-marked UTF-16 returns exit 2 without rewriting the file; decoding no longer silently inserts replacement characters.
+- Human CLI diagnostics escape controls in filenames and retained source text. GitHub annotation filenames escape property delimiters and newlines. Summary and dry-run output include skipped-file reasons, and write errors return exit 2.
 - (source checkout) The `n` of a backslash-n escape in a string literal was read as the first letter of the word after it, so every `\n` before a Greek or Cyrillic word was a "mixes scripts" warning (124 in one set of translated prompts).
 - (source checkout) A ZWNJ between a Latin term and a Persian suffix (`token` + ZWNJ + plural) is orthography, not an `invisible` warning. A ZWNJ with ASCII on both sides, and a ZWJ in that place, are still reported.
 - Revealed text now shows invisible characters inside confusable identifiers instead of letting the identifier highlight hide them. Overlapping findings at the same offset use the complete span, so variation-selector tails cannot remain invisible.
@@ -31,6 +36,7 @@ All notable changes to this project are documented in this file.
 
 ### Tests
 
+- `studies/repair-policy` exercises the built CLI with independent expected bytes: 26 controlled cases and a targeted repair in all 13 TypeScript 5.9.3 translation catalogs. It records the old and new output hashes, previews, and exit codes.
 - Added `tests/promptCensus.spec.ts`: layered and one-bit-per-word payloads, the backslash-n escape, Turkish, Russian and Greek text, the Persian ZWNJ, `styled-text` (circled letters, small capitals, a styled persona name beside its plain spelling, fullwidth text in Japanese) and `--format summary`. Every case is a shape found in the census.
 - Added regressions for overlapping findings, inert decoded controls, source offsets, complete sanitized output, and preview boundaries. Production browser workflows run in Chromium and Firefox, including desktop and phone accessibility audits, clipboard failures, and cancelled or failed workers.
 

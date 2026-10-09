@@ -1,0 +1,1817 @@
+{
+  "description": "Controlled repair cases and deliberate two-control insertions in all 13 TypeScript 5.9.3 catalogs. Not a detection benchmark.",
+  "node": "v24.21.0",
+  "cli_sha256": {
+    "candidate": "c4561831333746a92584d69e943fa24b5e3b26e23f3cec16796706edea8841fc",
+    "baseline": "f03bdeb1888c45ee890ec8acb256c816834c2c13cd4d0c91d6ae7ecadc823741"
+  },
+  "cases": [
+    {
+      "name": "ordinary-removal",
+      "source_sha256": "8df62aef5f92e4c30c0c938497f55f60078c361a476e7e0448485194ad79f884",
+      "source_bytes": 5,
+      "expected_sha256": "fb8e20fc2e4c3f248c60c39bd652f3c1347298bb977b8b4d5903b85055620603",
+      "policy": null,
+      "candidate": {
+        "checks": {
+          "preview_did_not_write": true,
+          "preview_added_line": true,
+          "exact_expected_bytes": true,
+          "nonruntime_exit": true
+        },
+        "passed": true,
+        "exit": 0,
+        "preview_exit": 0,
+        "actual_sha256": "fb8e20fc2e4c3f248c60c39bd652f3c1347298bb977b8b4d5903b85055620603",
+        "actual_bytes": 2,
+        "actual_hex": "6162",
+        "preview": "input.txt\n  1: - a\u27e6U+200B ZWSP\u27e7b\n  1: + ab\n  1 finding(s) affected. Preview only; no file was written.\n\n",
+        "preview_stderr": "",
+        "fix_stderr": ""
+      },
+      "baseline": {
+        "checks": {
+          "preview_did_not_write": true,
+          "preview_added_line": true,
+          "exact_expected_bytes": true,
+          "nonruntime_exit": true
+        },
+        "passed": true,
+        "exit": 0,
+        "preview_exit": 0,
+        "actual_sha256": "fb8e20fc2e4c3f248c60c39bd652f3c1347298bb977b8b4d5903b85055620603",
+        "actual_bytes": 2,
+        "actual_hex": "6162",
+        "preview": "input.txt\n  1: - a\u27e6U+200B ZWSP\u27e7b\n  1: + ab\n  1 finding(s) would be fixed.\n\n",
+        "preview_stderr": "",
+        "fix_stderr": ""
+      }
+    },
+    {
+      "name": "unfixable-findings-remain",
+      "source_sha256": "21659a9e14945d6aa91127b3fcb6ae712be9b80445962f6448a86acaa126cec5",
+      "source_bytes": 12,
+      "expected_sha256": "21659a9e14945d6aa91127b3fcb6ae712be9b80445962f6448a86acaa126cec5",
+      "policy": null,
+      "candidate": {
+        "checks": {
+          "preview_did_not_write": true,
+          "remaining_findings_visible": true,
+          "exact_expected_bytes": true,
+          "nonruntime_exit": true
+        },
+        "passed": true,
+        "exit": 1,
+        "preview_exit": 1,
+        "actual_sha256": "21659a9e14945d6aa91127b3fcb6ae712be9b80445962f6448a86acaa126cec5",
+        "actual_bytes": 12,
+        "actual_hex": "61646d696e20d0b0646d696e",
+        "preview": "ghostchars: no automatic removals under the current policy. Review the remaining findings.\n\ninput.txt\n  error  confusable  x2  1:1 .. 1:7\n  warn   confusable  x1  1:7\n\nghostchars: 2 error(s), 1 warning(s), 0 info in 1 file(s) scanned.\n",
+        "preview_stderr": "",
+        "fix_stderr": ""
+      },
+      "baseline": {
+        "checks": {
+          "preview_did_not_write": true,
+          "remaining_findings_visible": false,
+          "exact_expected_bytes": true,
+          "nonruntime_exit": true
+        },
+        "passed": false,
+        "exit": 1,
+        "preview_exit": 1,
+        "actual_sha256": "21659a9e14945d6aa91127b3fcb6ae712be9b80445962f6448a86acaa126cec5",
+        "actual_bytes": 12,
+        "actual_hex": "61646d696e20d0b0646d696e",
+        "preview": "ghostchars: nothing to fix.\n",
+        "preview_stderr": "",
+        "fix_stderr": ""
+      }
+    },
+    {
+      "name": "disabled-rule",
+      "source_sha256": "bf27cd3c6dd39a50b61b4554dffbc337bb2c8bcb34e16f9afcf80755eedb9564",
+      "source_bytes": 14,
+      "expected_sha256": "9c8c8c82c9bcaae9a700580a7fd75ae4e00933e914fda949ecda62ed5e0ca30e",
+      "policy": {
+        "rules": {
+          "invisible": false
+        }
+      },
+      "candidate": {
+        "checks": {
+          "preview_did_not_write": true,
+          "preview_added_line": true,
+          "exact_expected_bytes": true,
+          "nonruntime_exit": true
+        },
+        "passed": true,
+        "exit": 1,
+        "preview_exit": 1,
+        "actual_sha256": "9c8c8c82c9bcaae9a700580a7fd75ae4e00933e914fda949ecda62ed5e0ca30e",
+        "actual_bytes": 8,
+        "actual_hex": "61e2808b62206f6b",
+        "preview": "input.txt\n  1: - a\u27e6U+200B ZWSP\u27e7b \u27e6U+202E RLO\u27e7ok\u27e6U+202C PDF\u27e7\n  1: + a\u27e6U+200B ZWSP\u27e7b ok\n  2 finding(s) affected. Preview only; no file was written.\n\n",
+        "preview_stderr": "",
+        "fix_stderr": ""
+      },
+      "baseline": {
+        "checks": {
+          "preview_did_not_write": true,
+          "preview_added_line": false,
+          "exact_expected_bytes": false,
+          "nonruntime_exit": true
+        },
+        "passed": false,
+        "exit": 1,
+        "preview_exit": 1,
+        "actual_sha256": "58a25cc189b34a3d0ec21ddd2c23e3c278a6287942aa9bccf5565b35616ac37d",
+        "actual_bytes": 5,
+        "actual_hex": "6162206f6b",
+        "preview": "input.txt\n  1: - a\u27e6U+200B ZWSP\u27e7b \u27e6U+202E RLO\u27e7ok\u27e6U+202C PDF\u27e7\n  1: + ab ok\n  3 finding(s) would be fixed.\n\n",
+        "preview_stderr": "",
+        "fix_stderr": ""
+      }
+    },
+    {
+      "name": "allowed-space",
+      "source_sha256": "fda9a13c1ccc4a8c2fa3c815e5a326fe03f44e442cdc9dd1f827d8d7f21936dc",
+      "source_bytes": 14,
+      "expected_sha256": "620318cb162073ecf6029e188e63263512412e252a0555085ed221a7c02f79bd",
+      "policy": {
+        "allow": [
+          "U+00A0"
+        ]
+      },
+      "candidate": {
+        "checks": {
+          "preview_did_not_write": true,
+          "preview_added_line": true,
+          "exact_expected_bytes": true,
+          "nonruntime_exit": true
+        },
+        "passed": true,
+        "exit": 0,
+        "preview_exit": 0,
+        "actual_sha256": "620318cb162073ecf6029e188e63263512412e252a0555085ed221a7c02f79bd",
+        "actual_bytes": 11,
+        "actual_hex": "7072696365c2a055534420",
+        "preview": "input.txt\n  1: - price\u27e6U+00A0 NBSP\u27e7USD \u27e6U+200B ZWSP\u27e7\n  1: + price\u27e6U+00A0 NBSP\u27e7USD \n  1 finding(s) affected. Preview only; no file was written.\n\n",
+        "preview_stderr": "",
+        "fix_stderr": ""
+      },
+      "baseline": {
+        "checks": {
+          "preview_did_not_write": true,
+          "preview_added_line": false,
+          "exact_expected_bytes": false,
+          "nonruntime_exit": true
+        },
+        "passed": false,
+        "exit": 0,
+        "preview_exit": 0,
+        "actual_sha256": "3a0ea64df58ad1d5f3ecabc00af8cfba9712eb6c4c5aa41d95e3a413da18c5a3",
+        "actual_bytes": 9,
+        "actual_hex": "707269636555534420",
+        "preview": "input.txt\n  1: - price\u27e6U+00A0 NBSP\u27e7USD \u27e6U+200B ZWSP\u27e7\n  1: + priceUSD \n  2 finding(s) would be fixed.\n\n",
+        "preview_stderr": "",
+        "fix_stderr": ""
+      }
+    },
+    {
+      "name": "second-pass-disabled",
+      "source_sha256": "b3a552d89d6d107d9cbd195dcc3408c886132e822fb2f45c2ef3b338105dfafa",
+      "source_bytes": 8,
+      "expected_sha256": "2af6bc1b1edb248b524ac3405eab5a34b2eb453fe210112cfb0dd18b83be6c6c",
+      "policy": {
+        "rules": {
+          "invisible": false
+        }
+      },
+      "candidate": {
+        "checks": {
+          "preview_did_not_write": true,
+          "exact_expected_bytes": true,
+          "nonruntime_exit": true
+        },
+        "passed": true,
+        "exit": 0,
+        "preview_exit": 0,
+        "actual_sha256": "2af6bc1b1edb248b524ac3405eab5a34b2eb453fe210112cfb0dd18b83be6c6c",
+        "actual_bytes": 6,
+        "actual_hex": "3ae2808cd984",
+        "preview": "input.txt\n  1: - :\u27e6U+061C ALM\u27e7\\u{200C}\u0644\n  1: + :\u27e6U+200C ZWNJ\u27e7\u0644\n  1 finding(s) affected. Preview only; no file was written.\n\n",
+        "preview_stderr": "",
+        "fix_stderr": ""
+      },
+      "baseline": {
+        "checks": {
+          "preview_did_not_write": true,
+          "exact_expected_bytes": false,
+          "nonruntime_exit": true
+        },
+        "passed": false,
+        "exit": 0,
+        "preview_exit": 0,
+        "actual_sha256": "5cb6b94c2e539e142f1db0a813f0722e1c6806e7a40ac66a21674d9bb0511db7",
+        "actual_bytes": 3,
+        "actual_hex": "3ad984",
+        "preview": "input.txt\n  1: - :\u27e6U+061C ALM\u27e7\u200c\u0644\n  1: + :\u0644\n  2 finding(s) would be fixed.\n\n",
+        "preview_stderr": "",
+        "fix_stderr": ""
+      }
+    },
+    {
+      "name": "second-pass-allowed",
+      "source_sha256": "b3a552d89d6d107d9cbd195dcc3408c886132e822fb2f45c2ef3b338105dfafa",
+      "source_bytes": 8,
+      "expected_sha256": "2af6bc1b1edb248b524ac3405eab5a34b2eb453fe210112cfb0dd18b83be6c6c",
+      "policy": {
+        "allow": [
+          "U+200C"
+        ]
+      },
+      "candidate": {
+        "checks": {
+          "preview_did_not_write": true,
+          "exact_expected_bytes": true,
+          "nonruntime_exit": true
+        },
+        "passed": true,
+        "exit": 0,
+        "preview_exit": 0,
+        "actual_sha256": "2af6bc1b1edb248b524ac3405eab5a34b2eb453fe210112cfb0dd18b83be6c6c",
+        "actual_bytes": 6,
+        "actual_hex": "3ae2808cd984",
+        "preview": "input.txt\n  1: - :\u27e6U+061C ALM\u27e7\\u{200C}\u0644\n  1: + :\u27e6U+200C ZWNJ\u27e7\u0644\n  1 finding(s) affected. Preview only; no file was written.\n\n",
+        "preview_stderr": "",
+        "fix_stderr": ""
+      },
+      "baseline": {
+        "checks": {
+          "preview_did_not_write": true,
+          "exact_expected_bytes": false,
+          "nonruntime_exit": true
+        },
+        "passed": false,
+        "exit": 0,
+        "preview_exit": 0,
+        "actual_sha256": "5cb6b94c2e539e142f1db0a813f0722e1c6806e7a40ac66a21674d9bb0511db7",
+        "actual_bytes": 3,
+        "actual_hex": "3ad984",
+        "preview": "input.txt\n  1: - :\u27e6U+061C ALM\u27e7\u200c\u0644\n  1: + :\u0644\n  2 finding(s) would be fixed.\n\n",
+        "preview_stderr": "",
+        "fix_stderr": ""
+      }
+    },
+    {
+      "name": "partial-compound-allowlist",
+      "source_sha256": "eb2d3c028e19cc1942d313fc1d6135660153647b87c69a9c66fa5349c19bc991",
+      "source_bytes": 14,
+      "expected_sha256": "83a65e4406ecb11d75077692e3d92b2c49746dfdfef8b90a296b17aeabb73d5e",
+      "policy": {
+        "allow": [
+          "U+E0158"
+        ]
+      },
+      "candidate": {
+        "checks": {
+          "preview_did_not_write": true,
+          "exact_expected_bytes": true,
+          "nonruntime_exit": true
+        },
+        "passed": true,
+        "exit": 1,
+        "preview_exit": 1,
+        "actual_sha256": "83a65e4406ecb11d75077692e3d92b2c49746dfdfef8b90a296b17aeabb73d5e",
+        "actual_bytes": 10,
+        "actual_hex": "78f09f9880f3a085987a",
+        "preview": "input.txt\n  1: - x\u27e6U+1F600 U+1F600 U+E0158 VARIATION SELECTOR-105 U+E0159 VARIATION SELECTOR-106\u27e7 \u2192 \"hi\"z\n  1: + x\u27e6U+1F600 U+1F600 U+E0158 VARIATION SELECTOR-105\u27e7 \u2192 \"h\"z\n  1 finding(s) affected. Preview only; no file was written.\n\n",
+        "preview_stderr": "",
+        "fix_stderr": ""
+      },
+      "baseline": {
+        "checks": {
+          "preview_did_not_write": true,
+          "exact_expected_bytes": false,
+          "nonruntime_exit": true
+        },
+        "passed": false,
+        "exit": 1,
+        "preview_exit": 1,
+        "actual_sha256": "9571ab416d63d8a902b441a98f96ac83c6787d9bc1ac9e27d688ec849c0007aa",
+        "actual_bytes": 6,
+        "actual_hex": "78f09f98807a",
+        "preview": "input.txt\n  1: - x\u27e6U+1F600 U+1F600 U+E0158 VARIATION SELECTOR-105 U+E0159 VARIATION SELECTOR-106\u27e7 \u2192 \"hi\"z\n  1: + xz\n  1 finding(s) would be fixed.\n\n",
+        "preview_stderr": "",
+        "fix_stderr": ""
+      }
+    },
+    {
+      "name": "overlapping-findings",
+      "source_sha256": "1f7a9d5e8e213a52b4351c269292934459d928528ff5809d1c8b9a72aaf11915",
+      "source_bytes": 5,
+      "expected_sha256": "fb8e20fc2e4c3f248c60c39bd652f3c1347298bb977b8b4d5903b85055620603",
+      "policy": null,
+      "candidate": {
+        "checks": {
+          "preview_did_not_write": true,
+          "preview_added_line": true,
+          "exact_expected_bytes": true,
+          "nonruntime_exit": true
+        },
+        "passed": true,
+        "exit": 1,
+        "preview_exit": 1,
+        "actual_sha256": "fb8e20fc2e4c3f248c60c39bd652f3c1347298bb977b8b4d5903b85055620603",
+        "actual_bytes": 2,
+        "actual_hex": "6162",
+        "preview": "input.txt\n  1: - a\u27e6U+202E RLO\u27e7b\n  1: + ab\n  2 finding(s) affected. Preview only; no file was written.\n\n",
+        "preview_stderr": "",
+        "fix_stderr": ""
+      },
+      "baseline": {
+        "checks": {
+          "preview_did_not_write": true,
+          "preview_added_line": false,
+          "exact_expected_bytes": true,
+          "nonruntime_exit": true
+        },
+        "passed": false,
+        "exit": 1,
+        "preview_exit": 1,
+        "actual_sha256": "fb8e20fc2e4c3f248c60c39bd652f3c1347298bb977b8b4d5903b85055620603",
+        "actual_bytes": 2,
+        "actual_hex": "6162",
+        "preview": "input.txt\n  1: - a\u27e6U+202E RLO\u27e7b\n  1: + a\n  2 finding(s) would be fixed.\n\n",
+        "preview_stderr": "",
+        "fix_stderr": ""
+      }
+    },
+    {
+      "name": "visible-selector-carrier",
+      "source_sha256": "ae27abd3e4aae08097dc258e12d4e8da961d484cdbe77fd090700b1439d2c514",
+      "source_bytes": 8,
+      "expected_sha256": "38318c00d873bcdbf1dd521e4c68bcf16945d7e63a97f0f9d92b1c9fcbb2338e",
+      "policy": null,
+      "candidate": {
+        "checks": {
+          "preview_did_not_write": true,
+          "preview_added_line": true,
+          "exact_expected_bytes": true,
+          "nonruntime_exit": true
+        },
+        "passed": true,
+        "exit": 0,
+        "preview_exit": 0,
+        "actual_sha256": "38318c00d873bcdbf1dd521e4c68bcf16945d7e63a97f0f9d92b1c9fcbb2338e",
+        "actual_bytes": 2,
+        "actual_hex": "415a",
+        "preview": "input.txt\n  1: - \u27e6U+0041 U+0041 U+FE0F VARIATION SELECTOR-16 U+FE0F VARIATION SELECTOR-16\u27e7Z\n  1: + AZ\n  1 finding(s) affected. Preview only; no file was written.\n\n",
+        "preview_stderr": "",
+        "fix_stderr": ""
+      },
+      "baseline": {
+        "checks": {
+          "preview_did_not_write": true,
+          "preview_added_line": false,
+          "exact_expected_bytes": true,
+          "nonruntime_exit": true
+        },
+        "passed": false,
+        "exit": 0,
+        "preview_exit": 0,
+        "actual_sha256": "38318c00d873bcdbf1dd521e4c68bcf16945d7e63a97f0f9d92b1c9fcbb2338e",
+        "actual_bytes": 2,
+        "actual_hex": "415a",
+        "preview": "input.txt\n  1: - \u27e6U+0041 U+0041 U+FE0F VARIATION SELECTOR-16 U+FE0F VARIATION SELECTOR-16\u27e7Z\n  1: + Z\n  1 finding(s) would be fixed.\n\n",
+        "preview_stderr": "",
+        "fix_stderr": ""
+      }
+    },
+    {
+      "name": "astral-selector-carrier",
+      "source_sha256": "8d40805a1aa1f67d64830b18f88f0b2962e07902ff23347d60ee00d8699502fe",
+      "source_bytes": 21,
+      "expected_sha256": "1f6eefbcaeddf8c3665fa3645af00c38a7e7fc689372829cc2fac8742852faf1",
+      "policy": null,
+      "candidate": {
+        "checks": {
+          "preview_did_not_write": true,
+          "preview_added_line": true,
+          "exact_expected_bytes": true,
+          "nonruntime_exit": true
+        },
+        "passed": true,
+        "exit": 1,
+        "preview_exit": 1,
+        "actual_sha256": "1f6eefbcaeddf8c3665fa3645af00c38a7e7fc689372829cc2fac8742852faf1",
+        "actual_bytes": 13,
+        "actual_hex": "686920f09f9880207468657265",
+        "preview": "input.txt\n  1: - hi \u27e6U+1F600 U+1F600 U+E0158 VARIATION SELECTOR-105 U+E0159 VARIATION SELECTOR-106\u27e7 \u2192 \"hi\" there\n  1: + hi \ud83d\ude00 there\n  1 finding(s) affected. Preview only; no file was written.\n\n",
+        "preview_stderr": "",
+        "fix_stderr": ""
+      },
+      "baseline": {
+        "checks": {
+          "preview_did_not_write": true,
+          "preview_added_line": false,
+          "exact_expected_bytes": true,
+          "nonruntime_exit": true
+        },
+        "passed": false,
+        "exit": 1,
+        "preview_exit": 1,
+        "actual_sha256": "1f6eefbcaeddf8c3665fa3645af00c38a7e7fc689372829cc2fac8742852faf1",
+        "actual_bytes": 13,
+        "actual_hex": "686920f09f9880207468657265",
+        "preview": "input.txt\n  1: - hi \u27e6U+1F600 U+1F600 U+E0158 VARIATION SELECTOR-105 U+E0159 VARIATION SELECTOR-106\u27e7 \u2192 \"hi\" there\n  1: + hi  there\n  1 finding(s) would be fixed.\n\n",
+        "preview_stderr": "",
+        "fix_stderr": ""
+      }
+    },
+    {
+      "name": "second-pass-preview",
+      "source_sha256": "b3a552d89d6d107d9cbd195dcc3408c886132e822fb2f45c2ef3b338105dfafa",
+      "source_bytes": 8,
+      "expected_sha256": "5cb6b94c2e539e142f1db0a813f0722e1c6806e7a40ac66a21674d9bb0511db7",
+      "policy": null,
+      "candidate": {
+        "checks": {
+          "preview_did_not_write": true,
+          "preview_added_line": true,
+          "exact_expected_bytes": true,
+          "nonruntime_exit": true
+        },
+        "passed": true,
+        "exit": 0,
+        "preview_exit": 0,
+        "actual_sha256": "5cb6b94c2e539e142f1db0a813f0722e1c6806e7a40ac66a21674d9bb0511db7",
+        "actual_bytes": 3,
+        "actual_hex": "3ad984",
+        "preview": "input.txt\n  1: - :\u27e6U+061C ALM\u27e7\\u{200C}\u0644\n  1: + :\u0644\n  2 finding(s) affected. Preview only; no file was written.\n\n",
+        "preview_stderr": "",
+        "fix_stderr": ""
+      },
+      "baseline": {
+        "checks": {
+          "preview_did_not_write": true,
+          "preview_added_line": true,
+          "exact_expected_bytes": true,
+          "nonruntime_exit": true
+        },
+        "passed": true,
+        "exit": 0,
+        "preview_exit": 0,
+        "actual_sha256": "5cb6b94c2e539e142f1db0a813f0722e1c6806e7a40ac66a21674d9bb0511db7",
+        "actual_bytes": 3,
+        "actual_hex": "3ad984",
+        "preview": "input.txt\n  1: - :\u27e6U+061C ALM\u27e7\u200c\u0644\n  1: + :\u0644\n  2 finding(s) would be fixed.\n\n",
+        "preview_stderr": "",
+        "fix_stderr": ""
+      }
+    },
+    {
+      "name": "cr-lf-join",
+      "source_sha256": "e5a72b3e7ac8e247fa1a27b3454469e91115318df0752a3bcdfb0562d5e2f93a",
+      "source_bytes": 14,
+      "expected_sha256": "6e415cab7f95f0ecb89361f83c8d621b40c848f01148febaebbaff3be76984a3",
+      "policy": null,
+      "candidate": {
+        "checks": {
+          "preview_did_not_write": true,
+          "exact_expected_bytes": true,
+          "nonruntime_exit": true
+        },
+        "passed": true,
+        "exit": 0,
+        "preview_exit": 0,
+        "actual_sha256": "6e415cab7f95f0ecb89361f83c8d621b40c848f01148febaebbaff3be76984a3",
+        "actual_bytes": 11,
+        "actual_hex": "73746172740d0a656e640a",
+        "preview": "input.txt\n  2: - \u27e6U+200B ZWSP\u27e7\n  1 finding(s) affected. Preview only; no file was written.\n\n",
+        "preview_stderr": "",
+        "fix_stderr": ""
+      },
+      "baseline": {
+        "checks": {
+          "preview_did_not_write": true,
+          "exact_expected_bytes": true,
+          "nonruntime_exit": true
+        },
+        "passed": true,
+        "exit": 0,
+        "preview_exit": 0,
+        "actual_sha256": "6e415cab7f95f0ecb89361f83c8d621b40c848f01148febaebbaff3be76984a3",
+        "actual_bytes": 11,
+        "actual_hex": "73746172740d0a656e640a",
+        "preview": "input.txt\n  2: - \u27e6U+200B ZWSP\u27e7\n  2: + \n  1 finding(s) would be fixed.\n\n",
+        "preview_stderr": "",
+        "fix_stderr": ""
+      }
+    },
+    {
+      "name": "literal-replacement-character",
+      "source_sha256": "e904fbbf5d654e1928992b532aacccab5fa09c1491feee13cc2570a4d6aba717",
+      "source_bytes": 15,
+      "expected_sha256": "5829c205e60388243611e728d69ca3e5792ab0215ac52abea23978712e64d6ba",
+      "policy": null,
+      "candidate": {
+        "checks": {
+          "preview_did_not_write": true,
+          "exact_expected_bytes": true,
+          "nonruntime_exit": true
+        },
+        "passed": true,
+        "exit": 0,
+        "preview_exit": 0,
+        "actual_sha256": "5829c205e60388243611e728d69ca3e5792ab0215ac52abea23978712e64d6ba",
+        "actual_bytes": 12,
+        "actual_hex": "6c69746572616c20efbfbd20",
+        "preview": "input.txt\n  1: - literal \ufffd \u27e6U+200B ZWSP\u27e7\n  1: + literal \ufffd \n  1 finding(s) affected. Preview only; no file was written.\n\n",
+        "preview_stderr": "",
+        "fix_stderr": ""
+      },
+      "baseline": {
+        "checks": {
+          "preview_did_not_write": true,
+          "exact_expected_bytes": true,
+          "nonruntime_exit": true
+        },
+        "passed": true,
+        "exit": 0,
+        "preview_exit": 0,
+        "actual_sha256": "5829c205e60388243611e728d69ca3e5792ab0215ac52abea23978712e64d6ba",
+        "actual_bytes": 12,
+        "actual_hex": "6c69746572616c20efbfbd20",
+        "preview": "input.txt\n  1: - literal \ufffd \u27e6U+200B ZWSP\u27e7\n  1: + literal \ufffd \n  1 finding(s) would be fixed.\n\n",
+        "preview_stderr": "",
+        "fix_stderr": ""
+      }
+    },
+    {
+      "name": "missing-explicit-config",
+      "source_sha256": "8df62aef5f92e4c30c0c938497f55f60078c361a476e7e0448485194ad79f884",
+      "source_bytes": 5,
+      "expected_sha256": "8df62aef5f92e4c30c0c938497f55f60078c361a476e7e0448485194ad79f884",
+      "policy": null,
+      "candidate": {
+        "checks": {
+          "preview_did_not_write": true,
+          "exact_expected_bytes": true,
+          "runtime_exit": true
+        },
+        "passed": true,
+        "exit": 2,
+        "preview_exit": 2,
+        "actual_sha256": "8df62aef5f92e4c30c0c938497f55f60078c361a476e7e0448485194ad79f884",
+        "actual_bytes": 5,
+        "actual_hex": "61e2808b62",
+        "preview": "",
+        "preview_stderr": "Config file does not exist: missing.json\n",
+        "fix_stderr": "Config file does not exist: missing.json\n"
+      },
+      "baseline": {
+        "checks": {
+          "preview_did_not_write": true,
+          "exact_expected_bytes": false,
+          "runtime_exit": false
+        },
+        "passed": false,
+        "exit": 0,
+        "preview_exit": 0,
+        "actual_sha256": "fb8e20fc2e4c3f248c60c39bd652f3c1347298bb977b8b4d5903b85055620603",
+        "actual_bytes": 2,
+        "actual_hex": "6162",
+        "preview": "input.txt\n  1: - a\u27e6U+200B ZWSP\u27e7b\n  1: + ab\n  1 finding(s) would be fixed.\n\n",
+        "preview_stderr": "",
+        "fix_stderr": ""
+      }
+    },
+    {
+      "name": "unknown-rule",
+      "source_sha256": "8df62aef5f92e4c30c0c938497f55f60078c361a476e7e0448485194ad79f884",
+      "source_bytes": 5,
+      "expected_sha256": "8df62aef5f92e4c30c0c938497f55f60078c361a476e7e0448485194ad79f884",
+      "policy": {
+        "rules": {
+          "invisble": false
+        }
+      },
+      "candidate": {
+        "checks": {
+          "preview_did_not_write": true,
+          "exact_expected_bytes": true,
+          "runtime_exit": true
+        },
+        "passed": true,
+        "exit": 2,
+        "preview_exit": 2,
+        "actual_sha256": "8df62aef5f92e4c30c0c938497f55f60078c361a476e7e0448485194ad79f884",
+        "actual_bytes": 5,
+        "actual_hex": "61e2808b62",
+        "preview": "",
+        "preview_stderr": "Failed to parse /tmp/ghostchars-policy-4kd_ay45/.ghostcharsrc.json: Unknown rule in config: invisble\n",
+        "fix_stderr": "Failed to parse /tmp/ghostchars-policy-4kd_ay45/.ghostcharsrc.json: Unknown rule in config: invisble\n"
+      },
+      "baseline": {
+        "checks": {
+          "preview_did_not_write": true,
+          "exact_expected_bytes": false,
+          "runtime_exit": false
+        },
+        "passed": false,
+        "exit": 0,
+        "preview_exit": 0,
+        "actual_sha256": "fb8e20fc2e4c3f248c60c39bd652f3c1347298bb977b8b4d5903b85055620603",
+        "actual_bytes": 2,
+        "actual_hex": "6162",
+        "preview": "input.txt\n  1: - a\u27e6U+200B ZWSP\u27e7b\n  1: + ab\n  1 finding(s) would be fixed.\n\n",
+        "preview_stderr": "",
+        "fix_stderr": ""
+      }
+    },
+    {
+      "name": "invalid-code-point",
+      "source_sha256": "8df62aef5f92e4c30c0c938497f55f60078c361a476e7e0448485194ad79f884",
+      "source_bytes": 5,
+      "expected_sha256": "8df62aef5f92e4c30c0c938497f55f60078c361a476e7e0448485194ad79f884",
+      "policy": {
+        "allow": [
+          "U+110000"
+        ]
+      },
+      "candidate": {
+        "checks": {
+          "preview_did_not_write": true,
+          "exact_expected_bytes": true,
+          "runtime_exit": true
+        },
+        "passed": true,
+        "exit": 2,
+        "preview_exit": 2,
+        "actual_sha256": "8df62aef5f92e4c30c0c938497f55f60078c361a476e7e0448485194ad79f884",
+        "actual_bytes": 5,
+        "actual_hex": "61e2808b62",
+        "preview": "",
+        "preview_stderr": "Failed to parse /tmp/ghostchars-policy-9f4zb3o8/.ghostcharsrc.json: Invalid code point in config allowlist: U+110000\n",
+        "fix_stderr": "Failed to parse /tmp/ghostchars-policy-9f4zb3o8/.ghostcharsrc.json: Invalid code point in config allowlist: U+110000\n"
+      },
+      "baseline": {
+        "checks": {
+          "preview_did_not_write": true,
+          "exact_expected_bytes": false,
+          "runtime_exit": false
+        },
+        "passed": false,
+        "exit": 0,
+        "preview_exit": 0,
+        "actual_sha256": "fb8e20fc2e4c3f248c60c39bd652f3c1347298bb977b8b4d5903b85055620603",
+        "actual_bytes": 2,
+        "actual_hex": "6162",
+        "preview": "input.txt\n  1: - a\u27e6U+200B ZWSP\u27e7b\n  1: + ab\n  1 finding(s) would be fixed.\n\n",
+        "preview_stderr": "",
+        "fix_stderr": ""
+      }
+    },
+    {
+      "name": "invalid-config-shape",
+      "source_sha256": "8df62aef5f92e4c30c0c938497f55f60078c361a476e7e0448485194ad79f884",
+      "source_bytes": 5,
+      "expected_sha256": "8df62aef5f92e4c30c0c938497f55f60078c361a476e7e0448485194ad79f884",
+      "policy": [],
+      "candidate": {
+        "checks": {
+          "preview_did_not_write": true,
+          "exact_expected_bytes": true,
+          "runtime_exit": true
+        },
+        "passed": true,
+        "exit": 2,
+        "preview_exit": 2,
+        "actual_sha256": "8df62aef5f92e4c30c0c938497f55f60078c361a476e7e0448485194ad79f884",
+        "actual_bytes": 5,
+        "actual_hex": "61e2808b62",
+        "preview": "",
+        "preview_stderr": "Failed to parse /tmp/ghostchars-policy-15h65lmv/.ghostcharsrc.json: config must be an object\n",
+        "fix_stderr": "Failed to parse /tmp/ghostchars-policy-15h65lmv/.ghostcharsrc.json: config must be an object\n"
+      },
+      "baseline": {
+        "checks": {
+          "preview_did_not_write": true,
+          "exact_expected_bytes": false,
+          "runtime_exit": false
+        },
+        "passed": false,
+        "exit": 0,
+        "preview_exit": 0,
+        "actual_sha256": "fb8e20fc2e4c3f248c60c39bd652f3c1347298bb977b8b4d5903b85055620603",
+        "actual_bytes": 2,
+        "actual_hex": "6162",
+        "preview": "input.txt\n  1: - a\u27e6U+200B ZWSP\u27e7b\n  1: + ab\n  1 finding(s) would be fixed.\n\n",
+        "preview_stderr": "",
+        "fix_stderr": ""
+      }
+    },
+    {
+      "name": "terminal-boundary",
+      "source_sha256": "2704db8177f1995e89f1d2044f9888cec337abce326deb6b8ad78b266c0828cb",
+      "source_bytes": 9,
+      "expected_sha256": "e9133582d2a7c6419af891716c5d84a320ce837863a6a3269cdf4966d7a31809",
+      "policy": {
+        "allow": [
+          "U+001B"
+        ]
+      },
+      "candidate": {
+        "checks": {
+          "preview_did_not_write": true,
+          "terminal_controls_inert": true,
+          "filename_visible": true,
+          "exact_expected_bytes": true,
+          "nonruntime_exit": true
+        },
+        "passed": true,
+        "exit": 0,
+        "preview_exit": 0,
+        "actual_sha256": "e9133582d2a7c6419af891716c5d84a320ce837863a6a3269cdf4966d7a31809",
+        "actual_bytes": 6,
+        "actual_hex": "1b5b324a6162",
+        "preview": "hide\\u{001B}[2J\\u{000A}\\u{202E}.txt\n  1: - \u27e6U+001B ESC\u27e7[2Ja\u27e6U+200B ZWSP\u27e7b\n  1: + \u27e6U+001B ESC\u27e7[2Jab\n  1 finding(s) affected. Preview only; no file was written.\n\n",
+        "preview_stderr": "",
+        "fix_stderr": ""
+      },
+      "baseline": {
+        "checks": {
+          "preview_did_not_write": true,
+          "terminal_controls_inert": false,
+          "filename_visible": false,
+          "exact_expected_bytes": false,
+          "nonruntime_exit": true
+        },
+        "passed": false,
+        "exit": 0,
+        "preview_exit": 0,
+        "actual_sha256": "ff5ece52a65c0e179a67c909f1daf20506881b7c04be4f1df1365863843ebe82",
+        "actual_bytes": 5,
+        "actual_hex": "5b324a6162",
+        "preview": "hide\u001b[2J\n\u202e.txt\n  1: - \u27e6U+001B ESC\u27e7[2Ja\u27e6U+200B ZWSP\u27e7b\n  1: + [2Jab\n  2 finding(s) would be fixed.\n\n",
+        "preview_stderr": "",
+        "fix_stderr": ""
+      }
+    },
+    {
+      "name": "github-property-boundary",
+      "source_sha256": "1f7a9d5e8e213a52b4351c269292934459d928528ff5809d1c8b9a72aaf11915",
+      "source_bytes": 5,
+      "expected_sha256": "fb8e20fc2e4c3f248c60c39bd652f3c1347298bb977b8b4d5903b85055620603",
+      "policy": null,
+      "candidate": {
+        "checks": {
+          "preview_did_not_write": true,
+          "annotation_identity_escaped": true,
+          "exact_expected_bytes": true,
+          "nonruntime_exit": true
+        },
+        "passed": true,
+        "exit": 1,
+        "preview_exit": 1,
+        "actual_sha256": "fb8e20fc2e4c3f248c60c39bd652f3c1347298bb977b8b4d5903b85055620603",
+        "actual_bytes": 2,
+        "actual_hex": "6162",
+        "preview": "a,b:100%\\u{000A}::error::forged.txt\n  1: - a\u27e6U+202E RLO\u27e7b\n  1: + ab\n  2 finding(s) affected. Preview only; no file was written.\n\n",
+        "preview_stderr": "",
+        "fix_stderr": ""
+      },
+      "baseline": {
+        "checks": {
+          "preview_did_not_write": true,
+          "annotation_identity_escaped": false,
+          "exact_expected_bytes": true,
+          "nonruntime_exit": true
+        },
+        "passed": false,
+        "exit": 1,
+        "preview_exit": 1,
+        "actual_sha256": "fb8e20fc2e4c3f248c60c39bd652f3c1347298bb977b8b4d5903b85055620603",
+        "actual_bytes": 2,
+        "actual_hex": "6162",
+        "preview": "a,b:100%\n::error::forged.txt\n  1: - a\u27e6U+202E RLO\u27e7b\n  1: + a\n  2 finding(s) would be fixed.\n\n",
+        "preview_stderr": "",
+        "fix_stderr": ""
+      }
+    },
+    {
+      "name": "policy-and-signature-utf-8",
+      "source_sha256": "b5f261a7abb524ecacd20ddff9391502270cb673cefb7015259bb564412e4f32",
+      "source_bytes": 35,
+      "expected_sha256": "ae352d4e99e3980dae23d772e7a5ef2d98170be75f854bdc4fa154ca7dfd2cc6",
+      "policy": {
+        "overrides": [
+          {
+            "files": [
+              "*.txt"
+            ],
+            "rules": {
+              "invisible": false
+            },
+            "allow": [
+              "U+00A0"
+            ]
+          }
+        ]
+      },
+      "candidate": {
+        "checks": {
+          "preview_did_not_write": true,
+          "exact_expected_bytes": true,
+          "nonruntime_exit": true
+        },
+        "passed": true,
+        "exit": 1,
+        "preview_exit": 1,
+        "actual_sha256": "ae352d4e99e3980dae23d772e7a5ef2d98170be75f854bdc4fa154ca7dfd2cc6",
+        "actual_bytes": 29,
+        "actual_hex": "efbbbf61e2808b62206f6b0d0a7072696365c2a05553440d6e6578740a",
+        "preview": "input.txt\n  1: - \\u{FEFF}a\u27e6U+200B ZWSP\u27e7b \u27e6U+202E RLO\u27e7ok\u27e6U+202C PDF\u27e7\n  1: + \\u{FEFF}a\u27e6U+200B ZWSP\u27e7b ok\n  2 finding(s) affected. Preview only; no file was written.\n\n",
+        "preview_stderr": "",
+        "fix_stderr": ""
+      },
+      "baseline": {
+        "checks": {
+          "preview_did_not_write": true,
+          "exact_expected_bytes": false,
+          "nonruntime_exit": true
+        },
+        "passed": false,
+        "exit": 1,
+        "preview_exit": 1,
+        "actual_sha256": "dcd062415eb207089150571905f79c0a0432a1f5c9ad835f82fc9e417ba5ec66",
+        "actual_bytes": 24,
+        "actual_hex": "efbbbf6162206f6b0d0a70726963655553440d6e6578740a",
+        "preview": "input.txt\n  1: - \ufeffa\u27e6U+200B ZWSP\u27e7b \u27e6U+202E RLO\u27e7ok\u27e6U+202C PDF\u27e7\n  1: + \ufeffab ok\n  2: - price\u27e6U+00A0 NBSP\u27e7USD\n  2: + priceUSD\n  4 finding(s) would be fixed.\n\n",
+        "preview_stderr": "",
+        "fix_stderr": ""
+      }
+    },
+    {
+      "name": "policy-and-signature-utf-16le",
+      "source_sha256": "291f20bc988d0b3f319f8447c13b4daaa99c2838188378e390f041b3c8176406",
+      "source_bytes": 54,
+      "expected_sha256": "51cdc13ebf7cbec4abd0762cc17f66fdb9e2546ed4726cdc8f12c9fe4e5c9d33",
+      "policy": {
+        "overrides": [
+          {
+            "files": [
+              "*.txt"
+            ],
+            "rules": {
+              "invisible": false
+            },
+            "allow": [
+              "U+00A0"
+            ]
+          }
+        ]
+      },
+      "candidate": {
+        "checks": {
+          "preview_did_not_write": true,
+          "exact_expected_bytes": true,
+          "nonruntime_exit": true
+        },
+        "passed": true,
+        "exit": 1,
+        "preview_exit": 1,
+        "actual_sha256": "51cdc13ebf7cbec4abd0762cc17f66fdb9e2546ed4726cdc8f12c9fe4e5c9d33",
+        "actual_bytes": 50,
+        "actual_hex": "fffefffe61000b20620020006f006b000d000a0070007200690063006500a0005500530044000d006e006500780074000a00",
+        "preview": "input.txt\n  1: - \\u{FEFF}a\u27e6U+200B ZWSP\u27e7b \u27e6U+202E RLO\u27e7ok\u27e6U+202C PDF\u27e7\n  1: + \\u{FEFF}a\u27e6U+200B ZWSP\u27e7b ok\n  2 finding(s) affected. Preview only; no file was written.\n\n",
+        "preview_stderr": "",
+        "fix_stderr": ""
+      },
+      "baseline": {
+        "checks": {
+          "preview_did_not_write": true,
+          "exact_expected_bytes": false,
+          "nonruntime_exit": true
+        },
+        "passed": false,
+        "exit": 1,
+        "preview_exit": 1,
+        "actual_sha256": "9e9a501c711dd311161230ce8f90404f1174535f402bbb637bc4bd692e81ef48",
+        "actual_bytes": 46,
+        "actual_hex": "fffefffe6100620020006f006b000d000a00700072006900630065005500530044000d006e006500780074000a00",
+        "preview": "input.txt\n  1: - \ufeffa\u27e6U+200B ZWSP\u27e7b \u27e6U+202E RLO\u27e7ok\u27e6U+202C PDF\u27e7\n  1: + \ufeffab ok\n  2: - price\u27e6U+00A0 NBSP\u27e7USD\n  2: + priceUSD\n  4 finding(s) would be fixed.\n\n",
+        "preview_stderr": "",
+        "fix_stderr": ""
+      }
+    },
+    {
+      "name": "policy-and-signature-utf-16be",
+      "source_sha256": "ca4b369e1edd625d06b50114b651947354d77beb61c7909e4de7bec5b92e19ad",
+      "source_bytes": 54,
+      "expected_sha256": "f4ef7101f2c8ba671ebbd33fc5e5a27631f8d9c4e7e7b9d92b8f609645db05bc",
+      "policy": {
+        "overrides": [
+          {
+            "files": [
+              "*.txt"
+            ],
+            "rules": {
+              "invisible": false
+            },
+            "allow": [
+              "U+00A0"
+            ]
+          }
+        ]
+      },
+      "candidate": {
+        "checks": {
+          "preview_did_not_write": true,
+          "exact_expected_bytes": true,
+          "nonruntime_exit": true
+        },
+        "passed": true,
+        "exit": 1,
+        "preview_exit": 1,
+        "actual_sha256": "f4ef7101f2c8ba671ebbd33fc5e5a27631f8d9c4e7e7b9d92b8f609645db05bc",
+        "actual_bytes": 50,
+        "actual_hex": "fefffeff0061200b00620020006f006b000d000a0070007200690063006500a0005500530044000d006e006500780074000a",
+        "preview": "input.txt\n  1: - \\u{FEFF}a\u27e6U+200B ZWSP\u27e7b \u27e6U+202E RLO\u27e7ok\u27e6U+202C PDF\u27e7\n  1: + \\u{FEFF}a\u27e6U+200B ZWSP\u27e7b ok\n  2 finding(s) affected. Preview only; no file was written.\n\n",
+        "preview_stderr": "",
+        "fix_stderr": ""
+      },
+      "baseline": {
+        "checks": {
+          "preview_did_not_write": true,
+          "exact_expected_bytes": false,
+          "nonruntime_exit": true
+        },
+        "passed": false,
+        "exit": 1,
+        "preview_exit": 1,
+        "actual_sha256": "d21ea503d198a7a29db0e7b39f4ee0fc1a8d07b42c545c3339d405a522044f6f",
+        "actual_bytes": 46,
+        "actual_hex": "fefffeff006100620020006f006b000d000a00700072006900630065005500530044000d006e006500780074000a",
+        "preview": "input.txt\n  1: - \ufeffa\u27e6U+200B ZWSP\u27e7b \u27e6U+202E RLO\u27e7ok\u27e6U+202C PDF\u27e7\n  1: + \ufeffab ok\n  2: - price\u27e6U+00A0 NBSP\u27e7USD\n  2: + priceUSD\n  4 finding(s) would be fixed.\n\n",
+        "preview_stderr": "",
+        "fix_stderr": ""
+      }
+    },
+    {
+      "name": "invalid-utf8",
+      "source_sha256": "623425bc8185ae605b1157eeee516f9c6b8b57167487641527b2ba643f0acc23",
+      "source_bytes": 5,
+      "expected_sha256": "623425bc8185ae605b1157eeee516f9c6b8b57167487641527b2ba643f0acc23",
+      "policy": null,
+      "candidate": {
+        "checks": {
+          "preview_did_not_write": true,
+          "exact_expected_bytes": true,
+          "runtime_exit": true,
+          "reveal_refuses_lossy_decoding": true
+        },
+        "passed": true,
+        "exit": 2,
+        "preview_exit": 2,
+        "actual_sha256": "623425bc8185ae605b1157eeee516f9c6b8b57167487641527b2ba643f0acc23",
+        "actual_bytes": 5,
+        "actual_hex": "61ffe2808b",
+        "preview": "ghostchars: some files could not be read; no fix preview is available for them.\n",
+        "preview_stderr": "skipped input.txt: read error: Invalid utf-8 byte sequence; decode the file correctly before scanning or fixing it.\n",
+        "fix_stderr": ""
+      },
+      "baseline": {
+        "checks": {
+          "preview_did_not_write": true,
+          "exact_expected_bytes": false,
+          "runtime_exit": false,
+          "reveal_refuses_lossy_decoding": false
+        },
+        "passed": false,
+        "exit": 0,
+        "preview_exit": 0,
+        "actual_sha256": "51d277510ba4bf97b25f12d38513c1b620a2a33fc83b3beeeb0dd971bf429e6d",
+        "actual_bytes": 4,
+        "actual_hex": "61efbfbd",
+        "preview": "input.txt\n  1: - a\ufffd\u27e6U+200B ZWSP\u27e7\n  1: + a\ufffd\n  1 finding(s) would be fixed.\n\n",
+        "preview_stderr": "",
+        "fix_stderr": ""
+      }
+    },
+    {
+      "name": "truncated-utf8",
+      "source_sha256": "4942371287ab3519a758b7fe77119c0de8e58de8c669947726633bc7be845f0b",
+      "source_bytes": 5,
+      "expected_sha256": "4942371287ab3519a758b7fe77119c0de8e58de8c669947726633bc7be845f0b",
+      "policy": null,
+      "candidate": {
+        "checks": {
+          "preview_did_not_write": true,
+          "exact_expected_bytes": true,
+          "runtime_exit": true,
+          "reveal_refuses_lossy_decoding": true
+        },
+        "passed": true,
+        "exit": 2,
+        "preview_exit": 2,
+        "actual_sha256": "4942371287ab3519a758b7fe77119c0de8e58de8c669947726633bc7be845f0b",
+        "actual_bytes": 5,
+        "actual_hex": "61e2808bc3",
+        "preview": "ghostchars: some files could not be read; no fix preview is available for them.\n",
+        "preview_stderr": "skipped input.txt: read error: Invalid utf-8 byte sequence; decode the file correctly before scanning or fixing it.\n",
+        "fix_stderr": ""
+      },
+      "baseline": {
+        "checks": {
+          "preview_did_not_write": true,
+          "exact_expected_bytes": false,
+          "runtime_exit": false,
+          "reveal_refuses_lossy_decoding": false
+        },
+        "passed": false,
+        "exit": 0,
+        "preview_exit": 0,
+        "actual_sha256": "51d277510ba4bf97b25f12d38513c1b620a2a33fc83b3beeeb0dd971bf429e6d",
+        "actual_bytes": 4,
+        "actual_hex": "61efbfbd",
+        "preview": "input.txt\n  1: - a\u27e6U+200B ZWSP\u27e7\ufffd\n  1: + a\ufffd\n  1 finding(s) would be fixed.\n\n",
+        "preview_stderr": "",
+        "fix_stderr": ""
+      }
+    },
+    {
+      "name": "odd-utf16le",
+      "source_sha256": "0ff3c8a1cefdd2a80f76d73680b53e3d69006375445ac04ba855e8305864d488",
+      "source_bytes": 7,
+      "expected_sha256": "0ff3c8a1cefdd2a80f76d73680b53e3d69006375445ac04ba855e8305864d488",
+      "policy": null,
+      "candidate": {
+        "checks": {
+          "preview_did_not_write": true,
+          "exact_expected_bytes": true,
+          "runtime_exit": true,
+          "reveal_refuses_lossy_decoding": true
+        },
+        "passed": true,
+        "exit": 2,
+        "preview_exit": 2,
+        "actual_sha256": "0ff3c8a1cefdd2a80f76d73680b53e3d69006375445ac04ba855e8305864d488",
+        "actual_bytes": 7,
+        "actual_hex": "fffe61000b2062",
+        "preview": "ghostchars: some files could not be read; no fix preview is available for them.\n",
+        "preview_stderr": "skipped input.txt: read error: Invalid utf-16le byte sequence; decode the file correctly before scanning or fixing it.\n",
+        "fix_stderr": ""
+      },
+      "baseline": {
+        "checks": {
+          "preview_did_not_write": true,
+          "exact_expected_bytes": false,
+          "runtime_exit": false,
+          "reveal_refuses_lossy_decoding": false
+        },
+        "passed": false,
+        "exit": 0,
+        "preview_exit": 0,
+        "actual_sha256": "35a02cf13675bf6441235b7c29dde09b75bfb29cf0cd51765455d9e9f556c0d9",
+        "actual_bytes": 6,
+        "actual_hex": "fffe6100fdff",
+        "preview": "input.txt\n  1: - a\u27e6U+200B ZWSP\u27e7\ufffd\n  1: + a\ufffd\n  1 finding(s) would be fixed.\n\n",
+        "preview_stderr": "",
+        "fix_stderr": ""
+      }
+    },
+    {
+      "name": "unpaired-utf16be",
+      "source_sha256": "3790257b7b3209cd8e394b208fc5cb47ef35082e036738ea267cb97aae3a4123",
+      "source_bytes": 8,
+      "expected_sha256": "3790257b7b3209cd8e394b208fc5cb47ef35082e036738ea267cb97aae3a4123",
+      "policy": null,
+      "candidate": {
+        "checks": {
+          "preview_did_not_write": true,
+          "exact_expected_bytes": true,
+          "runtime_exit": true,
+          "reveal_refuses_lossy_decoding": true
+        },
+        "passed": true,
+        "exit": 2,
+        "preview_exit": 2,
+        "actual_sha256": "3790257b7b3209cd8e394b208fc5cb47ef35082e036738ea267cb97aae3a4123",
+        "actual_bytes": 8,
+        "actual_hex": "feff0061200bd800",
+        "preview": "ghostchars: some files could not be read; no fix preview is available for them.\n",
+        "preview_stderr": "skipped input.txt: read error: Invalid utf-16be byte sequence; decode the file correctly before scanning or fixing it.\n",
+        "fix_stderr": ""
+      },
+      "baseline": {
+        "checks": {
+          "preview_did_not_write": true,
+          "exact_expected_bytes": false,
+          "runtime_exit": false,
+          "reveal_refuses_lossy_decoding": false
+        },
+        "passed": false,
+        "exit": 0,
+        "preview_exit": 0,
+        "actual_sha256": "e54ee04acaecc73020f4205c82b5d67787c587044650b957c9a830c042aff2e2",
+        "actual_bytes": 6,
+        "actual_hex": "feff0061fffd",
+        "preview": "input.txt\n  1: - a\u27e6U+200B ZWSP\u27e7\ufffd\n  1: + a\ufffd\n  1 finding(s) would be fixed.\n\n",
+        "preview_stderr": "",
+        "fix_stderr": ""
+      }
+    },
+    {
+      "name": "typescript-cs",
+      "source_sha256": "41ae19b04047cda1421cb18a89d096abdd5360322ff5a50a6ebadcc87f6e8d64",
+      "source_bytes": 320459,
+      "expected_sha256": "5b30e58d35f877521e14c16551c86320b2ed19ddb70fe5f41841b561d27f18c2",
+      "policy": {
+        "allow": [
+          "U+00A0"
+        ],
+        "rules": {
+          "invisible": false,
+          "control-character": false
+        }
+      },
+      "catalog": {
+        "package": "typescript@5.9.3",
+        "path": "lib/cs/diagnosticMessages.generated.json",
+        "bytes": 320453,
+        "sha256": "5b30e58d35f877521e14c16551c86320b2ed19ddb70fe5f41841b561d27f18c2",
+        "nbsp": 2,
+        "zwsp": 0,
+        "c1_controls": 0
+      },
+      "candidate": {
+        "checks": {
+          "preview_did_not_write": true,
+          "exact_expected_bytes": true,
+          "nonruntime_exit": true
+        },
+        "passed": true,
+        "exit": 1,
+        "preview_exit": 1,
+        "actual_sha256": "5b30e58d35f877521e14c16551c86320b2ed19ddb70fe5f41841b561d27f18c2",
+        "actual_bytes": 320453,
+        "preview_sha256": "afec3b3723a89e2948eaad2d2869af65351cd960c13c0c2c35006414b5266436",
+        "fix_stdout_sha256": "325c285a5722460620c23ac5c7554b01eb119dd0750f45a7f8752fb9822d3107"
+      },
+      "baseline": {
+        "checks": {
+          "preview_did_not_write": true,
+          "exact_expected_bytes": false,
+          "nonruntime_exit": true
+        },
+        "passed": false,
+        "exit": 1,
+        "preview_exit": 1,
+        "actual_sha256": "375cc23a9b49f861d7411c14f315796932c6666a51c4aa773e8925fd06c55fb2",
+        "actual_bytes": 320449,
+        "preview_sha256": "c777f38c5dcb72e2dc8eb313a69f4b12ec48af5d9165171e75846dff40834d3d",
+        "fix_stdout_sha256": "325c285a5722460620c23ac5c7554b01eb119dd0750f45a7f8752fb9822d3107"
+      }
+    },
+    {
+      "name": "typescript-de",
+      "source_sha256": "28652cde6a8cfe31d90146072ed9b82f00d7db98549f3ab21c71bd174f9cebdd",
+      "source_bytes": 344432,
+      "expected_sha256": "a4031a8028febc35f92ba317104878d93f02c1750e6ee16351c2270ab4dff517",
+      "policy": {
+        "allow": [
+          "U+00A0"
+        ],
+        "rules": {
+          "invisible": false,
+          "control-character": false
+        }
+      },
+      "catalog": {
+        "package": "typescript@5.9.3",
+        "path": "lib/de/diagnosticMessages.generated.json",
+        "bytes": 344426,
+        "sha256": "a4031a8028febc35f92ba317104878d93f02c1750e6ee16351c2270ab4dff517",
+        "nbsp": 7,
+        "zwsp": 0,
+        "c1_controls": 0
+      },
+      "candidate": {
+        "checks": {
+          "preview_did_not_write": true,
+          "exact_expected_bytes": true,
+          "nonruntime_exit": true
+        },
+        "passed": true,
+        "exit": 1,
+        "preview_exit": 1,
+        "actual_sha256": "a4031a8028febc35f92ba317104878d93f02c1750e6ee16351c2270ab4dff517",
+        "actual_bytes": 344426,
+        "preview_sha256": "6c009090d2b13db1cb583f1d4f0277d056b0eb59ede8e381f3708c209a3c3203",
+        "fix_stdout_sha256": "aa74601f3d3e9be75437ed143b6ef9c9ab489c398c7d5eddb195ab7d7cc0f88e"
+      },
+      "baseline": {
+        "checks": {
+          "preview_did_not_write": true,
+          "exact_expected_bytes": false,
+          "nonruntime_exit": true
+        },
+        "passed": false,
+        "exit": 1,
+        "preview_exit": 1,
+        "actual_sha256": "932a78edfb36e40b3a2cb9d6fa4680b8064de2f369cacbd389d7d08217c3ed79",
+        "actual_bytes": 344412,
+        "preview_sha256": "d28e44160cda4237290daaed89b6c904785b1ae16a67639aeead92a49cbe00d3",
+        "fix_stdout_sha256": "aa74601f3d3e9be75437ed143b6ef9c9ab489c398c7d5eddb195ab7d7cc0f88e"
+      }
+    },
+    {
+      "name": "typescript-es",
+      "source_sha256": "ffe844aac9e40fd5d6ee5e32d38e1fe21344e90679bb2bffa03caa8064a1858d",
+      "source_bytes": 340060,
+      "expected_sha256": "3c7844125e1f2a3a2227e16dd1fed75218a3454919706b34cd8a5da9d43cda22",
+      "policy": {
+        "allow": [
+          "U+00A0"
+        ],
+        "rules": {
+          "invisible": false,
+          "control-character": false
+        }
+      },
+      "catalog": {
+        "package": "typescript@5.9.3",
+        "path": "lib/es/diagnosticMessages.generated.json",
+        "bytes": 340054,
+        "sha256": "3c7844125e1f2a3a2227e16dd1fed75218a3454919706b34cd8a5da9d43cda22",
+        "nbsp": 6,
+        "zwsp": 0,
+        "c1_controls": 0
+      },
+      "candidate": {
+        "checks": {
+          "preview_did_not_write": true,
+          "exact_expected_bytes": true,
+          "nonruntime_exit": true
+        },
+        "passed": true,
+        "exit": 1,
+        "preview_exit": 1,
+        "actual_sha256": "3c7844125e1f2a3a2227e16dd1fed75218a3454919706b34cd8a5da9d43cda22",
+        "actual_bytes": 340054,
+        "preview_sha256": "db74a3b8cb5f58b3a3dbdfa927e9c680366990b99ca4ac73b1dac6ef4fc557cd",
+        "fix_stdout_sha256": "b67fad163b162783adf4a206a1e6540368b6d4da3f28783a5c3516ed2da553d5"
+      },
+      "baseline": {
+        "checks": {
+          "preview_did_not_write": true,
+          "exact_expected_bytes": false,
+          "nonruntime_exit": true
+        },
+        "passed": false,
+        "exit": 1,
+        "preview_exit": 1,
+        "actual_sha256": "043e04826f03fc8327b070d880e1bce4863eb5094b6112b063870f2a86e19b19",
+        "actual_bytes": 340042,
+        "preview_sha256": "0e10c96d884fc3155ec40067d3350c69ac4cec4a414ec98cb7e3b8e8cb95ecc4",
+        "fix_stdout_sha256": "b67fad163b162783adf4a206a1e6540368b6d4da3f28783a5c3516ed2da553d5"
+      }
+    },
+    {
+      "name": "typescript-fr",
+      "source_sha256": "2927474a264cbfa604a04eec7f1ea5f6419e9315b2cfbef090ea0651342a4feb",
+      "source_bytes": 346022,
+      "expected_sha256": "9fc1836d7575840a8b7a63dacdedd99e90e4144c0bbe29a4b7fa78a86e0e8bf5",
+      "policy": {
+        "allow": [
+          "U+00A0"
+        ],
+        "rules": {
+          "invisible": false,
+          "control-character": false
+        }
+      },
+      "catalog": {
+        "package": "typescript@5.9.3",
+        "path": "lib/fr/diagnosticMessages.generated.json",
+        "bytes": 346016,
+        "sha256": "9fc1836d7575840a8b7a63dacdedd99e90e4144c0bbe29a4b7fa78a86e0e8bf5",
+        "nbsp": 791,
+        "zwsp": 0,
+        "c1_controls": 0
+      },
+      "candidate": {
+        "checks": {
+          "preview_did_not_write": true,
+          "exact_expected_bytes": true,
+          "nonruntime_exit": true
+        },
+        "passed": true,
+        "exit": 1,
+        "preview_exit": 1,
+        "actual_sha256": "9fc1836d7575840a8b7a63dacdedd99e90e4144c0bbe29a4b7fa78a86e0e8bf5",
+        "actual_bytes": 346016,
+        "preview_sha256": "4cc50160ecc9928062c1fe84ee80565ba3809ebe4b336a8213994155e0fb2b1f",
+        "fix_stdout_sha256": "b67fad163b162783adf4a206a1e6540368b6d4da3f28783a5c3516ed2da553d5"
+      },
+      "baseline": {
+        "checks": {
+          "preview_did_not_write": true,
+          "exact_expected_bytes": false,
+          "nonruntime_exit": true
+        },
+        "passed": false,
+        "exit": 1,
+        "preview_exit": 1,
+        "actual_sha256": "3a8962f344acd5e0147f8fdaefa8750352eec0c651a934fb3875732db909635e",
+        "actual_bytes": 345994,
+        "preview_sha256": "df693f9e66717835d1236eac6a4f1305c4149978da54bd38e1321f085384a472",
+        "fix_stdout_sha256": "b67fad163b162783adf4a206a1e6540368b6d4da3f28783a5c3516ed2da553d5"
+      }
+    },
+    {
+      "name": "typescript-it",
+      "source_sha256": "8e3d31414da391c2835fc8984acf097a2e5c04a36301a0cbb69fb253245f69fe",
+      "source_bytes": 339415,
+      "expected_sha256": "a740fe2b2338d72a8d165fb8c7c22ac1393a18b6aa7f1ed6d45b79887867f98a",
+      "policy": {
+        "allow": [
+          "U+00A0"
+        ],
+        "rules": {
+          "invisible": false,
+          "control-character": false
+        }
+      },
+      "catalog": {
+        "package": "typescript@5.9.3",
+        "path": "lib/it/diagnosticMessages.generated.json",
+        "bytes": 339409,
+        "sha256": "a740fe2b2338d72a8d165fb8c7c22ac1393a18b6aa7f1ed6d45b79887867f98a",
+        "nbsp": 0,
+        "zwsp": 0,
+        "c1_controls": 0
+      },
+      "candidate": {
+        "checks": {
+          "preview_did_not_write": true,
+          "exact_expected_bytes": true,
+          "nonruntime_exit": true
+        },
+        "passed": true,
+        "exit": 1,
+        "preview_exit": 1,
+        "actual_sha256": "a740fe2b2338d72a8d165fb8c7c22ac1393a18b6aa7f1ed6d45b79887867f98a",
+        "actual_bytes": 339409,
+        "preview_sha256": "dd6ff504656331b52632ec7c4449923ba50779095d22046d146a5190c4aec97d",
+        "fix_stdout_sha256": "930d43cd10f742d5cdd01169c873a1f6bb9dd65404027e30de61c38250c02132"
+      },
+      "baseline": {
+        "checks": {
+          "preview_did_not_write": true,
+          "exact_expected_bytes": true,
+          "nonruntime_exit": true
+        },
+        "passed": true,
+        "exit": 1,
+        "preview_exit": 1,
+        "actual_sha256": "a740fe2b2338d72a8d165fb8c7c22ac1393a18b6aa7f1ed6d45b79887867f98a",
+        "actual_bytes": 339409,
+        "preview_sha256": "397dd3a6af182135582972711541e2b812dda4dba2aa019dd1c5d71a9aecbe3f",
+        "fix_stdout_sha256": "930d43cd10f742d5cdd01169c873a1f6bb9dd65404027e30de61c38250c02132"
+      }
+    },
+    {
+      "name": "typescript-ja",
+      "source_sha256": "9fc3e12aceac748de3c03d2c941311e8a6f3fe28f196099f4d0ee718c8951036",
+      "source_bytes": 381404,
+      "expected_sha256": "ae1a2d439bfb60b9fa32408bde0e9ec39840a33d621014fcb5b2fb4e69a606de",
+      "policy": {
+        "allow": [
+          "U+00A0"
+        ],
+        "rules": {
+          "invisible": false,
+          "control-character": false
+        }
+      },
+      "catalog": {
+        "package": "typescript@5.9.3",
+        "path": "lib/ja/diagnosticMessages.generated.json",
+        "bytes": 381398,
+        "sha256": "ae1a2d439bfb60b9fa32408bde0e9ec39840a33d621014fcb5b2fb4e69a606de",
+        "nbsp": 0,
+        "zwsp": 0,
+        "c1_controls": 0
+      },
+      "candidate": {
+        "checks": {
+          "preview_did_not_write": true,
+          "exact_expected_bytes": true,
+          "nonruntime_exit": true
+        },
+        "passed": true,
+        "exit": 1,
+        "preview_exit": 1,
+        "actual_sha256": "ae1a2d439bfb60b9fa32408bde0e9ec39840a33d621014fcb5b2fb4e69a606de",
+        "actual_bytes": 381398,
+        "preview_sha256": "74f307d98b895314af7c84a54232ee592aad2249d2ca8f666f52ce79787ffacf",
+        "fix_stdout_sha256": "e76c52317045dbb668f2d36e88d71f1e304d859a64ca328faa86501be5906e14"
+      },
+      "baseline": {
+        "checks": {
+          "preview_did_not_write": true,
+          "exact_expected_bytes": true,
+          "nonruntime_exit": true
+        },
+        "passed": true,
+        "exit": 1,
+        "preview_exit": 1,
+        "actual_sha256": "ae1a2d439bfb60b9fa32408bde0e9ec39840a33d621014fcb5b2fb4e69a606de",
+        "actual_bytes": 381398,
+        "preview_sha256": "89262335a4e055bef512f661c4401132e07727afb0548cb9a490c24d91a1b05f",
+        "fix_stdout_sha256": "e76c52317045dbb668f2d36e88d71f1e304d859a64ca328faa86501be5906e14"
+      }
+    },
+    {
+      "name": "typescript-ko",
+      "source_sha256": "4b0b1f06d2fbb952b46066b96324b0001d34f705c0ef31da694ef469711be61d",
+      "source_bytes": 346145,
+      "expected_sha256": "31b27d2d556fc037eeac1672f771bf940ec70afba342e977faa75a2fa292a8be",
+      "policy": {
+        "allow": [
+          "U+00A0"
+        ],
+        "rules": {
+          "invisible": false,
+          "control-character": false
+        }
+      },
+      "catalog": {
+        "package": "typescript@5.9.3",
+        "path": "lib/ko/diagnosticMessages.generated.json",
+        "bytes": 346139,
+        "sha256": "31b27d2d556fc037eeac1672f771bf940ec70afba342e977faa75a2fa292a8be",
+        "nbsp": 0,
+        "zwsp": 4,
+        "c1_controls": 0
+      },
+      "candidate": {
+        "checks": {
+          "preview_did_not_write": true,
+          "exact_expected_bytes": true,
+          "nonruntime_exit": true
+        },
+        "passed": true,
+        "exit": 1,
+        "preview_exit": 1,
+        "actual_sha256": "31b27d2d556fc037eeac1672f771bf940ec70afba342e977faa75a2fa292a8be",
+        "actual_bytes": 346139,
+        "preview_sha256": "fbc4a174e9262230b630a7233cab85224bc49be7d43ba7618923f385f0d12d55",
+        "fix_stdout_sha256": "4028b06445a66db9142c530f7a7850cc3e0e73164c826ed1959f97f99ba9e976"
+      },
+      "baseline": {
+        "checks": {
+          "preview_did_not_write": true,
+          "exact_expected_bytes": false,
+          "nonruntime_exit": true
+        },
+        "passed": false,
+        "exit": 1,
+        "preview_exit": 1,
+        "actual_sha256": "20c849a71fc36e4bb816bebfacc3f5f6ef3551997b7a7ddad5983f580e6dc996",
+        "actual_bytes": 346127,
+        "preview_sha256": "acb1a800f17913cc613043b8a50ab23315e2b59653ad90a0394cb7b33424a86f",
+        "fix_stdout_sha256": "4028b06445a66db9142c530f7a7850cc3e0e73164c826ed1959f97f99ba9e976"
+      }
+    },
+    {
+      "name": "typescript-pl",
+      "source_sha256": "3b9e9139a404c2567a1c5992c3a14d3b1db740b4d8c6764395658ef0da76a9c5",
+      "source_bytes": 342117,
+      "expected_sha256": "0645575abe920de1ee4cf3f2f70c7abc7f6691daa01cf1e9ad6b1ce53917c9ff",
+      "policy": {
+        "allow": [
+          "U+00A0"
+        ],
+        "rules": {
+          "invisible": false,
+          "control-character": false
+        }
+      },
+      "catalog": {
+        "package": "typescript@5.9.3",
+        "path": "lib/pl/diagnosticMessages.generated.json",
+        "bytes": 342111,
+        "sha256": "0645575abe920de1ee4cf3f2f70c7abc7f6691daa01cf1e9ad6b1ce53917c9ff",
+        "nbsp": 29,
+        "zwsp": 0,
+        "c1_controls": 1
+      },
+      "candidate": {
+        "checks": {
+          "preview_did_not_write": true,
+          "exact_expected_bytes": true,
+          "nonruntime_exit": true
+        },
+        "passed": true,
+        "exit": 1,
+        "preview_exit": 1,
+        "actual_sha256": "0645575abe920de1ee4cf3f2f70c7abc7f6691daa01cf1e9ad6b1ce53917c9ff",
+        "actual_bytes": 342111,
+        "preview_sha256": "53c29eed12c5a2d5357d260df03b807296b49d4cea9f0079f30b9acc8f4ab9c7",
+        "fix_stdout_sha256": "119961f7b49bc1d7adb2c0b2353cda156d62ecb0b8bdbd1f80bf1cbd8e18acdd"
+      },
+      "baseline": {
+        "checks": {
+          "preview_did_not_write": true,
+          "exact_expected_bytes": false,
+          "nonruntime_exit": true
+        },
+        "passed": false,
+        "exit": 1,
+        "preview_exit": 1,
+        "actual_sha256": "5a5476a2dccb40acfb8f760591e0dd2c4423500227384d61c1e38171d580387a",
+        "actual_bytes": 342051,
+        "preview_sha256": "e779c95762fee4af7732ce4c5c995f4971eeb5368981325526ae9e5955e1148a",
+        "fix_stdout_sha256": "119961f7b49bc1d7adb2c0b2353cda156d62ecb0b8bdbd1f80bf1cbd8e18acdd"
+      }
+    },
+    {
+      "name": "typescript-pt-br",
+      "source_sha256": "30a0c53dfa8602fa608a37c48f5cb6c398d7dd16af0cae891d6bc0fab9ff7a22",
+      "source_bytes": 330488,
+      "expected_sha256": "34a649eb937cd70fe7b15663c2e5479e753d42df0e5c2933636789b60c2c939d",
+      "policy": {
+        "allow": [
+          "U+00A0"
+        ],
+        "rules": {
+          "invisible": false,
+          "control-character": false
+        }
+      },
+      "catalog": {
+        "package": "typescript@5.9.3",
+        "path": "lib/pt-br/diagnosticMessages.generated.json",
+        "bytes": 330482,
+        "sha256": "34a649eb937cd70fe7b15663c2e5479e753d42df0e5c2933636789b60c2c939d",
+        "nbsp": 45,
+        "zwsp": 0,
+        "c1_controls": 0
+      },
+      "candidate": {
+        "checks": {
+          "preview_did_not_write": true,
+          "exact_expected_bytes": true,
+          "nonruntime_exit": true
+        },
+        "passed": true,
+        "exit": 1,
+        "preview_exit": 1,
+        "actual_sha256": "34a649eb937cd70fe7b15663c2e5479e753d42df0e5c2933636789b60c2c939d",
+        "actual_bytes": 330482,
+        "preview_sha256": "989f54d82a0951aa1fd43d0db47c99ba74b1c32cbb3d890d5c49bcdd5dabbbf2",
+        "fix_stdout_sha256": "1bd897221c4757b278f5d12978b0121de13d94355a77db308c4be4434e7da55c"
+      },
+      "baseline": {
+        "checks": {
+          "preview_did_not_write": true,
+          "exact_expected_bytes": false,
+          "nonruntime_exit": true
+        },
+        "passed": false,
+        "exit": 1,
+        "preview_exit": 1,
+        "actual_sha256": "3b6527efcfe75d7b847cad230132d6a133de264caddc134ed74d3053f26634ce",
+        "actual_bytes": 330392,
+        "preview_sha256": "00f25abfe57b93475c0b64451ebb3106dbffd08059d8aa33caa0322abe1d42df",
+        "fix_stdout_sha256": "1bd897221c4757b278f5d12978b0121de13d94355a77db308c4be4434e7da55c"
+      }
+    },
+    {
+      "name": "typescript-ru",
+      "source_sha256": "9c40da180e0d45e2749e5115fdd8db6e5b49324d9777dc92c1275da3b72789b3",
+      "source_bytes": 443593,
+      "expected_sha256": "29bb8ea9d44f55bb7acdedfac0a57865ea40552f004d0d6e3b96746ac76666cc",
+      "policy": {
+        "allow": [
+          "U+00A0"
+        ],
+        "rules": {
+          "invisible": false,
+          "control-character": false
+        }
+      },
+      "catalog": {
+        "package": "typescript@5.9.3",
+        "path": "lib/ru/diagnosticMessages.generated.json",
+        "bytes": 443587,
+        "sha256": "29bb8ea9d44f55bb7acdedfac0a57865ea40552f004d0d6e3b96746ac76666cc",
+        "nbsp": 28,
+        "zwsp": 0,
+        "c1_controls": 0
+      },
+      "candidate": {
+        "checks": {
+          "preview_did_not_write": true,
+          "exact_expected_bytes": true,
+          "nonruntime_exit": true
+        },
+        "passed": true,
+        "exit": 1,
+        "preview_exit": 1,
+        "actual_sha256": "29bb8ea9d44f55bb7acdedfac0a57865ea40552f004d0d6e3b96746ac76666cc",
+        "actual_bytes": 443587,
+        "preview_sha256": "0d092fb426b71acd37d956f1fde0a508a110bfc9d4ab5589b1ad81acf16b769a",
+        "fix_stdout_sha256": "f151c590b4efedd374bd2efcc0624d3da49fe075529456c4e381bc9f1f0fc4c0"
+      },
+      "baseline": {
+        "checks": {
+          "preview_did_not_write": true,
+          "exact_expected_bytes": false,
+          "nonruntime_exit": true
+        },
+        "passed": false,
+        "exit": 1,
+        "preview_exit": 1,
+        "actual_sha256": "c6cce46a1fa2bd10110b76e2df270bd25c5478a253c80485d4710c262b29c1c0",
+        "actual_bytes": 443531,
+        "preview_sha256": "3fec4fae3e3f649e74651417f0f2abf7746faeba58f56cd1eb657ec94b528ea3",
+        "fix_stdout_sha256": "f151c590b4efedd374bd2efcc0624d3da49fe075529456c4e381bc9f1f0fc4c0"
+      }
+    },
+    {
+      "name": "typescript-tr",
+      "source_sha256": "a96cf548ded7c1eebf0e6ca4adb1a976b858ecfa79551f748dd74ca91538ea9f",
+      "source_bytes": 330690,
+      "expected_sha256": "9466915f3e0cdb2625495bbe9c02c8b7ef9e3543fffae957ba034655563abf65",
+      "policy": {
+        "allow": [
+          "U+00A0"
+        ],
+        "rules": {
+          "invisible": false,
+          "control-character": false
+        }
+      },
+      "catalog": {
+        "package": "typescript@5.9.3",
+        "path": "lib/tr/diagnosticMessages.generated.json",
+        "bytes": 330684,
+        "sha256": "9466915f3e0cdb2625495bbe9c02c8b7ef9e3543fffae957ba034655563abf65",
+        "nbsp": 0,
+        "zwsp": 0,
+        "c1_controls": 0
+      },
+      "candidate": {
+        "checks": {
+          "preview_did_not_write": true,
+          "exact_expected_bytes": true,
+          "nonruntime_exit": true
+        },
+        "passed": true,
+        "exit": 1,
+        "preview_exit": 1,
+        "actual_sha256": "9466915f3e0cdb2625495bbe9c02c8b7ef9e3543fffae957ba034655563abf65",
+        "actual_bytes": 330684,
+        "preview_sha256": "1b2f99c072d01694e85d5b8263f5dd81ced1e2d14ccbcebe8a3ca3a207addae1",
+        "fix_stdout_sha256": "2b04427fc488c337f062913dd1ee5545c34a2c20cf4c7e2b6f02e69252dfa24a"
+      },
+      "baseline": {
+        "checks": {
+          "preview_did_not_write": true,
+          "exact_expected_bytes": true,
+          "nonruntime_exit": true
+        },
+        "passed": true,
+        "exit": 1,
+        "preview_exit": 1,
+        "actual_sha256": "9466915f3e0cdb2625495bbe9c02c8b7ef9e3543fffae957ba034655563abf65",
+        "actual_bytes": 330684,
+        "preview_sha256": "a7ac214f36698a493604675d74a71c4fc6d3d16876e089ef11b2facca34c20ab",
+        "fix_stdout_sha256": "2b04427fc488c337f062913dd1ee5545c34a2c20cf4c7e2b6f02e69252dfa24a"
+      }
+    },
+    {
+      "name": "typescript-zh-cn",
+      "source_sha256": "1d5caac0462d4736e2639cfa3b3f4866bdd15245361d769e7659f2d8a34fcf1a",
+      "source_bytes": 295915,
+      "expected_sha256": "6bd4ae6aea0991f6b73c46ec79ebb643b280a07e4808be363b07d01d2f6d399d",
+      "policy": {
+        "allow": [
+          "U+00A0"
+        ],
+        "rules": {
+          "invisible": false,
+          "control-character": false
+        }
+      },
+      "catalog": {
+        "package": "typescript@5.9.3",
+        "path": "lib/zh-cn/diagnosticMessages.generated.json",
+        "bytes": 295909,
+        "sha256": "6bd4ae6aea0991f6b73c46ec79ebb643b280a07e4808be363b07d01d2f6d399d",
+        "nbsp": 0,
+        "zwsp": 0,
+        "c1_controls": 0
+      },
+      "candidate": {
+        "checks": {
+          "preview_did_not_write": true,
+          "exact_expected_bytes": true,
+          "nonruntime_exit": true
+        },
+        "passed": true,
+        "exit": 1,
+        "preview_exit": 1,
+        "actual_sha256": "6bd4ae6aea0991f6b73c46ec79ebb643b280a07e4808be363b07d01d2f6d399d",
+        "actual_bytes": 295909,
+        "preview_sha256": "1cd7152cc2d308cba2e414d3a2e64ba9ce2311e174ac8c40096e849d9b130daa",
+        "fix_stdout_sha256": "8138a98b2ba5d78b389a08096c2588c11e8333629e5f4586a6b0228436392025"
+      },
+      "baseline": {
+        "checks": {
+          "preview_did_not_write": true,
+          "exact_expected_bytes": true,
+          "nonruntime_exit": true
+        },
+        "passed": true,
+        "exit": 1,
+        "preview_exit": 1,
+        "actual_sha256": "6bd4ae6aea0991f6b73c46ec79ebb643b280a07e4808be363b07d01d2f6d399d",
+        "actual_bytes": 295909,
+        "preview_sha256": "f8a7d5bddbcce9e70473c502080533e71fcfe3289774e3683e6f0ab0de4de111",
+        "fix_stdout_sha256": "8138a98b2ba5d78b389a08096c2588c11e8333629e5f4586a6b0228436392025"
+      }
+    },
+    {
+      "name": "typescript-zh-tw",
+      "source_sha256": "b3602cfeddd3570aa6f186b62de6c5500af415078b4ac64faba8f05ded2e80aa",
+      "source_bytes": 292538,
+      "expected_sha256": "c35cf732ff01539090a3622b7a07f7bb4cadb28f6f13048b366012c458329be1",
+      "policy": {
+        "allow": [
+          "U+00A0"
+        ],
+        "rules": {
+          "invisible": false,
+          "control-character": false
+        }
+      },
+      "catalog": {
+        "package": "typescript@5.9.3",
+        "path": "lib/zh-tw/diagnosticMessages.generated.json",
+        "bytes": 292532,
+        "sha256": "c35cf732ff01539090a3622b7a07f7bb4cadb28f6f13048b366012c458329be1",
+        "nbsp": 0,
+        "zwsp": 0,
+        "c1_controls": 0
+      },
+      "candidate": {
+        "checks": {
+          "preview_did_not_write": true,
+          "exact_expected_bytes": true,
+          "nonruntime_exit": true
+        },
+        "passed": true,
+        "exit": 1,
+        "preview_exit": 1,
+        "actual_sha256": "c35cf732ff01539090a3622b7a07f7bb4cadb28f6f13048b366012c458329be1",
+        "actual_bytes": 292532,
+        "preview_sha256": "f3ddc475603628a760b9df1b220d6627a5f2402d9aca149559c4b4b1116304a2",
+        "fix_stdout_sha256": "8138a98b2ba5d78b389a08096c2588c11e8333629e5f4586a6b0228436392025"
+      },
+      "baseline": {
+        "checks": {
+          "preview_did_not_write": true,
+          "exact_expected_bytes": true,
+          "nonruntime_exit": true
+        },
+        "passed": true,
+        "exit": 1,
+        "preview_exit": 1,
+        "actual_sha256": "c35cf732ff01539090a3622b7a07f7bb4cadb28f6f13048b366012c458329be1",
+        "actual_bytes": 292532,
+        "preview_sha256": "b3f8f6658e59f84813f379e5dbb1d5e5f0b646f4ade42219fc31725efc68f44a",
+        "fix_stdout_sha256": "8138a98b2ba5d78b389a08096c2588c11e8333629e5f4586a6b0228436392025"
+      }
+    }
+  ],
+  "baseline_revision": "1a4a312",
+  "summary": {
+    "candidate": {
+      "passed": 39,
+      "total": 39,
+      "exact_bytes": 39
+    },
+    "baseline": {
+      "passed": 9,
+      "total": 39,
+      "exact_bytes": 14
+    }
+  }
+}
