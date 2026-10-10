@@ -4,8 +4,9 @@ import { severityCounts, totalFindings } from '../report.js';
 export function formatJson(report: ScanReport): string {
   const payload = {
     ghostchars: true,
-    summary: { ...severityCounts(report), total: totalFindings(report), files: report.files.length, durationMs: report.durationMs },
+    summary: { ...severityCounts(report), total: totalFindings(report), files: report.files.length, durationMs: report.durationMs, complete: report.errors.length === 0, inputErrors: report.errors.length },
     skipped: report.skipped,
+    errors: report.errors,
     results: report.files
       .filter((f) => f.findings.length > 0)
       .map((f) => ({

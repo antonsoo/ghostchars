@@ -3,6 +3,13 @@ import type { ScanReport } from '../report.js';
 /** GitHub Actions workflow command annotations (`::error file=…,line=…::…`). */
 export function formatGithub(report: ScanReport): string {
   const lines: string[] = [];
+  for (const error of report.errors) {
+    lines.push(`::error file=${escapeProp(error.path)},title=ghostchars scan incomplete::${escapeData(error.reason)}`);
+  }
+  if (report.skipped.length) {
+    const excluded = report.skipped.slice(0, 5).map((skip) => `${skip.path} (${skip.reason})`).join(', ');
+    lines.push(`::notice title=ghostchars excluded paths::${escapeData(`${report.skipped.length} path(s) skipped: ${excluded}${report.skipped.length > 5 ? ', ...' : ''}`)}`);
+  }
   for (const file of report.files) {
     for (const f of file.findings) {
       const cmd = f.severity === 'error' ? 'error' : f.severity === 'warning' ? 'warning' : 'notice';

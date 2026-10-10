@@ -33,7 +33,7 @@ export function formatSarif(report: ScanReport): string {
       locations: [
         {
           physicalLocation: {
-            artifactLocation: { uri: file.path },
+            artifactLocation: { uri: file.path.split('/').map(encodeURIComponent).join('/') },
             region: {
               startLine: f.start.line,
               startColumn: f.start.column,
@@ -47,7 +47,7 @@ export function formatSarif(report: ScanReport): string {
   );
 
   const sarif = {
-    $schema: 'https://raw.githubusercontent.com/oasis-tcs/sarif-spec/master/Schemata/sarif-schema-2.1.0.json',
+    $schema: 'https://docs.oasis-open.org/sarif/sarif/v2.1.0/errata01/os/schemas/sarif-schema-2.1.0.json',
     version: '2.1.0',
     runs: [
       {
@@ -60,6 +60,13 @@ export function formatSarif(report: ScanReport): string {
           },
         },
         results,
+        invocations: [{
+          executionSuccessful: report.errors.length === 0,
+          toolExecutionNotifications: report.errors.map((error) => ({
+            level: 'error', message: { text: `${error.path}: ${error.reason}` },
+          })),
+        }],
+        properties: { skipped: report.skipped },
       },
     ],
   };

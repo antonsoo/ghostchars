@@ -1,6 +1,5 @@
 #!/usr/bin/env node
-import { existsSync, readFileSync, realpathSync, writeFileSync } from 'node:fs';
-import { resolve } from 'node:path';
+import { readFileSync, realpathSync, writeFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { scanText } from '../core/index.js';
 import { diagnosticText } from '../core/diagnosticText.js';
@@ -17,7 +16,7 @@ import { revealCommand } from './revealCommand.js';
 import type { ScanReport } from './report.js';
 import { severityCounts } from './report.js';
 import { colors } from './colors.js';
-import { discoverFiles } from './walk.js';
+import { discoverFiles, throughSymlink } from './walk.js';
 import { VERSION } from './version.js';
 
 
@@ -102,29 +101,23 @@ export function main(argv: string[]): number {
     console.error(colors.red(diagnosticText((err as Error).message)));
     return 2;
   }
-  // A path named on the command line that isn't there is a mistake in the command (a typo in
-  // a CI step), not a file to skip: "no findings in 0 files" and exit 0 would pass the check
-  // without having scanned anything.
-  const missing = args.paths.filter((path) => !existsSync(resolve(cwd, path)));
-  if (missing.length > 0) {
-    console.error(colors.red(diagnosticText(`ghostchars: no such file or directory: ${missing.join(', ')}`)));
-    return 2;
-  }
   const start = performance.now();
-  const { files, skipped } = discoverFiles(args.paths, cwd);
+  const { files, skipped, errors } = discoverFiles(args.paths, cwd);
 
-  const report: ScanReport = { files: [], skipped, durationMs: 0 };
+  const report: ScanReport = { files: [], skipped, errors, durationMs: 0 };
   let hadFixes = false;
-  let runtimeError = false;
+  const repairs: Array<{ path: string; absPath: string; original: Buffer; replacement: Buffer }> = [];
 
   for (const file of files) {
     let source: string;
     let encoding: FileEncoding;
+    let original: Buffer;
     try {
-      ({ text: source, encoding } = decodeFile(readFileSync(file.absPath)));
+      if (throughSymlink(file.absPath)) throw new Error('path became a symbolic link after discovery');
+      original = readFileSync(file.absPath);
+      ({ text: source, encoding } = decodeFile(original));
     } catch (err) {
-      report.skipped.push({ path: file.path, reason: `read error: ${(err as Error).message}` });
-      runtimeError = true;
+      report.errors.push({ path: file.path, reason: `read error: ${(err as Error).message}` });
       continue;
     }
 
@@ -140,13 +133,24 @@ export function main(argv: string[]): number {
           const preview = formatDryRun(outcome, source);
           if (preview) console.log(preview + '\n');
         } else {
-          try {
-            writeFileSync(file.absPath, encodeFile(outcome.newText, encoding));
-          } catch (err) {
-            console.error(colors.red(diagnosticText(`Could not fix ${file.path}: ${(err as Error).message}`)));
-            runtimeError = true;
-          }
+          repairs.push({ ...file, original, replacement: encodeFile(outcome.newText, encoding) });
         }
+      }
+    }
+  }
+
+  // Finish discovering and reading every input before changing any file. A
+  // partial scan cannot establish which repairs the invocation should perform.
+  if (repairs.length > 0 && report.errors.length > 0) {
+    console.error('ghostchars: scan incomplete; no files were repaired.');
+  } else {
+    for (const repair of repairs) {
+      try {
+        if (throughSymlink(repair.absPath)) throw new Error('path became a symbolic link after scanning');
+        if (!readFileSync(repair.absPath).equals(repair.original)) throw new Error('file changed after scanning; scan it again before repairing');
+        writeFileSync(repair.absPath, repair.replacement);
+      } catch (err) {
+        report.errors.push({ path: repair.path, reason: `could not repair file: ${(err as Error).message}` });
       }
     }
   }
@@ -157,16 +161,20 @@ export function main(argv: string[]): number {
     const output = args.format === 'json' ? formatJson(report) : args.format === 'sarif' ? formatSarif(report) : args.format === 'github' ? formatGithub(report) : args.format === 'summary' ? formatSummary(report) : formatPretty(report);
     console.log(output);
   } else if (!hadFixes && !args.quiet) {
-    if (runtimeError) console.log('ghostchars: some files could not be read; no fix preview is available for them.');
+    if (report.errors.length) console.log('ghostchars: scan incomplete; no fix preview is available for failed inputs.');
     else if (report.files.some((file) => file.findings.length > 0)) {
       console.log('ghostchars: no automatic removals under the current policy. Review the remaining findings.\n\n' + formatSummary(report));
     } else console.log(colors.green('ghostchars: nothing to fix.'));
   }
 
-  if (args.fix && args.dryRun) for (const skip of report.skipped) console.error(diagnosticText(`skipped ${skip.path}: ${skip.reason}`));
+  if (args.fix && args.dryRun) {
+    if (report.errors.length) console.error('ghostchars: preview incomplete; failed inputs have no repair plan.');
+    for (const skip of report.skipped) console.error(diagnosticText(`skipped ${skip.path}: ${skip.reason}`));
+    for (const error of report.errors) console.error(diagnosticText(`error ${error.path}: ${error.reason}`));
+  }
 
   const counts = severityCounts(report);
-  if (runtimeError) return 2;
+  if (report.errors.length) return 2;
   if (counts.error > 0) return 1;
   return 0;
 }

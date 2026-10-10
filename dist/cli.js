@@ -1,8 +1,7 @@
 #!/usr/bin/env node
 
 // src/cli/index.ts
-import { existsSync as existsSync2, readFileSync as readFileSync4, realpathSync, writeFileSync } from "node:fs";
-import { resolve as resolve2 } from "node:path";
+import { readFileSync as readFileSync4, realpathSync as realpathSync2, writeFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 
 // src/core/names.ts
@@ -7610,7 +7609,7 @@ import { join as join2 } from "node:path";
 
 // src/cli/walk.ts
 import { execFileSync } from "node:child_process";
-import { readFileSync, readdirSync, statSync } from "node:fs";
+import { readFileSync, readdirSync, lstatSync, realpathSync } from "node:fs";
 
 // src/cli/encoding.ts
 function fileEncoding(bytes) {
@@ -7633,72 +7632,104 @@ function encodeFile(text, encoding) {
 }
 
 // src/cli/walk.ts
-import { join, relative, resolve, sep } from "node:path";
+import { dirname, join, relative, resolve, sep } from "node:path";
 var MAX_FILE_BYTES = 5 * 1024 * 1024;
+function throughSymlink(path) {
+  for (let current = path; ; current = dirname(current)) {
+    if (lstatSync(current).isSymbolicLink()) return true;
+    if (dirname(current) === current) return false;
+  }
+}
 function discoverFiles(inputPaths, cwd = process.cwd()) {
   const targets = inputPaths.length ? inputPaths : ["."];
-  const skipped = [];
-  const files = [];
+  const result = { files: [], skipped: [], errors: [] };
   const seen = /* @__PURE__ */ new Set();
+  let base;
+  try {
+    base = realpathSync(cwd);
+  } catch (error) {
+    result.errors.push({ path: cwd, reason: `could not resolve working directory: ${error.message}` });
+    return result;
+  }
+  const fail = (abs, operation, error) => {
+    const reason = error instanceof Error ? error.message : String(error);
+    result.errors.push({ path: toPosix(relative(base, abs) || "."), reason: `${operation}: ${reason}` });
+  };
   for (const target of targets) {
-    const absTarget = resolve(cwd, target);
+    const absTarget = resolve(base, target);
     let stat;
     try {
-      stat = statSync(absTarget);
-    } catch {
-      skipped.push({ path: target, reason: "not found" });
+      stat = lstatSync(absTarget);
+      if (throughSymlink(absTarget)) {
+        result.errors.push({ path: target, reason: "symbolic links are not scanned or repaired; pass the target's real path explicitly" });
+        continue;
+      }
+    } catch (error) {
+      fail(absTarget, "could not inspect path", error);
       continue;
     }
     if (stat.isFile()) {
-      addFile(absTarget, cwd, files, skipped, seen);
+      addFile(absTarget, base, result, seen, fail);
+      continue;
+    }
+    if (!stat.isDirectory()) {
+      result.errors.push({ path: target, reason: "not a regular file or directory" });
       continue;
     }
     const repoRoot = findGitRoot(absTarget);
-    const candidates = repoRoot ? listGitFiles(repoRoot, absTarget) : listWalk(absTarget);
-    for (const abs of candidates) addFile(abs, cwd, files, skipped, seen);
+    const candidates = repoRoot ? listGitFiles(repoRoot, absTarget, fail) : listWalk(absTarget, fail);
+    for (const abs of candidates) addFile(abs, base, result, seen, fail);
   }
-  files.sort((a, b) => a.path.localeCompare(b.path));
-  return { files, skipped };
+  result.files.sort((a, b) => a.path.localeCompare(b.path));
+  return result;
 }
-function addFile(absPath, cwd, files, skipped, seen) {
+function addFile(absPath, cwd, result, seen, fail) {
   if (seen.has(absPath)) return;
   seen.add(absPath);
   const path = toPosix(relative(cwd, absPath) || absPath);
   let stat;
   try {
-    stat = statSync(absPath);
-  } catch {
-    skipped.push({ path, reason: "not found" });
+    stat = lstatSync(absPath);
+    if (throughSymlink(absPath)) {
+      result.skipped.push({ path, reason: "symbolic link (not followed)" });
+      return;
+    }
+  } catch (error) {
+    fail(absPath, "could not inspect path", error);
     return;
   }
-  if (!stat.isFile()) return;
+  if (!stat.isFile()) {
+    result.skipped.push({ path, reason: "not a regular file" });
+    return;
+  }
   if (stat.size > MAX_FILE_BYTES) {
-    skipped.push({ path, reason: `too large (${(stat.size / (1024 * 1024)).toFixed(1)} MiB > ${MAX_FILE_BYTES / (1024 * 1024)} MiB)` });
+    result.skipped.push({ path, reason: `too large (${(stat.size / (1024 * 1024)).toFixed(1)} MiB > ${MAX_FILE_BYTES / (1024 * 1024)} MiB)` });
     return;
   }
-  if (isLikelyBinary(absPath)) {
-    skipped.push({ path, reason: "binary" });
+  try {
+    if (isLikelyBinary(absPath)) {
+      result.skipped.push({ path, reason: "binary" });
+      return;
+    }
+  } catch (error) {
+    fail(absPath, "could not read file", error);
     return;
   }
-  files.push({ path, absPath });
+  result.files.push({ path, absPath });
 }
 function isLikelyBinary(absPath) {
-  try {
-    const buf = readFileSync(absPath);
-    const sample = buf.subarray(0, Math.min(buf.length, 8192));
-    if (fileEncoding(sample) !== "utf-8") {
-      const text = new TextDecoder(fileEncoding(sample)).decode(sample, { stream: true });
-      return /[\u0000-\u0008\u000e-\u001a\u001c-\u001f]/.test(text);
-    }
-    if (sample.includes(0)) return true;
-    let suspicious = 0;
-    for (const byte of sample) {
-      if (byte < 9 || byte > 13 && byte < 32 && byte !== 27) suspicious++;
-    }
-    return sample.length > 0 && suspicious / sample.length > 0.3;
-  } catch {
-    return true;
+  const buf = readFileSync(absPath);
+  const sample = buf.subarray(0, Math.min(buf.length, 8192));
+  if (fileEncoding(sample) !== "utf-8") {
+    const text = new TextDecoder(fileEncoding(sample)).decode(sample, { stream: true });
+    return /[\u0000-\u0008\u000e-\u001a\u001c-\u001f]/.test(text);
   }
+  if (sample.includes(0)) return true;
+  let suspicious = 0;
+  for (const byte of sample) {
+    if (byte < 9 || byte > 13 && byte < 32 && byte !== 27) suspicious++;
+  }
+  return sample.length > 0 && suspicious / sample.length > 0.3;
 }
 function findGitRoot(startAbs) {
   try {
@@ -7708,25 +7739,27 @@ function findGitRoot(startAbs) {
     return void 0;
   }
 }
-function listGitFiles(repoRoot, scopeAbs) {
+function listGitFiles(repoRoot, scopeAbs, fail) {
   const scopeRel = relative(repoRoot, scopeAbs);
   const args = ["-C", repoRoot, "ls-files", "-z", "--cached", "--others", "--exclude-standard", "--", scopeRel === "" ? "." : scopeRel];
   try {
-    const out = execFileSync("git", args, { stdio: ["ignore", "pipe", "ignore"] }).toString();
+    const out = execFileSync("git", args, { stdio: ["ignore", "pipe", "pipe"], maxBuffer: 64 * 1024 * 1024 }).toString();
     return out.split("\0").filter(Boolean).map((p) => join(repoRoot, p));
-  } catch {
-    return listWalk(scopeAbs);
+  } catch (error) {
+    fail(scopeAbs, "could not enumerate git files", error);
+    return [];
   }
 }
 var ALWAYS_IGNORE_DIRS = /* @__PURE__ */ new Set([".git", "node_modules", ".hg", ".svn", "dist", "build", ".venv", "__pycache__"]);
-function listWalk(rootAbs) {
+function listWalk(rootAbs, fail) {
   const out = [];
-  const gitignore = loadGitignorePatterns(rootAbs);
+  const gitignore = loadGitignorePatterns(rootAbs, fail);
   const walk = (dir) => {
     let entries;
     try {
       entries = readdirSync(dir, { withFileTypes: true });
-    } catch {
+    } catch (error) {
+      fail(dir, "could not list directory", error);
       return;
     }
     for (const entry of entries) {
@@ -7735,18 +7768,18 @@ function listWalk(rootAbs) {
       const rel = toPosix(relative(rootAbs, abs));
       if (isGitignored(rel, gitignore)) continue;
       if (entry.isDirectory()) walk(abs);
-      else if (entry.isFile()) out.push(abs);
+      else out.push(abs);
     }
   };
-  const stat = statSync(rootAbs);
-  if (stat.isFile()) return [rootAbs];
   walk(rootAbs);
   return out;
 }
-function loadGitignorePatterns(rootAbs) {
+function loadGitignorePatterns(rootAbs, fail) {
   const rules = [];
   try {
-    const text = readFileSync(join(rootAbs, ".gitignore"), "utf8");
+    const path = join(rootAbs, ".gitignore");
+    if (lstatSync(path).isSymbolicLink()) throw new Error("symbolic-link ignore policies are not followed");
+    const text = readFileSync(path, "utf8");
     for (const raw of text.split("\n")) {
       const line = raw.trimEnd();
       if (!line || line.startsWith("#")) continue;
@@ -7754,7 +7787,8 @@ function loadGitignorePatterns(rootAbs) {
       const pattern = negate ? line.slice(1) : line;
       rules.push({ regex: globToRegex(pattern), negate });
     }
-  } catch {
+  } catch (error) {
+    if (error.code !== "ENOENT") fail(join(rootAbs, ".gitignore"), "could not read ignore policy", error);
   }
   return rules;
 }
@@ -7864,6 +7898,13 @@ function scanOptionsForFile(config, filePath) {
 // src/cli/formatters/github.ts
 function formatGithub(report) {
   const lines = [];
+  for (const error of report.errors) {
+    lines.push(`::error file=${escapeProp(error.path)},title=ghostchars scan incomplete::${escapeData(error.reason)}`);
+  }
+  if (report.skipped.length) {
+    const excluded = report.skipped.slice(0, 5).map((skip) => `${skip.path} (${skip.reason})`).join(", ");
+    lines.push(`::notice title=ghostchars excluded paths::${escapeData(`${report.skipped.length} path(s) skipped: ${excluded}${report.skipped.length > 5 ? ", ..." : ""}`)}`);
+  }
   for (const file of report.files) {
     for (const f of file.findings) {
       const cmd = f.severity === "error" ? "error" : f.severity === "warning" ? "warning" : "notice";
@@ -7895,8 +7936,9 @@ function totalFindings(report) {
 function formatJson(report) {
   const payload = {
     ghostchars: true,
-    summary: { ...severityCounts(report), total: totalFindings(report), files: report.files.length, durationMs: report.durationMs },
+    summary: { ...severityCounts(report), total: totalFindings(report), files: report.files.length, durationMs: report.durationMs, complete: report.errors.length === 0, inputErrors: report.errors.length },
     skipped: report.skipped,
+    errors: report.errors,
     results: report.files.filter((f) => f.findings.length > 0).map((f) => ({
       path: f.path,
       findings: f.findings.map((finding2) => ({
@@ -7961,7 +8003,10 @@ function formatPretty(report) {
   }
   const counts = severityCounts(report);
   const total = totalFindings(report);
-  if (total === 0) {
+  if (report.errors.length) {
+    lines.push(colors.red(`ghostchars: scan incomplete (${report.errors.length} input/repair error(s)); ${total} finding(s) in ${report.files.length} scanned file(s).`));
+    for (const error of report.errors) lines.push(`  ${diagnosticText(error.path)}: ${diagnosticText(error.reason)}`);
+  } else if (total === 0) {
     lines.push(colors.green(`ghostchars: no findings in ${report.files.length} file(s) (${msToStr(report.durationMs)}).`));
   } else {
     lines.push(colors.bold(`ghostchars: ${counts.error} error(s), ${counts.warning} warning(s), ${counts.info} info in ${report.files.length} file(s) scanned (${msToStr(report.durationMs)}).`));
@@ -8007,7 +8052,7 @@ function formatSarif(report) {
       locations: [
         {
           physicalLocation: {
-            artifactLocation: { uri: file.path },
+            artifactLocation: { uri: file.path.split("/").map(encodeURIComponent).join("/") },
             region: {
               startLine: f.start.line,
               startColumn: f.start.column,
@@ -8020,7 +8065,7 @@ function formatSarif(report) {
     }))
   );
   const sarif = {
-    $schema: "https://raw.githubusercontent.com/oasis-tcs/sarif-spec/master/Schemata/sarif-schema-2.1.0.json",
+    $schema: "https://docs.oasis-open.org/sarif/sarif/v2.1.0/errata01/os/schemas/sarif-schema-2.1.0.json",
     version: "2.1.0",
     runs: [
       {
@@ -8032,7 +8077,15 @@ function formatSarif(report) {
             rules
           }
         },
-        results
+        results,
+        invocations: [{
+          executionSuccessful: report.errors.length === 0,
+          toolExecutionNotifications: report.errors.map((error) => ({
+            level: "error",
+            message: { text: `${error.path}: ${error.reason}` }
+          }))
+        }],
+        properties: { skipped: report.skipped }
       }
     ]
   };
@@ -8075,7 +8128,10 @@ function formatSummary(report) {
   }
   const counts = severityCounts(report);
   const total = totalFindings(report);
-  lines.push(total === 0 ? colors.green(`ghostchars: no findings in ${report.files.length} file(s).`) : colors.bold(`ghostchars: ${counts.error} error(s), ${counts.warning} warning(s), ${counts.info} info in ${report.files.length} file(s) scanned.`));
+  if (report.errors.length) {
+    lines.push(colors.red(`ghostchars: scan incomplete (${report.errors.length} input/repair error(s)); ${total} finding(s) in ${report.files.length} scanned file(s).`));
+    for (const error of report.errors) lines.push(`  ${diagnosticText(error.path)}: ${diagnosticText(error.reason)}`);
+  } else lines.push(total === 0 ? colors.green(`ghostchars: no findings in ${report.files.length} file(s).`) : colors.bold(`ghostchars: ${counts.error} error(s), ${counts.warning} warning(s), ${counts.info} info in ${report.files.length} file(s) scanned.`));
   if (report.skipped.length) lines.push(colors.dim(`skipped ${report.skipped.length} file(s): ${report.skipped.slice(0, 5).map((skip) => diagnosticText(`${skip.path} (${skip.reason})`)).join(", ")}${report.skipped.length > 5 ? ", \u2026" : ""}`));
   return lines.join("\n");
 }
@@ -8214,24 +8270,21 @@ function main(argv) {
     console.error(colors.red(diagnosticText(err.message)));
     return 2;
   }
-  const missing = args.paths.filter((path) => !existsSync2(resolve2(cwd, path)));
-  if (missing.length > 0) {
-    console.error(colors.red(diagnosticText(`ghostchars: no such file or directory: ${missing.join(", ")}`)));
-    return 2;
-  }
   const start = performance.now();
-  const { files, skipped } = discoverFiles(args.paths, cwd);
-  const report = { files: [], skipped, durationMs: 0 };
+  const { files, skipped, errors } = discoverFiles(args.paths, cwd);
+  const report = { files: [], skipped, errors, durationMs: 0 };
   let hadFixes = false;
-  let runtimeError = false;
+  const repairs = [];
   for (const file of files) {
     let source;
     let encoding;
+    let original;
     try {
-      ({ text: source, encoding } = decodeFile(readFileSync4(file.absPath)));
+      if (throughSymlink(file.absPath)) throw new Error("path became a symbolic link after discovery");
+      original = readFileSync4(file.absPath);
+      ({ text: source, encoding } = decodeFile(original));
     } catch (err) {
-      report.skipped.push({ path: file.path, reason: `read error: ${err.message}` });
-      runtimeError = true;
+      report.errors.push({ path: file.path, reason: `read error: ${err.message}` });
       continue;
     }
     const options = scanOptionsForFile(config, file.path);
@@ -8245,13 +8298,21 @@ function main(argv) {
           const preview = formatDryRun(outcome, source);
           if (preview) console.log(preview + "\n");
         } else {
-          try {
-            writeFileSync(file.absPath, encodeFile(outcome.newText, encoding));
-          } catch (err) {
-            console.error(colors.red(diagnosticText(`Could not fix ${file.path}: ${err.message}`)));
-            runtimeError = true;
-          }
+          repairs.push({ ...file, original, replacement: encodeFile(outcome.newText, encoding) });
         }
+      }
+    }
+  }
+  if (repairs.length > 0 && report.errors.length > 0) {
+    console.error("ghostchars: scan incomplete; no files were repaired.");
+  } else {
+    for (const repair of repairs) {
+      try {
+        if (throughSymlink(repair.absPath)) throw new Error("path became a symbolic link after scanning");
+        if (!readFileSync4(repair.absPath).equals(repair.original)) throw new Error("file changed after scanning; scan it again before repairing");
+        writeFileSync(repair.absPath, repair.replacement);
+      } catch (err) {
+        report.errors.push({ path: repair.path, reason: `could not repair file: ${err.message}` });
       }
     }
   }
@@ -8260,14 +8321,18 @@ function main(argv) {
     const output = args.format === "json" ? formatJson(report) : args.format === "sarif" ? formatSarif(report) : args.format === "github" ? formatGithub(report) : args.format === "summary" ? formatSummary(report) : formatPretty(report);
     console.log(output);
   } else if (!hadFixes && !args.quiet) {
-    if (runtimeError) console.log("ghostchars: some files could not be read; no fix preview is available for them.");
+    if (report.errors.length) console.log("ghostchars: scan incomplete; no fix preview is available for failed inputs.");
     else if (report.files.some((file) => file.findings.length > 0)) {
       console.log("ghostchars: no automatic removals under the current policy. Review the remaining findings.\n\n" + formatSummary(report));
     } else console.log(colors.green("ghostchars: nothing to fix."));
   }
-  if (args.fix && args.dryRun) for (const skip of report.skipped) console.error(diagnosticText(`skipped ${skip.path}: ${skip.reason}`));
+  if (args.fix && args.dryRun) {
+    if (report.errors.length) console.error("ghostchars: preview incomplete; failed inputs have no repair plan.");
+    for (const skip of report.skipped) console.error(diagnosticText(`skipped ${skip.path}: ${skip.reason}`));
+    for (const error of report.errors) console.error(diagnosticText(`error ${error.path}: ${error.reason}`));
+  }
   const counts = severityCounts(report);
-  if (runtimeError) return 2;
+  if (report.errors.length) return 2;
   if (counts.error > 0) return 1;
   return 0;
 }
@@ -8275,7 +8340,7 @@ function invokedDirectly() {
   const entry = process.argv[1];
   if (!entry) return false;
   try {
-    return realpathSync(entry) === realpathSync(fileURLToPath(import.meta.url));
+    return realpathSync2(entry) === realpathSync2(fileURLToPath(import.meta.url));
   } catch {
     return false;
   }

@@ -9,6 +9,8 @@ export interface FileReport {
 export interface ScanReport {
   files: FileReport[];
   skipped: Array<{ path: string; reason: string }>;
+  /** Failed inputs/operations, separate from deliberate policy exclusions. */
+  errors: Array<{ path: string; reason: string }>;
   durationMs: number;
 }
 

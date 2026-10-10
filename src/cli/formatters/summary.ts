@@ -55,7 +55,10 @@ export function formatSummary(report: ScanReport): string {
   }
   const counts = severityCounts(report);
   const total = totalFindings(report);
-  lines.push(total === 0 ? colors.green(`ghostchars: no findings in ${report.files.length} file(s).`) : colors.bold(`ghostchars: ${counts.error} error(s), ${counts.warning} warning(s), ${counts.info} info in ${report.files.length} file(s) scanned.`));
+  if (report.errors.length) {
+    lines.push(colors.red(`ghostchars: scan incomplete (${report.errors.length} input/repair error(s)); ${total} finding(s) in ${report.files.length} scanned file(s).`));
+    for (const error of report.errors) lines.push(`  ${diagnosticText(error.path)}: ${diagnosticText(error.reason)}`);
+  } else lines.push(total === 0 ? colors.green(`ghostchars: no findings in ${report.files.length} file(s).`) : colors.bold(`ghostchars: ${counts.error} error(s), ${counts.warning} warning(s), ${counts.info} info in ${report.files.length} file(s) scanned.`));
   if (report.skipped.length) lines.push(colors.dim(`skipped ${report.skipped.length} file(s): ${report.skipped.slice(0, 5).map((skip) => diagnosticText(`${skip.path} (${skip.reason})`)).join(', ')}${report.skipped.length > 5 ? ', …' : ''}`));
   return lines.join('\n');
 }

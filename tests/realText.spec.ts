@@ -141,8 +141,10 @@ describe('the command line', () => {
   it('refuses a path that does not exist instead of reporting "no findings"', () => {
     const run = spawnSync(process.execPath, [cli, 'no-such-directory', '--format', 'json'], { encoding: 'utf8' });
     expect(run.status).toBe(2);
-    expect(run.stderr).toContain('no such file or directory: no-such-directory');
-    expect(run.stdout).toBe('');
+    const report = JSON.parse(run.stdout);
+    expect(report.summary.complete).toBe(false);
+    expect(report.errors[0].path).toBe('no-such-directory');
+    expect(report.errors[0].reason).toContain('ENOENT');
     // A real path beside it does not rescue the command.
     const mixed = spawnSync(process.execPath, [cli, 'src', 'scr'], { encoding: 'utf8' });
     expect(mixed.status).toBe(2);

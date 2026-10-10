@@ -86,7 +86,7 @@ describe('configured file repairs', () => {
     writeFileSync('broken.txt', bytes);
     const result = captured(['broken.txt', '--fix', '--format', 'json']);
     expect(result.code).toBe(2);
-    expect(JSON.parse(result.out).skipped[0].reason).toContain('Invalid utf-');
+    expect(JSON.parse(result.out).errors[0].reason).toContain('Invalid utf-');
     expect(readFileSync('broken.txt')).toEqual(bytes);
     const preview = captured(['broken.txt', '--fix', '--dry-run']);
     expect(preview.code).toBe(2);
@@ -139,11 +139,12 @@ describe('diagnostic boundaries', () => {
     expect(result.out.split('\n').filter((line) => line === '::error::forged.txt')).toEqual([]);
   });
 
-  it('escapes missing-path errors and retains skipped-file information in summary reports', () => {
-    expect(captured(['missing\u001B[2J']).err).toContain('missing\\u{001B}[2J');
+  it('escapes missing-path errors and retains input failures in summary reports', () => {
+    expect(captured(['missing\u001B[2J']).out).toContain('missing\\u{001B}[2J');
     writeFileSync('bad.txt', Buffer.from([0xff]));
     const result = captured(['bad.txt', '--format', 'summary']);
     expect(result.code).toBe(2);
-    expect(result.out).toContain('skipped 1 file(s): bad.txt (read error: Invalid utf-8');
+    expect(result.out).toContain('scan incomplete');
+    expect(result.out).toContain('bad.txt: read error: Invalid utf-8');
   });
 });
