@@ -1,0 +1,11 @@
+$ node <built-cli> denied.txt --format summary --no-config
+ghostchars: scan incomplete (1 input/repair error(s)); 0 finding(s) in 0 scanned file(s).
+  denied.txt: could not read file: EACCES: permission denied, open '<fixture>/denied.txt'
+exit: 2
+
+$ node <built-cli> . --fix --format summary --no-config
+ghostchars: no findings in 0 file(s).
+skipped 1 file(s): link.txt (symbolic link (not followed))
+exit: 0
+
+Filesystem check: the outside symlink target is byte-for-byte unchanged.

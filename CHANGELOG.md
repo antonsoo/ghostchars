@@ -14,6 +14,17 @@ All notable changes to this project are documented in this file.
 
 ### Fixed
 
+- Unreadable files and directories, failed Git enumeration, missing requested
+  paths and invalid encodings now produce an incomplete scan with exit 2.
+  They remain visible in JSON, SARIF, GitHub annotations and human reports.
+  Binary and size exclusions retain their separate skipped-file records.
+- Repository scans do not follow symbolic links, including tracked directory
+  paths replaced by links. Explicit link inputs are refused with instructions
+  to choose the real path. This prevents `--fix .` from repairing outside link
+  targets. Discovery/read failures block all planned repairs; detected edits
+  since the scan are not overwritten.
+- SARIF uses the maintained OASIS schema URL, reports execution failures in
+  invocation notifications, and encodes filenames as URI paths.
 - Configured repairs use the scan's allowlist, disabled rules and per-file overrides on every sanitizer pass. Previously an unrelated fix triggered default-policy removal of characters the user had explicitly retained. Allowlisted scalars are also protected inside compound findings.
 - `--fix --dry-run` renders the proposed text instead of replaying overlapping or shifted diagnostic spans. Bidi overlap, retained variation-selector carriers and later sanitizer passes now preview the same output that is written.
 - A dry run with unfixable or protected findings and no permitted removal shows those findings for review instead of a green "nothing to fix" message.

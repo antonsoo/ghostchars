@@ -1,0 +1,85 @@
+{
+  "sourceCommit": "2d59e9eebb5e2f92dd0b7e1c42bb5af911cf2243",
+  "baseline": "dd14d05",
+  "platform": "WSL2 Linux, non-root account",
+  "scope": "Source and installed local tarball verification; no npm release or hosted-site deployment.",
+  "cleanArchive": true,
+  "node": "v26.7.0",
+  "checks": [
+    {
+      "command": "npm ci",
+      "result": "success; audit reported 0 vulnerabilities"
+    },
+    {
+      "command": "npm run typecheck && npm run lint && npm run build",
+      "result": "success"
+    },
+    {
+      "command": "npm test -- --maxWorkers=2",
+      "passed": 201
+    },
+    {
+      "command": "LANG=de_DE.UTF-8 LC_ALL=de_DE.UTF-8 npm test -- --maxWorkers=2",
+      "passed": 201
+    },
+    {
+      "command": "compare clean dist/cli.js with committed dist/cli.js",
+      "result": "byte-identical"
+    },
+    {
+      "command": "node dist/cli.js src action.yml package.json tsconfig.json tsconfig.build.json eslint.config.js esbuild.cli.mjs .pre-commit-hooks.yaml README.md CHANGELOG.md CONTRIBUTING.md SECURITY.md --format summary --no-config",
+      "result": "51 files, no findings"
+    },
+    {
+      "directory": "web",
+      "command": "npm ci && npm run typecheck && npm run lint && npm run build",
+      "result": "success; audit reported 0 vulnerabilities"
+    },
+    {
+      "directory": "web",
+      "command": "npm run test:browser",
+      "passed": 30,
+      "browsers": [
+        "Chromium",
+        "Firefox"
+      ]
+    },
+    {
+      "command": "npm run bench",
+      "result": "completed synthetic ASCII/non-ASCII and installed node_modules scan; smoke check, not a before/after performance comparison"
+    },
+    {
+      "command": "npm pack --json",
+      "result": "installed tarball replayed on Node 26.7.0 and Node 20.0.0; 24/24 case contracts on each"
+    }
+  ],
+  "artifacts": {
+    "cliSha256": "61bda3a2d9d541395ae988f08307c92677d8c11c874a59df3e15cad30ce04682",
+    "tarballName": "antonsoloviev-ghostchars-0.1.5.tgz",
+    "tarballSha256": "4426bbb4240a2db02ad78d34dc9f9ee2da8f5a9d87301de6a7618c5a4229ae0e"
+  },
+  "sarif": {
+    "schema": "https://docs.oasis-open.org/sarif/sarif/v2.1.0/errata01/os/schemas/sarif-schema-2.1.0.json",
+    "schemaSha256": "c3b4bb2d6093897483348925aaa73af03b3e3f4bd4ca38cef26dcb4212a2682e",
+    "validator": "Python jsonschema Draft4Validator with FormatChecker",
+    "validatedReports": [
+      "after: unreadable-file-sarif",
+      "after: sarif-finding-control",
+      "installed: unreadable-file-sarif",
+      "installed: sarif-finding-control",
+      "installed-node20: unreadable-file-sarif",
+      "installed-node20: sarif-finding-control"
+    ]
+  },
+  "repairCompatibility": {
+    "passed": 39,
+    "total": 39,
+    "exactBytes": 39,
+    "translationCatalogs": 13
+  },
+  "limitations": [
+    "Permission and link behavior measured on Linux, not Windows.",
+    "The check before each write is not an atomic or adversarial filesystem guarantee. Earlier writes may remain after a later write failure.",
+    "Hard links retain normal in-place write semantics."
+  ]
+}

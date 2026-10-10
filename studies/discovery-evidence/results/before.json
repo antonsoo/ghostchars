@@ -1,0 +1,1670 @@
+{
+  "label": "dd14d05",
+  "cliSha256": "c4561831333746a92584d69e943fa24b5e3b26e23f3cec16796706edea8841fc",
+  "node": "v26.7.0",
+  "platform": "Linux",
+  "count": 24,
+  "disagreements": 18,
+  "results": [
+    {
+      "case": "unreadable-file-pretty",
+      "arguments": [
+        "denied.txt",
+        "--format",
+        "pretty"
+      ],
+      "expectedExit": 2,
+      "exit": 0,
+      "checks": {
+        "exit": false,
+        "fileBytes": true,
+        "incompleteReport": false
+      },
+      "agrees": false,
+      "originalSha256": {
+        "denied.txt": "ce0d133894458f1d5bf3b56a46ac63e566bfe39464c4dfb0193d9dd0e0c7be3a"
+      },
+      "expectedSha256": {
+        "denied.txt": "ce0d133894458f1d5bf3b56a46ac63e566bfe39464c4dfb0193d9dd0e0c7be3a"
+      },
+      "actualSha256": {
+        "denied.txt": "ce0d133894458f1d5bf3b56a46ac63e566bfe39464c4dfb0193d9dd0e0c7be3a"
+      },
+      "report": null,
+      "stdout": "ghostchars: no findings in 0 file(s) (0ms).\nskipped 1 file(s): denied.txt (binary)\n",
+      "stderr": ""
+    },
+    {
+      "case": "unreadable-file-summary",
+      "arguments": [
+        "denied.txt",
+        "--format",
+        "summary"
+      ],
+      "expectedExit": 2,
+      "exit": 0,
+      "checks": {
+        "exit": false,
+        "fileBytes": true,
+        "incompleteReport": false
+      },
+      "agrees": false,
+      "originalSha256": {
+        "denied.txt": "ce0d133894458f1d5bf3b56a46ac63e566bfe39464c4dfb0193d9dd0e0c7be3a"
+      },
+      "expectedSha256": {
+        "denied.txt": "ce0d133894458f1d5bf3b56a46ac63e566bfe39464c4dfb0193d9dd0e0c7be3a"
+      },
+      "actualSha256": {
+        "denied.txt": "ce0d133894458f1d5bf3b56a46ac63e566bfe39464c4dfb0193d9dd0e0c7be3a"
+      },
+      "report": null,
+      "stdout": "ghostchars: no findings in 0 file(s).\nskipped 1 file(s): denied.txt (binary)\n",
+      "stderr": ""
+    },
+    {
+      "case": "unreadable-file-json",
+      "arguments": [
+        "denied.txt",
+        "--format",
+        "json"
+      ],
+      "expectedExit": 2,
+      "exit": 0,
+      "checks": {
+        "exit": false,
+        "fileBytes": true,
+        "incompleteReport": false
+      },
+      "agrees": false,
+      "originalSha256": {
+        "denied.txt": "ce0d133894458f1d5bf3b56a46ac63e566bfe39464c4dfb0193d9dd0e0c7be3a"
+      },
+      "expectedSha256": {
+        "denied.txt": "ce0d133894458f1d5bf3b56a46ac63e566bfe39464c4dfb0193d9dd0e0c7be3a"
+      },
+      "actualSha256": {
+        "denied.txt": "ce0d133894458f1d5bf3b56a46ac63e566bfe39464c4dfb0193d9dd0e0c7be3a"
+      },
+      "report": {
+        "ghostchars": true,
+        "summary": {
+          "error": 0,
+          "warning": 0,
+          "info": 0,
+          "total": 0,
+          "files": 0
+        },
+        "skipped": [
+          {
+            "path": "denied.txt",
+            "reason": "binary"
+          }
+        ],
+        "results": []
+      },
+      "stdout": null,
+      "stderr": ""
+    },
+    {
+      "case": "unreadable-file-sarif",
+      "arguments": [
+        "denied.txt",
+        "--format",
+        "sarif"
+      ],
+      "expectedExit": 2,
+      "exit": 0,
+      "checks": {
+        "exit": false,
+        "fileBytes": true,
+        "incompleteReport": false
+      },
+      "agrees": false,
+      "originalSha256": {
+        "denied.txt": "ce0d133894458f1d5bf3b56a46ac63e566bfe39464c4dfb0193d9dd0e0c7be3a"
+      },
+      "expectedSha256": {
+        "denied.txt": "ce0d133894458f1d5bf3b56a46ac63e566bfe39464c4dfb0193d9dd0e0c7be3a"
+      },
+      "actualSha256": {
+        "denied.txt": "ce0d133894458f1d5bf3b56a46ac63e566bfe39464c4dfb0193d9dd0e0c7be3a"
+      },
+      "report": {
+        "$schema": "https://raw.githubusercontent.com/oasis-tcs/sarif-spec/master/Schemata/sarif-schema-2.1.0.json",
+        "version": "2.1.0",
+        "runs": [
+          {
+            "tool": {
+              "driver": {
+                "name": "ghostchars",
+                "informationUri": "https://github.com/antonsoo/ghostchars",
+                "version": "0.1.5",
+                "rules": [
+                  {
+                    "id": "bidi-control",
+                    "shortDescription": {
+                      "text": "Explicit bidirectional formatting character (Trojan Source, CVE-2021-42574)."
+                    },
+                    "helpUri": "https://github.com/antonsoo/ghostchars#detections"
+                  },
+                  {
+                    "id": "bidi-mark",
+                    "shortDescription": {
+                      "text": "Bidirectional mark character."
+                    },
+                    "helpUri": "https://github.com/antonsoo/ghostchars#detections"
+                  },
+                  {
+                    "id": "bidi-unbalanced",
+                    "shortDescription": {
+                      "text": "Unbalanced or unterminated bidirectional embedding/isolate."
+                    },
+                    "helpUri": "https://github.com/antonsoo/ghostchars#detections"
+                  },
+                  {
+                    "id": "tag-smuggling",
+                    "shortDescription": {
+                      "text": "Unicode tag characters outside a valid emoji tag sequence (ASCII smuggling)."
+                    },
+                    "helpUri": "https://github.com/antonsoo/ghostchars#detections"
+                  },
+                  {
+                    "id": "variation-selector-smuggling",
+                    "shortDescription": {
+                      "text": "Variation selector run decodes to a hidden payload."
+                    },
+                    "helpUri": "https://github.com/antonsoo/ghostchars#detections"
+                  },
+                  {
+                    "id": "variation-selector-stray",
+                    "shortDescription": {
+                      "text": "Variation selector with no valid base character."
+                    },
+                    "helpUri": "https://github.com/antonsoo/ghostchars#detections"
+                  },
+                  {
+                    "id": "invisible",
+                    "shortDescription": {
+                      "text": "Invisible / default-ignorable character."
+                    },
+                    "helpUri": "https://github.com/antonsoo/ghostchars#detections"
+                  },
+                  {
+                    "id": "confusable",
+                    "shortDescription": {
+                      "text": "Visually confusable identifier (mixed script or skeleton collision)."
+                    },
+                    "helpUri": "https://github.com/antonsoo/ghostchars#detections"
+                  },
+                  {
+                    "id": "styled-text",
+                    "shortDescription": {
+                      "text": "Letters in a styled Unicode alphabet (mathematical, fullwidth, circled, squared) that read as plain text."
+                    },
+                    "helpUri": "https://github.com/antonsoo/ghostchars#detections"
+                  },
+                  {
+                    "id": "unusual-whitespace",
+                    "shortDescription": {
+                      "text": "Unusual whitespace character."
+                    },
+                    "helpUri": "https://github.com/antonsoo/ghostchars#detections"
+                  },
+                  {
+                    "id": "control-character",
+                    "shortDescription": {
+                      "text": "Unexpected control character."
+                    },
+                    "helpUri": "https://github.com/antonsoo/ghostchars#detections"
+                  }
+                ]
+              }
+            },
+            "results": []
+          }
+        ]
+      },
+      "stdout": null,
+      "stderr": ""
+    },
+    {
+      "case": "unreadable-file-github",
+      "arguments": [
+        "denied.txt",
+        "--format",
+        "github"
+      ],
+      "expectedExit": 2,
+      "exit": 0,
+      "checks": {
+        "exit": false,
+        "fileBytes": true,
+        "incompleteReport": false
+      },
+      "agrees": false,
+      "originalSha256": {
+        "denied.txt": "ce0d133894458f1d5bf3b56a46ac63e566bfe39464c4dfb0193d9dd0e0c7be3a"
+      },
+      "expectedSha256": {
+        "denied.txt": "ce0d133894458f1d5bf3b56a46ac63e566bfe39464c4dfb0193d9dd0e0c7be3a"
+      },
+      "actualSha256": {
+        "denied.txt": "ce0d133894458f1d5bf3b56a46ac63e566bfe39464c4dfb0193d9dd0e0c7be3a"
+      },
+      "report": null,
+      "stdout": "\n",
+      "stderr": ""
+    },
+    {
+      "case": "unreadable-directory",
+      "arguments": [
+        ".",
+        "--format",
+        "json"
+      ],
+      "expectedExit": 2,
+      "exit": 0,
+      "checks": {
+        "exit": false,
+        "fileBytes": true,
+        "incompleteReport": false
+      },
+      "agrees": false,
+      "originalSha256": {
+        "private/hidden.txt": "ce0d133894458f1d5bf3b56a46ac63e566bfe39464c4dfb0193d9dd0e0c7be3a"
+      },
+      "expectedSha256": {
+        "private/hidden.txt": "ce0d133894458f1d5bf3b56a46ac63e566bfe39464c4dfb0193d9dd0e0c7be3a"
+      },
+      "actualSha256": {
+        "private/hidden.txt": "ce0d133894458f1d5bf3b56a46ac63e566bfe39464c4dfb0193d9dd0e0c7be3a"
+      },
+      "report": {
+        "ghostchars": true,
+        "summary": {
+          "error": 0,
+          "warning": 0,
+          "info": 0,
+          "total": 0,
+          "files": 0
+        },
+        "skipped": [],
+        "results": []
+      },
+      "stdout": null,
+      "stderr": ""
+    },
+    {
+      "case": "unreadable-ignore-policy",
+      "arguments": [
+        ".",
+        "--format",
+        "json",
+        "--fix"
+      ],
+      "expectedExit": 2,
+      "exit": 1,
+      "checks": {
+        "exit": false,
+        "fileBytes": false,
+        "incompleteReport": false
+      },
+      "agrees": false,
+      "originalSha256": {
+        "good.txt": "ce0d133894458f1d5bf3b56a46ac63e566bfe39464c4dfb0193d9dd0e0c7be3a"
+      },
+      "expectedSha256": {
+        "good.txt": "ce0d133894458f1d5bf3b56a46ac63e566bfe39464c4dfb0193d9dd0e0c7be3a"
+      },
+      "actualSha256": {
+        "good.txt": "fb8e20fc2e4c3f248c60c39bd652f3c1347298bb977b8b4d5903b85055620603"
+      },
+      "report": {
+        "ghostchars": true,
+        "summary": {
+          "error": 2,
+          "warning": 0,
+          "info": 0,
+          "total": 2,
+          "files": 1
+        },
+        "skipped": [
+          {
+            "path": ".gitignore",
+            "reason": "binary"
+          }
+        ],
+        "results": [
+          {
+            "path": "good.txt",
+            "findings": [
+              {
+                "rule": "bidi-control",
+                "severity": "error",
+                "start": {
+                  "line": 1,
+                  "column": 2,
+                  "offset": 1
+                },
+                "end": {
+                  "line": 1,
+                  "column": 3,
+                  "offset": 2
+                },
+                "codePoints": [
+                  "U+202E"
+                ],
+                "names": [
+                  "RIGHT-TO-LEFT OVERRIDE"
+                ],
+                "message": "RIGHT-TO-LEFT OVERRIDE changes the visual order of surrounding text without changing the underlying code -- the mechanism behind Trojan Source (CVE-2021-42574).",
+                "suggestion": "Remove this character unless the file is deliberately handling bidirectional text, in which case keep embeddings short, always balanced, and never spanning a comment/string boundary.",
+                "fixable": true
+              },
+              {
+                "rule": "bidi-control",
+                "severity": "error",
+                "start": {
+                  "line": 1,
+                  "column": 4,
+                  "offset": 3
+                },
+                "end": {
+                  "line": 1,
+                  "column": 5,
+                  "offset": 4
+                },
+                "codePoints": [
+                  "U+202C"
+                ],
+                "names": [
+                  "POP DIRECTIONAL FORMATTING"
+                ],
+                "message": "POP DIRECTIONAL FORMATTING changes the visual order of surrounding text without changing the underlying code -- the mechanism behind Trojan Source (CVE-2021-42574).",
+                "suggestion": "Remove this character unless the file is deliberately handling bidirectional text, in which case keep embeddings short, always balanced, and never spanning a comment/string boundary.",
+                "fixable": true
+              }
+            ]
+          }
+        ]
+      },
+      "stdout": null,
+      "stderr": ""
+    },
+    {
+      "case": "late-invalid-encoding",
+      "arguments": [
+        "a-good.txt",
+        "z-bad.txt",
+        "--fix",
+        "--format",
+        "json"
+      ],
+      "expectedExit": 2,
+      "exit": 2,
+      "checks": {
+        "exit": true,
+        "fileBytes": false,
+        "incompleteReport": false
+      },
+      "agrees": false,
+      "originalSha256": {
+        "a-good.txt": "ce0d133894458f1d5bf3b56a46ac63e566bfe39464c4dfb0193d9dd0e0c7be3a"
+      },
+      "expectedSha256": {
+        "a-good.txt": "ce0d133894458f1d5bf3b56a46ac63e566bfe39464c4dfb0193d9dd0e0c7be3a"
+      },
+      "actualSha256": {
+        "a-good.txt": "fb8e20fc2e4c3f248c60c39bd652f3c1347298bb977b8b4d5903b85055620603"
+      },
+      "report": {
+        "ghostchars": true,
+        "summary": {
+          "error": 2,
+          "warning": 0,
+          "info": 0,
+          "total": 2,
+          "files": 1
+        },
+        "skipped": [
+          {
+            "path": "z-bad.txt",
+            "reason": "read error: Invalid utf-8 byte sequence; decode the file correctly before scanning or fixing it."
+          }
+        ],
+        "results": [
+          {
+            "path": "a-good.txt",
+            "findings": [
+              {
+                "rule": "bidi-control",
+                "severity": "error",
+                "start": {
+                  "line": 1,
+                  "column": 2,
+                  "offset": 1
+                },
+                "end": {
+                  "line": 1,
+                  "column": 3,
+                  "offset": 2
+                },
+                "codePoints": [
+                  "U+202E"
+                ],
+                "names": [
+                  "RIGHT-TO-LEFT OVERRIDE"
+                ],
+                "message": "RIGHT-TO-LEFT OVERRIDE changes the visual order of surrounding text without changing the underlying code -- the mechanism behind Trojan Source (CVE-2021-42574).",
+                "suggestion": "Remove this character unless the file is deliberately handling bidirectional text, in which case keep embeddings short, always balanced, and never spanning a comment/string boundary.",
+                "fixable": true
+              },
+              {
+                "rule": "bidi-control",
+                "severity": "error",
+                "start": {
+                  "line": 1,
+                  "column": 4,
+                  "offset": 3
+                },
+                "end": {
+                  "line": 1,
+                  "column": 5,
+                  "offset": 4
+                },
+                "codePoints": [
+                  "U+202C"
+                ],
+                "names": [
+                  "POP DIRECTIONAL FORMATTING"
+                ],
+                "message": "POP DIRECTIONAL FORMATTING changes the visual order of surrounding text without changing the underlying code -- the mechanism behind Trojan Source (CVE-2021-42574).",
+                "suggestion": "Remove this character unless the file is deliberately handling bidirectional text, in which case keep embeddings short, always balanced, and never spanning a comment/string boundary.",
+                "fixable": true
+              }
+            ]
+          }
+        ]
+      },
+      "stdout": null,
+      "stderr": ""
+    },
+    {
+      "case": "missing-explicit-target",
+      "arguments": [
+        "a-good.txt",
+        "z-bad.txt",
+        "--fix",
+        "--format",
+        "json"
+      ],
+      "expectedExit": 2,
+      "exit": 2,
+      "checks": {
+        "exit": true,
+        "fileBytes": true,
+        "incompleteReport": false
+      },
+      "agrees": false,
+      "originalSha256": {
+        "a-good.txt": "ce0d133894458f1d5bf3b56a46ac63e566bfe39464c4dfb0193d9dd0e0c7be3a"
+      },
+      "expectedSha256": {
+        "a-good.txt": "ce0d133894458f1d5bf3b56a46ac63e566bfe39464c4dfb0193d9dd0e0c7be3a"
+      },
+      "actualSha256": {
+        "a-good.txt": "ce0d133894458f1d5bf3b56a46ac63e566bfe39464c4dfb0193d9dd0e0c7be3a"
+      },
+      "report": null,
+      "stdout": "",
+      "stderr": "ghostchars: no such file or directory: z-bad.txt\n"
+    },
+    {
+      "case": "tracked-symlink",
+      "arguments": [
+        ".",
+        "--fix",
+        "--format",
+        "json"
+      ],
+      "expectedExit": 0,
+      "exit": 1,
+      "checks": {
+        "exit": false,
+        "fileBytes": false,
+        "linkExclusionRecorded": false
+      },
+      "agrees": false,
+      "originalSha256": {
+        "outside.txt": "ce0d133894458f1d5bf3b56a46ac63e566bfe39464c4dfb0193d9dd0e0c7be3a",
+        "outside/file.txt": "ce0d133894458f1d5bf3b56a46ac63e566bfe39464c4dfb0193d9dd0e0c7be3a"
+      },
+      "expectedSha256": {
+        "outside.txt": "ce0d133894458f1d5bf3b56a46ac63e566bfe39464c4dfb0193d9dd0e0c7be3a",
+        "outside/file.txt": "ce0d133894458f1d5bf3b56a46ac63e566bfe39464c4dfb0193d9dd0e0c7be3a"
+      },
+      "actualSha256": {
+        "outside.txt": "fb8e20fc2e4c3f248c60c39bd652f3c1347298bb977b8b4d5903b85055620603",
+        "outside/file.txt": "ce0d133894458f1d5bf3b56a46ac63e566bfe39464c4dfb0193d9dd0e0c7be3a"
+      },
+      "report": {
+        "ghostchars": true,
+        "summary": {
+          "error": 2,
+          "warning": 0,
+          "info": 0,
+          "total": 2,
+          "files": 1
+        },
+        "skipped": [],
+        "results": [
+          {
+            "path": "link.txt",
+            "findings": [
+              {
+                "rule": "bidi-control",
+                "severity": "error",
+                "start": {
+                  "line": 1,
+                  "column": 2,
+                  "offset": 1
+                },
+                "end": {
+                  "line": 1,
+                  "column": 3,
+                  "offset": 2
+                },
+                "codePoints": [
+                  "U+202E"
+                ],
+                "names": [
+                  "RIGHT-TO-LEFT OVERRIDE"
+                ],
+                "message": "RIGHT-TO-LEFT OVERRIDE changes the visual order of surrounding text without changing the underlying code -- the mechanism behind Trojan Source (CVE-2021-42574).",
+                "suggestion": "Remove this character unless the file is deliberately handling bidirectional text, in which case keep embeddings short, always balanced, and never spanning a comment/string boundary.",
+                "fixable": true
+              },
+              {
+                "rule": "bidi-control",
+                "severity": "error",
+                "start": {
+                  "line": 1,
+                  "column": 4,
+                  "offset": 3
+                },
+                "end": {
+                  "line": 1,
+                  "column": 5,
+                  "offset": 4
+                },
+                "codePoints": [
+                  "U+202C"
+                ],
+                "names": [
+                  "POP DIRECTIONAL FORMATTING"
+                ],
+                "message": "POP DIRECTIONAL FORMATTING changes the visual order of surrounding text without changing the underlying code -- the mechanism behind Trojan Source (CVE-2021-42574).",
+                "suggestion": "Remove this character unless the file is deliberately handling bidirectional text, in which case keep embeddings short, always balanced, and never spanning a comment/string boundary.",
+                "fixable": true
+              }
+            ]
+          }
+        ]
+      },
+      "stdout": null,
+      "stderr": ""
+    },
+    {
+      "case": "walk-symlink",
+      "arguments": [
+        ".",
+        "--fix",
+        "--format",
+        "json"
+      ],
+      "expectedExit": 0,
+      "exit": 0,
+      "checks": {
+        "exit": true,
+        "fileBytes": true,
+        "linkExclusionRecorded": false
+      },
+      "agrees": false,
+      "originalSha256": {
+        "outside.txt": "ce0d133894458f1d5bf3b56a46ac63e566bfe39464c4dfb0193d9dd0e0c7be3a",
+        "outside/file.txt": "ce0d133894458f1d5bf3b56a46ac63e566bfe39464c4dfb0193d9dd0e0c7be3a"
+      },
+      "expectedSha256": {
+        "outside.txt": "ce0d133894458f1d5bf3b56a46ac63e566bfe39464c4dfb0193d9dd0e0c7be3a",
+        "outside/file.txt": "ce0d133894458f1d5bf3b56a46ac63e566bfe39464c4dfb0193d9dd0e0c7be3a"
+      },
+      "actualSha256": {
+        "outside.txt": "ce0d133894458f1d5bf3b56a46ac63e566bfe39464c4dfb0193d9dd0e0c7be3a",
+        "outside/file.txt": "ce0d133894458f1d5bf3b56a46ac63e566bfe39464c4dfb0193d9dd0e0c7be3a"
+      },
+      "report": {
+        "ghostchars": true,
+        "summary": {
+          "error": 0,
+          "warning": 0,
+          "info": 0,
+          "total": 0,
+          "files": 0
+        },
+        "skipped": [],
+        "results": []
+      },
+      "stdout": null,
+      "stderr": ""
+    },
+    {
+      "case": "explicit-symlink",
+      "arguments": [
+        "link.txt",
+        "--fix",
+        "--format",
+        "json"
+      ],
+      "expectedExit": 2,
+      "exit": 1,
+      "checks": {
+        "exit": false,
+        "fileBytes": false,
+        "incompleteReport": false
+      },
+      "agrees": false,
+      "originalSha256": {
+        "outside.txt": "ce0d133894458f1d5bf3b56a46ac63e566bfe39464c4dfb0193d9dd0e0c7be3a",
+        "outside/file.txt": "ce0d133894458f1d5bf3b56a46ac63e566bfe39464c4dfb0193d9dd0e0c7be3a"
+      },
+      "expectedSha256": {
+        "outside.txt": "ce0d133894458f1d5bf3b56a46ac63e566bfe39464c4dfb0193d9dd0e0c7be3a",
+        "outside/file.txt": "ce0d133894458f1d5bf3b56a46ac63e566bfe39464c4dfb0193d9dd0e0c7be3a"
+      },
+      "actualSha256": {
+        "outside.txt": "fb8e20fc2e4c3f248c60c39bd652f3c1347298bb977b8b4d5903b85055620603",
+        "outside/file.txt": "ce0d133894458f1d5bf3b56a46ac63e566bfe39464c4dfb0193d9dd0e0c7be3a"
+      },
+      "report": {
+        "ghostchars": true,
+        "summary": {
+          "error": 2,
+          "warning": 0,
+          "info": 0,
+          "total": 2,
+          "files": 1
+        },
+        "skipped": [],
+        "results": [
+          {
+            "path": "link.txt",
+            "findings": [
+              {
+                "rule": "bidi-control",
+                "severity": "error",
+                "start": {
+                  "line": 1,
+                  "column": 2,
+                  "offset": 1
+                },
+                "end": {
+                  "line": 1,
+                  "column": 3,
+                  "offset": 2
+                },
+                "codePoints": [
+                  "U+202E"
+                ],
+                "names": [
+                  "RIGHT-TO-LEFT OVERRIDE"
+                ],
+                "message": "RIGHT-TO-LEFT OVERRIDE changes the visual order of surrounding text without changing the underlying code -- the mechanism behind Trojan Source (CVE-2021-42574).",
+                "suggestion": "Remove this character unless the file is deliberately handling bidirectional text, in which case keep embeddings short, always balanced, and never spanning a comment/string boundary.",
+                "fixable": true
+              },
+              {
+                "rule": "bidi-control",
+                "severity": "error",
+                "start": {
+                  "line": 1,
+                  "column": 4,
+                  "offset": 3
+                },
+                "end": {
+                  "line": 1,
+                  "column": 5,
+                  "offset": 4
+                },
+                "codePoints": [
+                  "U+202C"
+                ],
+                "names": [
+                  "POP DIRECTIONAL FORMATTING"
+                ],
+                "message": "POP DIRECTIONAL FORMATTING changes the visual order of surrounding text without changing the underlying code -- the mechanism behind Trojan Source (CVE-2021-42574).",
+                "suggestion": "Remove this character unless the file is deliberately handling bidirectional text, in which case keep embeddings short, always balanced, and never spanning a comment/string boundary.",
+                "fixable": true
+              }
+            ]
+          }
+        ]
+      },
+      "stdout": null,
+      "stderr": ""
+    },
+    {
+      "case": "explicit-directory-link",
+      "arguments": [
+        "directory",
+        "--fix",
+        "--format",
+        "json"
+      ],
+      "expectedExit": 2,
+      "exit": 1,
+      "checks": {
+        "exit": false,
+        "fileBytes": false,
+        "incompleteReport": false
+      },
+      "agrees": false,
+      "originalSha256": {
+        "outside.txt": "ce0d133894458f1d5bf3b56a46ac63e566bfe39464c4dfb0193d9dd0e0c7be3a",
+        "outside/file.txt": "ce0d133894458f1d5bf3b56a46ac63e566bfe39464c4dfb0193d9dd0e0c7be3a"
+      },
+      "expectedSha256": {
+        "outside.txt": "ce0d133894458f1d5bf3b56a46ac63e566bfe39464c4dfb0193d9dd0e0c7be3a",
+        "outside/file.txt": "ce0d133894458f1d5bf3b56a46ac63e566bfe39464c4dfb0193d9dd0e0c7be3a"
+      },
+      "actualSha256": {
+        "outside.txt": "ce0d133894458f1d5bf3b56a46ac63e566bfe39464c4dfb0193d9dd0e0c7be3a",
+        "outside/file.txt": "fb8e20fc2e4c3f248c60c39bd652f3c1347298bb977b8b4d5903b85055620603"
+      },
+      "report": {
+        "ghostchars": true,
+        "summary": {
+          "error": 2,
+          "warning": 0,
+          "info": 0,
+          "total": 2,
+          "files": 1
+        },
+        "skipped": [],
+        "results": [
+          {
+            "path": "directory/file.txt",
+            "findings": [
+              {
+                "rule": "bidi-control",
+                "severity": "error",
+                "start": {
+                  "line": 1,
+                  "column": 2,
+                  "offset": 1
+                },
+                "end": {
+                  "line": 1,
+                  "column": 3,
+                  "offset": 2
+                },
+                "codePoints": [
+                  "U+202E"
+                ],
+                "names": [
+                  "RIGHT-TO-LEFT OVERRIDE"
+                ],
+                "message": "RIGHT-TO-LEFT OVERRIDE changes the visual order of surrounding text without changing the underlying code -- the mechanism behind Trojan Source (CVE-2021-42574).",
+                "suggestion": "Remove this character unless the file is deliberately handling bidirectional text, in which case keep embeddings short, always balanced, and never spanning a comment/string boundary.",
+                "fixable": true
+              },
+              {
+                "rule": "bidi-control",
+                "severity": "error",
+                "start": {
+                  "line": 1,
+                  "column": 4,
+                  "offset": 3
+                },
+                "end": {
+                  "line": 1,
+                  "column": 5,
+                  "offset": 4
+                },
+                "codePoints": [
+                  "U+202C"
+                ],
+                "names": [
+                  "POP DIRECTIONAL FORMATTING"
+                ],
+                "message": "POP DIRECTIONAL FORMATTING changes the visual order of surrounding text without changing the underlying code -- the mechanism behind Trojan Source (CVE-2021-42574).",
+                "suggestion": "Remove this character unless the file is deliberately handling bidirectional text, in which case keep embeddings short, always balanced, and never spanning a comment/string boundary.",
+                "fixable": true
+              }
+            ]
+          }
+        ]
+      },
+      "stdout": null,
+      "stderr": ""
+    },
+    {
+      "case": "explicit-link-ancestor",
+      "arguments": [
+        "directory/file.txt",
+        "--fix",
+        "--format",
+        "json"
+      ],
+      "expectedExit": 2,
+      "exit": 1,
+      "checks": {
+        "exit": false,
+        "fileBytes": false,
+        "incompleteReport": false
+      },
+      "agrees": false,
+      "originalSha256": {
+        "outside.txt": "ce0d133894458f1d5bf3b56a46ac63e566bfe39464c4dfb0193d9dd0e0c7be3a",
+        "outside/file.txt": "ce0d133894458f1d5bf3b56a46ac63e566bfe39464c4dfb0193d9dd0e0c7be3a"
+      },
+      "expectedSha256": {
+        "outside.txt": "ce0d133894458f1d5bf3b56a46ac63e566bfe39464c4dfb0193d9dd0e0c7be3a",
+        "outside/file.txt": "ce0d133894458f1d5bf3b56a46ac63e566bfe39464c4dfb0193d9dd0e0c7be3a"
+      },
+      "actualSha256": {
+        "outside.txt": "ce0d133894458f1d5bf3b56a46ac63e566bfe39464c4dfb0193d9dd0e0c7be3a",
+        "outside/file.txt": "fb8e20fc2e4c3f248c60c39bd652f3c1347298bb977b8b4d5903b85055620603"
+      },
+      "report": {
+        "ghostchars": true,
+        "summary": {
+          "error": 2,
+          "warning": 0,
+          "info": 0,
+          "total": 2,
+          "files": 1
+        },
+        "skipped": [],
+        "results": [
+          {
+            "path": "directory/file.txt",
+            "findings": [
+              {
+                "rule": "bidi-control",
+                "severity": "error",
+                "start": {
+                  "line": 1,
+                  "column": 2,
+                  "offset": 1
+                },
+                "end": {
+                  "line": 1,
+                  "column": 3,
+                  "offset": 2
+                },
+                "codePoints": [
+                  "U+202E"
+                ],
+                "names": [
+                  "RIGHT-TO-LEFT OVERRIDE"
+                ],
+                "message": "RIGHT-TO-LEFT OVERRIDE changes the visual order of surrounding text without changing the underlying code -- the mechanism behind Trojan Source (CVE-2021-42574).",
+                "suggestion": "Remove this character unless the file is deliberately handling bidirectional text, in which case keep embeddings short, always balanced, and never spanning a comment/string boundary.",
+                "fixable": true
+              },
+              {
+                "rule": "bidi-control",
+                "severity": "error",
+                "start": {
+                  "line": 1,
+                  "column": 4,
+                  "offset": 3
+                },
+                "end": {
+                  "line": 1,
+                  "column": 5,
+                  "offset": 4
+                },
+                "codePoints": [
+                  "U+202C"
+                ],
+                "names": [
+                  "POP DIRECTIONAL FORMATTING"
+                ],
+                "message": "POP DIRECTIONAL FORMATTING changes the visual order of surrounding text without changing the underlying code -- the mechanism behind Trojan Source (CVE-2021-42574).",
+                "suggestion": "Remove this character unless the file is deliberately handling bidirectional text, in which case keep embeddings short, always balanced, and never spanning a comment/string boundary.",
+                "fixable": true
+              }
+            ]
+          }
+        ]
+      },
+      "stdout": null,
+      "stderr": ""
+    },
+    {
+      "case": "tracked-link-ancestor",
+      "arguments": [
+        ".",
+        "--fix",
+        "--format",
+        "json"
+      ],
+      "expectedExit": 0,
+      "exit": 1,
+      "checks": {
+        "exit": false,
+        "fileBytes": false,
+        "linkExclusionRecorded": false
+      },
+      "agrees": false,
+      "originalSha256": {
+        "outside.txt": "ce0d133894458f1d5bf3b56a46ac63e566bfe39464c4dfb0193d9dd0e0c7be3a",
+        "outside/file.txt": "ce0d133894458f1d5bf3b56a46ac63e566bfe39464c4dfb0193d9dd0e0c7be3a"
+      },
+      "expectedSha256": {
+        "outside.txt": "ce0d133894458f1d5bf3b56a46ac63e566bfe39464c4dfb0193d9dd0e0c7be3a",
+        "outside/file.txt": "ce0d133894458f1d5bf3b56a46ac63e566bfe39464c4dfb0193d9dd0e0c7be3a"
+      },
+      "actualSha256": {
+        "outside.txt": "ce0d133894458f1d5bf3b56a46ac63e566bfe39464c4dfb0193d9dd0e0c7be3a",
+        "outside/file.txt": "fb8e20fc2e4c3f248c60c39bd652f3c1347298bb977b8b4d5903b85055620603"
+      },
+      "report": {
+        "ghostchars": true,
+        "summary": {
+          "error": 2,
+          "warning": 0,
+          "info": 0,
+          "total": 2,
+          "files": 1
+        },
+        "skipped": [],
+        "results": [
+          {
+            "path": "tree/file.txt",
+            "findings": [
+              {
+                "rule": "bidi-control",
+                "severity": "error",
+                "start": {
+                  "line": 1,
+                  "column": 2,
+                  "offset": 1
+                },
+                "end": {
+                  "line": 1,
+                  "column": 3,
+                  "offset": 2
+                },
+                "codePoints": [
+                  "U+202E"
+                ],
+                "names": [
+                  "RIGHT-TO-LEFT OVERRIDE"
+                ],
+                "message": "RIGHT-TO-LEFT OVERRIDE changes the visual order of surrounding text without changing the underlying code -- the mechanism behind Trojan Source (CVE-2021-42574).",
+                "suggestion": "Remove this character unless the file is deliberately handling bidirectional text, in which case keep embeddings short, always balanced, and never spanning a comment/string boundary.",
+                "fixable": true
+              },
+              {
+                "rule": "bidi-control",
+                "severity": "error",
+                "start": {
+                  "line": 1,
+                  "column": 4,
+                  "offset": 3
+                },
+                "end": {
+                  "line": 1,
+                  "column": 5,
+                  "offset": 4
+                },
+                "codePoints": [
+                  "U+202C"
+                ],
+                "names": [
+                  "POP DIRECTIONAL FORMATTING"
+                ],
+                "message": "POP DIRECTIONAL FORMATTING changes the visual order of surrounding text without changing the underlying code -- the mechanism behind Trojan Source (CVE-2021-42574).",
+                "suggestion": "Remove this character unless the file is deliberately handling bidirectional text, in which case keep embeddings short, always balanced, and never spanning a comment/string boundary.",
+                "fixable": true
+              }
+            ]
+          }
+        ]
+      },
+      "stdout": null,
+      "stderr": ""
+    },
+    {
+      "case": "dangling-explicit-link",
+      "arguments": [
+        "broken",
+        "--fix",
+        "--format",
+        "json"
+      ],
+      "expectedExit": 2,
+      "exit": 2,
+      "checks": {
+        "exit": true,
+        "fileBytes": true,
+        "incompleteReport": false
+      },
+      "agrees": false,
+      "originalSha256": {},
+      "expectedSha256": {},
+      "actualSha256": {},
+      "report": null,
+      "stdout": "",
+      "stderr": "ghostchars: no such file or directory: broken\n"
+    },
+    {
+      "case": "corrupt-git-index",
+      "arguments": [
+        ".",
+        "--format",
+        "json",
+        "--fix"
+      ],
+      "expectedExit": 2,
+      "exit": 1,
+      "checks": {
+        "exit": false,
+        "fileBytes": false,
+        "incompleteReport": false
+      },
+      "agrees": false,
+      "originalSha256": {
+        "good.txt": "ce0d133894458f1d5bf3b56a46ac63e566bfe39464c4dfb0193d9dd0e0c7be3a"
+      },
+      "expectedSha256": {
+        "good.txt": "ce0d133894458f1d5bf3b56a46ac63e566bfe39464c4dfb0193d9dd0e0c7be3a"
+      },
+      "actualSha256": {
+        "good.txt": "fb8e20fc2e4c3f248c60c39bd652f3c1347298bb977b8b4d5903b85055620603"
+      },
+      "report": {
+        "ghostchars": true,
+        "summary": {
+          "error": 2,
+          "warning": 0,
+          "info": 0,
+          "total": 2,
+          "files": 1
+        },
+        "skipped": [],
+        "results": [
+          {
+            "path": "good.txt",
+            "findings": [
+              {
+                "rule": "bidi-control",
+                "severity": "error",
+                "start": {
+                  "line": 1,
+                  "column": 2,
+                  "offset": 1
+                },
+                "end": {
+                  "line": 1,
+                  "column": 3,
+                  "offset": 2
+                },
+                "codePoints": [
+                  "U+202E"
+                ],
+                "names": [
+                  "RIGHT-TO-LEFT OVERRIDE"
+                ],
+                "message": "RIGHT-TO-LEFT OVERRIDE changes the visual order of surrounding text without changing the underlying code -- the mechanism behind Trojan Source (CVE-2021-42574).",
+                "suggestion": "Remove this character unless the file is deliberately handling bidirectional text, in which case keep embeddings short, always balanced, and never spanning a comment/string boundary.",
+                "fixable": true
+              },
+              {
+                "rule": "bidi-control",
+                "severity": "error",
+                "start": {
+                  "line": 1,
+                  "column": 4,
+                  "offset": 3
+                },
+                "end": {
+                  "line": 1,
+                  "column": 5,
+                  "offset": 4
+                },
+                "codePoints": [
+                  "U+202C"
+                ],
+                "names": [
+                  "POP DIRECTIONAL FORMATTING"
+                ],
+                "message": "POP DIRECTIONAL FORMATTING changes the visual order of surrounding text without changing the underlying code -- the mechanism behind Trojan Source (CVE-2021-42574).",
+                "suggestion": "Remove this character unless the file is deliberately handling bidirectional text, in which case keep embeddings short, always balanced, and never spanning a comment/string boundary.",
+                "fixable": true
+              }
+            ]
+          }
+        ]
+      },
+      "stdout": null,
+      "stderr": ""
+    },
+    {
+      "case": "binary-control",
+      "arguments": [
+        ".",
+        "--format",
+        "json"
+      ],
+      "expectedExit": 0,
+      "exit": 0,
+      "checks": {
+        "exit": true,
+        "fileBytes": true
+      },
+      "agrees": true,
+      "originalSha256": {
+        "binary.bin": "b3b19812dd51ef044f7e0016ff19a634d1812d051595aa55426dc6e91b310e93"
+      },
+      "expectedSha256": {
+        "binary.bin": "b3b19812dd51ef044f7e0016ff19a634d1812d051595aa55426dc6e91b310e93"
+      },
+      "actualSha256": {
+        "binary.bin": "b3b19812dd51ef044f7e0016ff19a634d1812d051595aa55426dc6e91b310e93"
+      },
+      "report": {
+        "ghostchars": true,
+        "summary": {
+          "error": 0,
+          "warning": 0,
+          "info": 0,
+          "total": 0,
+          "files": 0
+        },
+        "skipped": [
+          {
+            "path": "binary.bin",
+            "reason": "binary"
+          }
+        ],
+        "results": []
+      },
+      "stdout": null,
+      "stderr": ""
+    },
+    {
+      "case": "oversized-control",
+      "arguments": [
+        ".",
+        "--format",
+        "json"
+      ],
+      "expectedExit": 0,
+      "exit": 0,
+      "checks": {
+        "exit": true,
+        "fileBytes": true
+      },
+      "agrees": true,
+      "originalSha256": {
+        "large.txt": "0e353bd000756ce37c9349f47d51efd8f250556700fe35ac213a7ab62db44dbb"
+      },
+      "expectedSha256": {
+        "large.txt": "0e353bd000756ce37c9349f47d51efd8f250556700fe35ac213a7ab62db44dbb"
+      },
+      "actualSha256": {
+        "large.txt": "0e353bd000756ce37c9349f47d51efd8f250556700fe35ac213a7ab62db44dbb"
+      },
+      "report": {
+        "ghostchars": true,
+        "summary": {
+          "error": 0,
+          "warning": 0,
+          "info": 0,
+          "total": 0,
+          "files": 0
+        },
+        "skipped": [
+          {
+            "path": "large.txt",
+            "reason": "too large (5.0 MiB > 5 MiB)"
+          }
+        ],
+        "results": []
+      },
+      "stdout": null,
+      "stderr": ""
+    },
+    {
+      "case": "regular-repair-control",
+      "arguments": [
+        ".",
+        "--format",
+        "json",
+        "--fix"
+      ],
+      "expectedExit": 1,
+      "exit": 1,
+      "checks": {
+        "exit": true,
+        "fileBytes": true
+      },
+      "agrees": true,
+      "originalSha256": {
+        "good.txt": "ce0d133894458f1d5bf3b56a46ac63e566bfe39464c4dfb0193d9dd0e0c7be3a"
+      },
+      "expectedSha256": {
+        "good.txt": "fb8e20fc2e4c3f248c60c39bd652f3c1347298bb977b8b4d5903b85055620603"
+      },
+      "actualSha256": {
+        "good.txt": "fb8e20fc2e4c3f248c60c39bd652f3c1347298bb977b8b4d5903b85055620603"
+      },
+      "report": {
+        "ghostchars": true,
+        "summary": {
+          "error": 2,
+          "warning": 0,
+          "info": 0,
+          "total": 2,
+          "files": 1
+        },
+        "skipped": [],
+        "results": [
+          {
+            "path": "good.txt",
+            "findings": [
+              {
+                "rule": "bidi-control",
+                "severity": "error",
+                "start": {
+                  "line": 1,
+                  "column": 2,
+                  "offset": 1
+                },
+                "end": {
+                  "line": 1,
+                  "column": 3,
+                  "offset": 2
+                },
+                "codePoints": [
+                  "U+202E"
+                ],
+                "names": [
+                  "RIGHT-TO-LEFT OVERRIDE"
+                ],
+                "message": "RIGHT-TO-LEFT OVERRIDE changes the visual order of surrounding text without changing the underlying code -- the mechanism behind Trojan Source (CVE-2021-42574).",
+                "suggestion": "Remove this character unless the file is deliberately handling bidirectional text, in which case keep embeddings short, always balanced, and never spanning a comment/string boundary.",
+                "fixable": true
+              },
+              {
+                "rule": "bidi-control",
+                "severity": "error",
+                "start": {
+                  "line": 1,
+                  "column": 4,
+                  "offset": 3
+                },
+                "end": {
+                  "line": 1,
+                  "column": 5,
+                  "offset": 4
+                },
+                "codePoints": [
+                  "U+202C"
+                ],
+                "names": [
+                  "POP DIRECTIONAL FORMATTING"
+                ],
+                "message": "POP DIRECTIONAL FORMATTING changes the visual order of surrounding text without changing the underlying code -- the mechanism behind Trojan Source (CVE-2021-42574).",
+                "suggestion": "Remove this character unless the file is deliberately handling bidirectional text, in which case keep embeddings short, always balanced, and never spanning a comment/string boundary.",
+                "fixable": true
+              }
+            ]
+          }
+        ]
+      },
+      "stdout": null,
+      "stderr": ""
+    },
+    {
+      "case": "utf16-repair-control",
+      "arguments": [
+        ".",
+        "--format",
+        "json",
+        "--fix"
+      ],
+      "expectedExit": 1,
+      "exit": 1,
+      "checks": {
+        "exit": true,
+        "fileBytes": true
+      },
+      "agrees": true,
+      "originalSha256": {
+        "good.txt": "26921181e8ee5d42632b5df8432843a03ec9cff8081dbaeee35305c4920144ec"
+      },
+      "expectedSha256": {
+        "good.txt": "e8c4aa5fa278602c7336e733e52e08f7efd8cefff3b9a4370deae49033d9563d"
+      },
+      "actualSha256": {
+        "good.txt": "e8c4aa5fa278602c7336e733e52e08f7efd8cefff3b9a4370deae49033d9563d"
+      },
+      "report": {
+        "ghostchars": true,
+        "summary": {
+          "error": 2,
+          "warning": 0,
+          "info": 0,
+          "total": 2,
+          "files": 1
+        },
+        "skipped": [],
+        "results": [
+          {
+            "path": "good.txt",
+            "findings": [
+              {
+                "rule": "bidi-control",
+                "severity": "error",
+                "start": {
+                  "line": 1,
+                  "column": 2,
+                  "offset": 1
+                },
+                "end": {
+                  "line": 1,
+                  "column": 3,
+                  "offset": 2
+                },
+                "codePoints": [
+                  "U+202E"
+                ],
+                "names": [
+                  "RIGHT-TO-LEFT OVERRIDE"
+                ],
+                "message": "RIGHT-TO-LEFT OVERRIDE changes the visual order of surrounding text without changing the underlying code -- the mechanism behind Trojan Source (CVE-2021-42574).",
+                "suggestion": "Remove this character unless the file is deliberately handling bidirectional text, in which case keep embeddings short, always balanced, and never spanning a comment/string boundary.",
+                "fixable": true
+              },
+              {
+                "rule": "bidi-control",
+                "severity": "error",
+                "start": {
+                  "line": 1,
+                  "column": 4,
+                  "offset": 3
+                },
+                "end": {
+                  "line": 1,
+                  "column": 5,
+                  "offset": 4
+                },
+                "codePoints": [
+                  "U+202C"
+                ],
+                "names": [
+                  "POP DIRECTIONAL FORMATTING"
+                ],
+                "message": "POP DIRECTIONAL FORMATTING changes the visual order of surrounding text without changing the underlying code -- the mechanism behind Trojan Source (CVE-2021-42574).",
+                "suggestion": "Remove this character unless the file is deliberately handling bidirectional text, in which case keep embeddings short, always balanced, and never spanning a comment/string boundary.",
+                "fixable": true
+              }
+            ]
+          }
+        ]
+      },
+      "stdout": null,
+      "stderr": ""
+    },
+    {
+      "case": "gitignore-control",
+      "arguments": [
+        ".",
+        "--format",
+        "json",
+        "--fix"
+      ],
+      "expectedExit": 0,
+      "exit": 0,
+      "checks": {
+        "exit": true,
+        "fileBytes": true
+      },
+      "agrees": true,
+      "originalSha256": {
+        "ignored.txt": "ce0d133894458f1d5bf3b56a46ac63e566bfe39464c4dfb0193d9dd0e0c7be3a"
+      },
+      "expectedSha256": {
+        "ignored.txt": "ce0d133894458f1d5bf3b56a46ac63e566bfe39464c4dfb0193d9dd0e0c7be3a"
+      },
+      "actualSha256": {
+        "ignored.txt": "ce0d133894458f1d5bf3b56a46ac63e566bfe39464c4dfb0193d9dd0e0c7be3a"
+      },
+      "report": {
+        "ghostchars": true,
+        "summary": {
+          "error": 0,
+          "warning": 0,
+          "info": 0,
+          "total": 0,
+          "files": 2
+        },
+        "skipped": [],
+        "results": []
+      },
+      "stdout": null,
+      "stderr": ""
+    },
+    {
+      "case": "sarif-finding-control",
+      "arguments": [
+        ".",
+        "--format",
+        "sarif"
+      ],
+      "expectedExit": 1,
+      "exit": 1,
+      "checks": {
+        "exit": true,
+        "fileBytes": true,
+        "successfulInvocation": false,
+        "filenameUri": false
+      },
+      "agrees": false,
+      "originalSha256": {
+        "name #100%.txt": "ce0d133894458f1d5bf3b56a46ac63e566bfe39464c4dfb0193d9dd0e0c7be3a"
+      },
+      "expectedSha256": {
+        "name #100%.txt": "ce0d133894458f1d5bf3b56a46ac63e566bfe39464c4dfb0193d9dd0e0c7be3a"
+      },
+      "actualSha256": {
+        "name #100%.txt": "ce0d133894458f1d5bf3b56a46ac63e566bfe39464c4dfb0193d9dd0e0c7be3a"
+      },
+      "report": {
+        "$schema": "https://raw.githubusercontent.com/oasis-tcs/sarif-spec/master/Schemata/sarif-schema-2.1.0.json",
+        "version": "2.1.0",
+        "runs": [
+          {
+            "tool": {
+              "driver": {
+                "name": "ghostchars",
+                "informationUri": "https://github.com/antonsoo/ghostchars",
+                "version": "0.1.5",
+                "rules": [
+                  {
+                    "id": "bidi-control",
+                    "shortDescription": {
+                      "text": "Explicit bidirectional formatting character (Trojan Source, CVE-2021-42574)."
+                    },
+                    "helpUri": "https://github.com/antonsoo/ghostchars#detections"
+                  },
+                  {
+                    "id": "bidi-mark",
+                    "shortDescription": {
+                      "text": "Bidirectional mark character."
+                    },
+                    "helpUri": "https://github.com/antonsoo/ghostchars#detections"
+                  },
+                  {
+                    "id": "bidi-unbalanced",
+                    "shortDescription": {
+                      "text": "Unbalanced or unterminated bidirectional embedding/isolate."
+                    },
+                    "helpUri": "https://github.com/antonsoo/ghostchars#detections"
+                  },
+                  {
+                    "id": "tag-smuggling",
+                    "shortDescription": {
+                      "text": "Unicode tag characters outside a valid emoji tag sequence (ASCII smuggling)."
+                    },
+                    "helpUri": "https://github.com/antonsoo/ghostchars#detections"
+                  },
+                  {
+                    "id": "variation-selector-smuggling",
+                    "shortDescription": {
+                      "text": "Variation selector run decodes to a hidden payload."
+                    },
+                    "helpUri": "https://github.com/antonsoo/ghostchars#detections"
+                  },
+                  {
+                    "id": "variation-selector-stray",
+                    "shortDescription": {
+                      "text": "Variation selector with no valid base character."
+                    },
+                    "helpUri": "https://github.com/antonsoo/ghostchars#detections"
+                  },
+                  {
+                    "id": "invisible",
+                    "shortDescription": {
+                      "text": "Invisible / default-ignorable character."
+                    },
+                    "helpUri": "https://github.com/antonsoo/ghostchars#detections"
+                  },
+                  {
+                    "id": "confusable",
+                    "shortDescription": {
+                      "text": "Visually confusable identifier (mixed script or skeleton collision)."
+                    },
+                    "helpUri": "https://github.com/antonsoo/ghostchars#detections"
+                  },
+                  {
+                    "id": "styled-text",
+                    "shortDescription": {
+                      "text": "Letters in a styled Unicode alphabet (mathematical, fullwidth, circled, squared) that read as plain text."
+                    },
+                    "helpUri": "https://github.com/antonsoo/ghostchars#detections"
+                  },
+                  {
+                    "id": "unusual-whitespace",
+                    "shortDescription": {
+                      "text": "Unusual whitespace character."
+                    },
+                    "helpUri": "https://github.com/antonsoo/ghostchars#detections"
+                  },
+                  {
+                    "id": "control-character",
+                    "shortDescription": {
+                      "text": "Unexpected control character."
+                    },
+                    "helpUri": "https://github.com/antonsoo/ghostchars#detections"
+                  }
+                ]
+              }
+            },
+            "results": [
+              {
+                "ruleId": "bidi-control",
+                "level": "error",
+                "message": {
+                  "text": "RIGHT-TO-LEFT OVERRIDE changes the visual order of surrounding text without changing the underlying code -- the mechanism behind Trojan Source (CVE-2021-42574)."
+                },
+                "locations": [
+                  {
+                    "physicalLocation": {
+                      "artifactLocation": {
+                        "uri": "name #100%.txt"
+                      },
+                      "region": {
+                        "startLine": 1,
+                        "startColumn": 2,
+                        "endLine": 1,
+                        "endColumn": 3
+                      }
+                    }
+                  }
+                ]
+              },
+              {
+                "ruleId": "bidi-control",
+                "level": "error",
+                "message": {
+                  "text": "POP DIRECTIONAL FORMATTING changes the visual order of surrounding text without changing the underlying code -- the mechanism behind Trojan Source (CVE-2021-42574)."
+                },
+                "locations": [
+                  {
+                    "physicalLocation": {
+                      "artifactLocation": {
+                        "uri": "name #100%.txt"
+                      },
+                      "region": {
+                        "startLine": 1,
+                        "startColumn": 4,
+                        "endLine": 1,
+                        "endColumn": 5
+                      }
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "stdout": null,
+      "stderr": ""
+    },
+    {
+      "case": "clean-control",
+      "arguments": [
+        ".",
+        "--format",
+        "json"
+      ],
+      "expectedExit": 0,
+      "exit": 0,
+      "checks": {
+        "exit": true,
+        "fileBytes": true
+      },
+      "agrees": true,
+      "originalSha256": {
+        "ok.txt": "2cf24dba5fb0a30e26e83b2ac5b9e29e1b161e5c1fa7425e73043362938b9824"
+      },
+      "expectedSha256": {
+        "ok.txt": "2cf24dba5fb0a30e26e83b2ac5b9e29e1b161e5c1fa7425e73043362938b9824"
+      },
+      "actualSha256": {
+        "ok.txt": "2cf24dba5fb0a30e26e83b2ac5b9e29e1b161e5c1fa7425e73043362938b9824"
+      },
+      "report": {
+        "ghostchars": true,
+        "summary": {
+          "error": 0,
+          "warning": 0,
+          "info": 0,
+          "total": 0,
+          "files": 1
+        },
+        "skipped": [],
+        "results": []
+      },
+      "stdout": null,
+      "stderr": ""
+    }
+  ]
+}

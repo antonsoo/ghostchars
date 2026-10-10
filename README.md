@@ -94,6 +94,14 @@ later passes. Its preview shows the actual proposed text; invalid encodings or
 invalid explicit configuration stop with exit 2 instead of being rewritten.
 See [repair behavior and before/after evidence](studies/repair-policy/README.md).
 
+The source checkout also reports **incomplete scans** separately from clean
+results. Unreadable files, failed directory/Git enumeration and decoding errors
+return exit 2, with details in every report format. Discovered symbolic links
+are listed as exclusions and never followed by `--fix`; an explicitly named
+link asks for the real target path. [Filesystem reproductions and installed
+CLI verification](studies/discovery-evidence/README.md) retain the before/after
+results. These changes have not been released to npm.
+
 ### As an LLM input filter
 
 ```sh
@@ -145,10 +153,21 @@ disable `bidi-unbalanced`. Severity changes (`info`, `warning`, `error`) change
 reporting, not whether an enabled fixable rule can remove its characters.
 All matching overrides merge in order; allowlists accumulate.
 
-`--fix` reports findings and the exit code from the **original** scan. Run a
-second scan to check what remains. Review a dry run before applying changes;
-the CLI writes files in place and does not create backups or a transaction
-across files.
+`--fix` reports findings from the **original** scan: exit 1 means error-level
+findings, while exit 2 takes precedence for input or repair failures. Run a
+second scan to check what remains. In the source checkout, discovery and reading
+finish before any write; an input failure blocks every planned repair. A later
+write failure can still leave earlier files repaired. Writes are in place,
+without backups or a transaction across files. A file changed since the scan is
+refused when noticed; these checks do not provide an atomic filesystem sandbox.
+
+JSON reports add `summary.complete`, `summary.inputErrors` and an `errors` array.
+`skipped` records intentional exclusions (binary, over 5 MiB, symbolic links,
+or non-regular entries), not failed reads. `complete: true` means the eligible
+inputs were processed; excluded files have not been analyzed. SARIF records
+execution failure separately from findings; GitHub output emits error annotations
+for incomplete inputs. A detected bidi finding alone is a successful scan with
+exit 1, not an execution failure. [Exact report examples](studies/discovery-evidence/README.md).
 
 ## The web app: "the UV lamp"
 
