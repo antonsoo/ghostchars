@@ -1,0 +1,86 @@
+{
+  "repo": "ghostchars",
+  "checkedAt": "2026-10-11T06:52:26.886457+00:00",
+  "pagesRevision": "1850946585995ad189416c171873a0be96aaf4e9",
+  "servedFiles": [
+    {
+      "path": "assets/index-Ro6q6q-n.js",
+      "url": "https://antonsoo.github.io/ghostchars/assets/index-Ro6q6q-n.js",
+      "bytes": 17094,
+      "sha256": "825686e38b66877487bfb0c8fc6653c13e92accd3f214c0ac70b439b28cd4f91",
+      "matchesBuild": true
+    },
+    {
+      "path": "assets/index-gL_LL1ZC.css",
+      "url": "https://antonsoo.github.io/ghostchars/assets/index-gL_LL1ZC.css",
+      "bytes": 24131,
+      "sha256": "ee98171d105e9b37dbbfad72ae2ce4cbd1220950de77914dbaa4d4d95332ff4c",
+      "matchesBuild": true
+    },
+    {
+      "path": "assets/scan.worker-mosX3sIA.js",
+      "url": "https://antonsoo.github.io/ghostchars/assets/scan.worker-mosX3sIA.js",
+      "bytes": 154493,
+      "sha256": "56648539a03be891bf720e33598f32917471c934a17ee73593c39e6c1284dcc7",
+      "matchesBuild": true
+    },
+    {
+      "path": "index.html",
+      "url": "https://antonsoo.github.io/ghostchars/index.html",
+      "bytes": 2259,
+      "sha256": "2d9efdee3322a172b320d1490f17f4863c3a2b836ea91b6177789e73cf0373b0",
+      "matchesBuild": true
+    }
+  ],
+  "sourceRevision": "bc4717e5bac0de8454dbbea5d59e5a69020225f0",
+  "buildSourceRevision": "61e4d2e69f54dbca26b9e8cc1f780f64b00b93ed",
+  "remoteBranches": [
+    "1850946585995ad189416c171873a0be96aaf4e9\trefs/heads/gh-pages",
+    "bc4717e5bac0de8454dbbea5d59e5a69020225f0\trefs/heads/main"
+  ],
+  "hostedBrowserChecks": [
+    {
+      "browser": "chromium",
+      "url": "https://antonsoo.github.io/ghostchars/",
+      "offline": true,
+      "inputCodeUnits": 64009,
+      "status": "Scanned 64,009 code units (64,009 code points); 128,000 findings.",
+      "renderedFindings": 300,
+      "sanitizedText": "keep this",
+      "copiedText": "keep this",
+      "pageErrors": [],
+      "externalRequests": [],
+      "cspViolations": []
+    },
+    {
+      "browser": "firefox",
+      "url": "https://antonsoo.github.io/ghostchars/",
+      "offline": true,
+      "inputCodeUnits": 64009,
+      "status": "Scanned 64,009 code units (64,009 code points); 128,000 findings.",
+      "renderedFindings": 300,
+      "sanitizedText": "keep this",
+      "copiedText": "keep this",
+      "pageErrors": [],
+      "externalRequests": [],
+      "cspViolations": []
+    }
+  ],
+  "pinnedSourceFiles": [
+    {
+      "path": "src/core/rules/bidi.ts",
+      "url": "https://raw.githubusercontent.com/antonsoo/ghostchars/bc4717e5bac0de8454dbbea5d59e5a69020225f0/src/core/rules/bidi.ts",
+      "bytes": 5616,
+      "sha256": "991eb5dd48e3a1a50cb745b22c1849f1671bfd8c6f3dae44c5d5f498f0429f0a",
+      "matchesLocal": true
+    },
+    {
+      "path": "studies/bidi-scaling/checks.json",
+      "url": "https://raw.githubusercontent.com/antonsoo/ghostchars/bc4717e5bac0de8454dbbea5d59e5a69020225f0/studies/bidi-scaling/checks.json",
+      "bytes": 11246,
+      "sha256": "39d3fb4af35b772007485fcc136647b99ef97eb8f59698417dce2153a4858fa1",
+      "matchesLocal": true
+    }
+  ],
+  "scope": "Source and static demo published; no npm release or tag."
+}

@@ -11,8 +11,11 @@ Line resets discard both stacks. Every control, unmatched-pop diagnostic and
 unterminated opening remains reported. The stack bookkeeping is linear; the
 full scanner still includes finding sorting and other rules.
 
-This is source and local-package validation. It does not establish an npm
-release or a hosted deployment.
+The source and [live demo](https://antonsoo.github.io/ghostchars/) now include
+the correction. The [publication receipt](publication.json) checks served HTML,
+JavaScript, worker and CSS against the tested build, and repeats the dense-input
+scan and copy workflow offline in hosted Chromium and Firefox. No npm package
+or tag was released with this deployment.
 
 The [clean-install receipt](checks.json) records source `61e4d2e`, all nine
 successful setup/check commands, 208 tests and 32 browser workflows. All 51
