@@ -94,3 +94,11 @@ rule leaves quiet. A clean report is not proof of code safety.
 
 These are local source and installed-artifact checks. This work does not
 publish an npm release or update the hosted demo.
+
+[verification.json](verification.json) records a fresh archive build: package
+lint, types, 227 tests; web lint, types, build and 34 Chromium/Firefox workflows.
+The packed tarball was installed separately without running package scripts;
+every installed `dist/` file matches the clean build. The full fixture/oracle
+replay passed on [Node 20.0.0](installed-node20.json) and
+[Node 26.7.0](installed-node26.json), including all four output formats and both
+repair modes. All 32 locally served web assets were byte-compared with that build.

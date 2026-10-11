@@ -1,0 +1,794 @@
+{
+  "node": "v20.0.0",
+  "icu": "72.1",
+  "unicode": "15.0",
+  "oracle": "ICU uspoof_getSkeletonUTF8",
+  "oracleIcu": "74.2.0.0",
+  "librarySha256": "89bda84d637c05188d22a8e1232fe89c9cf210a575f1404ea7e776a99abbe606",
+  "cliSha256": "b28fd1914b9513e415270a44ad35f4f0cb1a7928885f3e51257e4d0cce8ba798",
+  "source": {
+    "file": "fixtures/identifiers.mjs",
+    "sha256": "49000a26d9b76599022159befc897fe3660ec9bfcf05ab136b064e9adc0690ab",
+    "bytes": 181,
+    "execution": [
+      "allowed",
+      "substituted"
+    ],
+    "exitCode": 0
+  },
+  "cases": [
+    {
+      "name": "latin-accent-cyrillic",
+      "inputSha256": "5fd01737042c991ef483de807a27b753756c0e999fdf7744a4c2cf3f8e910b8d",
+      "expectedCollisions": 2,
+      "collisions": 2,
+      "findings": [
+        {
+          "rule": "confusable",
+          "severity": "error",
+          "start": {
+            "line": 1,
+            "column": 1,
+            "offset": 0
+          },
+          "end": {
+            "line": 1,
+            "column": 5,
+            "offset": 4
+          },
+          "codePoints": [
+            99,
+            111,
+            112,
+            233
+          ],
+          "names": [
+            "U+0063",
+            "U+006F",
+            "U+0070",
+            "U+00E9"
+          ],
+          "message": "\"copé\" is visually confusable with 1 other spelling(s) used elsewhere in this file (they share the skeleton \"copé\") -- this is how lookalike identifier/variable attacks work.",
+          "suggestion": "Rename one of the colliding identifiers so they are visually distinguishable, or confirm this is intentional (e.g. deliberately testing confusable handling).",
+          "skeleton": "copé",
+          "fixable": false
+        },
+        {
+          "rule": "confusable",
+          "severity": "error",
+          "start": {
+            "line": 1,
+            "column": 6,
+            "offset": 5
+          },
+          "end": {
+            "line": 1,
+            "column": 11,
+            "offset": 10
+          },
+          "codePoints": [
+            1089,
+            1086,
+            1088,
+            1077,
+            769
+          ],
+          "names": [
+            "U+0441",
+            "U+043E",
+            "U+0440",
+            "U+0435",
+            "U+0301"
+          ],
+          "message": "\"соре́\" is visually confusable with 1 other spelling(s) used elsewhere in this file (they share the skeleton \"copé\") -- this is how lookalike identifier/variable attacks work.",
+          "suggestion": "Rename one of the colliding identifiers so they are visually distinguishable, or confirm this is intentional (e.g. deliberately testing confusable handling).",
+          "skeleton": "copé",
+          "fixable": false
+        }
+      ]
+    },
+    {
+      "name": "cyrillic-precomposed",
+      "inputSha256": "157c5437ff2efa91f550054fe510ea20242f86ffb116941d4ba5d5a473833f7f",
+      "expectedCollisions": 2,
+      "collisions": 2,
+      "findings": [
+        {
+          "rule": "confusable",
+          "severity": "error",
+          "start": {
+            "line": 1,
+            "column": 1,
+            "offset": 0
+          },
+          "end": {
+            "line": 1,
+            "column": 6,
+            "offset": 5
+          },
+          "codePoints": [
+            99,
+            111,
+            112,
+            101,
+            776
+          ],
+          "names": [
+            "U+0063",
+            "U+006F",
+            "U+0070",
+            "U+0065",
+            "U+0308"
+          ],
+          "message": "\"copë\" is visually confusable with 1 other spelling(s) used elsewhere in this file (they share the skeleton \"copë\") -- this is how lookalike identifier/variable attacks work.",
+          "suggestion": "Rename one of the colliding identifiers so they are visually distinguishable, or confirm this is intentional (e.g. deliberately testing confusable handling).",
+          "skeleton": "copë",
+          "fixable": false
+        },
+        {
+          "rule": "confusable",
+          "severity": "error",
+          "start": {
+            "line": 1,
+            "column": 7,
+            "offset": 6
+          },
+          "end": {
+            "line": 1,
+            "column": 11,
+            "offset": 10
+          },
+          "codePoints": [
+            1089,
+            1086,
+            1088,
+            1105
+          ],
+          "names": [
+            "U+0441",
+            "U+043E",
+            "U+0440",
+            "U+0451"
+          ],
+          "message": "\"сорё\" is visually confusable with 1 other spelling(s) used elsewhere in this file (they share the skeleton \"copë\") -- this is how lookalike identifier/variable attacks work.",
+          "suggestion": "Rename one of the colliding identifiers so they are visually distinguishable, or confirm this is intentional (e.g. deliberately testing confusable handling).",
+          "skeleton": "copë",
+          "fixable": false
+        }
+      ]
+    },
+    {
+      "name": "greek-precomposed",
+      "inputSha256": "0686ed690d687f5ec86a974f71b34d3a832d9bbbffbac0b435316f969e417c50",
+      "expectedCollisions": 2,
+      "collisions": 2,
+      "findings": [
+        {
+          "rule": "confusable",
+          "severity": "error",
+          "start": {
+            "line": 1,
+            "column": 1,
+            "offset": 0
+          },
+          "end": {
+            "line": 1,
+            "column": 5,
+            "offset": 4
+          },
+          "codePoints": [
+            84,
+            243,
+            112,
+            111
+          ],
+          "names": [
+            "U+0054",
+            "U+00F3",
+            "U+0070",
+            "U+006F"
+          ],
+          "message": "\"Tópo\" is visually confusable with 1 other spelling(s) used elsewhere in this file (they share the skeleton \"Tópo\") -- this is how lookalike identifier/variable attacks work.",
+          "suggestion": "Rename one of the colliding identifiers so they are visually distinguishable, or confirm this is intentional (e.g. deliberately testing confusable handling).",
+          "skeleton": "Tópo",
+          "fixable": false
+        },
+        {
+          "rule": "confusable",
+          "severity": "error",
+          "start": {
+            "line": 1,
+            "column": 6,
+            "offset": 5
+          },
+          "end": {
+            "line": 1,
+            "column": 10,
+            "offset": 9
+          },
+          "codePoints": [
+            932,
+            972,
+            961,
+            959
+          ],
+          "names": [
+            "U+03A4",
+            "U+03CC",
+            "U+03C1",
+            "U+03BF"
+          ],
+          "message": "\"Τόρο\" is visually confusable with 1 other spelling(s) used elsewhere in this file (they share the skeleton \"Tópo\") -- this is how lookalike identifier/variable attacks work.",
+          "suggestion": "Rename one of the colliding identifiers so they are visually distinguishable, or confirm this is intentional (e.g. deliberately testing confusable handling).",
+          "skeleton": "Tópo",
+          "fixable": false
+        }
+      ]
+    },
+    {
+      "name": "combining-order",
+      "inputSha256": "53377a7e6247f915222171b55c13f144ab79bbb7280b49c45c668f4a9e72453c",
+      "expectedCollisions": 2,
+      "collisions": 2,
+      "findings": [
+        {
+          "rule": "confusable",
+          "severity": "error",
+          "start": {
+            "line": 1,
+            "column": 1,
+            "offset": 0
+          },
+          "end": {
+            "line": 1,
+            "column": 7,
+            "offset": 6
+          },
+          "codePoints": [
+            99,
+            97,
+            102,
+            101,
+            769,
+            803
+          ],
+          "names": [
+            "U+0063",
+            "U+0061",
+            "U+0066",
+            "U+0065",
+            "U+0301",
+            "U+0323"
+          ],
+          "message": "\"cafẹ́\" is visually confusable with 1 other spelling(s) used elsewhere in this file (they share the skeleton \"cafẹ́\") -- this is how lookalike identifier/variable attacks work.",
+          "suggestion": "Rename one of the colliding identifiers so they are visually distinguishable, or confirm this is intentional (e.g. deliberately testing confusable handling).",
+          "skeleton": "cafẹ́",
+          "fixable": false
+        },
+        {
+          "rule": "confusable",
+          "severity": "warning",
+          "start": {
+            "line": 1,
+            "column": 8,
+            "offset": 7
+          },
+          "end": {
+            "line": 1,
+            "column": 14,
+            "offset": 13
+          },
+          "codePoints": [
+            99,
+            97,
+            102,
+            1077,
+            803,
+            769
+          ],
+          "names": [
+            "U+0063",
+            "U+0061",
+            "U+0066",
+            "U+0435",
+            "U+0323",
+            "U+0301"
+          ],
+          "message": "\"cafе̣́\" mixes scripts (Latin, Cyrillic) in one word -- a common homoglyph-attack shape. Skeleton: \"cafẹ́\".",
+          "suggestion": "Confirm every character is intentional (e.g. a Greek variable name is fine on its own, but Latin+Cyrillic in one identifier rarely is), or rename to a single script.",
+          "skeleton": "cafẹ́",
+          "fixable": false
+        },
+        {
+          "rule": "confusable",
+          "severity": "error",
+          "start": {
+            "line": 1,
+            "column": 8,
+            "offset": 7
+          },
+          "end": {
+            "line": 1,
+            "column": 14,
+            "offset": 13
+          },
+          "codePoints": [
+            99,
+            97,
+            102,
+            1077,
+            803,
+            769
+          ],
+          "names": [
+            "U+0063",
+            "U+0061",
+            "U+0066",
+            "U+0435",
+            "U+0323",
+            "U+0301"
+          ],
+          "message": "\"cafе̣́\" is visually confusable with 1 other spelling(s) used elsewhere in this file (they share the skeleton \"cafẹ́\") -- this is how lookalike identifier/variable attacks work.",
+          "suggestion": "Rename one of the colliding identifiers so they are visually distinguishable, or confirm this is intentional (e.g. deliberately testing confusable handling).",
+          "skeleton": "cafẹ́",
+          "fixable": false
+        }
+      ]
+    },
+    {
+      "name": "decomposable-mark",
+      "inputSha256": "d0e01ab668b0cfb3492d9a17ced68014cdf3fa4084acc3039c644de52db5b025",
+      "expectedCollisions": 2,
+      "collisions": 2,
+      "findings": [
+        {
+          "rule": "confusable",
+          "severity": "error",
+          "start": {
+            "line": 1,
+            "column": 1,
+            "offset": 0
+          },
+          "end": {
+            "line": 1,
+            "column": 4,
+            "offset": 3
+          },
+          "codePoints": [
+            99,
+            97,
+            768
+          ],
+          "names": [
+            "U+0063",
+            "U+0061",
+            "U+0300"
+          ],
+          "message": "\"cà\" is visually confusable with 1 other spelling(s) used elsewhere in this file (they share the skeleton \"cà\") -- this is how lookalike identifier/variable attacks work.",
+          "suggestion": "Rename one of the colliding identifiers so they are visually distinguishable, or confirm this is intentional (e.g. deliberately testing confusable handling).",
+          "skeleton": "cà",
+          "fixable": false
+        },
+        {
+          "rule": "confusable",
+          "severity": "warning",
+          "start": {
+            "line": 1,
+            "column": 5,
+            "offset": 4
+          },
+          "end": {
+            "line": 1,
+            "column": 8,
+            "offset": 7
+          },
+          "codePoints": [
+            99,
+            1072,
+            832
+          ],
+          "names": [
+            "U+0063",
+            "U+0430",
+            "U+0340"
+          ],
+          "message": "\"cа̀\" mixes scripts (Latin, Cyrillic) in one word -- a common homoglyph-attack shape. Skeleton: \"cà\".",
+          "suggestion": "Confirm every character is intentional (e.g. a Greek variable name is fine on its own, but Latin+Cyrillic in one identifier rarely is), or rename to a single script.",
+          "skeleton": "cà",
+          "fixable": false
+        },
+        {
+          "rule": "confusable",
+          "severity": "error",
+          "start": {
+            "line": 1,
+            "column": 5,
+            "offset": 4
+          },
+          "end": {
+            "line": 1,
+            "column": 8,
+            "offset": 7
+          },
+          "codePoints": [
+            99,
+            1072,
+            832
+          ],
+          "names": [
+            "U+0063",
+            "U+0430",
+            "U+0340"
+          ],
+          "message": "\"cа̀\" is visually confusable with 1 other spelling(s) used elsewhere in this file (they share the skeleton \"cà\") -- this is how lookalike identifier/variable attacks work.",
+          "suggestion": "Rename one of the colliding identifiers so they are visually distinguishable, or confirm this is intentional (e.g. deliberately testing confusable handling).",
+          "skeleton": "cà",
+          "fixable": false
+        }
+      ]
+    },
+    {
+      "name": "mapped-mark-order",
+      "inputSha256": "0478440c3c9922c938eefd0e598519d8a26f19427ad903eaaec5f742109ecdec",
+      "expectedCollisions": 2,
+      "collisions": 2,
+      "findings": [
+        {
+          "rule": "confusable",
+          "severity": "error",
+          "start": {
+            "line": 1,
+            "column": 1,
+            "offset": 0
+          },
+          "end": {
+            "line": 1,
+            "column": 5,
+            "offset": 4
+          },
+          "codePoints": [
+            99,
+            97,
+            789,
+            768
+          ],
+          "names": [
+            "U+0063",
+            "U+0061",
+            "U+0315",
+            "U+0300"
+          ],
+          "message": "\"cà̕\" is visually confusable with 1 other spelling(s) used elsewhere in this file (they share the skeleton \"cà̓\") -- this is how lookalike identifier/variable attacks work.",
+          "suggestion": "Rename one of the colliding identifiers so they are visually distinguishable, or confirm this is intentional (e.g. deliberately testing confusable handling).",
+          "skeleton": "cà̓",
+          "fixable": false
+        },
+        {
+          "rule": "confusable",
+          "severity": "warning",
+          "start": {
+            "line": 1,
+            "column": 6,
+            "offset": 5
+          },
+          "end": {
+            "line": 1,
+            "column": 10,
+            "offset": 9
+          },
+          "codePoints": [
+            99,
+            1072,
+            789,
+            832
+          ],
+          "names": [
+            "U+0063",
+            "U+0430",
+            "U+0315",
+            "U+0340"
+          ],
+          "message": "\"cа̀̕\" mixes scripts (Latin, Cyrillic) in one word -- a common homoglyph-attack shape. Skeleton: \"cà̓\".",
+          "suggestion": "Confirm every character is intentional (e.g. a Greek variable name is fine on its own, but Latin+Cyrillic in one identifier rarely is), or rename to a single script.",
+          "skeleton": "cà̓",
+          "fixable": false
+        },
+        {
+          "rule": "confusable",
+          "severity": "error",
+          "start": {
+            "line": 1,
+            "column": 6,
+            "offset": 5
+          },
+          "end": {
+            "line": 1,
+            "column": 10,
+            "offset": 9
+          },
+          "codePoints": [
+            99,
+            1072,
+            789,
+            832
+          ],
+          "names": [
+            "U+0063",
+            "U+0430",
+            "U+0315",
+            "U+0340"
+          ],
+          "message": "\"cа̀̕\" is visually confusable with 1 other spelling(s) used elsewhere in this file (they share the skeleton \"cà̓\") -- this is how lookalike identifier/variable attacks work.",
+          "suggestion": "Rename one of the colliding identifiers so they are visually distinguishable, or confirm this is intentional (e.g. deliberately testing confusable handling).",
+          "skeleton": "cà̓",
+          "fixable": false
+        }
+      ]
+    },
+    {
+      "name": "latin-canonical-prose-policy",
+      "inputSha256": "268483acce82391a064692e20c66f8bf65aef80848356283ec8de7e8a803287a",
+      "expectedCollisions": 0,
+      "collisions": 0,
+      "findings": []
+    },
+    {
+      "name": "latin-dotless-accent",
+      "inputSha256": "b147381928d2fe1c54f2799097413c6b5da884a91f6271c315f46545c25f0b24",
+      "expectedCollisions": 2,
+      "collisions": 2,
+      "findings": [
+        {
+          "rule": "confusable",
+          "severity": "error",
+          "start": {
+            "line": 1,
+            "column": 1,
+            "offset": 0
+          },
+          "end": {
+            "line": 1,
+            "column": 6,
+            "offset": 5
+          },
+          "codePoints": [
+            97,
+            100,
+            109,
+            237,
+            110
+          ],
+          "names": [
+            "U+0061",
+            "U+0064",
+            "U+006D",
+            "U+00ED",
+            "U+006E"
+          ],
+          "message": "\"admín\" is visually confusable with 1 other spelling(s) used elsewhere in this file (they share the skeleton \"adrnín\") -- this is how lookalike identifier/variable attacks work.",
+          "suggestion": "Rename one of the colliding identifiers so they are visually distinguishable, or confirm this is intentional (e.g. deliberately testing confusable handling).",
+          "skeleton": "adrnín",
+          "fixable": false
+        },
+        {
+          "rule": "confusable",
+          "severity": "error",
+          "start": {
+            "line": 1,
+            "column": 7,
+            "offset": 6
+          },
+          "end": {
+            "line": 1,
+            "column": 13,
+            "offset": 12
+          },
+          "codePoints": [
+            97,
+            100,
+            109,
+            305,
+            769,
+            110
+          ],
+          "names": [
+            "U+0061",
+            "U+0064",
+            "U+006D",
+            "U+0131",
+            "U+0301",
+            "U+006E"
+          ],
+          "message": "\"admı́n\" is visually confusable with 1 other spelling(s) used elsewhere in this file (they share the skeleton \"adrnín\") -- this is how lookalike identifier/variable attacks work.",
+          "suggestion": "Rename one of the colliding identifiers so they are visually distinguishable, or confirm this is intentional (e.g. deliberately testing confusable handling).",
+          "skeleton": "adrnín",
+          "fixable": false
+        }
+      ]
+    },
+    {
+      "name": "existing-cyrillic",
+      "inputSha256": "061081b863fcf6a70b58cb9dfd0596618d1255aae6b5c12a9abdb95eb35149e7",
+      "expectedCollisions": 2,
+      "collisions": 2,
+      "findings": [
+        {
+          "rule": "confusable",
+          "severity": "error",
+          "start": {
+            "line": 1,
+            "column": 1,
+            "offset": 0
+          },
+          "end": {
+            "line": 1,
+            "column": 6,
+            "offset": 5
+          },
+          "codePoints": [
+            115,
+            99,
+            111,
+            112,
+            101
+          ],
+          "names": [
+            "U+0073",
+            "U+0063",
+            "U+006F",
+            "U+0070",
+            "U+0065"
+          ],
+          "message": "\"scope\" is visually confusable with 1 other spelling(s) used elsewhere in this file (they share the skeleton \"scope\") -- this is how lookalike identifier/variable attacks work.",
+          "suggestion": "Rename one of the colliding identifiers so they are visually distinguishable, or confirm this is intentional (e.g. deliberately testing confusable handling).",
+          "skeleton": "scope",
+          "fixable": false
+        },
+        {
+          "rule": "confusable",
+          "severity": "error",
+          "start": {
+            "line": 1,
+            "column": 7,
+            "offset": 6
+          },
+          "end": {
+            "line": 1,
+            "column": 12,
+            "offset": 11
+          },
+          "codePoints": [
+            1109,
+            1089,
+            1086,
+            1088,
+            1077
+          ],
+          "names": [
+            "U+0455",
+            "U+0441",
+            "U+043E",
+            "U+0440",
+            "U+0435"
+          ],
+          "message": "\"ѕсоре\" is visually confusable with 1 other spelling(s) used elsewhere in this file (they share the skeleton \"scope\") -- this is how lookalike identifier/variable attacks work.",
+          "suggestion": "Rename one of the colliding identifiers so they are visually distinguishable, or confirm this is intentional (e.g. deliberately testing confusable handling).",
+          "skeleton": "scope",
+          "fixable": false
+        }
+      ]
+    },
+    {
+      "name": "different-accents",
+      "inputSha256": "21c5a4ed74f28dfcadd4b21bdf71da88fb26c9dc829f224d1a7c2e6048355e5b",
+      "expectedCollisions": 0,
+      "collisions": 0,
+      "findings": []
+    },
+    {
+      "name": "accent-not-stripped",
+      "inputSha256": "b799127415be4b1b2cc1e54d4fdc035c33bd3ef46be82d05c24f35fa34cc685a",
+      "expectedCollisions": 0,
+      "collisions": 0,
+      "findings": []
+    },
+    {
+      "name": "identical-spelling",
+      "inputSha256": "1c96674991fcb0a97502059c3c45881935fb74012ac4188939581ba92dfbaf22",
+      "expectedCollisions": 0,
+      "collisions": 0,
+      "findings": []
+    },
+    {
+      "name": "greek-prose-policy",
+      "inputSha256": "e7902dfd075f2445e78a35e4c7ac895c0c9d7796fbe19bd44d1c4ef22454233e",
+      "expectedCollisions": 0,
+      "collisions": 0,
+      "findings": []
+    },
+    {
+      "name": "ascii-policy",
+      "inputSha256": "7c9f7d841a3486f53cacf28490b6f5b417bf15743d4815e0c9cfdd2dac54deab",
+      "expectedCollisions": 0,
+      "collisions": 0,
+      "findings": []
+    },
+    {
+      "name": "styled-policy",
+      "inputSha256": "cc71e6039a215d08f1faf0a64e21b0ef3e28bef83bc0420b14e61ee7044de425",
+      "expectedCollisions": 0,
+      "collisions": 0,
+      "findings": [
+        {
+          "rule": "styled-text",
+          "severity": "warning",
+          "start": {
+            "line": 1,
+            "column": 6,
+            "offset": 5
+          },
+          "end": {
+            "line": 1,
+            "column": 9,
+            "offset": 8
+          },
+          "codePoints": [
+            65347,
+            65345,
+            65350
+          ],
+          "names": [
+            "U+FF43"
+          ],
+          "message": "3 letters in fullwidth styled alphabets read as \"caf\" once normalised to plain letters (NFKC). A model reads that text; a filter that compares code points without normalising does not.",
+          "suggestion": "Normalise with NFKC before matching the text against anything, or replace the passage with plain letters if the styling is not wanted.",
+          "decoded": "caf",
+          "fixable": false
+        }
+      ]
+    }
+  ],
+  "commands": [
+    {
+      "command": "ghostchars identifiers.mjs --no-config --format json",
+      "exitCode": 1,
+      "stdout": "{\n  \"ghostchars\": true,\n  \"summary\": {\n    \"error\": 4,\n    \"warning\": 0,\n    \"info\": 0,\n    \"total\": 4,\n    \"files\": 1,\n    \"durationMs\": 6.454709008336067,\n    \"complete\": true,\n    \"inputErrors\": 0\n  },\n  \"skipped\": [],\n  \"errors\": [],\n  \"results\": [\n    {\n      \"path\": \"studies/canonical-confusables/fixtures/identifiers.mjs\",\n      \"findings\": [\n        {\n          \"rule\": \"confusable\",\n          \"severity\": \"error\",\n          \"start\": {\n            \"line\": 2,\n            \"column\": 7,\n            \"offset\": 78\n          },\n          \"end\": {\n            \"line\": 2,\n            \"column\": 11,\n            \"offset\": 82\n          },\n          \"codePoints\": [\n            \"U+0063\",\n            \"U+006F\",\n            \"U+0070\",\n            \"U+00E9\"\n          ],\n          \"names\": [\n            \"U+0063\",\n            \"U+006F\",\n            \"U+0070\",\n            \"U+00E9\"\n          ],\n          \"message\": \"\\\"copé\\\" is visually confusable with 1 other spelling(s) used elsewhere in this file (they share the skeleton \\\"copé\\\") -- this is how lookalike identifier/variable attacks work.\",\n          \"suggestion\": \"Rename one of the colliding identifiers so they are visually distinguishable, or confirm this is intentional (e.g. deliberately testing confusable handling).\",\n          \"skeleton\": \"copé\",\n          \"fixable\": false\n        },\n        {\n          \"rule\": \"confusable\",\n          \"severity\": \"error\",\n          \"start\": {\n            \"line\": 3,\n            \"column\": 7,\n            \"offset\": 102\n          },\n          \"end\": {\n            \"line\": 3,\n            \"column\": 12,\n            \"offset\": 107\n          },\n          \"codePoints\": [\n            \"U+0441\",\n            \"U+043E\",\n            \"U+0440\",\n            \"U+0435\",\n            \"U+0301\"\n          ],\n          \"names\": [\n            \"U+0441\",\n            \"U+043E\",\n            \"U+0440\",\n            \"U+0435\",\n            \"U+0301\"\n          ],\n          \"message\": \"\\\"соре́\\\" is visually confusable with 1 other spelling(s) used elsewhere in this file (they share the skeleton \\\"copé\\\") -- this is how lookalike identifier/variable attacks work.\",\n          \"suggestion\": \"Rename one of the colliding identifiers so they are visually distinguishable, or confirm this is intentional (e.g. deliberately testing confusable handling).\",\n          \"skeleton\": \"copé\",\n          \"fixable\": false\n        },\n        {\n          \"rule\": \"confusable\",\n          \"severity\": \"error\",\n          \"start\": {\n            \"line\": 4,\n            \"column\": 29,\n            \"offset\": 153\n          },\n          \"end\": {\n            \"line\": 4,\n            \"column\": 33,\n            \"offset\": 157\n          },\n          \"codePoints\": [\n            \"U+0063\",\n            \"U+006F\",\n            \"U+0070\",\n            \"U+00E9\"\n          ],\n          \"names\": [\n            \"U+0063\",\n            \"U+006F\",\n            \"U+0070\",\n            \"U+00E9\"\n          ],\n          \"message\": \"\\\"copé\\\" is visually confusable with 1 other spelling(s) used elsewhere in this file (they share the skeleton \\\"copé\\\") -- this is how lookalike identifier/variable attacks work.\",\n          \"suggestion\": \"Rename one of the colliding identifiers so they are visually distinguishable, or confirm this is intentional (e.g. deliberately testing confusable handling).\",\n          \"skeleton\": \"copé\",\n          \"fixable\": false\n        },\n        {\n          \"rule\": \"confusable\",\n          \"severity\": \"error\",\n          \"start\": {\n            \"line\": 4,\n            \"column\": 35,\n            \"offset\": 159\n          },\n          \"end\": {\n            \"line\": 4,\n            \"column\": 40,\n            \"offset\": 164\n          },\n          \"codePoints\": [\n            \"U+0441\",\n            \"U+043E\",\n            \"U+0440\",\n            \"U+0435\",\n            \"U+0301\"\n          ],\n          \"names\": [\n            \"U+0441\",\n            \"U+043E\",\n            \"U+0440\",\n            \"U+0435\",\n            \"U+0301\"\n          ],\n          \"message\": \"\\\"соре́\\\" is visually confusable with 1 other spelling(s) used elsewhere in this file (they share the skeleton \\\"copé\\\") -- this is how lookalike identifier/variable attacks work.\",\n          \"suggestion\": \"Rename one of the colliding identifiers so they are visually distinguishable, or confirm this is intentional (e.g. deliberately testing confusable handling).\",\n          \"skeleton\": \"copé\",\n          \"fixable\": false\n        }\n      ]\n    }\n  ]\n}\n",
+      "stderr": ""
+    },
+    {
+      "command": "ghostchars identifiers.mjs --no-config --format sarif",
+      "exitCode": 1,
+      "stdout": "{\n  \"$schema\": \"https://docs.oasis-open.org/sarif/sarif/v2.1.0/errata01/os/schemas/sarif-schema-2.1.0.json\",\n  \"version\": \"2.1.0\",\n  \"runs\": [\n    {\n      \"tool\": {\n        \"driver\": {\n          \"name\": \"ghostchars\",\n          \"informationUri\": \"https://github.com/antonsoo/ghostchars\",\n          \"version\": \"0.1.5\",\n          \"rules\": [\n            {\n              \"id\": \"bidi-control\",\n              \"shortDescription\": {\n                \"text\": \"Explicit bidirectional formatting character (Trojan Source, CVE-2021-42574).\"\n              },\n              \"helpUri\": \"https://github.com/antonsoo/ghostchars#detections\"\n            },\n            {\n              \"id\": \"bidi-mark\",\n              \"shortDescription\": {\n                \"text\": \"Bidirectional mark character.\"\n              },\n              \"helpUri\": \"https://github.com/antonsoo/ghostchars#detections\"\n            },\n            {\n              \"id\": \"bidi-unbalanced\",\n              \"shortDescription\": {\n                \"text\": \"Unbalanced or unterminated bidirectional embedding/isolate.\"\n              },\n              \"helpUri\": \"https://github.com/antonsoo/ghostchars#detections\"\n            },\n            {\n              \"id\": \"tag-smuggling\",\n              \"shortDescription\": {\n                \"text\": \"Unicode tag characters outside a valid emoji tag sequence (ASCII smuggling).\"\n              },\n              \"helpUri\": \"https://github.com/antonsoo/ghostchars#detections\"\n            },\n            {\n              \"id\": \"variation-selector-smuggling\",\n              \"shortDescription\": {\n                \"text\": \"Variation selector run decodes to a hidden payload.\"\n              },\n              \"helpUri\": \"https://github.com/antonsoo/ghostchars#detections\"\n            },\n            {\n              \"id\": \"variation-selector-stray\",\n              \"shortDescription\": {\n                \"text\": \"Variation selector with no valid base character.\"\n              },\n              \"helpUri\": \"https://github.com/antonsoo/ghostchars#detections\"\n            },\n            {\n              \"id\": \"invisible\",\n              \"shortDescription\": {\n                \"text\": \"Invisible / default-ignorable character.\"\n              },\n              \"helpUri\": \"https://github.com/antonsoo/ghostchars#detections\"\n            },\n            {\n              \"id\": \"confusable\",\n              \"shortDescription\": {\n                \"text\": \"Visually confusable identifier (mixed script or skeleton collision).\"\n              },\n              \"helpUri\": \"https://github.com/antonsoo/ghostchars#detections\"\n            },\n            {\n              \"id\": \"styled-text\",\n              \"shortDescription\": {\n                \"text\": \"Letters in a styled Unicode alphabet (mathematical, fullwidth, circled, squared) that read as plain text.\"\n              },\n              \"helpUri\": \"https://github.com/antonsoo/ghostchars#detections\"\n            },\n            {\n              \"id\": \"unusual-whitespace\",\n              \"shortDescription\": {\n                \"text\": \"Unusual whitespace character.\"\n              },\n              \"helpUri\": \"https://github.com/antonsoo/ghostchars#detections\"\n            },\n            {\n              \"id\": \"control-character\",\n              \"shortDescription\": {\n                \"text\": \"Unexpected control character.\"\n              },\n              \"helpUri\": \"https://github.com/antonsoo/ghostchars#detections\"\n            }\n          ]\n        }\n      },\n      \"results\": [\n        {\n          \"ruleId\": \"confusable\",\n          \"level\": \"error\",\n          \"message\": {\n            \"text\": \"\\\"copé\\\" is visually confusable with 1 other spelling(s) used elsewhere in this file (they share the skeleton \\\"copé\\\") -- this is how lookalike identifier/variable attacks work.\"\n          },\n          \"locations\": [\n            {\n              \"physicalLocation\": {\n                \"artifactLocation\": {\n                  \"uri\": \"studies/canonical-confusables/fixtures/identifiers.mjs\"\n                },\n                \"region\": {\n                  \"startLine\": 2,\n                  \"startColumn\": 7,\n                  \"endLine\": 2,\n                  \"endColumn\": 11\n                }\n              }\n            }\n          ]\n        },\n        {\n          \"ruleId\": \"confusable\",\n          \"level\": \"error\",\n          \"message\": {\n            \"text\": \"\\\"соре́\\\" is visually confusable with 1 other spelling(s) used elsewhere in this file (they share the skeleton \\\"copé\\\") -- this is how lookalike identifier/variable attacks work.\"\n          },\n          \"locations\": [\n            {\n              \"physicalLocation\": {\n                \"artifactLocation\": {\n                  \"uri\": \"studies/canonical-confusables/fixtures/identifiers.mjs\"\n                },\n                \"region\": {\n                  \"startLine\": 3,\n                  \"startColumn\": 7,\n                  \"endLine\": 3,\n                  \"endColumn\": 12\n                }\n              }\n            }\n          ]\n        },\n        {\n          \"ruleId\": \"confusable\",\n          \"level\": \"error\",\n          \"message\": {\n            \"text\": \"\\\"copé\\\" is visually confusable with 1 other spelling(s) used elsewhere in this file (they share the skeleton \\\"copé\\\") -- this is how lookalike identifier/variable attacks work.\"\n          },\n          \"locations\": [\n            {\n              \"physicalLocation\": {\n                \"artifactLocation\": {\n                  \"uri\": \"studies/canonical-confusables/fixtures/identifiers.mjs\"\n                },\n                \"region\": {\n                  \"startLine\": 4,\n                  \"startColumn\": 29,\n                  \"endLine\": 4,\n                  \"endColumn\": 33\n                }\n              }\n            }\n          ]\n        },\n        {\n          \"ruleId\": \"confusable\",\n          \"level\": \"error\",\n          \"message\": {\n            \"text\": \"\\\"соре́\\\" is visually confusable with 1 other spelling(s) used elsewhere in this file (they share the skeleton \\\"copé\\\") -- this is how lookalike identifier/variable attacks work.\"\n          },\n          \"locations\": [\n            {\n              \"physicalLocation\": {\n                \"artifactLocation\": {\n                  \"uri\": \"studies/canonical-confusables/fixtures/identifiers.mjs\"\n                },\n                \"region\": {\n                  \"startLine\": 4,\n                  \"startColumn\": 35,\n                  \"endLine\": 4,\n                  \"endColumn\": 40\n                }\n              }\n            }\n          ]\n        }\n      ],\n      \"invocations\": [\n        {\n          \"executionSuccessful\": true,\n          \"toolExecutionNotifications\": []\n        }\n      ],\n      \"properties\": {\n        \"skipped\": []\n      }\n    }\n  ]\n}\n",
+      "stderr": ""
+    },
+    {
+      "command": "ghostchars identifiers.mjs --no-config --format github",
+      "exitCode": 1,
+      "stdout": "::error file=studies/canonical-confusables/fixtures/identifiers.mjs,line=2,col=7,endLine=2,endColumn=11,title=ghostchars%3A confusable::\"copé\" is visually confusable with 1 other spelling(s) used elsewhere in this file (they share the skeleton \"copé\") -- this is how lookalike identifier/variable attacks work.\n::error file=studies/canonical-confusables/fixtures/identifiers.mjs,line=3,col=7,endLine=3,endColumn=12,title=ghostchars%3A confusable::\"соре́\" is visually confusable with 1 other spelling(s) used elsewhere in this file (they share the skeleton \"copé\") -- this is how lookalike identifier/variable attacks work.\n::error file=studies/canonical-confusables/fixtures/identifiers.mjs,line=4,col=29,endLine=4,endColumn=33,title=ghostchars%3A confusable::\"copé\" is visually confusable with 1 other spelling(s) used elsewhere in this file (they share the skeleton \"copé\") -- this is how lookalike identifier/variable attacks work.\n::error file=studies/canonical-confusables/fixtures/identifiers.mjs,line=4,col=35,endLine=4,endColumn=40,title=ghostchars%3A confusable::\"соре́\" is visually confusable with 1 other spelling(s) used elsewhere in this file (they share the skeleton \"copé\") -- this is how lookalike identifier/variable attacks work.\n",
+      "stderr": ""
+    },
+    {
+      "command": "ghostchars identifiers.mjs --no-config --format summary",
+      "exitCode": 1,
+      "stdout": "studies/canonical-confusables/fixtures/identifiers.mjs\n  error  confusable  x4  2:7 .. 4:35\n\nghostchars: 4 error(s), 0 warning(s), 0 info in 1 file(s) scanned.\n",
+      "stderr": ""
+    }
+  ],
+  "repairs": [
+    {
+      "options": [
+        "--fix",
+        "--dry-run"
+      ],
+      "exitCode": 1,
+      "sourceUnchanged": true
+    },
+    {
+      "options": [
+        "--fix"
+      ],
+      "exitCode": 1,
+      "sourceUnchanged": true
+    }
+  ]
+}

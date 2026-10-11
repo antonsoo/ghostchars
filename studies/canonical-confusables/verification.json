@@ -1,0 +1,169 @@
+{
+  "implementation_commit": "4b4a55aceeab9278b08d9bb52ff7803a3380ec38",
+  "source": "fresh git archive; separate npm ci at package and web roots",
+  "package": {
+    "name": "antonsoloviev-ghostchars-0.1.5.tgz",
+    "sha256": "307194ceffa2984deada1c85d900370459c5da7188485d38a38eae55881e28ae",
+    "bytes": 151770,
+    "fresh_tarball_install": true,
+    "all_dist_bytes_equal_to_clean_build": true,
+    "install_scripts_required": false
+  },
+  "checks": {
+    "package": [
+      "npm ci",
+      "npm run lint",
+      "npm run typecheck",
+      "npm run build",
+      "npm test (227 passed)"
+    ],
+    "web": [
+      "npm --prefix web ci",
+      "npm --prefix web run lint",
+      "npm --prefix web run build (includes typecheck)",
+      "npm --prefix web run test:browser (34 passed; Chromium and Firefox, desktop and 375px)"
+    ],
+    "installed": [
+      "15 independent ICU vectors on Node 20.0.0 and 26.7.0",
+      "JSON/SARIF/GitHub/summary gates all exit 1",
+      "--fix and --fix --dry-run retain fixture bytes",
+      "ghostchars src exits 0"
+    ]
+  },
+  "installed_source_scan": {
+    "exit_code": 0,
+    "stdout": "ghostchars: no findings in 40 file(s) (30ms).\n",
+    "stderr": ""
+  },
+  "local_preview_bytes_match_build": {
+    "favicon.svg": {
+      "sha256": "8a223c5369b990e7795446b06d4c17559a05ff6ed0d1d66e85e64015ed05395f",
+      "bytes": 360
+    },
+    "index.html": {
+      "sha256": "db07d321b184279999506630652d48c1ec07294840b9a2a9282803753c03bbf5",
+      "bytes": 2259
+    },
+    "assets/ibm-plex-mono-600-latin-BgSNZQsw.woff2": {
+      "sha256": "0d1f0b8d0722224e32e9f28261bdc86c79115be73444ae5eceb73976a1bcdf83",
+      "bytes": 15620
+    },
+    "assets/ibm-plex-mono-500-cyrillic-Bq9vWWag.woff2": {
+      "sha256": "1d89462e86cb8e87e7e9d6f6635605bd7c3081baca6caaecee84916bf7b60edc",
+      "bytes": 8460
+    },
+    "assets/inter-vietnamese-CBcvBZtf.woff2": {
+      "sha256": "5c66f9e07e90c6d4ac4922cc68d60de26c17b1858e677fb5e603fce3952b3ff2",
+      "bytes": 10252
+    },
+    "assets/ibm-plex-mono-500-vietnamese-DZ4AoWbu.woff2": {
+      "sha256": "781633d95de88040fb77141d1e65d928c87c0144691fbc74da5a64d137a7e910",
+      "bytes": 6040
+    },
+    "assets/index-gL_LL1ZC.css": {
+      "sha256": "ee98171d105e9b37dbbfad72ae2ce4cbd1220950de77914dbaa4d4d95332ff4c",
+      "bytes": 24131
+    },
+    "assets/inter-greek-CkhJZR-_.woff2": {
+      "sha256": "1be3448e292fbf05ffe176fe1e43f135013d50b1e7d324ad1a558f623d3bb6f6",
+      "bytes": 18996
+    },
+    "assets/inter-cyrillic-ext-BOeWTOD4.woff2": {
+      "sha256": "ca157063339ac4ad418f214f3abfed119b0798ab4d377386ce5c9e5a7a435ebd",
+      "bytes": 25960
+    },
+    "assets/inter-latin-Dx4kXJAl.woff2": {
+      "sha256": "3100e775e8616cd2611beecfa23a4263d7037586789b43f035236a2e6fbd4c62",
+      "bytes": 48256
+    },
+    "assets/inter-greek-ext-DlzME5K_.woff2": {
+      "sha256": "6e9e020a25f9b56d418f2c085b1d3c09725a4da23fe693a5b463064606732190",
+      "bytes": 11232
+    },
+    "assets/space-grotesk-latin-ext-D9tNdqV9.woff2": {
+      "sha256": "952dddb45d2f96f71cbf3b7f510b24379afc3c89ea02fcf89d377b45d62c0166",
+      "bytes": 18940
+    },
+    "assets/space-grotesk-vietnamese-D0rl6rjA.woff2": {
+      "sha256": "8895e3d49825128bfa5238e4c96e9b432d7a3dadbe5c17c6081267398305dc71",
+      "bytes": 6712
+    },
+    "assets/inter-cyrillic-DqGufNeO.woff2": {
+      "sha256": "71d5ee93cc1e9f1d520a3a8b66456de18c7879d8df09d57fcd2eaff75fef0075",
+      "bytes": 18748
+    },
+    "assets/space-grotesk-latin-BhU9QXUp.woff2": {
+      "sha256": "0640890476fc1198ab4de571fb658de443c4d85b66466ec09534a8737ab1ce9d",
+      "bytes": 22288
+    },
+    "assets/scan.worker-7vXU2DQi.js.map": {
+      "sha256": "73abe8c5b74567ed2fec16ff2e412e0a04b99693b00d6d74175f9050047bba0b",
+      "bytes": 538904
+    },
+    "assets/ibm-plex-mono-400-latin-DMJ8VG8y.woff2": {
+      "sha256": "08949f728dc52d528e69b1667d15c89a5686a4ee9a296ff90983985f99c380f7",
+      "bytes": 14708
+    },
+    "assets/ibm-plex-mono-600-latin-ext-D38SheWl.woff2": {
+      "sha256": "32057cf50dd14bdb21a2c93766c4a2c43e4abe688ea3922df3203cac7751a98b",
+      "bytes": 14328
+    },
+    "assets/scan.worker-7vXU2DQi.js": {
+      "sha256": "d5f6dc81072add00f5268b6c719e0173f7d2846b8f45c1f343b2959d89e730bf",
+      "bytes": 154271
+    },
+    "assets/ibm-plex-mono-600-cyrillic-CTOM6hUh.woff2": {
+      "sha256": "2b05a8695c7f9f4abd7178b279646a3b005a8ce57546bef6fd145f25d131e0aa",
+      "bytes": 9352
+    },
+    "assets/ibm-plex-mono-400-latin-ext-BmRBH3aV.woff2": {
+      "sha256": "6bc0f226a5b7884a8170e3f62c63d7675609d4631bdc5931b5cdab81821f00eb",
+      "bytes": 13348
+    },
+    "assets/ibm-plex-mono-500-latin-ext-CAhNIIs5.woff2": {
+      "sha256": "6bb06407c97584b0867a959e05e8874693bfeb8c317de190811c51598f2d99ea",
+      "bytes": 13432
+    },
+    "assets/ibm-plex-mono-400-vietnamese-BulugwFq.woff2": {
+      "sha256": "62632b6375305e70ddcafdd895218e6ae41a184fcd280a69c739460604ca00a9",
+      "bytes": 5868
+    },
+    "assets/ibm-plex-mono-500-latin-DSY6xOcd.woff2": {
+      "sha256": "01d285447409c8a588692162439a038b8cbd7871309ee20267b0d2d91c6e8e22",
+      "bytes": 14888
+    },
+    "assets/index-EkR-YW6S.js.map": {
+      "sha256": "15157a494963324b25cc053ccec3d42052d4fe21616c0faaafbb3563c486a21e",
+      "bytes": 29863
+    },
+    "assets/ibm-plex-mono-600-vietnamese-D2EvbN8M.woff2": {
+      "sha256": "51b74d53e106ba8a26dd33464b231a562069be2a234b923c115beb622e6f6bc6",
+      "bytes": 6932
+    },
+    "assets/ibm-plex-mono-400-cyrillic-ext-xuaO2J-f.woff2": {
+      "sha256": "f8c22ec1804bd6966b70f43ac7c327025645b4c09597117fca2a5a6c750106fe",
+      "bytes": 6912
+    },
+    "assets/index-EkR-YW6S.js": {
+      "sha256": "8b0a4115b4e2c6255c3eebba9a1520936765a5bea7347de38bbd18848c0e6e54",
+      "bytes": 17094
+    },
+    "assets/ibm-plex-mono-600-cyrillic-ext-V-xxqcpd.woff2": {
+      "sha256": "83109cdd4f8665b475dfc11d61bd44da328bf7e6eab3d3953d39c49b1b9f6015",
+      "bytes": 7692
+    },
+    "assets/inter-latin-ext-DO1Apj_S.woff2": {
+      "sha256": "34b9c504cab7a73e37b746343a449132e56cf7b5481af2cb81dc74dcff25c956",
+      "bytes": 85068
+    },
+    "assets/ibm-plex-mono-500-cyrillic-ext-BqneJy0T.woff2": {
+      "sha256": "3febe5c7f22e4b07b4552738673c3dbe8bced2dc5f48b866edf7ccd9552d109a",
+      "bytes": 6972
+    },
+    "assets/ibm-plex-mono-400-cyrillic-BSMlKf0J.woff2": {
+      "sha256": "7635422bd10ddbbcb0e0caa1154b928298f5c8319b8c00b30978d4395f4783ce",
+      "bytes": 8356
+    }
+  },
+  "publication": "No npm publish, tag, push or hosted deployment performed."
+}
