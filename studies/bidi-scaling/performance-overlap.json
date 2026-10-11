@@ -1,0 +1,135 @@
+{
+  "node": "v26.7.0",
+  "environment": "14 vCPU WSL2 Linux, 48 GB RAM; host not isolated",
+  "baselineBidiSha256": "3443382a67e9952abefafbb7b37727cf42e237d7f26d31f6b3d922abfff7c7b1",
+  "currentBidiSha256": "263a1775c64a5942a896223dabe3e65abbeb228ab0c6ce522e37e0737e6c1767",
+  "scope": "Controlled dense-control stress inputs, not observed attacks or a production distribution. Full scanText; JSON hashing excluded from timings. Two small warmups per version; three timed scans per case.",
+  "results": [
+    {
+      "name": "unmatched",
+      "controlsPerHalf": 4000,
+      "codeUnits": 8000,
+      "bytes": 24000,
+      "inputSha256": "633dae4366a0e1eb8353a8701607ea8de5d2280c873c7b8baa149b196857e2a8",
+      "findings": 16000,
+      "identicalFindingsSha256": "bfb1ade4119b6ccfabb064bc1501e9f45ced384ec7cc7c0c8bdfd9ca2414c38a",
+      "runsMs": {
+        "before": [
+          98.62882299999998,
+          233.99462800000003,
+          209.25987499999997
+        ],
+        "after": [
+          19.066993000000025,
+          11.651816999999994,
+          12.587856999999985
+        ]
+      },
+      "medianMs": {
+        "before": 209.25987499999997,
+        "after": 12.587856999999985
+      }
+    },
+    {
+      "name": "unmatched",
+      "controlsPerHalf": 16000,
+      "codeUnits": 32000,
+      "bytes": 96000,
+      "inputSha256": "642be5497bd39965ef5242b0a7ecb77724edd47826428c7edbcfc01a5207a32b",
+      "findings": 64000,
+      "identicalFindingsSha256": "3b5ab2fd1521042f98bdc92f24759c56f02bf3fa1a0e7ea2d7ffd5561354e98f",
+      "runsMs": {
+        "before": [
+          3118.7135160000003,
+          992.6005850000001,
+          983.154775
+        ],
+        "after": [
+          57.7887410000003,
+          30.456553999999414,
+          36.165484000000106
+        ]
+      },
+      "medianMs": {
+        "before": 992.6005850000001,
+        "after": 36.165484000000106
+      }
+    },
+    {
+      "name": "unmatched",
+      "controlsPerHalf": 32000,
+      "codeUnits": 64000,
+      "bytes": 192000,
+      "inputSha256": "0a24d21a7463e72a8c4cdb0086de8615a0dcd698ab56c9c0d8107723d5a9a7f4",
+      "findings": 128000,
+      "identicalFindingsSha256": "1fad322cd25a784633277db594bd1d421542cc1f3936dd011bf1328b562cc409",
+      "runsMs": {
+        "before": [
+          6804.026045999999,
+          6317.709295000001,
+          5785.134664000001
+        ],
+        "after": [
+          135.45805500000097,
+          55.0503830000016,
+          88.84039200000188
+        ]
+      },
+      "medianMs": {
+        "before": 6317.709295000001,
+        "after": 88.84039200000188
+      }
+    },
+    {
+      "name": "unmatched",
+      "controlsPerHalf": 48000,
+      "codeUnits": 96000,
+      "bytes": 288000,
+      "inputSha256": "f7c54ba963f5b1361f5bddef1990325d0836ac03bedc6cd458b0f76e66849ee1",
+      "findings": 192000,
+      "identicalFindingsSha256": "0583a2d4b444e0d202dff41bb5b6b62a7bbd0c4659f72b47ad39acb46b3fc596",
+      "runsMs": {
+        "before": [
+          16084.276271000002,
+          16161.534656000003,
+          15948.568233000005
+        ],
+        "after": [
+          131.3984700000001,
+          127.77439700000104,
+          120.03398700000253
+        ]
+      },
+      "medianMs": {
+        "before": 16084.276271000002,
+        "after": 127.77439700000104
+      }
+    },
+    {
+      "name": "nested",
+      "controlsPerHalf": 32000,
+      "codeUnits": 64000,
+      "bytes": 192000,
+      "inputSha256": "a5bb351e8922dc6d38e4f40faee128d0fb4274fa074441e0c587917d0cddb508",
+      "findings": 64000,
+      "identicalFindingsSha256": "6b4d79b1576963dfb7985a659c851af5c479df47dafde3e840a93a783f365122",
+      "runsMs": {
+        "before": [
+          2710.8228880000097,
+          2467.336065999989,
+          2656.9497499999998
+        ],
+        "after": [
+          48.39096800000698,
+          35.439821000007214,
+          35.68719899999269
+        ]
+      },
+      "medianMs": {
+        "before": 2656.9497499999998,
+        "after": 35.68719899999269
+      }
+    }
+  ],
+  "context": "Initial exploratory matrix; some lint/typecheck/web-build work overlapped this run. Retained separately from the later measurement with these jobs stopped."
+}

@@ -1,0 +1,12 @@
+{
+  "browser": "firefox",
+  "offline": true,
+  "inputCodeUnits": 64009,
+  "status": "Scanned 64,009 code units (64,009 code points); 128,000 findings.",
+  "renderedFindings": 300,
+  "summary": "64,000 code units removed. 0 findings remain under the supported rules.",
+  "sanitizedText": "keep this",
+  "copiedText": "keep this",
+  "pageErrorsOrExternalRequests": [],
+  "cspViolations": []
+}

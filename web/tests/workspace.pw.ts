@@ -1,6 +1,7 @@
 import { test, expect } from '@playwright/test';
 import type { Page } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
+import { mkdir, writeFile } from 'node:fs/promises';
 
 declare global {
   interface Window {
@@ -188,6 +189,43 @@ test('dense input bounds rendering without truncating scan totals or copied outp
   await expect(page.locator('#preview-note')).toContainText('sanitized output cover the complete input');
   await expect(page.locator('#all-findings .list-limit')).toContainText('300 of 2,000');
   await expect(page.locator('#sanitized-output')).toHaveValue('a'.repeat(2000));
+});
+
+test('dense unmatched bidi controls retain complete totals and sanitized text offline', async ({ page, context, browserName }) => {
+  await context.setOffline(true);
+  const source = 'keep ' + '\u202e'.repeat(32_000) + '\u2069'.repeat(32_000) + 'this';
+  await inspect(page, source);
+  await expect(page.locator('#scan-status')).toContainText('128,000 findings');
+  await expect(page.locator('#all-findings button.loc')).toHaveCount(300);
+  await expect(page.locator('#all-findings .list-limit')).toContainText('300 of 128,000');
+  await expect(page.locator('#sanitized-output')).toHaveValue('keep this');
+  await expect(page.locator('#remaining-findings')).toBeEmpty();
+  await page.evaluate(() => Object.defineProperty(navigator, 'clipboard', { configurable: true,
+    value: { writeText: async (text: string) => { window.__copied = text; } } }));
+  await page.locator('#copy-clean').click();
+  await expect(page.locator('#copy-status')).toContainText('Sanitized output copied.');
+  expect(await page.evaluate(() => window.__copied)).toBe('keep this');
+  if (process.env.CAPTURE_BIDI_EVIDENCE) {
+    await mkdir('../docs/assets/bidi-scaling', { recursive: true });
+    for (const width of [1440, 375]) {
+      await page.setViewportSize({ width, height: 950 });
+      await page.locator('#summary').evaluate(element => {
+        element.scrollIntoView({ block: 'start' });
+        window.scrollBy(0, -24);
+      });
+      await page.screenshot({ path: `../docs/assets/bidi-scaling/${browserName}-${width}.png` });
+    }
+    await writeFile(`../studies/bidi-scaling/browser-${browserName}.json`, JSON.stringify({
+      browser: browserName, offline: true, inputCodeUnits: source.length,
+      status: await page.locator('#scan-status').textContent(),
+      renderedFindings: await page.locator('#all-findings button.loc').count(),
+      summary: await page.locator('#sanitized-summary').textContent(),
+      sanitizedText: await page.locator('#sanitized-output').inputValue(),
+      copiedText: await page.evaluate(() => window.__copied),
+      pageErrorsOrExternalRequests: errors.get(page),
+      cspViolations: await page.evaluate(() => window.__csp),
+    }, null, 2) + '\n');
+  }
 });
 
 test('lamp changes reuse cached evidence and clear removes previous text and findings', async ({ page }) => {

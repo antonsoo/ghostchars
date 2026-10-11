@@ -14,6 +14,10 @@ All notable changes to this project are documented in this file.
 
 ### Fixed
 
+- Bidi isolate matching no longer copies and reverses the whole control stack
+  for each PDI. Dense or deeply nested controls retain every finding while
+  avoiding quadratic stack work in scans, repairs and the browser worker.
+  Before/after CLI and compatibility evidence: `studies/bidi-scaling`.
 - Unreadable files and directories, failed Git enumeration, missing requested
   paths and invalid encodings now produce an incomplete scan with exit 2.
   They remain visible in JSON, SARIF, GitHub annotations and human reports.

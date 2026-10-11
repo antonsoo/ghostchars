@@ -102,6 +102,13 @@ link asks for the real target path. [Filesystem reproductions and installed
 CLI verification](studies/discovery-evidence/README.md) retain the before/after
 results. These changes have not been released to npm.
 
+Dense bidi controls also avoid repeated full-stack searches in the source
+checkout. A controlled 192 KB file scanned in 0.28 seconds versus 2.78 seconds
+before the change; repair took 0.43 seconds versus 8.59 seconds, retaining
+identical findings and repaired bytes. These are local single-run observations,
+not production traffic or portable timing guarantees. [Reproduction, complete
+output comparisons and offline browser evidence](studies/bidi-scaling/README.md).
+
 ### As an LLM input filter
 
 ```sh
