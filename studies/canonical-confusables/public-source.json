@@ -1,0 +1,58 @@
+{
+  "verified_at_utc": "2026-10-11T19:21:49.666275+00:00",
+  "repository": "https://github.com/antonsoo/ghostchars",
+  "source_commit": "1d43b09e87a34a032793b694c97ef195eaac4ac1",
+  "remote_main_matches_source": true,
+  "gh_pages_ref_observed": "1850946585995ad189416c171873a0be96aaf4e9",
+  "pinned_raw_files": {
+    "src/core/rules/confusables.ts": {
+      "url": "https://raw.githubusercontent.com/antonsoo/ghostchars/1d43b09e87a34a032793b694c97ef195eaac4ac1/src/core/rules/confusables.ts",
+      "bytes": 20382,
+      "sha256": "de9c3c39e54dedcbf79c1ba8c578edaa411624bee4c014335babfac2c22d7997",
+      "matches_checkout": true
+    },
+    "src/core/scanText.ts": {
+      "url": "https://raw.githubusercontent.com/antonsoo/ghostchars/1d43b09e87a34a032793b694c97ef195eaac4ac1/src/core/scanText.ts",
+      "bytes": 2876,
+      "sha256": "bd0238203becda9eba14b41dc77da8cac5f1df6a970a8cf98e19ff3bdfa49b00",
+      "matches_checkout": true
+    },
+    "dist/cli.js": {
+      "url": "https://raw.githubusercontent.com/antonsoo/ghostchars/1d43b09e87a34a032793b694c97ef195eaac4ac1/dist/cli.js",
+      "bytes": 235751,
+      "sha256": "b28fd1914b9513e415270a44ad35f4f0cb1a7928885f3e51257e4d0cce8ba798",
+      "matches_checkout": true
+    },
+    "tests/canonicalConfusables.spec.ts": {
+      "url": "https://raw.githubusercontent.com/antonsoo/ghostchars/1d43b09e87a34a032793b694c97ef195eaac4ac1/tests/canonicalConfusables.spec.ts",
+      "bytes": 2622,
+      "sha256": "fef63e63f4538cac95225151a742410fe9a5a6e95b3885e5312be83dfeb977fb",
+      "matches_checkout": true
+    },
+    "studies/canonical-confusables/README.md": {
+      "url": "https://raw.githubusercontent.com/antonsoo/ghostchars/1d43b09e87a34a032793b694c97ef195eaac4ac1/studies/canonical-confusables/README.md",
+      "bytes": 5695,
+      "sha256": "5506e7608960ec42b52659afb3d45eec8c30aec9bbd7a7c4cba5a509bc16c142",
+      "matches_checkout": true
+    },
+    "studies/canonical-confusables/verification.json": {
+      "url": "https://raw.githubusercontent.com/antonsoo/ghostchars/1d43b09e87a34a032793b694c97ef195eaac4ac1/studies/canonical-confusables/verification.json",
+      "bytes": 6497,
+      "sha256": "8c4f52d29846a5111a7b553ccfe032d61cb172fea1ffabec590de7f42e5948bd",
+      "matches_checkout": true
+    },
+    "studies/canonical-confusables/corpus.json": {
+      "url": "https://raw.githubusercontent.com/antonsoo/ghostchars/1d43b09e87a34a032793b694c97ef195eaac4ac1/studies/canonical-confusables/corpus.json",
+      "bytes": 1622,
+      "sha256": "b629fe1a6cbbd48ca4dd4d949b5dde902c75c1707aa120fa60a424319dbbfe12",
+      "matches_checkout": true
+    },
+    "studies/canonical-confusables/fixtures/identifiers.mjs": {
+      "url": "https://raw.githubusercontent.com/antonsoo/ghostchars/1d43b09e87a34a032793b694c97ef195eaac4ac1/studies/canonical-confusables/fixtures/identifiers.mjs",
+      "bytes": 181,
+      "sha256": "49000a26d9b76599022159befc897fe3660ec9bfcf05ab136b064e9adc0690ab",
+      "matches_checkout": true
+    }
+  },
+  "scope": "Source publication verified. No npm publish or manual hosted deployment performed; hosted application bytes were not checked in this receipt."
+}

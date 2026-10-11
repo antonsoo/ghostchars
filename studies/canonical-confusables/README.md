@@ -96,6 +96,11 @@ These are local source and installed-artifact checks, retained with the source
 correction. They do not establish what the hosted demo currently serves. No
 npm release was made for this change.
 
+[public-source.json](public-source.json) separately verifies the pushed source
+commit against GitHub's `main` ref and byte-compares eight pinned raw files,
+including the scanner, bundled CLI, regression and study evidence. This source
+publication receipt does not assert a package release or hosted deployment.
+
 [verification.json](verification.json) records a fresh archive build: package
 lint, types, 227 tests; web lint, types, build and 34 Chromium/Firefox workflows.
 The packed tarball was installed separately without running package scripts;
