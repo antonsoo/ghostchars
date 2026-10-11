@@ -1,0 +1,51 @@
+{
+  "node": "v26.7.0",
+  "manifestSha256": "4918139517b95809158fbf484befc670943054fbacd9ad7ada50034a2146ce84",
+  "docs": 83494,
+  "bytes": 155361980,
+  "inputSha256": "1175ffa359bfdadcd06d38b6f7cbc850e390c174d319937decf41536796f3cc4",
+  "before": {
+    "findings": 18582,
+    "outputSha256": "a9abb0a963624b24752ba9c5fc4ebfc087331fdb6a4b4d976ce1296f5144eb75",
+    "scanMs": 9344.761158999863
+  },
+  "after": {
+    "findings": 18582,
+    "outputSha256": "e97f1fe18c174ff1de95293eb7d9f411b8761c18a9690b185b9663fc68f06a90",
+    "scanMs": 9285.230729999541
+  },
+  "timingScope": "One sequential local pass; baseline runs first for each input. Not an isolated benchmark.",
+  "changed": [
+    {
+      "source": "awesome-chatgpt-prompts",
+      "file": "src/content/book/az/06-chain-of-thought.mdx",
+      "inputSha256": "e17a9205ca66939b0853acc1a5af79502fba2975ce582d1680950c7acf7aefb7",
+      "before": 3,
+      "after": 3,
+      "added": [],
+      "removed": [],
+      "diagnosticsChanged": 3
+    },
+    {
+      "source": "awesome-chatgpt-prompts",
+      "file": "src/content/kids/tr/4-4-world-builder.mdx",
+      "inputSha256": "a06d275ee0a2b7df9f529017b72782cab100b20063aca1b4d5fa2dfe6ab0fa4c",
+      "before": 2,
+      "after": 2,
+      "added": [],
+      "removed": [],
+      "diagnosticsChanged": 2
+    },
+    {
+      "source": "L1B3RT4S",
+      "file": "GROK-MEGA.mkd",
+      "inputSha256": "c5ddaa0675c85cc168a45c7f0337ba20a767863320b40a317cf30c37a59c093b",
+      "before": 8946,
+      "after": 8946,
+      "added": [],
+      "removed": [],
+      "diagnosticsChanged": 53
+    }
+  ],
+  "unrelatedRulesIdentical": true
+}

@@ -14,6 +14,12 @@ All notable changes to this project are documented in this file.
 
 ### Fixed
 
+- Canonical accents no longer hide cross-script identifier collisions. Comparison
+  keys use NFD before and after confusable mapping; canonically equivalent-only
+  prose spellings remain quiet. Original source ranges and text are preserved,
+  including CR-only line locations. Independent ICU vectors, an executable
+  JavaScript counterexample and a hash-checked public-text replay are retained
+  in `studies/canonical-confusables`.
 - Bidi isolate matching no longer copies and reverses the whole control stack
   for each PDI. Dense or deeply nested controls retain every finding while
   avoiding quadratic stack work in scans, repairs and the browser worker.

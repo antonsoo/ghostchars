@@ -3,10 +3,15 @@ import { unicodeName } from '../names.js';
 import type { Finding } from '../types.js';
 import { scriptsOf } from '../unicode-utils.js';
 import { isStyledChar } from './styledText.js';
+import { positionIndex, type PositionLookup } from './position.js';
 
 // Follows Unicode UTS #39 (Unicode Security Mechanisms) "skeleton" approach:
-// map every code point in an identifier through confusables.txt's prototype
-// mapping, concatenate the results, and compare. Two spellings that are not
+// canonically decompose each identifier, map its code points through
+// confusables.txt, then canonically decompose the result before comparing.
+// These are UTS #39's canonical-normalization steps around the prototype
+// mapping; the rule's prose/ASCII exclusions below are deliberate. It does
+// not implement full UTS #39 conformance or bidi skeleton reordering.
+// Two spellings that are not
 // character-for-character identical but reduce to the same skeleton are the
 // definition of a confusable pair (e.g. an all-Latin "paypal" vs the same
 // word with its "a" swapped for Cyrillic small letter a, U+0430 -- written
@@ -49,12 +54,14 @@ function skeletonOf(token: string): string {
   if (ASCII_RE.test(token) && ![...token].some((c) => ASCII_CONFUSABLE_CHARS.has(c))) return token;
   const map = getConfusableMap();
   let out = '';
-  for (const ch of token) {
+  for (const ch of token.normalize('NFD')) {
     const cp = ch.codePointAt(0)!;
     const mapped = map.get(cp);
     out += mapped ? String.fromCodePoint(...mapped) : ch;
   }
-  return out;
+  // Mappings can introduce decomposable characters or change combining classes.
+  // Normalize only the comparison key: source spelling and positions stay intact.
+  return out.normalize('NFD');
 }
 
 /** For each character of a word that belongs to a script at all, the scripts it can be read as
@@ -224,25 +231,6 @@ function forEachToken(text: string, visit: (token: Token) => void): void {
   }
 }
 
-/** 1-based line and column of a UTF-16 offset, counting "\n" as the line break. Found on first use. */
-function lineLookup(text: string): (index: number) => { line: number; column: number } {
-  let newlines: number[] | undefined;
-  return (index) => {
-    if (!newlines) {
-      newlines = [];
-      for (let i = 0; i < text.length; i++) if (text.charCodeAt(i) === 0x0a) newlines.push(i);
-    }
-    let lo = 0;
-    let hi = newlines.length;
-    while (lo < hi) {
-      const mid = (lo + hi) >>> 1;
-      if (newlines[mid]! < index) lo = mid + 1;
-      else hi = mid;
-    }
-    return { line: lo + 1, column: index - (lo === 0 ? 0 : newlines[lo - 1]! + 1) + 1 };
-  };
-}
-
 // A pure-ASCII lookalike (rn/m, O/0, l/1/I) is a font-rendering problem, not
 // the Unicode cross-script attack this tool targets, and treating it as one
 // is noisy: English prose is full of accidental ASCII near-matches (this
@@ -294,14 +282,12 @@ function isStyledWord(token: string): boolean {
   return styled;
 }
 
-export function scanConfusables(text: string): Finding[] {
+export function scanConfusables(text: string, positionAt: PositionLookup = positionIndex(text)): Finding[] {
   const findings: Finding[] = [];
-  const lineOf = lineLookup(text);
   const span = (token: Token): Pick<Finding, 'start' | 'end'> => {
-    const { line, column } = lineOf(token.index);
     return {
-      start: { line, column, offset: token.index },
-      end: { line, column: column + token.text.length, offset: token.index + token.text.length },
+      start: positionAt(token.index),
+      end: positionAt(token.index + token.text.length),
     };
   };
 
@@ -366,6 +352,11 @@ export function scanConfusables(text: string): Finding[] {
     const group = spelled.filter((t) => !isStyledWord(t.text));
     const distinctSpellings = new Set(group.map((t) => t.text));
     if (distinctSpellings.size < 2) continue;
+    // A composed/decomposed name in prose is still the same text. Only report
+    // a collision if canonically different spellings also share this skeleton.
+    // Language-specific identifier equality (e.g. JavaScript's raw code units)
+    // is outside this prose-aware rule; never rewrite the original spelling.
+    if (new Set([...distinctSpellings].map(s => s.normalize('NFD'))).size < 2) continue;
     if (![...distinctSpellings].some((s) => !isAscii(s))) continue; // ASCII-vs-ASCII: out of scope, see note above
     // Two words of one script that share a skeleton are two words: confusables.txt folds
     // lookalikes inside a script too (Hebrew vav and final nun both reduce to "l"), so ordinary

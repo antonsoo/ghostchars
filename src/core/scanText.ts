@@ -34,7 +34,7 @@ export function scanText(text: string, options: ScanOptions = {}): ScanResult {
     ...scanTags(text, positionAt),
     ...scanVariationSelectors(text, positionAt),
     ...scanInvisible(text, positionAt),
-    ...scanConfusables(text),
+    ...scanConfusables(text, positionAt),
     ...scanStyledText(text, positionAt),
     ...scanWhitespaceAndControl(text, positionAt),
   ];

@@ -97,6 +97,36 @@ test('finding locations select the exact UTF-16 range after an astral character'
   expect(await page.locator('#input').evaluate((el: HTMLTextAreaElement) => el.value.slice(el.selectionStart, el.selectionEnd))).toBe('\u200d');
 });
 
+test('canonical lookalikes retain their original spelling in selection and copied text', async ({ page, browserName }) => {
+  const left = 'cop\u00e9', right = '\u0441\u043e\u0440\u0435\u0301';
+  const source = `// Two distinct JavaScript bindings\nconst ${left} = "allowed";\nconst ${right} = "substituted";\nconsole.log(${left}, ${right});`;
+  await inspect(page, source);
+  await expect(page.locator('#scan-status')).toContainText('4 findings');
+  await expect(page.locator('#revealed .gc-confusable')).toHaveCount(4);
+  await expect(page.locator('#sanitized-output')).toHaveValue(source);
+  const locations = page.locator('#all-findings').getByRole('button', { name: /Select confusable/ });
+  await expect(locations).toHaveCount(4);
+  const selected: string[] = [];
+  for (let i = 0; i < 4; i++) {
+    await locations.nth(i).click();
+    selected.push(await page.locator('#input').evaluate((el: HTMLTextAreaElement) => el.value.slice(el.selectionStart, el.selectionEnd)));
+  }
+  expect(selected).toEqual([left, right, left, right]);
+  await page.evaluate(() => Object.defineProperty(navigator, 'clipboard', { configurable: true, value: { writeText: async (text: string) => { window.__copied = text; } } }));
+  await page.locator('#copy-clean').click();
+  await expect(page.locator('#copy-status')).toContainText('Sanitized output copied.');
+  expect(await page.evaluate(() => window.__copied)).toBe(source);
+  await page.setViewportSize({ width: 1280, height: 1000 });
+  await page.locator('#input').blur();
+  await mkdir('../docs/assets/canonical-confusables', { recursive: true });
+  await page.screenshot({ path: `../docs/assets/canonical-confusables/${browserName}.png`, fullPage: true });
+  await writeFile(`../studies/canonical-confusables/browser-${browserName}.json`, JSON.stringify({
+    browser: browserName, findings: 4, selected, sourcePreserved: true,
+    sanitizedCopyPreserved: true, pageErrors: errors.get(page),
+    cspViolations: await page.evaluate(() => window.__csp),
+  }, null, 2) + '\n');
+});
+
 test('clipboard rejection selects actual sanitized text for manual copying', async ({ page }) => {
   await inspect(page, 'p\u0430ypal\u200b');
   await page.evaluate(() => Object.defineProperty(navigator, 'clipboard', { configurable: true, value: { writeText: () => Promise.reject(new Error('denied')) } }));

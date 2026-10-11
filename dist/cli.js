@@ -6727,12 +6727,12 @@ function skeletonOf(token) {
   if (ASCII_RE.test(token) && ![...token].some((c) => ASCII_CONFUSABLE_CHARS.has(c))) return token;
   const map = getConfusableMap();
   let out = "";
-  for (const ch of token) {
+  for (const ch of token.normalize("NFD")) {
     const cp = ch.codePointAt(0);
     const mapped = map.get(cp);
     out += mapped ? String.fromCodePoint(...mapped) : ch;
   }
-  return out;
+  return out.normalize("NFD");
 }
 function scriptSetsOfToken(token) {
   if (ASCII_RE.test(token)) return [];
@@ -6865,23 +6865,6 @@ function forEachToken(text, visit) {
     if (match.index === IDENTIFIER_RE.lastIndex) IDENTIFIER_RE.lastIndex++;
   }
 }
-function lineLookup(text) {
-  let newlines;
-  return (index) => {
-    if (!newlines) {
-      newlines = [];
-      for (let i = 0; i < text.length; i++) if (text.charCodeAt(i) === 10) newlines.push(i);
-    }
-    let lo = 0;
-    let hi = newlines.length;
-    while (lo < hi) {
-      const mid = lo + hi >>> 1;
-      if (newlines[mid] < index) lo = mid + 1;
-      else hi = mid;
-    }
-    return { line: lo + 1, column: index - (lo === 0 ? 0 : newlines[lo - 1] + 1) + 1 };
-  };
-}
 function isAscii(s) {
   return ASCII_RE.test(s);
 }
@@ -6910,14 +6893,12 @@ function isStyledWord(token) {
   }
   return styled;
 }
-function scanConfusables(text) {
+function scanConfusables(text, positionAt = positionIndex(text)) {
   const findings = [];
-  const lineOf = lineLookup(text);
   const span = (token) => {
-    const { line, column } = lineOf(token.index);
     return {
-      start: { line, column, offset: token.index },
-      end: { line, column: column + token.text.length, offset: token.index + token.text.length }
+      start: positionAt(token.index),
+      end: positionAt(token.index + token.text.length)
     };
   };
   const bySkeleton = /* @__PURE__ */ new Map();
@@ -6968,6 +6949,7 @@ function scanConfusables(text) {
     const group = spelled.filter((t) => !isStyledWord(t.text));
     const distinctSpellings = new Set(group.map((t) => t.text));
     if (distinctSpellings.size < 2) continue;
+    if (new Set([...distinctSpellings].map((s) => s.normalize("NFD"))).size < 2) continue;
     if (![...distinctSpellings].some((s) => !isAscii(s))) continue;
     const signatures = new Set([...distinctSpellings].map(scriptSignature));
     if (signatures.size === 1 && !signatures.has("Latin") && ![...signatures][0].includes("+")) continue;
@@ -7450,7 +7432,7 @@ function scanText(text, options = {}) {
     ...scanTags(text, positionAt),
     ...scanVariationSelectors(text, positionAt),
     ...scanInvisible(text, positionAt),
-    ...scanConfusables(text),
+    ...scanConfusables(text, positionAt),
     ...scanStyledText(text, positionAt),
     ...scanWhitespaceAndControl(text, positionAt)
   ];

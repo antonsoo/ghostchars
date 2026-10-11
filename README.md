@@ -53,6 +53,14 @@ node dist/cli.js .
 
 ## What it detects
 
+The source checkout also catches **accented cross-script lookalikes** that the
+previous scanner missed entirely. A runnable JavaScript example returned a
+clean scan despite declaring two visually confusable, distinct variables.
+[Before/after CLI output, independent ICU checks and the public-text replay](studies/canonical-confusables/README.md)
+show the correction and its limits. Canonically equivalent prose spellings
+stay quiet; identifier text is never automatically renamed. This fix is local
+and has not been released to npm or deployed to the demo.
+
 | # | Rule ID(s) | Catches | Severity |
 |---|---|---|---|
 | 1 | `bidi-control`, `bidi-mark`, `bidi-unbalanced` | Explicit bidi formatting characters (U+202A-202E, U+2066-2069), bidi marks (U+200E, U+200F, U+061C), and embeddings/isolates that open without closing on a line | error / warning / error |
@@ -229,7 +237,11 @@ Driven directly by the `Default_Ignorable_Code_Point` property rather than a han
 
 ### Confusables (rule 5)
 
-Follows UTS #39's skeleton approach: every character in an identifier-shaped token is mapped through `confusables.txt`'s prototype mapping and concatenated. Two independent signals are flagged.
+Uses UTS #39's prototype mappings for identifier-shaped tokens. In this source
+checkout, canonical decomposition (NFD) runs before and after that mapping,
+so accents and combining order cannot hide a collision. This is a prose-aware
+subset, not a complete UTS #39 conformance implementation. Two independent
+signals are flagged.
 
 **A word that mixes scripts and holds a lookalike.** Real writing mixes scripts all the time, so the scripts of a word (from `Scripts.txt` + `ScriptExtensions.txt`, Common and Inherited aside) are first held against UTS #39's restriction levels (section 5.2). A word is ordinary, and not looked at further, when it is one script; Latin with Han + Hiragana + Katakana, Han + Bopomofo or Han + Hangul (Japanese, Chinese and Korean have no spaces, so a Latin term sits inside the word around it); or Latin with one other script in general use except Cyrillic and Greek (Arabic and Hebrew attach prefixes to a Latin term). What is left (Latin with Cyrillic or Greek, two non-Latin scripts, Latin with a script like Cherokee) is reported when the word holds an actual lookalike: a character of another script that `confusables.txt` reduces to ASCII letters, or an ASCII letter planted in a word of a script that has a double for it. So `LaTeX2ε`, `Δt` and `10μs` pass (a Greek letter used as a symbol imitates nothing) and `paypal` with the Cyrillic U+0430 for its `a` does not. The words of a `snake_case` name are judged one by one.
 

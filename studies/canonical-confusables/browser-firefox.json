@@ -1,0 +1,14 @@
+{
+  "browser": "firefox",
+  "findings": 4,
+  "selected": [
+    "copé",
+    "соре́",
+    "copé",
+    "соре́"
+  ],
+  "sourcePreserved": true,
+  "sanitizedCopyPreserved": true,
+  "pageErrors": [],
+  "cspViolations": []
+}

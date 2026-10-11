@@ -1,0 +1,142 @@
+{
+  "oracle": "ICU uspoof_getSkeletonUTF8",
+  "icuVersion": "74.2.0.0",
+  "unicodeVersion": "15.1.0.0",
+  "cases": [
+    {
+      "name": "latin-accent-cyrillic",
+      "left": "cop\u00e9",
+      "right": "\u0441\u043e\u0440\u0435\u0301",
+      "leftSkeleton": "cope\u0301",
+      "rightSkeleton": "cope\u0301",
+      "equalSkeletons": true,
+      "expectedCollisions": 2
+    },
+    {
+      "name": "cyrillic-precomposed",
+      "left": "cope\u0308",
+      "right": "\u0441\u043e\u0440\u0451",
+      "leftSkeleton": "cope\u0308",
+      "rightSkeleton": "cope\u0308",
+      "equalSkeletons": true,
+      "expectedCollisions": 2
+    },
+    {
+      "name": "greek-precomposed",
+      "left": "T\u00f3po",
+      "right": "\u03a4\u03cc\u03c1\u03bf",
+      "leftSkeleton": "To\u0301po",
+      "rightSkeleton": "To\u0301po",
+      "equalSkeletons": true,
+      "expectedCollisions": 2
+    },
+    {
+      "name": "combining-order",
+      "left": "cafe\u0301\u0323",
+      "right": "caf\u0435\u0323\u0301",
+      "leftSkeleton": "cafe\u0323\u0301",
+      "rightSkeleton": "cafe\u0323\u0301",
+      "equalSkeletons": true,
+      "expectedCollisions": 2
+    },
+    {
+      "name": "decomposable-mark",
+      "left": "ca\u0300",
+      "right": "c\u0430\u0340",
+      "leftSkeleton": "ca\u0300",
+      "rightSkeleton": "ca\u0300",
+      "equalSkeletons": true,
+      "expectedCollisions": 2
+    },
+    {
+      "name": "mapped-mark-order",
+      "left": "ca\u0315\u0300",
+      "right": "c\u0430\u0315\u0340",
+      "leftSkeleton": "ca\u0300\u0313",
+      "rightSkeleton": "ca\u0300\u0313",
+      "equalSkeletons": true,
+      "expectedCollisions": 2
+    },
+    {
+      "name": "latin-canonical-prose-policy",
+      "left": "caf\u00e9",
+      "right": "cafe\u0301",
+      "leftSkeleton": "cafe\u0301",
+      "rightSkeleton": "cafe\u0301",
+      "equalSkeletons": true,
+      "expectedCollisions": 0
+    },
+    {
+      "name": "latin-dotless-accent",
+      "left": "adm\u00edn",
+      "right": "adm\u0131\u0301n",
+      "leftSkeleton": "adrni\u0301n",
+      "rightSkeleton": "adrni\u0301n",
+      "equalSkeletons": true,
+      "expectedCollisions": 2
+    },
+    {
+      "name": "existing-cyrillic",
+      "left": "scope",
+      "right": "\u0455\u0441\u043e\u0440\u0435",
+      "leftSkeleton": "scope",
+      "rightSkeleton": "scope",
+      "equalSkeletons": true,
+      "expectedCollisions": 2
+    },
+    {
+      "name": "different-accents",
+      "left": "cop\u00e9",
+      "right": "\u0441\u043e\u0440\u0450",
+      "leftSkeleton": "cope\u0301",
+      "rightSkeleton": "cope\u0300",
+      "equalSkeletons": false,
+      "expectedCollisions": 0
+    },
+    {
+      "name": "accent-not-stripped",
+      "left": "cope",
+      "right": "\u0441\u043e\u0440\u0435\u0301",
+      "leftSkeleton": "cope",
+      "rightSkeleton": "cope\u0301",
+      "equalSkeletons": false,
+      "expectedCollisions": 0
+    },
+    {
+      "name": "identical-spelling",
+      "left": "caf\u00e9",
+      "right": "caf\u00e9",
+      "leftSkeleton": "cafe\u0301",
+      "rightSkeleton": "cafe\u0301",
+      "equalSkeletons": true,
+      "expectedCollisions": 0
+    },
+    {
+      "name": "greek-prose-policy",
+      "left": "\u03cc\u03c1\u03bf",
+      "right": "\u03bf\u0301\u03c1\u03bf",
+      "leftSkeleton": "o\u0301po",
+      "rightSkeleton": "o\u0301po",
+      "equalSkeletons": true,
+      "expectedCollisions": 0
+    },
+    {
+      "name": "ascii-policy",
+      "left": "modern",
+      "right": "rnodern",
+      "leftSkeleton": "rnodern",
+      "rightSkeleton": "rnodern",
+      "equalSkeletons": true,
+      "expectedCollisions": 0
+    },
+    {
+      "name": "styled-policy",
+      "left": "caf\u00e9",
+      "right": "\uff43\uff41\uff46e\u0301",
+      "leftSkeleton": "cafe\u0301",
+      "rightSkeleton": "ca\uff46e\u0301",
+      "equalSkeletons": false,
+      "expectedCollisions": 0
+    }
+  ]
+}
