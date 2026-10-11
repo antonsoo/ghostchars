@@ -1,0 +1,114 @@
+{
+  "node": "v20.0.0",
+  "baselineBidiSha256": "3443382a67e9952abefafbb7b37727cf42e237d7f26d31f6b3d922abfff7c7b1",
+  "currentBidiSha256": "263a1775c64a5942a896223dabe3e65abbeb228ab0c6ce522e37e0737e6c1767",
+  "exhaustive": {
+    "alphabet": [
+      8234,
+      8238,
+      8294,
+      8296,
+      8236,
+      8297,
+      10,
+      13,
+      97
+    ],
+    "maxLength": 5,
+    "sequences": 66430,
+    "identical": 66430,
+    "scope": "Preserves the existing line-scoped checker. Not a complete Unicode bidirectional algorithm conformance test."
+  },
+  "corpus": [
+    {
+      "file": "examples/fixtures/bad.js",
+      "bytes": 33,
+      "inputSha256": "55a13d37bc5919cd8c2c278cecd6ef16a8ee843a04538f05979bafd6ee8ab2aa",
+      "findings": 2,
+      "findingsSha256": "dd0c5ec43e6b2d8a0dd4ceef55cff0a6c4bf08b00c35115b2f0656395a64d791",
+      "sanitizedSha256": "478d2990dd09d22b52be2c47bf7aee7fd1ecd5a4ea9b046e058b970ecb91538e",
+      "identicalScanRepairReveal": true
+    },
+    {
+      "file": "examples/fixtures/good.js",
+      "bytes": 82,
+      "inputSha256": "7298a8b5d160c95a69448c2f64c1c4d60c101c65477b4af604d466830ad678b1",
+      "findings": 0,
+      "findingsSha256": "03e18bab1683a5faaa792f14ca70da247daa65a6c3f5c958090425a7b6f17ed5",
+      "sanitizedSha256": "7298a8b5d160c95a69448c2f64c1c4d60c101c65477b4af604d466830ad678b1",
+      "identicalScanRepairReveal": true
+    },
+    {
+      "file": "examples/hangul-filler-backdoor.js",
+      "bytes": 641,
+      "inputSha256": "1525aecdf25c5ef646a86a662bdd3a624317465d07b3d13d9a7e22ccecfd52bd",
+      "findings": 1,
+      "findingsSha256": "8e6dc966b9e71108c046b8fbf4ba75c25bc835aebb1801b6422a06de8a2bb111",
+      "sanitizedSha256": "e6a46513f1383efed3ca275fc343bb7658f268f554b9f4f0d87f5f69e228e97b",
+      "identicalScanRepairReveal": true
+    },
+    {
+      "file": "examples/homoglyph-login.py",
+      "bytes": 598,
+      "inputSha256": "b20f049af03cbcb2ea754fe72d7d473b020863194e21eb3313b4e58cc573220e",
+      "findings": 8,
+      "findingsSha256": "3a1186ab28f2e8d641c5e2e672c94a5c5990dbca40114fea32af1d39157febaf",
+      "sanitizedSha256": "b20f049af03cbcb2ea754fe72d7d473b020863194e21eb3313b4e58cc573220e",
+      "identicalScanRepairReveal": true
+    },
+    {
+      "file": "examples/repair-policy/.ghostcharsrc.json",
+      "bytes": 26,
+      "inputSha256": "ec39a43465f49905923742561cd239f4b915b2c91230f6d4df01448182f27c2f",
+      "findings": 0,
+      "findingsSha256": "87a884a0ef29bc4e95a7d8927f458fccf2eb45c1ddf15db0b8e8a31c54886a18",
+      "sanitizedSha256": "ec39a43465f49905923742561cd239f4b915b2c91230f6d4df01448182f27c2f",
+      "identicalScanRepairReveal": true
+    },
+    {
+      "file": "examples/repair-policy/review.txt",
+      "bytes": 50,
+      "inputSha256": "bca2fe8bf79ae9d083bdc34ace6b88a6b4794a4c2d9aedf511d44fe72f89c5f7",
+      "findings": 5,
+      "findingsSha256": "4f2317ba027d841e2e9b9b1e09a8345fed54ca589462a94f19f4c18e3194727d",
+      "sanitizedSha256": "5371d5a5f23d60677feb3ebd30397775874d78bc7eeaa4adc617974e0a75e75e",
+      "identicalScanRepairReveal": true
+    },
+    {
+      "file": "examples/tag-smuggled-prompt.txt",
+      "bytes": 348,
+      "inputSha256": "672c4440ecad7e74eb3dcff9de150952941ff7003f19954412ff246b881f4757",
+      "findings": 1,
+      "findingsSha256": "b030f081fd8aa8139ffea5930ab449dd2678cf2a71f24bf955b5854617d82c9f",
+      "sanitizedSha256": "515d5e50287a82384269c9258a005930ec6930adf8c6d6f5aee97054b5d851b5",
+      "identicalScanRepairReveal": true
+    },
+    {
+      "file": "examples/trojan-source.c",
+      "bytes": 1296,
+      "inputSha256": "2483980756978aff4fe895c0e45f44e195b5e46882daf3d06a293bdfcf73b2fd",
+      "findings": 2,
+      "findingsSha256": "1ee456d39bb9f8ae0995761373ed4ee6d4bf47c8378b6ebfe474ef046adf7961",
+      "sanitizedSha256": "b371b11f019d46063d014ef784c5748f7a636bb14bec32feff84f929275aff0f",
+      "identicalScanRepairReveal": true
+    },
+    {
+      "file": "examples/workflows/ghostchars-sarif.yml",
+      "bytes": 929,
+      "inputSha256": "46141110befc1d034603a476fc02003fb893e099cba8e14b9982c966bf8014d7",
+      "findings": 0,
+      "findingsSha256": "eaf20231015a08aed8a8b7b4a74589c1048227d8100464385563ddb46df26ef1",
+      "sanitizedSha256": "46141110befc1d034603a476fc02003fb893e099cba8e14b9982c966bf8014d7",
+      "identicalScanRepairReveal": true
+    },
+    {
+      "file": "examples/workflows/ghostchars.yml",
+      "bytes": 460,
+      "inputSha256": "6915aa239f3f43a5820537cbd64747326eba083bd57eb79b709214d1fd756f17",
+      "findings": 0,
+      "findingsSha256": "f9c5b7fea1985bd69d5c574dda22f3958228acd2f50af027489fd89784dadfaa",
+      "sanitizedSha256": "6915aa239f3f43a5820537cbd64747326eba083bd57eb79b709214d1fd756f17",
+      "identicalScanRepairReveal": true
+    }
+  ]
+}

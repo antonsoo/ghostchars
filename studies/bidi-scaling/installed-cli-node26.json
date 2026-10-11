@@ -1,0 +1,55 @@
+{
+  "node": "v26.7.0",
+  "sourceCodeUnits": 64009,
+  "sourceBytes": 192009,
+  "sourceSha256": "9c1c35065907b78e2baaac0f76b92587792478e453bf674fb558d4a4dc8f721c",
+  "identical": true,
+  "environment": "14 vCPU WSL2 Linux, 48 GB RAM; host not isolated",
+  "scope": "One actual CLI process per scan/repair/version; timings include process startup and formatting. Controlled dense input, not production traffic.",
+  "results": [
+    {
+      "version": "before",
+      "cliSha256": "61bda3a2d9d541395ae988f08307c92677d8c11c874a59df3e15cad30ce04682",
+      "steps": [
+        {
+          "command": "ghostchars case.txt --no-config --format summary",
+          "exitCode": 1,
+          "ms": 2559.064724,
+          "output": "case.txt\n  error  bidi-unbalanced  x64000  1:6 .. 1:64005\n  error  bidi-control  RIGHT-TO-LEFT OVERRIDE  x32000  1:6 .. 1:32005\n  error  bidi-control  POP DIRECTIONAL ISOLATE  x32000  1:32006 .. 1:64005\n\nghostchars: 128000 error(s), 0 warning(s), 0 info in 1 file(s) scanned.\n",
+          "outputSha256": "c69ef189b6eca26be06e3c5372bcb564326b93246413bdd88482f1345a2d3f4d",
+          "resultingFileSha256": "9c1c35065907b78e2baaac0f76b92587792478e453bf674fb558d4a4dc8f721c"
+        },
+        {
+          "command": "ghostchars case.txt --no-config --format summary --fix",
+          "exitCode": 1,
+          "ms": 8113.010129,
+          "output": "case.txt\n  error  bidi-unbalanced  x64000  1:6 .. 1:64005\n  error  bidi-control  RIGHT-TO-LEFT OVERRIDE  x32000  1:6 .. 1:32005\n  error  bidi-control  POP DIRECTIONAL ISOLATE  x32000  1:32006 .. 1:64005\n\nghostchars: 128000 error(s), 0 warning(s), 0 info in 1 file(s) scanned.\n",
+          "outputSha256": "c69ef189b6eca26be06e3c5372bcb564326b93246413bdd88482f1345a2d3f4d",
+          "resultingFileSha256": "e6cebec468ac9d30027f2e7b117f657d0ae6487f54f4043aae4dbc487f7ff6dc"
+        }
+      ]
+    },
+    {
+      "version": "after",
+      "cliSha256": "3e1e2c5534de1a481309435ba990b6cbf8c48f04647da907b7d59da6c72b526d",
+      "steps": [
+        {
+          "command": "ghostchars case.txt --no-config --format summary",
+          "exitCode": 1,
+          "ms": 291.3928969999997,
+          "output": "case.txt\n  error  bidi-unbalanced  x64000  1:6 .. 1:64005\n  error  bidi-control  RIGHT-TO-LEFT OVERRIDE  x32000  1:6 .. 1:32005\n  error  bidi-control  POP DIRECTIONAL ISOLATE  x32000  1:32006 .. 1:64005\n\nghostchars: 128000 error(s), 0 warning(s), 0 info in 1 file(s) scanned.\n",
+          "outputSha256": "c69ef189b6eca26be06e3c5372bcb564326b93246413bdd88482f1345a2d3f4d",
+          "resultingFileSha256": "9c1c35065907b78e2baaac0f76b92587792478e453bf674fb558d4a4dc8f721c"
+        },
+        {
+          "command": "ghostchars case.txt --no-config --format summary --fix",
+          "exitCode": 1,
+          "ms": 450.34316000000035,
+          "output": "case.txt\n  error  bidi-unbalanced  x64000  1:6 .. 1:64005\n  error  bidi-control  RIGHT-TO-LEFT OVERRIDE  x32000  1:6 .. 1:32005\n  error  bidi-control  POP DIRECTIONAL ISOLATE  x32000  1:32006 .. 1:64005\n\nghostchars: 128000 error(s), 0 warning(s), 0 info in 1 file(s) scanned.\n",
+          "outputSha256": "c69ef189b6eca26be06e3c5372bcb564326b93246413bdd88482f1345a2d3f4d",
+          "resultingFileSha256": "e6cebec468ac9d30027f2e7b117f657d0ae6487f54f4043aae4dbc487f7ff6dc"
+        }
+      ]
+    }
+  ]
+}

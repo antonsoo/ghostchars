@@ -1,0 +1,345 @@
+{
+  "sourceRevision": "61e4d2e69f54dbca26b9e8cc1f780f64b00b93ed",
+  "commands": [
+    {
+      "command": "npm ci --no-audit --no-fund",
+      "directory": ".",
+      "exitCode": 0,
+      "logSha256": "c62e8203d5dd088a4b3304d317cdcd049af93b109b8315052e643aef8c7072d9"
+    },
+    {
+      "command": "npm ci --no-audit --no-fund",
+      "directory": "web",
+      "exitCode": 0,
+      "logSha256": "7035b8d0a27aa4340d97d944a1a1ebfc3bf0e3b0733a8568302bb0ed2ad96ed7"
+    },
+    {
+      "command": "npm run lint",
+      "directory": ".",
+      "exitCode": 0,
+      "logSha256": "9816032d097de2b86ee0fe002a35bb3960ad089342879cf11d72cd62e427d9c8"
+    },
+    {
+      "command": "npm run typecheck",
+      "directory": ".",
+      "exitCode": 0,
+      "logSha256": "3b5b905dfcf2e8234c734b5f1bbc2762f973b949323ff45b44c651201f3ed004"
+    },
+    {
+      "command": "npm run lint",
+      "directory": "web",
+      "exitCode": 0,
+      "logSha256": "fccbc07fbf29c332497e42e0e6086b4bb6509fc86e47f77a2474be49164cb8df"
+    },
+    {
+      "command": "npm run build",
+      "directory": ".",
+      "exitCode": 0,
+      "logSha256": "9e993204c89115a68e24a33ab4ec6bf1a45b72cb7eaf62d16f2ceff849b7e7af"
+    },
+    {
+      "command": "npm run web:build",
+      "directory": ".",
+      "exitCode": 0,
+      "logSha256": "99e3e3ef6b054224a744990ef5034ede4d944830f8039deaacd557a4cf37b175"
+    },
+    {
+      "command": "npm test",
+      "directory": ".",
+      "exitCode": 0,
+      "logSha256": "77c941131c41ade9c58d16aeae73b78cce3f4f0972f8a41998ee1ef3547e4eac"
+    },
+    {
+      "command": "npm run test:browser",
+      "directory": "web",
+      "exitCode": 0,
+      "logSha256": "475848d709aeb2c0f5ded1c9c4d4b5a5f8ea5aa77dfe3a09cf0789eb9daf3fb0"
+    }
+  ],
+  "baselineRevision": "a9d54cf9a283b0a43b1b6f9b1dba02a7576c84ae",
+  "results": {
+    "tests": 208,
+    "testFiles": 18,
+    "browserWorkflows": 32,
+    "browsers": [
+      "Chromium",
+      "Firefox"
+    ]
+  },
+  "archive": {
+    "name": "antonsoloviev-ghostchars-0.1.5.tgz",
+    "bytes": 151578,
+    "sha256": "502dc8713c493ebfb4531e4e8ea0cb3d08bbffa8e0c9b8dded2517e3931cf698"
+  },
+  "installedDistFiles": [
+    {
+      "path": "dist/cli.js",
+      "bytes": 236198,
+      "sha256": "3e1e2c5534de1a481309435ba990b6cbf8c48f04647da907b7d59da6c72b526d"
+    },
+    {
+      "path": "dist/core/decodeTags.d.ts",
+      "bytes": 1269,
+      "sha256": "22e1506fc9a42c5c7769ddfb1bbc7f16a130b15f452b7f1aad72d6a7d73e5c74"
+    },
+    {
+      "path": "dist/core/decodeTags.js",
+      "bytes": 3496,
+      "sha256": "ff956c84fc8c7a82129631cd9f2e3df9d0b9ee9305282682e5c7d2464abbc99f"
+    },
+    {
+      "path": "dist/core/decodeVariationSelectors.d.ts",
+      "bytes": 2477,
+      "sha256": "62ce68599ee4315e26ec5a9815b3c2b2f97e4b0aa3b06b5090612fae66a86975"
+    },
+    {
+      "path": "dist/core/decodeVariationSelectors.js",
+      "bytes": 7430,
+      "sha256": "0709a67a8b531242cddcc7fdfe81707e6d767cdf95773ef35926ce21ae162a31"
+    },
+    {
+      "path": "dist/core/diagnosticText.d.ts",
+      "bytes": 159,
+      "sha256": "ea9be9a3e20c0eca2a8d2d0c001312219c28606b9e919597e87063a57d429d3d"
+    },
+    {
+      "path": "dist/core/diagnosticText.js",
+      "bytes": 512,
+      "sha256": "8f5be7bce11ea0fda34154fd9b242166bf55587f35141fc442c482e01d8e6f36"
+    },
+    {
+      "path": "dist/core/index.d.ts",
+      "bytes": 549,
+      "sha256": "89ccc04102be3b48d1649c482ac74ca562b0b48bb25ad6f7f0ce207a09756ecc"
+    },
+    {
+      "path": "dist/core/index.js",
+      "bytes": 284,
+      "sha256": "e5ab7b6106d3dcced940e9a5fa2866ccf52db7e5e18e8775a0eadc1aae099d92"
+    },
+    {
+      "path": "dist/core/names.d.ts",
+      "bytes": 57,
+      "sha256": "6e8d516b6e17988b122b7199d498fc0786bdc66b47184c6c5e7bddd319a9574c"
+    },
+    {
+      "path": "dist/core/names.js",
+      "bytes": 3599,
+      "sha256": "271f618500c6e113a60aec8cee163a7f337f86bac692531b771e87545360a4e6"
+    },
+    {
+      "path": "dist/core/reveal.d.ts",
+      "bytes": 570,
+      "sha256": "048f2ad3ebecfcd3fca4fcdbb04083f61b9bec9c9594403720c6704de0608c05"
+    },
+    {
+      "path": "dist/core/reveal.js",
+      "bytes": 2963,
+      "sha256": "e1d4ab18c7baf4d7454cb78dc06efa1df6df94ff0726b6642487f24090653690"
+    },
+    {
+      "path": "dist/core/rules/bidi.d.ts",
+      "bytes": 973,
+      "sha256": "cb408c2c050f64e3fb5d1863cd0597d0f038449c0deb893b2b3e0a6a2a753307"
+    },
+    {
+      "path": "dist/core/rules/bidi.js",
+      "bytes": 5449,
+      "sha256": "263a1775c64a5942a896223dabe3e65abbeb228ab0c6ce522e37e0737e6c1767"
+    },
+    {
+      "path": "dist/core/rules/confusables.d.ts",
+      "bytes": 110,
+      "sha256": "6a646f5797eaeb5383c5aa97bef67df024b1c0d42bc987ff54b7f6c1b71d683b"
+    },
+    {
+      "path": "dist/core/rules/confusables.js",
+      "bytes": 20717,
+      "sha256": "c9f2e0dfa6ce43bcab25eed5c8130765a4890924060849f69014ada240458878"
+    },
+    {
+      "path": "dist/core/rules/invisible.d.ts",
+      "bytes": 189,
+      "sha256": "5dd8656ac408d87d3223af6c02a67a5fd6fc6bdc0479edaff72fd287f88a7022"
+    },
+    {
+      "path": "dist/core/rules/invisible.js",
+      "bytes": 5971,
+      "sha256": "92e0943b600c44e88db9e79fc45cd16993078e9ed19f04d6e084b50c38fbe2ea"
+    },
+    {
+      "path": "dist/core/rules/position.d.ts",
+      "bytes": 1177,
+      "sha256": "acb76c2d72d1eb3c38d5766d3e71bed65ec81d21d2367277241b6e31a4d4621f"
+    },
+    {
+      "path": "dist/core/rules/position.js",
+      "bytes": 1551,
+      "sha256": "e68bf5ecd0a89baf10b38185f33a743809c12db0ebe759d9c9bbcf4cb42c7331"
+    },
+    {
+      "path": "dist/core/rules/styledText.d.ts",
+      "bytes": 340,
+      "sha256": "0c72746ef55ad8fb007db704d1b2245017cd96ca6098cc45df94800ac9a8a5f5"
+    },
+    {
+      "path": "dist/core/rules/styledText.js",
+      "bytes": 5430,
+      "sha256": "7fcfc9a8deb28dc6dbce2ce10f9816c697c35db4ff3cfab1f277314d40166050"
+    },
+    {
+      "path": "dist/core/rules/tags.d.ts",
+      "bytes": 184,
+      "sha256": "63da80777c0315ec8b6ef64480cd73b54b63ca2708825e119ca8f059c9fc3811"
+    },
+    {
+      "path": "dist/core/rules/tags.js",
+      "bytes": 1282,
+      "sha256": "bc3735f7baef15245319758596afcce47608205ef353154c700fe73146fb638e"
+    },
+    {
+      "path": "dist/core/rules/variationSelectors.d.ts",
+      "bytes": 198,
+      "sha256": "83b90d064c3a9c9ee65b6fcc18d8ab75c27202cbc3f87c778bdda29e3a75179f"
+    },
+    {
+      "path": "dist/core/rules/variationSelectors.js",
+      "bytes": 3986,
+      "sha256": "4fce49c6d04b84cb43a48e9535464d71c05df493da61a365e8e3580b28603e98"
+    },
+    {
+      "path": "dist/core/rules/whitespaceControl.d.ts",
+      "bytes": 200,
+      "sha256": "dc5d18376f5409596fac9df8d9f6c96c207c1918e653e3e065e0520289caaa30"
+    },
+    {
+      "path": "dist/core/rules/whitespaceControl.js",
+      "bytes": 6371,
+      "sha256": "07f45a3396a50abfa463d3725dd10d2c29136f78ae764ea18ebd937dd8e7c8d3"
+    },
+    {
+      "path": "dist/core/sanitize.d.ts",
+      "bytes": 458,
+      "sha256": "f92436a5ff8490a7a421044dd0c3eafb687dc22d68231339d56f210b83a23a43"
+    },
+    {
+      "path": "dist/core/sanitize.js",
+      "bytes": 3739,
+      "sha256": "77d4a1a704b1f05179e6ee5be9711ccd8774fe404c0472bffc7f076073b88b89"
+    },
+    {
+      "path": "dist/core/scanText.d.ts",
+      "bytes": 142,
+      "sha256": "fc73e8752a3f283a9b21ee547d29378cdecbcb51dab37afb9e9d390357221dec"
+    },
+    {
+      "path": "dist/core/scanText.js",
+      "bytes": 2778,
+      "sha256": "4966edf5d4a0bebd1d882ea0e2e607def0d4da866e86badadc4cda4c51d48c50"
+    },
+    {
+      "path": "dist/core/types.d.ts",
+      "bytes": 3950,
+      "sha256": "75be0466b5ccdb51f3c040c0bab8cfe36a1d71c98619f6aa5675383897d905fe"
+    },
+    {
+      "path": "dist/core/types.js",
+      "bytes": 11,
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "path": "dist/core/unicode-utils.d.ts",
+      "bytes": 1561,
+      "sha256": "f8c15bd9f447f00755325cbe1b45f2d69049b577ac2aea2c61f27855181ee306"
+    },
+    {
+      "path": "dist/core/unicode-utils.js",
+      "bytes": 2827,
+      "sha256": "83e3cd9c75010c4c55137056cf919453268323de609874c02102ab6cc5fdf639"
+    },
+    {
+      "path": "dist/generated/confusables.d.ts",
+      "bytes": 196,
+      "sha256": "819016493c913b0a99987aa939b4e3274e16dd1b6f353c534164e6e64890ea0b"
+    },
+    {
+      "path": "dist/generated/confusables.js",
+      "bytes": 166792,
+      "sha256": "2de71da55c3ebfb058f11c25ec155e85174b4bf4bc7ec3eaaaa5e68bac78d907"
+    },
+    {
+      "path": "dist/generated/default-ignorable.d.ts",
+      "bytes": 148,
+      "sha256": "3db6532afbbd38e7a88a9866ca025280cb6565e06405500e20441416e8e82daf"
+    },
+    {
+      "path": "dist/generated/default-ignorable.js",
+      "bytes": 602,
+      "sha256": "9682c6db6af339a92ca913d0762f3bfe799d4c8bfd4fc4211cca93f1bbd7c674"
+    },
+    {
+      "path": "dist/generated/emoji-tag-sequences.d.ts",
+      "bytes": 212,
+      "sha256": "d16462011b37945d9211c4ef6951a24ea69a4eeff6312e16d847b66e12a9be2b"
+    },
+    {
+      "path": "dist/generated/emoji-tag-sequences.js",
+      "bytes": 567,
+      "sha256": "fa0f173f7fec06f8ae5dabaa4b97d8b9b14ba66853557f3b8f518843ba729566"
+    },
+    {
+      "path": "dist/generated/emoji.d.ts",
+      "bytes": 137,
+      "sha256": "cee457a35342832b054db38172f39eda544046f99b4ccc5a5fe7a36d34517bdd"
+    },
+    {
+      "path": "dist/generated/emoji.js",
+      "bytes": 3088,
+      "sha256": "3cc6ee4d8a658a74d5c74b0454ffdceadf2317f562b78b10662d18e9ee36d89c"
+    },
+    {
+      "path": "dist/generated/script-extensions.d.ts",
+      "bytes": 207,
+      "sha256": "fec261d555322d900ad4655cc750b9e9f6bccc99779294f9ce6f31dea5c937c4"
+    },
+    {
+      "path": "dist/generated/script-extensions.js",
+      "bytes": 814,
+      "sha256": "ba4bf386b5121cb2381ec771db14f3ad99c2bd69e9295930ba010af552aface0"
+    },
+    {
+      "path": "dist/generated/scripts.d.ts",
+      "bytes": 218,
+      "sha256": "c6f7dede067d25c71e909592dbb55aefae5ec97091b3e4bc8550c41283c28665"
+    },
+    {
+      "path": "dist/generated/scripts.js",
+      "bytes": 24678,
+      "sha256": "5d671157299ea646ee08c8ca39908123e01a17fbac41591ada0c39b52432f80c"
+    },
+    {
+      "path": "dist/index.d.ts",
+      "bytes": 33,
+      "sha256": "a06db219f83fd299973856c648293bcfca1f606a2617b7750f75b13dd28ca5fd"
+    },
+    {
+      "path": "dist/index.js",
+      "bytes": 217,
+      "sha256": "74c53f9f5531c99ca727c1a41de8f76a8d1d0e39e005009b76778584daa1206d"
+    }
+  ],
+  "runtimes": [
+    {
+      "node": "v26.7.0",
+      "compatibility": "installed-compatibility-node26.json",
+      "cli": "installed-cli-node26.json"
+    },
+    {
+      "node": "v20.0.0",
+      "compatibility": "installed-compatibility-node20.json",
+      "cli": "installed-cli-node20.json"
+    }
+  ],
+  "verificationHarnessCorrection": "compare.mjs uses its checked-in examples, because the package intentionally excludes them. The initial installed comparison stopped on ENOENT. The corrected comparison and CLI replay passed on both runtimes. An initial receipt-writing command then failed because the clean git archive has no .git; the source revision here comes from the recorded archive command.",
+  "scope": "Clean source build and locally installed archive; not an npm release. Timings in installed CLI replays are observations, not isolated benchmarks."
+}

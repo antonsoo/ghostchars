@@ -14,6 +14,14 @@ full scanner still includes finding sorting and other rules.
 This is source and local-package validation. It does not establish an npm
 release or a hosted deployment.
 
+The [clean-install receipt](checks.json) records source `61e4d2e`, all nine
+successful setup/check commands, 208 tests and 32 browser workflows. All 51
+installed `dist` files match the fresh build byte for byte. The installed
+archive repeats the full compatibility comparison and actual CLI scan/repair
+on Node 20.0.0 and 26.7.0. The comparison script reads examples beside the
+study, because the package intentionally excludes them; the receipt records
+the initial harness failure and correction.
+
 ## Actual CLI behavior
 
 [`cli-replay.mjs`](cli-replay.mjs) creates a temporary file containing `keep `,
