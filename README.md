@@ -58,8 +58,9 @@ previous scanner missed entirely. A runnable JavaScript example returned a
 clean scan despite declaring two visually confusable, distinct variables.
 [Before/after CLI output, independent ICU checks and the public-text replay](studies/canonical-confusables/README.md)
 show the correction and its limits. Canonically equivalent prose spellings
-stay quiet; identifier text is never automatically renamed. This fix is local
-and has not been released to npm or deployed to the demo.
+stay quiet; identifier text is never automatically renamed. This correction
+is available from source. The linked verification covers local builds and
+installed artifacts; no npm release was made for this change.
 
 | # | Rule ID(s) | Catches | Severity |
 |---|---|---|---|

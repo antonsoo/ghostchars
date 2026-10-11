@@ -92,8 +92,9 @@ invisible characters separately. In particular,
 JavaScript can distinguish even NFC/NFD-only spellings that this prose-aware
 rule leaves quiet. A clean report is not proof of code safety.
 
-These are local source and installed-artifact checks. This work does not
-publish an npm release or update the hosted demo.
+These are local source and installed-artifact checks, retained with the source
+correction. They do not establish what the hosted demo currently serves. No
+npm release was made for this change.
 
 [verification.json](verification.json) records a fresh archive build: package
 lint, types, 227 tests; web lint, types, build and 34 Chromium/Firefox workflows.
