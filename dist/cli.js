@@ -122,12 +122,14 @@ var BIDI_RE = /[\u061c\u200e\u200f\u202a-\u202e\u2066-\u2069]/g;
 function scanBidi(text, positionAt) {
   const findings = [];
   let stack = [];
+  const isolates = [];
   BIDI_RE.lastIndex = 0;
   const flushUnterminated = () => {
     for (const entry of stack) {
       findings.push(makeFinding(entry.info, text, "bidi-unbalanced", "error", `${unicodeName(entry.codePoint)} is opened but never closed before the end of the line.`, "Add the matching POP DIRECTIONAL FORMATTING (U+202C) or POP DIRECTIONAL ISOLATE (U+2069), or remove this character."));
     }
     stack = [];
+    isolates.length = 0;
   };
   for (let match = BIDI_RE.exec(text); match !== null; match = BIDI_RE.exec(text)) {
     const cp = describeCodePoint(text, match.index, positionAt);
@@ -149,6 +151,7 @@ function scanBidi(text, positionAt) {
     if (EMBED_OR_OVERRIDE.has(cp.codePoint)) {
       stack.push({ codePoint: cp.codePoint, kind: "embed", info: cp });
     } else if (ISOLATE_INITIATOR.has(cp.codePoint)) {
+      isolates.push(stack.length);
       stack.push({ codePoint: cp.codePoint, kind: "isolate", info: cp });
     } else if (cp.codePoint === PDF) {
       const top = stack[stack.length - 1];
@@ -158,11 +161,11 @@ function scanBidi(text, positionAt) {
         findings.push(makeFinding(cp, text, "bidi-unbalanced", "error", "POP DIRECTIONAL FORMATTING (U+202C) has no matching embedding/override to close on this line.", "Remove this character or add the missing LRE/RLE/LRO/RLO before it."));
       }
     } else if (cp.codePoint === PDI) {
-      const idx = [...stack].reverse().findIndex((e) => e.kind === "isolate");
-      if (idx === -1) {
+      const idx = isolates.pop();
+      if (idx === void 0) {
         findings.push(makeFinding(cp, text, "bidi-unbalanced", "error", "POP DIRECTIONAL ISOLATE (U+2069) has no matching isolate to close on this line.", "Remove this character or add the missing LRI/RLI/FSI before it."));
       } else {
-        stack.length = stack.length - 1 - idx;
+        stack.length = idx;
       }
     }
   }

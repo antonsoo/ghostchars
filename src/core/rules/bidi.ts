@@ -42,6 +42,10 @@ interface StackEntry {
 export function scanBidi(text: string, positionAt: PositionLookup): Finding[] {
   const findings: Finding[] = [];
   let stack: StackEntry[] = [];
+  // PDI closes the last isolate and every embedding opened inside it. Remember
+  // those positions instead of copying/searching the full stack for each PDI;
+  // dense or unmatched controls must not turn a small file into quadratic work.
+  const isolates: number[] = [];
   // Only the bidi characters are visited. Whether a line ended since the last one shows in
   // its line number, so the rest of the text needn't be walked to find the breaks.
   BIDI_RE.lastIndex = 0;
@@ -51,6 +55,7 @@ export function scanBidi(text: string, positionAt: PositionLookup): Finding[] {
       findings.push(makeFinding(entry.info, text, 'bidi-unbalanced', 'error', `${unicodeName(entry.codePoint)} is opened but never closed before the end of the line.`, 'Add the matching POP DIRECTIONAL FORMATTING (U+202C) or POP DIRECTIONAL ISOLATE (U+2069), or remove this character.'));
     }
     stack = [];
+    isolates.length = 0;
   };
 
   for (let match = BIDI_RE.exec(text); match !== null; match = BIDI_RE.exec(text)) {
@@ -75,6 +80,7 @@ export function scanBidi(text: string, positionAt: PositionLookup): Finding[] {
     if (EMBED_OR_OVERRIDE.has(cp.codePoint)) {
       stack.push({ codePoint: cp.codePoint, kind: 'embed', info: cp });
     } else if (ISOLATE_INITIATOR.has(cp.codePoint)) {
+      isolates.push(stack.length);
       stack.push({ codePoint: cp.codePoint, kind: 'isolate', info: cp });
     } else if (cp.codePoint === PDF) {
       const top = stack[stack.length - 1];
@@ -84,11 +90,11 @@ export function scanBidi(text: string, positionAt: PositionLookup): Finding[] {
         findings.push(makeFinding(cp, text, 'bidi-unbalanced', 'error', 'POP DIRECTIONAL FORMATTING (U+202C) has no matching embedding/override to close on this line.', 'Remove this character or add the missing LRE/RLE/LRO/RLO before it.'));
       }
     } else if (cp.codePoint === PDI) {
-      const idx = [...stack].reverse().findIndex((e) => e.kind === 'isolate');
-      if (idx === -1) {
+      const idx = isolates.pop();
+      if (idx === undefined) {
         findings.push(makeFinding(cp, text, 'bidi-unbalanced', 'error', 'POP DIRECTIONAL ISOLATE (U+2069) has no matching isolate to close on this line.', 'Remove this character or add the missing LRI/RLI/FSI before it.'));
       } else {
-        stack.length = stack.length - 1 - idx;
+        stack.length = idx;
       }
     }
   }

@@ -38,4 +38,30 @@ describe('bidi controls', () => {
     expect(mark).toBeDefined();
     expect(mark!.severity).toBe('warning');
   });
+
+  it('closes nested isolates together with their inner embeddings', () => {
+    const { findings } = scanText('\u202a\u2066\u202b\u2067\u202e\u2069\u202c\u2069\u202c');
+    expect(findings.filter((finding) => finding.rule === 'bidi-control')).toHaveLength(9);
+    expect(findings.filter((finding) => finding.rule === 'bidi-unbalanced')).toEqual([]);
+  });
+
+  it.each([
+    ['\u202a\u2066\u202c\u2069\u202c', [2]], // PDF cannot close an isolate.
+    ['\u2066\u202a\u2069\u202c', [3]], // PDI also closes its inner embedding.
+    ['\u2066\n\u202a\u2069', [0, 2, 3]],
+    ['\u2066\r\n\u202a\u2069', [0, 3, 4]],
+    ['\u2066\r\u202a\u2069', [0, 2, 3]],
+  ])('retains unmatched positions across pops and line resets in %j', (text, offsets) => {
+    const { findings } = scanText(text);
+    expect(findings.filter((finding) => finding.rule === 'bidi-unbalanced')
+      .map((finding) => finding.start.offset)).toEqual(offsets);
+  });
+
+  it('retains every finding in a dense unmatched-control input', () => {
+    const count = 16_000;
+    const { findings } = scanText('\u202e'.repeat(count) + '\u2069'.repeat(count));
+    expect(findings).toHaveLength(count * 4);
+    expect(findings.filter((finding) => finding.rule === 'bidi-unbalanced')).toHaveLength(count * 2);
+    expect(findings.at(-1)!.start.offset).toBe(count * 2 - 1);
+  });
 });
