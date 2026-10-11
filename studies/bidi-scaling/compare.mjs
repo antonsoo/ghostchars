@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { readFile, readdir, writeFile } from 'node:fs/promises';
 import { resolve, relative } from 'node:path';
-import { pathToFileURL } from 'node:url';
+import { fileURLToPath, pathToFileURL, URL } from 'node:url';
 
 const [beforeRoot, afterRoot, output] = process.argv.slice(2);
 if (!output) throw new Error('Supply BASELINE_ROOT CURRENT_ROOT OUTPUT');
@@ -30,7 +30,10 @@ async function walk(directory) {
     else if (entry.isFile()) files.push(path);
   }
 }
-await walk(resolve(afterRoot, 'examples'));
+// The published package intentionally excludes examples. Keep the input corpus
+// with this study while loading both implementations from the supplied roots.
+const corpusRoot = fileURLToPath(new URL('../../', import.meta.url));
+await walk(resolve(corpusRoot, 'examples'));
 const corpus = [];
 for (const path of files.sort()) {
   const text = await readFile(path, 'utf8');
@@ -39,7 +42,7 @@ for (const path of files.sort()) {
   const oldRepair = before.sanitize(text), currentRepair = after.sanitize(text);
   assert.deepEqual(currentRepair, oldRepair);
   assert.equal(after.reveal(text), before.reveal(text));
-  corpus.push({ file: relative(afterRoot, path), bytes: Buffer.byteLength(text), inputSha256: sha(text),
+  corpus.push({ file: relative(corpusRoot, path), bytes: Buffer.byteLength(text), inputSha256: sha(text),
     findings: current.findings.length, findingsSha256: sha(JSON.stringify(current)),
     sanitizedSha256: sha(currentRepair.text), identicalScanRepairReveal: true });
 }
