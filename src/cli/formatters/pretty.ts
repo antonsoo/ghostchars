@@ -1,9 +1,9 @@
 import type { Finding } from '../../core/index.js';
-import { reveal } from '../../core/index.js';
 import { diagnosticText } from '../../core/diagnosticText.js';
 import { colors } from '../colors.js';
 import type { ScanReport } from '../report.js';
 import { severityCounts, totalFindings } from '../report.js';
+import { shortDiagnostic, sourceExcerpt } from './excerpt.js';
 
 const SEVERITY_LABEL: Record<Finding['severity'], string> = {
   error: colors.red(colors.bold('error')),
@@ -17,17 +17,14 @@ export function formatPretty(report: ScanReport): string {
   for (const file of report.files) {
     if (file.findings.length === 0) continue;
     lines.push(colors.underline(diagnosticText(file.path)));
-    const sourceLines = file.source.split(/\r\n|\r|\n/);
+    lines.push(colors.dim('  Bounded source excerpts: [[...]] marks each finding. End positions are exclusive.'));
 
     for (const f of file.findings) {
-      const loc = colors.gray(`${f.start.line}:${f.start.column}`);
+      const loc = colors.gray(`${f.start.line}:${f.start.column}-${f.end.line}:${f.end.column}`);
       lines.push(`  ${loc}  ${SEVERITY_LABEL[f.severity]}  ${colors.dim(f.rule)}`);
-      lines.push(`    ${diagnosticText(f.message)}`);
-      const srcLine = sourceLines[f.start.line - 1] ?? '';
-      const revealedLine = diagnosticText(reveal(srcLine));
-      lines.push(`    ${colors.gray('|')} ${revealedLine}`);
-      lines.push(`    ${colors.gray('|')} ${' '.repeat(Math.max(0, f.start.column - 1))}${colors.magenta('^'.repeat(Math.max(1, f.end.offset - f.start.offset)))}`);
-      lines.push(`    ${colors.dim('fix:')} ${diagnosticText(f.suggestion)}`);
+      lines.push(`    ${shortDiagnostic(f.message)}`);
+      lines.push(`    ${colors.gray('|')} ${sourceExcerpt(file.source, f)}`);
+      lines.push(`    ${colors.dim('fix:')} ${shortDiagnostic(f.suggestion)}`);
       lines.push('');
     }
   }

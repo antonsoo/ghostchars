@@ -9267,6 +9267,51 @@ var colors = {
   magenta: wrap("35")
 };
 
+// src/cli/formatters/excerpt.ts
+var lineBreak = (char) => char === "\r" || char === "\n";
+var lowSurrogate = (unit) => unit >= 56320 && unit <= 57343;
+var highSurrogate = (unit) => unit >= 55296 && unit <= 56319;
+function take(source, start, end, budget, reverse = false, stopAtLine = false) {
+  const pieces = [];
+  let cursor = reverse ? end : start;
+  let used = 0;
+  while (reverse ? cursor > start : cursor < end) {
+    let next;
+    if (reverse) {
+      next = cursor - 1;
+      if (next > start && lowSurrogate(source.charCodeAt(next)) && highSurrogate(source.charCodeAt(next - 1))) next--;
+    } else next = cursor + (source.codePointAt(cursor) > 65535 ? 2 : 1);
+    const char = source.slice(Math.min(cursor, next), Math.max(cursor, next));
+    if (stopAtLine && lineBreak(char)) break;
+    const visible = diagnosticText(char);
+    if (used + visible.length > budget) break;
+    pieces.push(visible);
+    used += visible.length;
+    cursor = next;
+  }
+  return { text: (reverse ? pieces.reverse() : pieces).join(""), start: reverse ? cursor : start, end: reverse ? end : cursor };
+}
+function shortDiagnostic(text) {
+  const part = take(text, 0, text.length, 1200);
+  return part.text + (part.end < text.length ? " ... [diagnostic shortened; use --format json for full text]" : "");
+}
+function sourceExcerpt(source, finding2) {
+  const start = finding2.start.offset;
+  const end = finding2.end.offset;
+  const before = take(source, 0, start, 32, true, true);
+  const after = take(source, end, source.length, 32, false, true);
+  let span = take(source, start, end, 80);
+  let selected = span.text;
+  if (span.end < end) {
+    span = take(source, start, end, 40);
+    const tail = take(source, span.end, end, 40, true);
+    selected = `${span.text} ... [${tail.start - span.end} UTF-16 units omitted] ... ${tail.text}`;
+  }
+  const prefix = before.start > 0 && !lineBreak(source[before.start - 1]) ? "... " : "";
+  const suffix = after.end < source.length && !lineBreak(source[after.end]) ? " ..." : "";
+  return `${prefix}${before.text}[[${selected}]]${after.text}${suffix}`;
+}
+
 // src/cli/formatters/pretty.ts
 var SEVERITY_LABEL = {
   error: colors.red(colors.bold("error")),
@@ -9278,16 +9323,13 @@ function formatPretty(report) {
   for (const file of report.files) {
     if (file.findings.length === 0) continue;
     lines.push(colors.underline(diagnosticText(file.path)));
-    const sourceLines = file.source.split(/\r\n|\r|\n/);
+    lines.push(colors.dim("  Bounded source excerpts: [[...]] marks each finding. End positions are exclusive."));
     for (const f of file.findings) {
-      const loc = colors.gray(`${f.start.line}:${f.start.column}`);
+      const loc = colors.gray(`${f.start.line}:${f.start.column}-${f.end.line}:${f.end.column}`);
       lines.push(`  ${loc}  ${SEVERITY_LABEL[f.severity]}  ${colors.dim(f.rule)}`);
-      lines.push(`    ${diagnosticText(f.message)}`);
-      const srcLine = sourceLines[f.start.line - 1] ?? "";
-      const revealedLine = diagnosticText(reveal(srcLine));
-      lines.push(`    ${colors.gray("|")} ${revealedLine}`);
-      lines.push(`    ${colors.gray("|")} ${" ".repeat(Math.max(0, f.start.column - 1))}${colors.magenta("^".repeat(Math.max(1, f.end.offset - f.start.offset)))}`);
-      lines.push(`    ${colors.dim("fix:")} ${diagnosticText(f.suggestion)}`);
+      lines.push(`    ${shortDiagnostic(f.message)}`);
+      lines.push(`    ${colors.gray("|")} ${sourceExcerpt(file.source, f)}`);
+      lines.push(`    ${colors.dim("fix:")} ${shortDiagnostic(f.suggestion)}`);
       lines.push("");
     }
   }
