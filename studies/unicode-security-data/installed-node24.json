@@ -1,0 +1,473 @@
+{
+  "node": "v24.21.0",
+  "unicode": "17.0",
+  "icu": "78.3",
+  "cliSha256": "b17c6ed5c2bf04452d5fe3c8077331047c5a1574de1e2824c5059b860f1183f5",
+  "tableSha256": "01295420d2ccd80a169e37dd25ef2e6d7d65acfd81912b1cb52e73d97764557a",
+  "source": {
+    "file": "fixtures/identifiers.mjs",
+    "bytes": 181,
+    "sha256": "813383d5d6e58d9d3a8d580b7413d8a44fb998bada01e55ee2685dacf86769f6",
+    "execution": [
+      "intended",
+      "different",
+      "intended",
+      "different"
+    ]
+  },
+  "cases": [
+    {
+      "name": "all-Cyrillic apple collision",
+      "text": "apple аррӏе",
+      "inputSha256": "441c2ceb5d134f31bdb187998a09fa76a3a9d97da7114cff3723b65eb3167321",
+      "expected": {
+        "errors": 2,
+        "warnings": 0,
+        "skeleton": "apple"
+      },
+      "actualErrors": 2,
+      "actualWarnings": 0,
+      "findings": [
+        {
+          "rule": "confusable",
+          "severity": "error",
+          "start": {
+            "line": 1,
+            "column": 1,
+            "offset": 0
+          },
+          "end": {
+            "line": 1,
+            "column": 6,
+            "offset": 5
+          },
+          "codePoints": [
+            97,
+            112,
+            112,
+            108,
+            101
+          ],
+          "names": [
+            "U+0061",
+            "U+0070",
+            "U+0070",
+            "U+006C",
+            "U+0065"
+          ],
+          "message": "\"apple\" is visually confusable with 1 other spelling(s) used elsewhere in this file (they share the skeleton \"apple\") -- this is how lookalike identifier/variable attacks work.",
+          "suggestion": "Rename one of the colliding identifiers so they are visually distinguishable, or confirm this is intentional (e.g. deliberately testing confusable handling).",
+          "skeleton": "apple",
+          "fixable": false
+        },
+        {
+          "rule": "confusable",
+          "severity": "error",
+          "start": {
+            "line": 1,
+            "column": 7,
+            "offset": 6
+          },
+          "end": {
+            "line": 1,
+            "column": 12,
+            "offset": 11
+          },
+          "codePoints": [
+            1072,
+            1088,
+            1088,
+            1231,
+            1077
+          ],
+          "names": [
+            "U+0430",
+            "U+0440",
+            "U+0440",
+            "U+04CF",
+            "U+0435"
+          ],
+          "message": "\"аррӏе\" is visually confusable with 1 other spelling(s) used elsewhere in this file (they share the skeleton \"apple\") -- this is how lookalike identifier/variable attacks work.",
+          "suggestion": "Rename one of the colliding identifiers so they are visually distinguishable, or confirm this is intentional (e.g. deliberately testing confusable handling).",
+          "skeleton": "apple",
+          "fixable": false
+        }
+      ]
+    },
+    {
+      "name": "Cyrillic sha collision",
+      "text": "window шindow",
+      "inputSha256": "e85098ecce6ec05ed3dd1f65fe72187ebfbb0e3ce2e13fca8f3ddda6a2cd8ac7",
+      "expected": {
+        "errors": 2,
+        "warnings": 1,
+        "skeleton": "window"
+      },
+      "actualErrors": 2,
+      "actualWarnings": 1,
+      "findings": [
+        {
+          "rule": "confusable",
+          "severity": "error",
+          "start": {
+            "line": 1,
+            "column": 1,
+            "offset": 0
+          },
+          "end": {
+            "line": 1,
+            "column": 7,
+            "offset": 6
+          },
+          "codePoints": [
+            119,
+            105,
+            110,
+            100,
+            111,
+            119
+          ],
+          "names": [
+            "U+0077",
+            "U+0069",
+            "U+006E",
+            "U+0064",
+            "U+006F",
+            "U+0077"
+          ],
+          "message": "\"window\" is visually confusable with 1 other spelling(s) used elsewhere in this file (they share the skeleton \"window\") -- this is how lookalike identifier/variable attacks work.",
+          "suggestion": "Rename one of the colliding identifiers so they are visually distinguishable, or confirm this is intentional (e.g. deliberately testing confusable handling).",
+          "skeleton": "window",
+          "fixable": false
+        },
+        {
+          "rule": "confusable",
+          "severity": "warning",
+          "start": {
+            "line": 1,
+            "column": 8,
+            "offset": 7
+          },
+          "end": {
+            "line": 1,
+            "column": 14,
+            "offset": 13
+          },
+          "codePoints": [
+            1096,
+            105,
+            110,
+            100,
+            111,
+            119
+          ],
+          "names": [
+            "U+0448",
+            "U+0069",
+            "U+006E",
+            "U+0064",
+            "U+006F",
+            "U+0077"
+          ],
+          "message": "\"шindow\" mixes scripts (Cyrillic, Latin) in one word -- a common homoglyph-attack shape. Skeleton: \"window\".",
+          "suggestion": "Confirm every character is intentional (e.g. a Greek variable name is fine on its own, but Latin+Cyrillic in one identifier rarely is), or rename to a single script.",
+          "skeleton": "window",
+          "fixable": false
+        },
+        {
+          "rule": "confusable",
+          "severity": "error",
+          "start": {
+            "line": 1,
+            "column": 8,
+            "offset": 7
+          },
+          "end": {
+            "line": 1,
+            "column": 14,
+            "offset": 13
+          },
+          "codePoints": [
+            1096,
+            105,
+            110,
+            100,
+            111,
+            119
+          ],
+          "names": [
+            "U+0448",
+            "U+0069",
+            "U+006E",
+            "U+0064",
+            "U+006F",
+            "U+0077"
+          ],
+          "message": "\"шindow\" is visually confusable with 1 other spelling(s) used elsewhere in this file (they share the skeleton \"window\") -- this is how lookalike identifier/variable attacks work.",
+          "suggestion": "Rename one of the colliding identifiers so they are visually distinguishable, or confirm this is intentional (e.g. deliberately testing confusable handling).",
+          "skeleton": "window",
+          "fixable": false
+        }
+      ]
+    },
+    {
+      "name": "Cyrillic sha without counterpart",
+      "text": "шindow",
+      "inputSha256": "9ba7b8a78090bb51ac8eeeb0421133b16305e2d9819d3c697e168c9a664ec24a",
+      "expected": {
+        "errors": 0,
+        "warnings": 1,
+        "skeleton": "window"
+      },
+      "actualErrors": 0,
+      "actualWarnings": 1,
+      "findings": [
+        {
+          "rule": "confusable",
+          "severity": "warning",
+          "start": {
+            "line": 1,
+            "column": 1,
+            "offset": 0
+          },
+          "end": {
+            "line": 1,
+            "column": 7,
+            "offset": 6
+          },
+          "codePoints": [
+            1096,
+            105,
+            110,
+            100,
+            111,
+            119
+          ],
+          "names": [
+            "U+0448",
+            "U+0069",
+            "U+006E",
+            "U+0064",
+            "U+006F",
+            "U+0077"
+          ],
+          "message": "\"шindow\" mixes scripts (Cyrillic, Latin) in one word -- a common homoglyph-attack shape. Skeleton: \"window\".",
+          "suggestion": "Confirm every character is intentional (e.g. a Greek variable name is fine on its own, but Latin+Cyrillic in one identifier rarely is), or rename to a single script.",
+          "skeleton": "window",
+          "fixable": false
+        }
+      ]
+    },
+    {
+      "name": "obsolete palochka-to-i collision",
+      "text": "appie аррӏе",
+      "inputSha256": "7a91d83cf928da86c420b62b559f49ab090e6b419b3bf4f43d5f79aa0e651c6d",
+      "expected": {
+        "errors": 0,
+        "warnings": 0,
+        "skeleton": null
+      },
+      "actualErrors": 0,
+      "actualWarnings": 0,
+      "findings": []
+    },
+    {
+      "name": "existing Cyrillic-a collision",
+      "text": "paypal pаypal",
+      "inputSha256": "5b474a5086001b9790c119ec3e75eec4771b9bdbbfe9443226de79bf7898df46",
+      "expected": {
+        "errors": 2,
+        "warnings": 1,
+        "skeleton": "paypal"
+      },
+      "actualErrors": 2,
+      "actualWarnings": 1,
+      "findings": [
+        {
+          "rule": "confusable",
+          "severity": "error",
+          "start": {
+            "line": 1,
+            "column": 1,
+            "offset": 0
+          },
+          "end": {
+            "line": 1,
+            "column": 7,
+            "offset": 6
+          },
+          "codePoints": [
+            112,
+            97,
+            121,
+            112,
+            97,
+            108
+          ],
+          "names": [
+            "U+0070",
+            "U+0061",
+            "U+0079",
+            "U+0070",
+            "U+0061",
+            "U+006C"
+          ],
+          "message": "\"paypal\" is visually confusable with 1 other spelling(s) used elsewhere in this file (they share the skeleton \"paypal\") -- this is how lookalike identifier/variable attacks work.",
+          "suggestion": "Rename one of the colliding identifiers so they are visually distinguishable, or confirm this is intentional (e.g. deliberately testing confusable handling).",
+          "skeleton": "paypal",
+          "fixable": false
+        },
+        {
+          "rule": "confusable",
+          "severity": "warning",
+          "start": {
+            "line": 1,
+            "column": 8,
+            "offset": 7
+          },
+          "end": {
+            "line": 1,
+            "column": 14,
+            "offset": 13
+          },
+          "codePoints": [
+            112,
+            1072,
+            121,
+            112,
+            97,
+            108
+          ],
+          "names": [
+            "U+0070",
+            "U+0430",
+            "U+0079",
+            "U+0070",
+            "U+0061",
+            "U+006C"
+          ],
+          "message": "\"pаypal\" mixes scripts (Latin, Cyrillic) in one word -- a common homoglyph-attack shape. Skeleton: \"paypal\".",
+          "suggestion": "Confirm every character is intentional (e.g. a Greek variable name is fine on its own, but Latin+Cyrillic in one identifier rarely is), or rename to a single script.",
+          "skeleton": "paypal",
+          "fixable": false
+        },
+        {
+          "rule": "confusable",
+          "severity": "error",
+          "start": {
+            "line": 1,
+            "column": 8,
+            "offset": 7
+          },
+          "end": {
+            "line": 1,
+            "column": 14,
+            "offset": 13
+          },
+          "codePoints": [
+            112,
+            1072,
+            121,
+            112,
+            97,
+            108
+          ],
+          "names": [
+            "U+0070",
+            "U+0430",
+            "U+0079",
+            "U+0070",
+            "U+0061",
+            "U+006C"
+          ],
+          "message": "\"pаypal\" is visually confusable with 1 other spelling(s) used elsewhere in this file (they share the skeleton \"paypal\") -- this is how lookalike identifier/variable attacks work.",
+          "suggestion": "Rename one of the colliding identifiers so they are visually distinguishable, or confirm this is intentional (e.g. deliberately testing confusable handling).",
+          "skeleton": "paypal",
+          "fixable": false
+        }
+      ]
+    },
+    {
+      "name": "ASCII lookalikes stay out of scope",
+      "text": "modern rnodern allow a11ow",
+      "inputSha256": "caded268f55b1db5e5d923e27e4889f67ee7859a71f568403b495c9a02eeac97",
+      "expected": {
+        "errors": 0,
+        "warnings": 0,
+        "skeleton": null
+      },
+      "actualErrors": 0,
+      "actualWarnings": 0,
+      "findings": []
+    },
+    {
+      "name": "canonical equivalents stay quiet",
+      "text": "café café",
+      "inputSha256": "268483acce82391a064692e20c66f8bf65aef80848356283ec8de7e8a803287a",
+      "expected": {
+        "errors": 0,
+        "warnings": 0,
+        "skeleton": null
+      },
+      "actualErrors": 0,
+      "actualWarnings": 0,
+      "findings": []
+    },
+    {
+      "name": "Greek symbols stay quiet",
+      "text": "LaTeX2ε Δt 10μs",
+      "inputSha256": "dba1946fc86037db1050fa6477a53bb883fd6393f8391d4cca8cbbb6a17d3480",
+      "expected": {
+        "errors": 0,
+        "warnings": 0,
+        "skeleton": null
+      },
+      "actualErrors": 0,
+      "actualWarnings": 0,
+      "findings": []
+    }
+  ],
+  "commands": [
+    {
+      "format": "json",
+      "exitCode": 1,
+      "stdout": "{\n  \"ghostchars\": true,\n  \"summary\": {\n    \"error\": 8,\n    \"warning\": 2,\n    \"info\": 0,\n    \"total\": 10,\n    \"files\": 1,\n    \"durationMs\": 15.085788,\n    \"complete\": true,\n    \"inputErrors\": 0\n  },\n  \"skipped\": [],\n  \"errors\": [],\n  \"results\": [\n    {\n      \"path\": \"fixtures/identifiers.mjs\",\n      \"findings\": [\n        {\n          \"rule\": \"confusable\",\n          \"severity\": \"error\",\n          \"start\": {\n            \"line\": 1,\n            \"column\": 7,\n            \"offset\": 6\n          },\n          \"end\": {\n            \"line\": 1,\n            \"column\": 12,\n            \"offset\": 11\n          },\n          \"codePoints\": [\n            \"U+0061\",\n            \"U+0070\",\n            \"U+0070\",\n            \"U+006C\",\n            \"U+0065\"\n          ],\n          \"names\": [\n            \"U+0061\",\n            \"U+0070\",\n            \"U+0070\",\n            \"U+006C\",\n            \"U+0065\"\n          ],\n          \"message\": \"\\\"apple\\\" is visually confusable with 1 other spelling(s) used elsewhere in this file (they share the skeleton \\\"apple\\\") -- this is how lookalike identifier/variable attacks work.\",\n          \"suggestion\": \"Rename one of the colliding identifiers so they are visually distinguishable, or confirm this is intentional (e.g. deliberately testing confusable handling).\",\n          \"skeleton\": \"apple\",\n          \"fixable\": false\n        },\n        {\n          \"rule\": \"confusable\",\n          \"severity\": \"error\",\n          \"start\": {\n            \"line\": 2,\n            \"column\": 7,\n            \"offset\": 32\n          },\n          \"end\": {\n            \"line\": 2,\n            \"column\": 12,\n            \"offset\": 37\n          },\n          \"codePoints\": [\n            \"U+0430\",\n            \"U+0440\",\n            \"U+0440\",\n            \"U+04CF\",\n            \"U+0435\"\n          ],\n          \"names\": [\n            \"U+0430\",\n            \"U+0440\",\n            \"U+0440\",\n            \"U+04CF\",\n            \"U+0435\"\n          ],\n          \"message\": \"\\\"аррӏе\\\" is visually confusable with 1 other spelling(s) used elsewhere in this file (they share the skeleton \\\"apple\\\") -- this is how lookalike identifier/variable attacks work.\",\n          \"suggestion\": \"Rename one of the colliding identifiers so they are visually distinguishable, or confirm this is intentional (e.g. deliberately testing confusable handling).\",\n          \"skeleton\": \"apple\",\n          \"fixable\": false\n        },\n        {\n          \"rule\": \"confusable\",\n          \"severity\": \"error\",\n          \"start\": {\n            \"line\": 3,\n            \"column\": 7,\n            \"offset\": 59\n          },\n          \"end\": {\n            \"line\": 3,\n            \"column\": 13,\n            \"offset\": 65\n          },\n          \"codePoints\": [\n            \"U+0077\",\n            \"U+0069\",\n            \"U+006E\",\n            \"U+0064\",\n            \"U+006F\",\n            \"U+0077\"\n          ],\n          \"names\": [\n            \"U+0077\",\n            \"U+0069\",\n            \"U+006E\",\n            \"U+0064\",\n            \"U+006F\",\n            \"U+0077\"\n          ],\n          \"message\": \"\\\"window\\\" is visually confusable with 1 other spelling(s) used elsewhere in this file (they share the skeleton \\\"window\\\") -- this is how lookalike identifier/variable attacks work.\",\n          \"suggestion\": \"Rename one of the colliding identifiers so they are visually distinguishable, or confirm this is intentional (e.g. deliberately testing confusable handling).\",\n          \"skeleton\": \"window\",\n          \"fixable\": false\n        },\n        {\n          \"rule\": \"confusable\",\n          \"severity\": \"warning\",\n          \"start\": {\n            \"line\": 4,\n            \"column\": 7,\n            \"offset\": 86\n          },\n          \"end\": {\n            \"line\": 4,\n            \"column\": 13,\n            \"offset\": 92\n          },\n          \"codePoints\": [\n            \"U+0448\",\n            \"U+0069\",\n            \"U+006E\",\n            \"U+0064\",\n            \"U+006F\",\n            \"U+0077\"\n          ],\n          \"names\": [\n            \"U+0448\",\n            \"U+0069\",\n            \"U+006E\",\n            \"U+0064\",\n            \"U+006F\",\n            \"U+0077\"\n          ],\n          \"message\": \"\\\"шindow\\\" mixes scripts (Cyrillic, Latin) in one word -- a common homoglyph-attack shape. Skeleton: \\\"window\\\".\",\n          \"suggestion\": \"Confirm every character is intentional (e.g. a Greek variable name is fine on its own, but Latin+Cyrillic in one identifier rarely is), or rename to a single script.\",\n          \"skeleton\": \"window\",\n          \"fixable\": false\n        },\n        {\n          \"rule\": \"confusable\",\n          \"severity\": \"error\",\n          \"start\": {\n            \"line\": 4,\n            \"column\": 7,\n            \"offset\": 86\n          },\n          \"end\": {\n            \"line\": 4,\n            \"column\": 13,\n            \"offset\": 92\n          },\n          \"codePoints\": [\n            \"U+0448\",\n            \"U+0069\",\n            \"U+006E\",\n            \"U+0064\",\n            \"U+006F\",\n            \"U+0077\"\n          ],\n          \"names\": [\n            \"U+0448\",\n            \"U+0069\",\n            \"U+006E\",\n            \"U+0064\",\n            \"U+006F\",\n            \"U+0077\"\n          ],\n          \"message\": \"\\\"шindow\\\" is visually confusable with 1 other spelling(s) used elsewhere in this file (they share the skeleton \\\"window\\\") -- this is how lookalike identifier/variable attacks work.\",\n          \"suggestion\": \"Rename one of the colliding identifiers so they are visually distinguishable, or confirm this is intentional (e.g. deliberately testing confusable handling).\",\n          \"skeleton\": \"window\",\n          \"fixable\": false\n        },\n        {\n          \"rule\": \"confusable\",\n          \"severity\": \"error\",\n          \"start\": {\n            \"line\": 5,\n            \"column\": 29,\n            \"offset\": 136\n          },\n          \"end\": {\n            \"line\": 5,\n            \"column\": 34,\n            \"offset\": 141\n          },\n          \"codePoints\": [\n            \"U+0061\",\n            \"U+0070\",\n            \"U+0070\",\n            \"U+006C\",\n            \"U+0065\"\n          ],\n          \"names\": [\n            \"U+0061\",\n            \"U+0070\",\n            \"U+0070\",\n            \"U+006C\",\n            \"U+0065\"\n          ],\n          \"message\": \"\\\"apple\\\" is visually confusable with 1 other spelling(s) used elsewhere in this file (they share the skeleton \\\"apple\\\") -- this is how lookalike identifier/variable attacks work.\",\n          \"suggestion\": \"Rename one of the colliding identifiers so they are visually distinguishable, or confirm this is intentional (e.g. deliberately testing confusable handling).\",\n          \"skeleton\": \"apple\",\n          \"fixable\": false\n        },\n        {\n          \"rule\": \"confusable\",\n          \"severity\": \"error\",\n          \"start\": {\n            \"line\": 5,\n            \"column\": 36,\n            \"offset\": 143\n          },\n          \"end\": {\n            \"line\": 5,\n            \"column\": 41,\n            \"offset\": 148\n          },\n          \"codePoints\": [\n            \"U+0430\",\n            \"U+0440\",\n            \"U+0440\",\n            \"U+04CF\",\n            \"U+0435\"\n          ],\n          \"names\": [\n            \"U+0430\",\n            \"U+0440\",\n            \"U+0440\",\n            \"U+04CF\",\n            \"U+0435\"\n          ],\n          \"message\": \"\\\"аррӏе\\\" is visually confusable with 1 other spelling(s) used elsewhere in this file (they share the skeleton \\\"apple\\\") -- this is how lookalike identifier/variable attacks work.\",\n          \"suggestion\": \"Rename one of the colliding identifiers so they are visually distinguishable, or confirm this is intentional (e.g. deliberately testing confusable handling).\",\n          \"skeleton\": \"apple\",\n          \"fixable\": false\n        },\n        {\n          \"rule\": \"confusable\",\n          \"severity\": \"error\",\n          \"start\": {\n            \"line\": 5,\n            \"column\": 43,\n            \"offset\": 150\n          },\n          \"end\": {\n            \"line\": 5,\n            \"column\": 49,\n            \"offset\": 156\n          },\n          \"codePoints\": [\n            \"U+0077\",\n            \"U+0069\",\n            \"U+006E\",\n            \"U+0064\",\n            \"U+006F\",\n            \"U+0077\"\n          ],\n          \"names\": [\n            \"U+0077\",\n            \"U+0069\",\n            \"U+006E\",\n            \"U+0064\",\n            \"U+006F\",\n            \"U+0077\"\n          ],\n          \"message\": \"\\\"window\\\" is visually confusable with 1 other spelling(s) used elsewhere in this file (they share the skeleton \\\"window\\\") -- this is how lookalike identifier/variable attacks work.\",\n          \"suggestion\": \"Rename one of the colliding identifiers so they are visually distinguishable, or confirm this is intentional (e.g. deliberately testing confusable handling).\",\n          \"skeleton\": \"window\",\n          \"fixable\": false\n        },\n        {\n          \"rule\": \"confusable\",\n          \"severity\": \"warning\",\n          \"start\": {\n            \"line\": 5,\n            \"column\": 51,\n            \"offset\": 158\n          },\n          \"end\": {\n            \"line\": 5,\n            \"column\": 57,\n            \"offset\": 164\n          },\n          \"codePoints\": [\n            \"U+0448\",\n            \"U+0069\",\n            \"U+006E\",\n            \"U+0064\",\n            \"U+006F\",\n            \"U+0077\"\n          ],\n          \"names\": [\n            \"U+0448\",\n            \"U+0069\",\n            \"U+006E\",\n            \"U+0064\",\n            \"U+006F\",\n            \"U+0077\"\n          ],\n          \"message\": \"\\\"шindow\\\" mixes scripts (Cyrillic, Latin) in one word -- a common homoglyph-attack shape. Skeleton: \\\"window\\\".\",\n          \"suggestion\": \"Confirm every character is intentional (e.g. a Greek variable name is fine on its own, but Latin+Cyrillic in one identifier rarely is), or rename to a single script.\",\n          \"skeleton\": \"window\",\n          \"fixable\": false\n        },\n        {\n          \"rule\": \"confusable\",\n          \"severity\": \"error\",\n          \"start\": {\n            \"line\": 5,\n            \"column\": 51,\n            \"offset\": 158\n          },\n          \"end\": {\n            \"line\": 5,\n            \"column\": 57,\n            \"offset\": 164\n          },\n          \"codePoints\": [\n            \"U+0448\",\n            \"U+0069\",\n            \"U+006E\",\n            \"U+0064\",\n            \"U+006F\",\n            \"U+0077\"\n          ],\n          \"names\": [\n            \"U+0448\",\n            \"U+0069\",\n            \"U+006E\",\n            \"U+0064\",\n            \"U+006F\",\n            \"U+0077\"\n          ],\n          \"message\": \"\\\"шindow\\\" is visually confusable with 1 other spelling(s) used elsewhere in this file (they share the skeleton \\\"window\\\") -- this is how lookalike identifier/variable attacks work.\",\n          \"suggestion\": \"Rename one of the colliding identifiers so they are visually distinguishable, or confirm this is intentional (e.g. deliberately testing confusable handling).\",\n          \"skeleton\": \"window\",\n          \"fixable\": false\n        }\n      ]\n    }\n  ]\n}\n",
+      "stderr": ""
+    },
+    {
+      "format": "sarif",
+      "exitCode": 1,
+      "stdout": "{\n  \"$schema\": \"https://docs.oasis-open.org/sarif/sarif/v2.1.0/errata01/os/schemas/sarif-schema-2.1.0.json\",\n  \"version\": \"2.1.0\",\n  \"runs\": [\n    {\n      \"tool\": {\n        \"driver\": {\n          \"name\": \"ghostchars\",\n          \"informationUri\": \"https://github.com/antonsoo/ghostchars\",\n          \"version\": \"0.1.5\",\n          \"rules\": [\n            {\n              \"id\": \"bidi-control\",\n              \"shortDescription\": {\n                \"text\": \"Explicit bidirectional formatting character (Trojan Source, CVE-2021-42574).\"\n              },\n              \"helpUri\": \"https://github.com/antonsoo/ghostchars#detections\"\n            },\n            {\n              \"id\": \"bidi-mark\",\n              \"shortDescription\": {\n                \"text\": \"Bidirectional mark character.\"\n              },\n              \"helpUri\": \"https://github.com/antonsoo/ghostchars#detections\"\n            },\n            {\n              \"id\": \"bidi-unbalanced\",\n              \"shortDescription\": {\n                \"text\": \"Unbalanced or unterminated bidirectional embedding/isolate.\"\n              },\n              \"helpUri\": \"https://github.com/antonsoo/ghostchars#detections\"\n            },\n            {\n              \"id\": \"tag-smuggling\",\n              \"shortDescription\": {\n                \"text\": \"Unicode tag characters outside a valid emoji tag sequence (ASCII smuggling).\"\n              },\n              \"helpUri\": \"https://github.com/antonsoo/ghostchars#detections\"\n            },\n            {\n              \"id\": \"variation-selector-smuggling\",\n              \"shortDescription\": {\n                \"text\": \"Variation selector run decodes to a hidden payload.\"\n              },\n              \"helpUri\": \"https://github.com/antonsoo/ghostchars#detections\"\n            },\n            {\n              \"id\": \"variation-selector-stray\",\n              \"shortDescription\": {\n                \"text\": \"Variation selector with no valid base character.\"\n              },\n              \"helpUri\": \"https://github.com/antonsoo/ghostchars#detections\"\n            },\n            {\n              \"id\": \"invisible\",\n              \"shortDescription\": {\n                \"text\": \"Invisible / default-ignorable character.\"\n              },\n              \"helpUri\": \"https://github.com/antonsoo/ghostchars#detections\"\n            },\n            {\n              \"id\": \"confusable\",\n              \"shortDescription\": {\n                \"text\": \"Visually confusable identifier (mixed script or skeleton collision).\"\n              },\n              \"helpUri\": \"https://github.com/antonsoo/ghostchars#detections\"\n            },\n            {\n              \"id\": \"styled-text\",\n              \"shortDescription\": {\n                \"text\": \"Letters in a styled Unicode alphabet (mathematical, fullwidth, circled, squared) that read as plain text.\"\n              },\n              \"helpUri\": \"https://github.com/antonsoo/ghostchars#detections\"\n            },\n            {\n              \"id\": \"unusual-whitespace\",\n              \"shortDescription\": {\n                \"text\": \"Unusual whitespace character.\"\n              },\n              \"helpUri\": \"https://github.com/antonsoo/ghostchars#detections\"\n            },\n            {\n              \"id\": \"control-character\",\n              \"shortDescription\": {\n                \"text\": \"Unexpected control character.\"\n              },\n              \"helpUri\": \"https://github.com/antonsoo/ghostchars#detections\"\n            }\n          ]\n        }\n      },\n      \"results\": [\n        {\n          \"ruleId\": \"confusable\",\n          \"level\": \"error\",\n          \"message\": {\n            \"text\": \"\\\"apple\\\" is visually confusable with 1 other spelling(s) used elsewhere in this file (they share the skeleton \\\"apple\\\") -- this is how lookalike identifier/variable attacks work.\"\n          },\n          \"locations\": [\n            {\n              \"physicalLocation\": {\n                \"artifactLocation\": {\n                  \"uri\": \"fixtures/identifiers.mjs\"\n                },\n                \"region\": {\n                  \"startLine\": 1,\n                  \"startColumn\": 7,\n                  \"endLine\": 1,\n                  \"endColumn\": 12\n                }\n              }\n            }\n          ]\n        },\n        {\n          \"ruleId\": \"confusable\",\n          \"level\": \"error\",\n          \"message\": {\n            \"text\": \"\\\"аррӏе\\\" is visually confusable with 1 other spelling(s) used elsewhere in this file (they share the skeleton \\\"apple\\\") -- this is how lookalike identifier/variable attacks work.\"\n          },\n          \"locations\": [\n            {\n              \"physicalLocation\": {\n                \"artifactLocation\": {\n                  \"uri\": \"fixtures/identifiers.mjs\"\n                },\n                \"region\": {\n                  \"startLine\": 2,\n                  \"startColumn\": 7,\n                  \"endLine\": 2,\n                  \"endColumn\": 12\n                }\n              }\n            }\n          ]\n        },\n        {\n          \"ruleId\": \"confusable\",\n          \"level\": \"error\",\n          \"message\": {\n            \"text\": \"\\\"window\\\" is visually confusable with 1 other spelling(s) used elsewhere in this file (they share the skeleton \\\"window\\\") -- this is how lookalike identifier/variable attacks work.\"\n          },\n          \"locations\": [\n            {\n              \"physicalLocation\": {\n                \"artifactLocation\": {\n                  \"uri\": \"fixtures/identifiers.mjs\"\n                },\n                \"region\": {\n                  \"startLine\": 3,\n                  \"startColumn\": 7,\n                  \"endLine\": 3,\n                  \"endColumn\": 13\n                }\n              }\n            }\n          ]\n        },\n        {\n          \"ruleId\": \"confusable\",\n          \"level\": \"warning\",\n          \"message\": {\n            \"text\": \"\\\"шindow\\\" mixes scripts (Cyrillic, Latin) in one word -- a common homoglyph-attack shape. Skeleton: \\\"window\\\".\"\n          },\n          \"locations\": [\n            {\n              \"physicalLocation\": {\n                \"artifactLocation\": {\n                  \"uri\": \"fixtures/identifiers.mjs\"\n                },\n                \"region\": {\n                  \"startLine\": 4,\n                  \"startColumn\": 7,\n                  \"endLine\": 4,\n                  \"endColumn\": 13\n                }\n              }\n            }\n          ]\n        },\n        {\n          \"ruleId\": \"confusable\",\n          \"level\": \"error\",\n          \"message\": {\n            \"text\": \"\\\"шindow\\\" is visually confusable with 1 other spelling(s) used elsewhere in this file (they share the skeleton \\\"window\\\") -- this is how lookalike identifier/variable attacks work.\"\n          },\n          \"locations\": [\n            {\n              \"physicalLocation\": {\n                \"artifactLocation\": {\n                  \"uri\": \"fixtures/identifiers.mjs\"\n                },\n                \"region\": {\n                  \"startLine\": 4,\n                  \"startColumn\": 7,\n                  \"endLine\": 4,\n                  \"endColumn\": 13\n                }\n              }\n            }\n          ]\n        },\n        {\n          \"ruleId\": \"confusable\",\n          \"level\": \"error\",\n          \"message\": {\n            \"text\": \"\\\"apple\\\" is visually confusable with 1 other spelling(s) used elsewhere in this file (they share the skeleton \\\"apple\\\") -- this is how lookalike identifier/variable attacks work.\"\n          },\n          \"locations\": [\n            {\n              \"physicalLocation\": {\n                \"artifactLocation\": {\n                  \"uri\": \"fixtures/identifiers.mjs\"\n                },\n                \"region\": {\n                  \"startLine\": 5,\n                  \"startColumn\": 29,\n                  \"endLine\": 5,\n                  \"endColumn\": 34\n                }\n              }\n            }\n          ]\n        },\n        {\n          \"ruleId\": \"confusable\",\n          \"level\": \"error\",\n          \"message\": {\n            \"text\": \"\\\"аррӏе\\\" is visually confusable with 1 other spelling(s) used elsewhere in this file (they share the skeleton \\\"apple\\\") -- this is how lookalike identifier/variable attacks work.\"\n          },\n          \"locations\": [\n            {\n              \"physicalLocation\": {\n                \"artifactLocation\": {\n                  \"uri\": \"fixtures/identifiers.mjs\"\n                },\n                \"region\": {\n                  \"startLine\": 5,\n                  \"startColumn\": 36,\n                  \"endLine\": 5,\n                  \"endColumn\": 41\n                }\n              }\n            }\n          ]\n        },\n        {\n          \"ruleId\": \"confusable\",\n          \"level\": \"error\",\n          \"message\": {\n            \"text\": \"\\\"window\\\" is visually confusable with 1 other spelling(s) used elsewhere in this file (they share the skeleton \\\"window\\\") -- this is how lookalike identifier/variable attacks work.\"\n          },\n          \"locations\": [\n            {\n              \"physicalLocation\": {\n                \"artifactLocation\": {\n                  \"uri\": \"fixtures/identifiers.mjs\"\n                },\n                \"region\": {\n                  \"startLine\": 5,\n                  \"startColumn\": 43,\n                  \"endLine\": 5,\n                  \"endColumn\": 49\n                }\n              }\n            }\n          ]\n        },\n        {\n          \"ruleId\": \"confusable\",\n          \"level\": \"warning\",\n          \"message\": {\n            \"text\": \"\\\"шindow\\\" mixes scripts (Cyrillic, Latin) in one word -- a common homoglyph-attack shape. Skeleton: \\\"window\\\".\"\n          },\n          \"locations\": [\n            {\n              \"physicalLocation\": {\n                \"artifactLocation\": {\n                  \"uri\": \"fixtures/identifiers.mjs\"\n                },\n                \"region\": {\n                  \"startLine\": 5,\n                  \"startColumn\": 51,\n                  \"endLine\": 5,\n                  \"endColumn\": 57\n                }\n              }\n            }\n          ]\n        },\n        {\n          \"ruleId\": \"confusable\",\n          \"level\": \"error\",\n          \"message\": {\n            \"text\": \"\\\"шindow\\\" is visually confusable with 1 other spelling(s) used elsewhere in this file (they share the skeleton \\\"window\\\") -- this is how lookalike identifier/variable attacks work.\"\n          },\n          \"locations\": [\n            {\n              \"physicalLocation\": {\n                \"artifactLocation\": {\n                  \"uri\": \"fixtures/identifiers.mjs\"\n                },\n                \"region\": {\n                  \"startLine\": 5,\n                  \"startColumn\": 51,\n                  \"endLine\": 5,\n                  \"endColumn\": 57\n                }\n              }\n            }\n          ]\n        }\n      ],\n      \"invocations\": [\n        {\n          \"executionSuccessful\": true,\n          \"toolExecutionNotifications\": []\n        }\n      ],\n      \"properties\": {\n        \"skipped\": []\n      }\n    }\n  ]\n}\n",
+      "stderr": ""
+    },
+    {
+      "format": "github",
+      "exitCode": 1,
+      "stdout": "::error file=fixtures/identifiers.mjs,line=1,col=7,endLine=1,endColumn=12,title=ghostchars%3A confusable::\"apple\" is visually confusable with 1 other spelling(s) used elsewhere in this file (they share the skeleton \"apple\") -- this is how lookalike identifier/variable attacks work.\n::error file=fixtures/identifiers.mjs,line=2,col=7,endLine=2,endColumn=12,title=ghostchars%3A confusable::\"аррӏе\" is visually confusable with 1 other spelling(s) used elsewhere in this file (they share the skeleton \"apple\") -- this is how lookalike identifier/variable attacks work.\n::error file=fixtures/identifiers.mjs,line=3,col=7,endLine=3,endColumn=13,title=ghostchars%3A confusable::\"window\" is visually confusable with 1 other spelling(s) used elsewhere in this file (they share the skeleton \"window\") -- this is how lookalike identifier/variable attacks work.\n::warning file=fixtures/identifiers.mjs,line=4,col=7,endLine=4,endColumn=13,title=ghostchars%3A confusable::\"шindow\" mixes scripts (Cyrillic, Latin) in one word -- a common homoglyph-attack shape. Skeleton: \"window\".\n::error file=fixtures/identifiers.mjs,line=4,col=7,endLine=4,endColumn=13,title=ghostchars%3A confusable::\"шindow\" is visually confusable with 1 other spelling(s) used elsewhere in this file (they share the skeleton \"window\") -- this is how lookalike identifier/variable attacks work.\n::error file=fixtures/identifiers.mjs,line=5,col=29,endLine=5,endColumn=34,title=ghostchars%3A confusable::\"apple\" is visually confusable with 1 other spelling(s) used elsewhere in this file (they share the skeleton \"apple\") -- this is how lookalike identifier/variable attacks work.\n::error file=fixtures/identifiers.mjs,line=5,col=36,endLine=5,endColumn=41,title=ghostchars%3A confusable::\"аррӏе\" is visually confusable with 1 other spelling(s) used elsewhere in this file (they share the skeleton \"apple\") -- this is how lookalike identifier/variable attacks work.\n::error file=fixtures/identifiers.mjs,line=5,col=43,endLine=5,endColumn=49,title=ghostchars%3A confusable::\"window\" is visually confusable with 1 other spelling(s) used elsewhere in this file (they share the skeleton \"window\") -- this is how lookalike identifier/variable attacks work.\n::warning file=fixtures/identifiers.mjs,line=5,col=51,endLine=5,endColumn=57,title=ghostchars%3A confusable::\"шindow\" mixes scripts (Cyrillic, Latin) in one word -- a common homoglyph-attack shape. Skeleton: \"window\".\n::error file=fixtures/identifiers.mjs,line=5,col=51,endLine=5,endColumn=57,title=ghostchars%3A confusable::\"шindow\" is visually confusable with 1 other spelling(s) used elsewhere in this file (they share the skeleton \"window\") -- this is how lookalike identifier/variable attacks work.\n",
+      "stderr": ""
+    },
+    {
+      "format": "summary",
+      "exitCode": 1,
+      "stdout": "fixtures/identifiers.mjs\n  error  confusable  x8  1:7 .. 5:51\n  warn   confusable  x2  4:7 .. 5:51\n\nghostchars: 8 error(s), 2 warning(s), 0 info in 1 file(s) scanned.\n",
+      "stderr": ""
+    }
+  ],
+  "repairs": [
+    {
+      "options": [
+        "--fix",
+        "--dry-run"
+      ],
+      "exitCode": 1,
+      "sourceUnchanged": true
+    },
+    {
+      "options": [
+        "--fix"
+      ],
+      "exitCode": 1,
+      "sourceUnchanged": true
+    }
+  ]
+}

@@ -79,6 +79,26 @@ system clipboard.
 <img src="../../docs/assets/unicode-security-data/before-chromium-1440.png" alt="Baseline scan reports no findings for distinct confusable identifiers" width="480" />
 <img src="../../docs/assets/unicode-security-data/after-chromium-1440.png" alt="Updated scan reports eight collision errors and two mixed-script warnings while preserving the text" width="480" />
 
+## Clean build and installed package
+
+A fresh archive of implementation commit `d5c9811` matched all 309 Git entries.
+Node 24.21.0 installation, lint, type checks, 252 unit tests, library/CLI/web
+builds and 36 browser workflows passed. All six regression screenshots were
+inspected. The 85 built files match the previously tested build byte for byte,
+including the assets fetched by the dedicated browser replay.
+
+The locally packed archive contains 53 compiled files, all identical to that
+clean build. A separate offline installation passes the eight replay cases,
+four CLI formats, package import, installed binary and unchanged-source repair
+checks on Node 20.0.0 and 24.21.0. Full runtime receipts are
+[`installed-node20.json`](installed-node20.json) and
+[`installed-node24.json`](installed-node24.json); build hashes, commands and
+tarball identity are in [`verification.json`](verification.json).
+Node 20 uses Unicode 15.0/ICU 72.1, while Node 24 uses Unicode 17.0/ICU 78.3.
+These cases exercise the existing identifier spellings above; they do not
+establish runtime recognition of every new Unicode 17 character. The packed
+artifact remains version 0.1.5 and has not been released to npm.
+
 ## Reproduce
 
 Build both the baseline and current source separately. After `npm ci`,

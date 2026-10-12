@@ -1,0 +1,604 @@
+{
+  "sourceCommit": "d5c9811e791c22702f8646b3ee6e8503148090ab",
+  "sourceArchive": {
+    "entries": 309,
+    "allMatchGitObjects": true
+  },
+  "cleanRuntime": {
+    "node": "24.21.0",
+    "npm": "12.0.1"
+  },
+  "checks": [
+    {
+      "command": "npm ci",
+      "exitCode": 0,
+      "logSha256": "956d1eb08a67a7c53087dea5d8471cd83acb39f112046b2c6cd4cd68185b0033"
+    },
+    {
+      "command": "npm run lint",
+      "exitCode": 0,
+      "logSha256": "9816032d097de2b86ee0fe002a35bb3960ad089342879cf11d72cd62e427d9c8"
+    },
+    {
+      "command": "npm run typecheck",
+      "exitCode": 0,
+      "logSha256": "3b5b905dfcf2e8234c734b5f1bbc2762f973b949323ff45b44c651201f3ed004"
+    },
+    {
+      "command": "npm test",
+      "exitCode": 0,
+      "logSha256": "d1b200d2e71a05e8589b29bc62c07525108ca1182ec3b4b8383bc5bfba0840d7"
+    },
+    {
+      "command": "npm run build",
+      "exitCode": 0,
+      "logSha256": "9e993204c89115a68e24a33ab4ec6bf1a45b72cb7eaf62d16f2ceff849b7e7af"
+    },
+    {
+      "command": "npm --prefix web ci",
+      "exitCode": 0,
+      "logSha256": "fd66373b7a9a35895d7c059955911aba6eb87aacf9a5df1da225b9ab4ec6259f"
+    },
+    {
+      "command": "npm --prefix web run lint",
+      "exitCode": 0,
+      "logSha256": "fccbc07fbf29c332497e42e0e6086b4bb6509fc86e47f77a2474be49164cb8df"
+    },
+    {
+      "command": "npm run web:build",
+      "exitCode": 0,
+      "logSha256": "30b1e4413b3c16989e4b6e042f23b09453aa26517d163a8c7f7bce86f43afd1a"
+    },
+    {
+      "command": "npm --prefix web run test:browser",
+      "exitCode": 0,
+      "logSha256": "5c9c7adcce62a1b0cbcfcbdefaffe30765824a3bff6d74ed5af40a547c2f68b2"
+    }
+  ],
+  "unitTests": {
+    "files": 21,
+    "passed": 252,
+    "skipped": 0
+  },
+  "browserTests": {
+    "passed": 36,
+    "skipped": 0,
+    "regressionScreenshotsInspected": 6
+  },
+  "buildComparison": {
+    "files": 85,
+    "allMatchPreviouslyTestedBuild": true,
+    "filesWithHashes": [
+      {
+        "path": "dist/cli.js",
+        "bytes": 271573,
+        "sha256": "b17c6ed5c2bf04452d5fe3c8077331047c5a1574de1e2824c5059b860f1183f5"
+      },
+      {
+        "path": "dist/core/decodeTags.d.ts",
+        "bytes": 1269,
+        "sha256": "22e1506fc9a42c5c7769ddfb1bbc7f16a130b15f452b7f1aad72d6a7d73e5c74"
+      },
+      {
+        "path": "dist/core/decodeTags.js",
+        "bytes": 3496,
+        "sha256": "ff956c84fc8c7a82129631cd9f2e3df9d0b9ee9305282682e5c7d2464abbc99f"
+      },
+      {
+        "path": "dist/core/decodeVariationSelectors.d.ts",
+        "bytes": 2482,
+        "sha256": "52d5a1639b6a3cfb5f5e8ceb0e476f655293f771aae821ab2764094de642f8c1"
+      },
+      {
+        "path": "dist/core/decodeVariationSelectors.js",
+        "bytes": 8105,
+        "sha256": "cc4bffa93e5c6c754da01a62b4e3a185c4148deed8deb09e493dc1356b333b49"
+      },
+      {
+        "path": "dist/core/diagnosticText.d.ts",
+        "bytes": 159,
+        "sha256": "ea9be9a3e20c0eca2a8d2d0c001312219c28606b9e919597e87063a57d429d3d"
+      },
+      {
+        "path": "dist/core/diagnosticText.js",
+        "bytes": 512,
+        "sha256": "8f5be7bce11ea0fda34154fd9b242166bf55587f35141fc442c482e01d8e6f36"
+      },
+      {
+        "path": "dist/core/index.d.ts",
+        "bytes": 549,
+        "sha256": "89ccc04102be3b48d1649c482ac74ca562b0b48bb25ad6f7f0ce207a09756ecc"
+      },
+      {
+        "path": "dist/core/index.js",
+        "bytes": 284,
+        "sha256": "e5ab7b6106d3dcced940e9a5fa2866ccf52db7e5e18e8775a0eadc1aae099d92"
+      },
+      {
+        "path": "dist/core/names.d.ts",
+        "bytes": 57,
+        "sha256": "6e8d516b6e17988b122b7199d498fc0786bdc66b47184c6c5e7bddd319a9574c"
+      },
+      {
+        "path": "dist/core/names.js",
+        "bytes": 3599,
+        "sha256": "271f618500c6e113a60aec8cee163a7f337f86bac692531b771e87545360a4e6"
+      },
+      {
+        "path": "dist/core/reveal.d.ts",
+        "bytes": 570,
+        "sha256": "048f2ad3ebecfcd3fca4fcdbb04083f61b9bec9c9594403720c6704de0608c05"
+      },
+      {
+        "path": "dist/core/reveal.js",
+        "bytes": 2963,
+        "sha256": "e1d4ab18c7baf4d7454cb78dc06efa1df6df94ff0726b6642487f24090653690"
+      },
+      {
+        "path": "dist/core/rules/bidi.d.ts",
+        "bytes": 973,
+        "sha256": "cb408c2c050f64e3fb5d1863cd0597d0f038449c0deb893b2b3e0a6a2a753307"
+      },
+      {
+        "path": "dist/core/rules/bidi.js",
+        "bytes": 5449,
+        "sha256": "263a1775c64a5942a896223dabe3e65abbeb228ab0c6ce522e37e0737e6c1767"
+      },
+      {
+        "path": "dist/core/rules/confusables.d.ts",
+        "bytes": 192,
+        "sha256": "757bd958e918b1e2dca37809ac766ab12605c3406e28f46a6c60ef163ff0a00d"
+      },
+      {
+        "path": "dist/core/rules/confusables.js",
+        "bytes": 20817,
+        "sha256": "89bda84d637c05188d22a8e1232fe89c9cf210a575f1404ea7e776a99abbe606"
+      },
+      {
+        "path": "dist/core/rules/invisible.d.ts",
+        "bytes": 189,
+        "sha256": "5dd8656ac408d87d3223af6c02a67a5fd6fc6bdc0479edaff72fd287f88a7022"
+      },
+      {
+        "path": "dist/core/rules/invisible.js",
+        "bytes": 5971,
+        "sha256": "92e0943b600c44e88db9e79fc45cd16993078e9ed19f04d6e084b50c38fbe2ea"
+      },
+      {
+        "path": "dist/core/rules/position.d.ts",
+        "bytes": 1177,
+        "sha256": "acb76c2d72d1eb3c38d5766d3e71bed65ec81d21d2367277241b6e31a4d4621f"
+      },
+      {
+        "path": "dist/core/rules/position.js",
+        "bytes": 1551,
+        "sha256": "e68bf5ecd0a89baf10b38185f33a743809c12db0ebe759d9c9bbcf4cb42c7331"
+      },
+      {
+        "path": "dist/core/rules/styledText.d.ts",
+        "bytes": 340,
+        "sha256": "0c72746ef55ad8fb007db704d1b2245017cd96ca6098cc45df94800ac9a8a5f5"
+      },
+      {
+        "path": "dist/core/rules/styledText.js",
+        "bytes": 5430,
+        "sha256": "7fcfc9a8deb28dc6dbce2ce10f9816c697c35db4ff3cfab1f277314d40166050"
+      },
+      {
+        "path": "dist/core/rules/tags.d.ts",
+        "bytes": 184,
+        "sha256": "63da80777c0315ec8b6ef64480cd73b54b63ca2708825e119ca8f059c9fc3811"
+      },
+      {
+        "path": "dist/core/rules/tags.js",
+        "bytes": 1282,
+        "sha256": "bc3735f7baef15245319758596afcce47608205ef353154c700fe73146fb638e"
+      },
+      {
+        "path": "dist/core/rules/variationSelectors.d.ts",
+        "bytes": 198,
+        "sha256": "83b90d064c3a9c9ee65b6fcc18d8ab75c27202cbc3f87c778bdda29e3a75179f"
+      },
+      {
+        "path": "dist/core/rules/variationSelectors.js",
+        "bytes": 4408,
+        "sha256": "7ca4b3545e6a610a446b613e88846c173f6a8671a10543a3f7e0be47fb3b2664"
+      },
+      {
+        "path": "dist/core/rules/whitespaceControl.d.ts",
+        "bytes": 200,
+        "sha256": "dc5d18376f5409596fac9df8d9f6c96c207c1918e653e3e065e0520289caaa30"
+      },
+      {
+        "path": "dist/core/rules/whitespaceControl.js",
+        "bytes": 6371,
+        "sha256": "07f45a3396a50abfa463d3725dd10d2c29136f78ae764ea18ebd937dd8e7c8d3"
+      },
+      {
+        "path": "dist/core/sanitize.d.ts",
+        "bytes": 458,
+        "sha256": "f92436a5ff8490a7a421044dd0c3eafb687dc22d68231339d56f210b83a23a43"
+      },
+      {
+        "path": "dist/core/sanitize.js",
+        "bytes": 3739,
+        "sha256": "77d4a1a704b1f05179e6ee5be9711ccd8774fe404c0472bffc7f076073b88b89"
+      },
+      {
+        "path": "dist/core/scanText.d.ts",
+        "bytes": 142,
+        "sha256": "fc73e8752a3f283a9b21ee547d29378cdecbcb51dab37afb9e9d390357221dec"
+      },
+      {
+        "path": "dist/core/scanText.js",
+        "bytes": 2790,
+        "sha256": "c978d8543f53eb0d1fcf06beb321962d78c7cda6f350d76dc48503ffff40d4bd"
+      },
+      {
+        "path": "dist/core/types.d.ts",
+        "bytes": 3950,
+        "sha256": "75be0466b5ccdb51f3c040c0bab8cfe36a1d71c98619f6aa5675383897d905fe"
+      },
+      {
+        "path": "dist/core/types.js",
+        "bytes": 11,
+        "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+      },
+      {
+        "path": "dist/core/unicode-utils.d.ts",
+        "bytes": 1561,
+        "sha256": "f8c15bd9f447f00755325cbe1b45f2d69049b577ac2aea2c61f27855181ee306"
+      },
+      {
+        "path": "dist/core/unicode-utils.js",
+        "bytes": 2827,
+        "sha256": "83e3cd9c75010c4c55137056cf919453268323de609874c02102ab6cc5fdf639"
+      },
+      {
+        "path": "dist/generated/confusables.d.ts",
+        "bytes": 196,
+        "sha256": "819016493c913b0a99987aa939b4e3274e16dd1b6f353c534164e6e64890ea0b"
+      },
+      {
+        "path": "dist/generated/confusables.js",
+        "bytes": 172228,
+        "sha256": "01295420d2ccd80a169e37dd25ef2e6d7d65acfd81912b1cb52e73d97764557a"
+      },
+      {
+        "path": "dist/generated/default-ignorable.d.ts",
+        "bytes": 148,
+        "sha256": "3db6532afbbd38e7a88a9866ca025280cb6565e06405500e20441416e8e82daf"
+      },
+      {
+        "path": "dist/generated/default-ignorable.js",
+        "bytes": 602,
+        "sha256": "9682c6db6af339a92ca913d0762f3bfe799d4c8bfd4fc4211cca93f1bbd7c674"
+      },
+      {
+        "path": "dist/generated/emoji-tag-sequences.d.ts",
+        "bytes": 212,
+        "sha256": "d16462011b37945d9211c4ef6951a24ea69a4eeff6312e16d847b66e12a9be2b"
+      },
+      {
+        "path": "dist/generated/emoji-tag-sequences.js",
+        "bytes": 567,
+        "sha256": "fa0f173f7fec06f8ae5dabaa4b97d8b9b14ba66853557f3b8f518843ba729566"
+      },
+      {
+        "path": "dist/generated/emoji.d.ts",
+        "bytes": 137,
+        "sha256": "cee457a35342832b054db38172f39eda544046f99b4ccc5a5fe7a36d34517bdd"
+      },
+      {
+        "path": "dist/generated/emoji.js",
+        "bytes": 3088,
+        "sha256": "3cc6ee4d8a658a74d5c74b0454ffdceadf2317f562b78b10662d18e9ee36d89c"
+      },
+      {
+        "path": "dist/generated/script-extensions.d.ts",
+        "bytes": 207,
+        "sha256": "fec261d555322d900ad4655cc750b9e9f6bccc99779294f9ce6f31dea5c937c4"
+      },
+      {
+        "path": "dist/generated/script-extensions.js",
+        "bytes": 814,
+        "sha256": "ba4bf386b5121cb2381ec771db14f3ad99c2bd69e9295930ba010af552aface0"
+      },
+      {
+        "path": "dist/generated/scripts.d.ts",
+        "bytes": 218,
+        "sha256": "c6f7dede067d25c71e909592dbb55aefae5ec97091b3e4bc8550c41283c28665"
+      },
+      {
+        "path": "dist/generated/scripts.js",
+        "bytes": 24678,
+        "sha256": "5d671157299ea646ee08c8ca39908123e01a17fbac41591ada0c39b52432f80c"
+      },
+      {
+        "path": "dist/generated/standardized-variants.d.ts",
+        "bytes": 160,
+        "sha256": "e740b1b4118b11201465e30f79a1dc828442df3be83b324eabdf36a6740f23a1"
+      },
+      {
+        "path": "dist/generated/standardized-variants.js",
+        "bytes": 29049,
+        "sha256": "68aeed067e97b685bc1d34cc6c8093754c2faa95291fc07c372d0030dcd0d653"
+      },
+      {
+        "path": "dist/index.d.ts",
+        "bytes": 33,
+        "sha256": "a06db219f83fd299973856c648293bcfca1f606a2617b7750f75b13dd28ca5fd"
+      },
+      {
+        "path": "dist/index.js",
+        "bytes": 217,
+        "sha256": "74c53f9f5531c99ca727c1a41de8f76a8d1d0e39e005009b76778584daa1206d"
+      },
+      {
+        "path": "web/dist/assets/ibm-plex-mono-400-cyrillic-BSMlKf0J.woff2",
+        "bytes": 8356,
+        "sha256": "7635422bd10ddbbcb0e0caa1154b928298f5c8319b8c00b30978d4395f4783ce"
+      },
+      {
+        "path": "web/dist/assets/ibm-plex-mono-400-cyrillic-ext-xuaO2J-f.woff2",
+        "bytes": 6912,
+        "sha256": "f8c22ec1804bd6966b70f43ac7c327025645b4c09597117fca2a5a6c750106fe"
+      },
+      {
+        "path": "web/dist/assets/ibm-plex-mono-400-latin-DMJ8VG8y.woff2",
+        "bytes": 14708,
+        "sha256": "08949f728dc52d528e69b1667d15c89a5686a4ee9a296ff90983985f99c380f7"
+      },
+      {
+        "path": "web/dist/assets/ibm-plex-mono-400-latin-ext-BmRBH3aV.woff2",
+        "bytes": 13348,
+        "sha256": "6bc0f226a5b7884a8170e3f62c63d7675609d4631bdc5931b5cdab81821f00eb"
+      },
+      {
+        "path": "web/dist/assets/ibm-plex-mono-400-vietnamese-BulugwFq.woff2",
+        "bytes": 5868,
+        "sha256": "62632b6375305e70ddcafdd895218e6ae41a184fcd280a69c739460604ca00a9"
+      },
+      {
+        "path": "web/dist/assets/ibm-plex-mono-500-cyrillic-Bq9vWWag.woff2",
+        "bytes": 8460,
+        "sha256": "1d89462e86cb8e87e7e9d6f6635605bd7c3081baca6caaecee84916bf7b60edc"
+      },
+      {
+        "path": "web/dist/assets/ibm-plex-mono-500-cyrillic-ext-BqneJy0T.woff2",
+        "bytes": 6972,
+        "sha256": "3febe5c7f22e4b07b4552738673c3dbe8bced2dc5f48b866edf7ccd9552d109a"
+      },
+      {
+        "path": "web/dist/assets/ibm-plex-mono-500-latin-DSY6xOcd.woff2",
+        "bytes": 14888,
+        "sha256": "01d285447409c8a588692162439a038b8cbd7871309ee20267b0d2d91c6e8e22"
+      },
+      {
+        "path": "web/dist/assets/ibm-plex-mono-500-latin-ext-CAhNIIs5.woff2",
+        "bytes": 13432,
+        "sha256": "6bb06407c97584b0867a959e05e8874693bfeb8c317de190811c51598f2d99ea"
+      },
+      {
+        "path": "web/dist/assets/ibm-plex-mono-500-vietnamese-DZ4AoWbu.woff2",
+        "bytes": 6040,
+        "sha256": "781633d95de88040fb77141d1e65d928c87c0144691fbc74da5a64d137a7e910"
+      },
+      {
+        "path": "web/dist/assets/ibm-plex-mono-600-cyrillic-CTOM6hUh.woff2",
+        "bytes": 9352,
+        "sha256": "2b05a8695c7f9f4abd7178b279646a3b005a8ce57546bef6fd145f25d131e0aa"
+      },
+      {
+        "path": "web/dist/assets/ibm-plex-mono-600-cyrillic-ext-V-xxqcpd.woff2",
+        "bytes": 7692,
+        "sha256": "83109cdd4f8665b475dfc11d61bd44da328bf7e6eab3d3953d39c49b1b9f6015"
+      },
+      {
+        "path": "web/dist/assets/ibm-plex-mono-600-latin-BgSNZQsw.woff2",
+        "bytes": 15620,
+        "sha256": "0d1f0b8d0722224e32e9f28261bdc86c79115be73444ae5eceb73976a1bcdf83"
+      },
+      {
+        "path": "web/dist/assets/ibm-plex-mono-600-latin-ext-D38SheWl.woff2",
+        "bytes": 14328,
+        "sha256": "32057cf50dd14bdb21a2c93766c4a2c43e4abe688ea3922df3203cac7751a98b"
+      },
+      {
+        "path": "web/dist/assets/ibm-plex-mono-600-vietnamese-D2EvbN8M.woff2",
+        "bytes": 6932,
+        "sha256": "51b74d53e106ba8a26dd33464b231a562069be2a234b923c115beb622e6f6bc6"
+      },
+      {
+        "path": "web/dist/assets/index-BgH9oRrq.js",
+        "bytes": 17094,
+        "sha256": "57893a227d282dd793f07f825f17b39c202754bda5c6fa6e1c6aa4df8246b05d"
+      },
+      {
+        "path": "web/dist/assets/index-BgH9oRrq.js.map",
+        "bytes": 29863,
+        "sha256": "a04acc502f3377fc9a499e40a0e46cc4e3ae69a441952bcffa298d168141b35b"
+      },
+      {
+        "path": "web/dist/assets/index-D-URW2Iy.css",
+        "bytes": 17707,
+        "sha256": "f7da8186ed0fcac032c424a13f2601ece4d04ad6192a85c9b4b4e239223bae52"
+      },
+      {
+        "path": "web/dist/assets/inter-cyrillic-DqGufNeO.woff2",
+        "bytes": 18748,
+        "sha256": "71d5ee93cc1e9f1d520a3a8b66456de18c7879d8df09d57fcd2eaff75fef0075"
+      },
+      {
+        "path": "web/dist/assets/inter-cyrillic-ext-BOeWTOD4.woff2",
+        "bytes": 25960,
+        "sha256": "ca157063339ac4ad418f214f3abfed119b0798ab4d377386ce5c9e5a7a435ebd"
+      },
+      {
+        "path": "web/dist/assets/inter-greek-CkhJZR-_.woff2",
+        "bytes": 18996,
+        "sha256": "1be3448e292fbf05ffe176fe1e43f135013d50b1e7d324ad1a558f623d3bb6f6"
+      },
+      {
+        "path": "web/dist/assets/inter-greek-ext-DlzME5K_.woff2",
+        "bytes": 11232,
+        "sha256": "6e9e020a25f9b56d418f2c085b1d3c09725a4da23fe693a5b463064606732190"
+      },
+      {
+        "path": "web/dist/assets/inter-latin-Dx4kXJAl.woff2",
+        "bytes": 48256,
+        "sha256": "3100e775e8616cd2611beecfa23a4263d7037586789b43f035236a2e6fbd4c62"
+      },
+      {
+        "path": "web/dist/assets/inter-latin-ext-DO1Apj_S.woff2",
+        "bytes": 85068,
+        "sha256": "34b9c504cab7a73e37b746343a449132e56cf7b5481af2cb81dc74dcff25c956"
+      },
+      {
+        "path": "web/dist/assets/inter-vietnamese-CBcvBZtf.woff2",
+        "bytes": 10252,
+        "sha256": "5c66f9e07e90c6d4ac4922cc68d60de26c17b1858e677fb5e603fce3952b3ff2"
+      },
+      {
+        "path": "web/dist/assets/scan.worker-B1n98KwB.js",
+        "bytes": 176238,
+        "sha256": "3371d16cab5206663e26906581c85a0c5cbf47bcae0a9e77cbb4ecc05e052d11"
+      },
+      {
+        "path": "web/dist/assets/scan.worker-B1n98KwB.js.map",
+        "bytes": 604551,
+        "sha256": "9d8c34e5a4490eff0d9ba17c765e5b00dfdbc89949b3d4c142b766edeb069d3a"
+      },
+      {
+        "path": "web/dist/assets/space-grotesk-latin-BhU9QXUp.woff2",
+        "bytes": 22288,
+        "sha256": "0640890476fc1198ab4de571fb658de443c4d85b66466ec09534a8737ab1ce9d"
+      },
+      {
+        "path": "web/dist/assets/space-grotesk-latin-ext-D9tNdqV9.woff2",
+        "bytes": 18940,
+        "sha256": "952dddb45d2f96f71cbf3b7f510b24379afc3c89ea02fcf89d377b45d62c0166"
+      },
+      {
+        "path": "web/dist/assets/space-grotesk-vietnamese-D0rl6rjA.woff2",
+        "bytes": 6712,
+        "sha256": "8895e3d49825128bfa5238e4c96e9b432d7a3dadbe5c17c6081267398305dc71"
+      },
+      {
+        "path": "web/dist/favicon.svg",
+        "bytes": 360,
+        "sha256": "8a223c5369b990e7795446b06d4c17559a05ff6ed0d1d66e85e64015ed05395f"
+      },
+      {
+        "path": "web/dist/index.html",
+        "bytes": 2259,
+        "sha256": "77dfe46fb26d4816b7146a72b06aeba85a8ac15011078b20fb41942d7e8c9a86"
+      }
+    ]
+  },
+  "installedPackage": {
+    "tarball": {
+      "filename": "antonsoloviev-ghostchars-0.1.5.tgz",
+      "bytes": 168387,
+      "sha256": "44d9ac417f6554a4dccd6c2ee2e189d8ff3b4f2c2c3940805d5ec10b8f52d72b"
+    },
+    "compiledFilesMatch": 53,
+    "runtimeChecks": [
+      {
+        "runtime": "node20",
+        "versions": {
+          "node": "20.0.0",
+          "acorn": "8.8.2",
+          "ada": "2.0.0",
+          "ares": "1.19.0",
+          "brotli": "1.0.9",
+          "cldr": "42.0",
+          "icu": "72.1",
+          "llhttp": "8.1.0",
+          "modules": "115",
+          "napi": "8",
+          "nghttp2": "1.52.0",
+          "nghttp3": "0.7.0",
+          "ngtcp2": "0.8.1",
+          "openssl": "3.0.8+quic",
+          "simdutf": "3.2.7",
+          "tz": "2023c",
+          "undici": "5.21.0",
+          "unicode": "15.0",
+          "uv": "1.44.2",
+          "uvwasi": "0.0.16",
+          "v8": "11.3.244.4-node.3",
+          "zlib": "1.2.13"
+        },
+        "replay": {
+          "cases": 8,
+          "changedCasesPassing": 8,
+          "cliExitCodes": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "repairSourceUnchanged": true
+        },
+        "packageImportPassed": true,
+        "installedBinVersion": "0.1.5",
+        "receiptSha256": "d5109b2d2bc772d8ad5e3190a9bd2adff62b35a8e9d078452dfe592ac39db556"
+      },
+      {
+        "runtime": "node24",
+        "versions": {
+          "node": "24.21.0",
+          "acorn": "8.18.0",
+          "ada": "4.0.0",
+          "amaro": "1.1.11",
+          "ares": "1.34.8",
+          "brotli": "1.2.0",
+          "cldr": "48.0",
+          "icu": "78.3",
+          "llhttp": "9.4.3",
+          "merve": "1.2.2",
+          "modules": "137",
+          "napi": "10",
+          "nbytes": "0.1.4",
+          "ncrypto": "0.0.1",
+          "nghttp2": "1.70.0",
+          "nghttp3": "",
+          "ngtcp2": "",
+          "openssl": "3.5.8",
+          "simdjson": "4.6.7",
+          "simdutf": "6.4.0",
+          "sqlite": "3.53.4",
+          "tz": "2026c",
+          "undici": "7.29.1",
+          "unicode": "17.0",
+          "uv": "1.52.1",
+          "uvwasi": "0.0.23",
+          "v8": "13.6.233.17-node.53",
+          "zlib": "1.3.2.1-motley-8002e91",
+          "zstd": "1.5.7"
+        },
+        "replay": {
+          "cases": 8,
+          "changedCasesPassing": 8,
+          "cliExitCodes": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "repairSourceUnchanged": true
+        },
+        "packageImportPassed": true,
+        "installedBinVersion": "0.1.5",
+        "receiptSha256": "5feaa26a1c32aeeb86e7dc28439ba9ecaa611d0169e876922a8286243258d412"
+      }
+    ]
+  },
+  "limits": [
+    "The package was installed from a locally packed archive; this is not a registry release.",
+    "Eight installed-runtime cases check existing identifier spellings, not every new Unicode 17 character or full UTS #39 conformance.",
+    "Browser replay loads the fixture font subsets before disconnecting; cold offline glyph-subset availability is not established.",
+    "Only main source publication is intended; no tag or hosted deployment."
+  ]
+}
