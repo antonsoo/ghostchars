@@ -1,11 +1,13 @@
 // Actual built worker, with the no-store HTTP server stopped before new input.
 // node browser.mjs DIST_ROOT OUTPUT baseline|verify SCREENSHOT_DIR
+/* global window, document, innerWidth */
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { mkdir, readdir, readFile, writeFile } from 'node:fs/promises';
 import { createServer } from 'node:http';
 import { createRequire } from 'node:module';
 import { extname, join, resolve } from 'node:path';
+import { URL } from 'node:url';
 
 const require = createRequire(new URL('../../web/package.json', import.meta.url));
 const { chromium, firefox } = require('playwright');

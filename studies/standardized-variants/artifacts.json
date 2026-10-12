@@ -323,7 +323,8 @@
     "final-web-types": "d527ccde703be6678288a298d1c2b6a89290dfb05a4f479f3f91d36882bc0a7a",
     "final-web-lint": "fccbc07fbf29c332497e42e0e6086b4bb6509fc86e47f77a2474be49164cb8df",
     "final-web-build": "9618d1fb900b925e98143e144e88437f8f9e6658ba58aa7a604b9b57863bd167",
-    "final-web-browser": "b41d05323dd122d67b0105300fbe13d7a9b957230bae9446f7c84820103f54b3"
+    "final-web-browser": "b41d05323dd122d67b0105300fbe13d7a9b957230bae9446f7c84820103f54b3",
+    "final-evidence-lint": "9816032d097de2b86ee0fe002a35bb3960ad089342879cf11d72cd62e427d9c8"
   },
   "artifacts": {
     "browser-after.json": "28ad03bdbd821ea13a7e877159bf2509e34a4058421d5875dff5669787a049bb",
