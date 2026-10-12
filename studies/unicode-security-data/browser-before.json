@@ -1,0 +1,374 @@
+{
+  "mode": "before",
+  "results": [
+    {
+      "engine": "chromium",
+      "browserVersion": "153.0.8010.12",
+      "width": 1440,
+      "serverStoppedBeforeNewInput": true,
+      "glyphFontsLoadedBeforeOffline": true,
+      "cases": [
+        {
+          "name": "new collisions",
+          "inputSha256": "813383d5d6e58d9d3a8d580b7413d8a44fb998bada01e55ee2685dacf86769f6",
+          "findings": 0,
+          "status": "Scanned 169 code units (169 code points); 0 findings.",
+          "selected": [],
+          "sanitizedTextUnchanged": true,
+          "outputSelectionUnchanged": true
+        },
+        {
+          "name": "obsolete collision",
+          "inputSha256": "7a91d83cf928da86c420b62b559f49ab090e6b419b3bf4f43d5f79aa0e651c6d",
+          "findings": 2,
+          "status": "Scanned 11 code units (11 code points); 2 findings.",
+          "selected": [
+            "appie",
+            "аррӏе"
+          ],
+          "sanitizedTextUnchanged": true,
+          "outputSelectionUnchanged": true
+        }
+      ],
+      "served": {
+        "/ghostchars/index.html": {
+          "bytes": 2259,
+          "sha256": "1fdce7de78223ed7edaa855d5047fff17aa017a50aa16b5a07d09df4c2b96707"
+        },
+        "/ghostchars/assets/index-D-URW2Iy.css": {
+          "bytes": 17707,
+          "sha256": "f7da8186ed0fcac032c424a13f2601ece4d04ad6192a85c9b4b4e239223bae52"
+        },
+        "/ghostchars/assets/index-C0DQI7Jo.js": {
+          "bytes": 17094,
+          "sha256": "47c84a881c0704776cb7894c658c8753c2bcf845357c64b4cf11bacf009ef30a"
+        },
+        "/ghostchars/assets/space-grotesk-latin-BhU9QXUp.woff2": {
+          "bytes": 22288,
+          "sha256": "0640890476fc1198ab4de571fb658de443c4d85b66466ec09534a8737ab1ce9d"
+        },
+        "/ghostchars/assets/inter-latin-Dx4kXJAl.woff2": {
+          "bytes": 48256,
+          "sha256": "3100e775e8616cd2611beecfa23a4263d7037586789b43f035236a2e6fbd4c62"
+        },
+        "/ghostchars/assets/scan.worker-ehKglIt1.js": {
+          "bytes": 172796,
+          "sha256": "2efa2279f087132626cded0c39f31f655fe82ba9bee3adfba483e9d7d1a97547"
+        },
+        "/ghostchars/assets/ibm-plex-mono-500-latin-DSY6xOcd.woff2": {
+          "bytes": 14888,
+          "sha256": "01d285447409c8a588692162439a038b8cbd7871309ee20267b0d2d91c6e8e22"
+        },
+        "/ghostchars/assets/inter-cyrillic-DqGufNeO.woff2": {
+          "bytes": 18748,
+          "sha256": "71d5ee93cc1e9f1d520a3a8b66456de18c7879d8df09d57fcd2eaff75fef0075"
+        },
+        "/ghostchars/assets/ibm-plex-mono-400-latin-DMJ8VG8y.woff2": {
+          "bytes": 14708,
+          "sha256": "08949f728dc52d528e69b1667d15c89a5686a4ee9a296ff90983985f99c380f7"
+        },
+        "/ghostchars/assets/ibm-plex-mono-600-latin-BgSNZQsw.woff2": {
+          "bytes": 15620,
+          "sha256": "0d1f0b8d0722224e32e9f28261bdc86c79115be73444ae5eceb73976a1bcdf83"
+        },
+        "/ghostchars/assets/ibm-plex-mono-400-cyrillic-ext-xuaO2J-f.woff2": {
+          "bytes": 6912,
+          "sha256": "f8c22ec1804bd6966b70f43ac7c327025645b4c09597117fca2a5a6c750106fe"
+        },
+        "/ghostchars/assets/ibm-plex-mono-400-cyrillic-BSMlKf0J.woff2": {
+          "bytes": 8356,
+          "sha256": "7635422bd10ddbbcb0e0caa1154b928298f5c8319b8c00b30978d4395f4783ce"
+        },
+        "/ghostchars/assets/inter-cyrillic-ext-BOeWTOD4.woff2": {
+          "bytes": 25960,
+          "sha256": "ca157063339ac4ad418f214f3abfed119b0798ab4d377386ce5c9e5a7a435ebd"
+        }
+      },
+      "errors": [],
+      "lateRequests": [],
+      "external": [],
+      "cspViolations": [],
+      "axeViolations": 0,
+      "horizontalOverflow": false
+    },
+    {
+      "engine": "chromium",
+      "browserVersion": "153.0.8010.12",
+      "width": 375,
+      "serverStoppedBeforeNewInput": true,
+      "glyphFontsLoadedBeforeOffline": true,
+      "cases": [
+        {
+          "name": "new collisions",
+          "inputSha256": "813383d5d6e58d9d3a8d580b7413d8a44fb998bada01e55ee2685dacf86769f6",
+          "findings": 0,
+          "status": "Scanned 169 code units (169 code points); 0 findings.",
+          "selected": [],
+          "sanitizedTextUnchanged": true,
+          "outputSelectionUnchanged": true
+        },
+        {
+          "name": "obsolete collision",
+          "inputSha256": "7a91d83cf928da86c420b62b559f49ab090e6b419b3bf4f43d5f79aa0e651c6d",
+          "findings": 2,
+          "status": "Scanned 11 code units (11 code points); 2 findings.",
+          "selected": [
+            "appie",
+            "аррӏе"
+          ],
+          "sanitizedTextUnchanged": true,
+          "outputSelectionUnchanged": true
+        }
+      ],
+      "served": {
+        "/ghostchars/index.html": {
+          "bytes": 2259,
+          "sha256": "1fdce7de78223ed7edaa855d5047fff17aa017a50aa16b5a07d09df4c2b96707"
+        },
+        "/ghostchars/assets/index-D-URW2Iy.css": {
+          "bytes": 17707,
+          "sha256": "f7da8186ed0fcac032c424a13f2601ece4d04ad6192a85c9b4b4e239223bae52"
+        },
+        "/ghostchars/assets/index-C0DQI7Jo.js": {
+          "bytes": 17094,
+          "sha256": "47c84a881c0704776cb7894c658c8753c2bcf845357c64b4cf11bacf009ef30a"
+        },
+        "/ghostchars/assets/inter-latin-Dx4kXJAl.woff2": {
+          "bytes": 48256,
+          "sha256": "3100e775e8616cd2611beecfa23a4263d7037586789b43f035236a2e6fbd4c62"
+        },
+        "/ghostchars/assets/space-grotesk-latin-BhU9QXUp.woff2": {
+          "bytes": 22288,
+          "sha256": "0640890476fc1198ab4de571fb658de443c4d85b66466ec09534a8737ab1ce9d"
+        },
+        "/ghostchars/assets/scan.worker-ehKglIt1.js": {
+          "bytes": 172796,
+          "sha256": "2efa2279f087132626cded0c39f31f655fe82ba9bee3adfba483e9d7d1a97547"
+        },
+        "/ghostchars/assets/ibm-plex-mono-500-latin-DSY6xOcd.woff2": {
+          "bytes": 14888,
+          "sha256": "01d285447409c8a588692162439a038b8cbd7871309ee20267b0d2d91c6e8e22"
+        },
+        "/ghostchars/assets/ibm-plex-mono-600-latin-BgSNZQsw.woff2": {
+          "bytes": 15620,
+          "sha256": "0d1f0b8d0722224e32e9f28261bdc86c79115be73444ae5eceb73976a1bcdf83"
+        },
+        "/ghostchars/assets/inter-cyrillic-DqGufNeO.woff2": {
+          "bytes": 18748,
+          "sha256": "71d5ee93cc1e9f1d520a3a8b66456de18c7879d8df09d57fcd2eaff75fef0075"
+        },
+        "/ghostchars/assets/ibm-plex-mono-400-latin-DMJ8VG8y.woff2": {
+          "bytes": 14708,
+          "sha256": "08949f728dc52d528e69b1667d15c89a5686a4ee9a296ff90983985f99c380f7"
+        },
+        "/ghostchars/assets/ibm-plex-mono-400-cyrillic-ext-xuaO2J-f.woff2": {
+          "bytes": 6912,
+          "sha256": "f8c22ec1804bd6966b70f43ac7c327025645b4c09597117fca2a5a6c750106fe"
+        },
+        "/ghostchars/assets/ibm-plex-mono-400-cyrillic-BSMlKf0J.woff2": {
+          "bytes": 8356,
+          "sha256": "7635422bd10ddbbcb0e0caa1154b928298f5c8319b8c00b30978d4395f4783ce"
+        },
+        "/ghostchars/assets/inter-cyrillic-ext-BOeWTOD4.woff2": {
+          "bytes": 25960,
+          "sha256": "ca157063339ac4ad418f214f3abfed119b0798ab4d377386ce5c9e5a7a435ebd"
+        }
+      },
+      "errors": [],
+      "lateRequests": [],
+      "external": [],
+      "cspViolations": [],
+      "axeViolations": 0,
+      "horizontalOverflow": false
+    },
+    {
+      "engine": "firefox",
+      "browserVersion": "155.0",
+      "width": 1440,
+      "serverStoppedBeforeNewInput": true,
+      "glyphFontsLoadedBeforeOffline": true,
+      "cases": [
+        {
+          "name": "new collisions",
+          "inputSha256": "813383d5d6e58d9d3a8d580b7413d8a44fb998bada01e55ee2685dacf86769f6",
+          "findings": 0,
+          "status": "Scanned 169 code units (169 code points); 0 findings.",
+          "selected": [],
+          "sanitizedTextUnchanged": true,
+          "outputSelectionUnchanged": true
+        },
+        {
+          "name": "obsolete collision",
+          "inputSha256": "7a91d83cf928da86c420b62b559f49ab090e6b419b3bf4f43d5f79aa0e651c6d",
+          "findings": 2,
+          "status": "Scanned 11 code units (11 code points); 2 findings.",
+          "selected": [
+            "appie",
+            "аррӏе"
+          ],
+          "sanitizedTextUnchanged": true,
+          "outputSelectionUnchanged": true
+        }
+      ],
+      "served": {
+        "/ghostchars/index.html": {
+          "bytes": 2259,
+          "sha256": "1fdce7de78223ed7edaa855d5047fff17aa017a50aa16b5a07d09df4c2b96707"
+        },
+        "/ghostchars/assets/index-C0DQI7Jo.js": {
+          "bytes": 17094,
+          "sha256": "47c84a881c0704776cb7894c658c8753c2bcf845357c64b4cf11bacf009ef30a"
+        },
+        "/ghostchars/assets/index-D-URW2Iy.css": {
+          "bytes": 17707,
+          "sha256": "f7da8186ed0fcac032c424a13f2601ece4d04ad6192a85c9b4b4e239223bae52"
+        },
+        "/ghostchars/favicon.svg": {
+          "bytes": 360,
+          "sha256": "8a223c5369b990e7795446b06d4c17559a05ff6ed0d1d66e85e64015ed05395f"
+        },
+        "/ghostchars/assets/inter-latin-Dx4kXJAl.woff2": {
+          "bytes": 48256,
+          "sha256": "3100e775e8616cd2611beecfa23a4263d7037586789b43f035236a2e6fbd4c62"
+        },
+        "/ghostchars/assets/space-grotesk-latin-BhU9QXUp.woff2": {
+          "bytes": 22288,
+          "sha256": "0640890476fc1198ab4de571fb658de443c4d85b66466ec09534a8737ab1ce9d"
+        },
+        "/ghostchars/assets/ibm-plex-mono-500-latin-DSY6xOcd.woff2": {
+          "bytes": 14888,
+          "sha256": "01d285447409c8a588692162439a038b8cbd7871309ee20267b0d2d91c6e8e22"
+        },
+        "/ghostchars/assets/ibm-plex-mono-400-latin-DMJ8VG8y.woff2": {
+          "bytes": 14708,
+          "sha256": "08949f728dc52d528e69b1667d15c89a5686a4ee9a296ff90983985f99c380f7"
+        },
+        "/ghostchars/assets/ibm-plex-mono-600-latin-BgSNZQsw.woff2": {
+          "bytes": 15620,
+          "sha256": "0d1f0b8d0722224e32e9f28261bdc86c79115be73444ae5eceb73976a1bcdf83"
+        },
+        "/ghostchars/assets/inter-cyrillic-DqGufNeO.woff2": {
+          "bytes": 18748,
+          "sha256": "71d5ee93cc1e9f1d520a3a8b66456de18c7879d8df09d57fcd2eaff75fef0075"
+        },
+        "/ghostchars/assets/scan.worker-ehKglIt1.js": {
+          "bytes": 172796,
+          "sha256": "2efa2279f087132626cded0c39f31f655fe82ba9bee3adfba483e9d7d1a97547"
+        },
+        "/ghostchars/assets/ibm-plex-mono-400-cyrillic-ext-xuaO2J-f.woff2": {
+          "bytes": 6912,
+          "sha256": "f8c22ec1804bd6966b70f43ac7c327025645b4c09597117fca2a5a6c750106fe"
+        },
+        "/ghostchars/assets/ibm-plex-mono-400-cyrillic-BSMlKf0J.woff2": {
+          "bytes": 8356,
+          "sha256": "7635422bd10ddbbcb0e0caa1154b928298f5c8319b8c00b30978d4395f4783ce"
+        },
+        "/ghostchars/assets/inter-cyrillic-ext-BOeWTOD4.woff2": {
+          "bytes": 25960,
+          "sha256": "ca157063339ac4ad418f214f3abfed119b0798ab4d377386ce5c9e5a7a435ebd"
+        }
+      },
+      "errors": [],
+      "lateRequests": [],
+      "external": [],
+      "cspViolations": [],
+      "axeViolations": 0,
+      "horizontalOverflow": false
+    },
+    {
+      "engine": "firefox",
+      "browserVersion": "155.0",
+      "width": 375,
+      "serverStoppedBeforeNewInput": true,
+      "glyphFontsLoadedBeforeOffline": true,
+      "cases": [
+        {
+          "name": "new collisions",
+          "inputSha256": "813383d5d6e58d9d3a8d580b7413d8a44fb998bada01e55ee2685dacf86769f6",
+          "findings": 0,
+          "status": "Scanned 169 code units (169 code points); 0 findings.",
+          "selected": [],
+          "sanitizedTextUnchanged": true,
+          "outputSelectionUnchanged": true
+        },
+        {
+          "name": "obsolete collision",
+          "inputSha256": "7a91d83cf928da86c420b62b559f49ab090e6b419b3bf4f43d5f79aa0e651c6d",
+          "findings": 2,
+          "status": "Scanned 11 code units (11 code points); 2 findings.",
+          "selected": [
+            "appie",
+            "аррӏе"
+          ],
+          "sanitizedTextUnchanged": true,
+          "outputSelectionUnchanged": true
+        }
+      ],
+      "served": {
+        "/ghostchars/index.html": {
+          "bytes": 2259,
+          "sha256": "1fdce7de78223ed7edaa855d5047fff17aa017a50aa16b5a07d09df4c2b96707"
+        },
+        "/ghostchars/assets/index-C0DQI7Jo.js": {
+          "bytes": 17094,
+          "sha256": "47c84a881c0704776cb7894c658c8753c2bcf845357c64b4cf11bacf009ef30a"
+        },
+        "/ghostchars/assets/index-D-URW2Iy.css": {
+          "bytes": 17707,
+          "sha256": "f7da8186ed0fcac032c424a13f2601ece4d04ad6192a85c9b4b4e239223bae52"
+        },
+        "/ghostchars/favicon.svg": {
+          "bytes": 360,
+          "sha256": "8a223c5369b990e7795446b06d4c17559a05ff6ed0d1d66e85e64015ed05395f"
+        },
+        "/ghostchars/assets/inter-latin-Dx4kXJAl.woff2": {
+          "bytes": 48256,
+          "sha256": "3100e775e8616cd2611beecfa23a4263d7037586789b43f035236a2e6fbd4c62"
+        },
+        "/ghostchars/assets/space-grotesk-latin-BhU9QXUp.woff2": {
+          "bytes": 22288,
+          "sha256": "0640890476fc1198ab4de571fb658de443c4d85b66466ec09534a8737ab1ce9d"
+        },
+        "/ghostchars/assets/ibm-plex-mono-500-latin-DSY6xOcd.woff2": {
+          "bytes": 14888,
+          "sha256": "01d285447409c8a588692162439a038b8cbd7871309ee20267b0d2d91c6e8e22"
+        },
+        "/ghostchars/assets/ibm-plex-mono-600-latin-BgSNZQsw.woff2": {
+          "bytes": 15620,
+          "sha256": "0d1f0b8d0722224e32e9f28261bdc86c79115be73444ae5eceb73976a1bcdf83"
+        },
+        "/ghostchars/assets/ibm-plex-mono-400-latin-DMJ8VG8y.woff2": {
+          "bytes": 14708,
+          "sha256": "08949f728dc52d528e69b1667d15c89a5686a4ee9a296ff90983985f99c380f7"
+        },
+        "/ghostchars/assets/inter-cyrillic-DqGufNeO.woff2": {
+          "bytes": 18748,
+          "sha256": "71d5ee93cc1e9f1d520a3a8b66456de18c7879d8df09d57fcd2eaff75fef0075"
+        },
+        "/ghostchars/assets/scan.worker-ehKglIt1.js": {
+          "bytes": 172796,
+          "sha256": "2efa2279f087132626cded0c39f31f655fe82ba9bee3adfba483e9d7d1a97547"
+        },
+        "/ghostchars/assets/ibm-plex-mono-400-cyrillic-ext-xuaO2J-f.woff2": {
+          "bytes": 6912,
+          "sha256": "f8c22ec1804bd6966b70f43ac7c327025645b4c09597117fca2a5a6c750106fe"
+        },
+        "/ghostchars/assets/ibm-plex-mono-400-cyrillic-BSMlKf0J.woff2": {
+          "bytes": 8356,
+          "sha256": "7635422bd10ddbbcb0e0caa1154b928298f5c8319b8c00b30978d4395f4783ce"
+        },
+        "/ghostchars/assets/inter-cyrillic-ext-BOeWTOD4.woff2": {
+          "bytes": 25960,
+          "sha256": "ca157063339ac4ad418f214f3abfed119b0798ab4d377386ce5c9e5a7a435ebd"
+        }
+      },
+      "errors": [],
+      "lateRequests": [],
+      "external": [],
+      "cspViolations": [],
+      "axeViolations": 0,
+      "horizontalOverflow": false
+    }
+  ],
+  "scope": "Built offline worker and keyboard text selection, with the fixture glyph font subsets loaded before disconnection. The operating-system clipboard is not read."
+}

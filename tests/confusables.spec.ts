@@ -2,6 +2,24 @@ import { describe, expect, it } from 'vitest';
 import { scanText } from '../src/core/scanText.js';
 
 describe('confusables', () => {
+  it('finds the all-Cyrillic apple lookalike using the revised palochka mapping', () => {
+    const lookalike = '\u0430\u0440\u0440\u04cf\u0435';
+    const collisions = scanText(`apple ${lookalike}`).findings.filter(f => f.severity === 'error');
+    expect(collisions).toHaveLength(2);
+    expect(collisions.map(f => f.skeleton)).toEqual(['apple', 'apple']);
+    expect(collisions.every(f => !f.fixable)).toBe(true);
+    // Unicode 16 mapped palochka to i, producing this spurious collision.
+    expect(scanText(`appie ${lookalike}`).findings).toEqual([]);
+  });
+
+  it('finds a Cyrillic sha substituted for w even without a colliding spelling', () => {
+    const lookalike = '\u0448indow';
+    const mixed = scanText(lookalike).findings;
+    expect(mixed).toHaveLength(1);
+    expect(mixed[0]).toMatchObject({ rule: 'confusable', severity: 'warning', skeleton: 'window', fixable: false });
+    expect(scanText(`window ${lookalike}`).findings.filter(f => f.severity === 'error')).toHaveLength(2);
+  });
+
   it('flags an identifier mixing Latin and Cyrillic', () => {
     // "paypal" with a Cyrillic а (U+0430) in place of Latin a.
     const mixed = 'pаypal';

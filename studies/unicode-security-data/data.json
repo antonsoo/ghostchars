@@ -1,0 +1,1284 @@
+{
+  "source": {
+    "confusables-16.txt": {
+      "url": "https://www.unicode.org/Public/security/16.0.0/confusables.txt",
+      "sha256": "95bd0aad6dced5ebc63436f459c06ab21a8d107cd842fb57f5c3a1e91bca8611",
+      "bytes": 722509
+    },
+    "confusables-17.txt": {
+      "url": "https://www.unicode.org/Public/17.0.0/security/confusables.txt",
+      "sha256": "091c7f82fc39ef208faf8f94d29c244de99254675e09de163160c810d13ef22a",
+      "bytes": 745683
+    },
+    "emoji-sequences-16.txt": {
+      "url": "https://www.unicode.org/Public/emoji/16.0/emoji-sequences.txt",
+      "sha256": "3fe3c77e72e8f26df302dc7d99b106c5d08fd808ef7246fb5d4502d659fe659c",
+      "bytes": 192618
+    },
+    "emoji-sequences-17.txt": {
+      "url": "https://www.unicode.org/Public/17.0.0/emoji/emoji-sequences.txt",
+      "sha256": "12cc8267dc33cbd11ed32bcf6fc5dc2ad9c7a77bae1bdfba2f41b1b9b3ead8dd",
+      "bytes": 194868
+    }
+  },
+  "beforeMappings": 6355,
+  "afterMappings": 6565,
+  "generatedMappingsChecked": 6565,
+  "generatedMatchesSource": true,
+  "added": 210,
+  "changed": 39,
+  "removed": 0,
+  "emojiTagSequencesUnchanged": [
+    "1F3F4 E0067 E0062 E0065 E006E E0067 E007F",
+    "1F3F4 E0067 E0062 E0073 E0063 E0074 E007F",
+    "1F3F4 E0067 E0062 E0077 E006C E0073 E007F"
+  ],
+  "delta": [
+    {
+      "source": "00FE",
+      "before": null,
+      "after": "0070"
+    },
+    {
+      "source": "014B",
+      "before": null,
+      "after": "006E 0329"
+    },
+    {
+      "source": "0192",
+      "before": "0066 0326",
+      "after": "0066"
+    },
+    {
+      "source": "01BF",
+      "before": "00FE",
+      "after": "0070"
+    },
+    {
+      "source": "0295",
+      "before": null,
+      "after": "A7CE"
+    },
+    {
+      "source": "02A9",
+      "before": "0066 014B",
+      "after": "0066 006E 0329"
+    },
+    {
+      "source": "031A",
+      "before": null,
+      "after": "1AE9"
+    },
+    {
+      "source": "0348",
+      "before": null,
+      "after": "10EFA"
+    },
+    {
+      "source": "03E4",
+      "before": null,
+      "after": "0427"
+    },
+    {
+      "source": "03E5",
+      "before": null,
+      "after": "0447"
+    },
+    {
+      "source": "03EC",
+      "before": null,
+      "after": "0036"
+    },
+    {
+      "source": "03ED",
+      "before": null,
+      "after": "006F"
+    },
+    {
+      "source": "03F8",
+      "before": "00FE",
+      "after": "0070"
+    },
+    {
+      "source": "0448",
+      "before": null,
+      "after": "0077"
+    },
+    {
+      "source": "045F",
+      "before": null,
+      "after": "0075 0329"
+    },
+    {
+      "source": "04CF",
+      "before": "0069",
+      "after": "006C"
+    },
+    {
+      "source": "0572",
+      "before": null,
+      "after": "006E 0329"
+    },
+    {
+      "source": "0582",
+      "before": null,
+      "after": "0069"
+    },
+    {
+      "source": "0587",
+      "before": "0565 0582",
+      "after": "0565 0069"
+    },
+    {
+      "source": "067A",
+      "before": null,
+      "after": "062A"
+    },
+    {
+      "source": "068F",
+      "before": null,
+      "after": "062F 06DB"
+    },
+    {
+      "source": "06FD",
+      "before": "0621 0348",
+      "after": "0621 10EFA"
+    },
+    {
+      "source": "06FE",
+      "before": "0645 0348",
+      "after": "0645 10EFA"
+    },
+    {
+      "source": "0752",
+      "before": null,
+      "after": "0649 06DB"
+    },
+    {
+      "source": "088F",
+      "before": null,
+      "after": "0649 030A"
+    },
+    {
+      "source": "08BE",
+      "before": null,
+      "after": "0649 06DB 0306"
+    },
+    {
+      "source": "08BF",
+      "before": null,
+      "after": "062A 0306"
+    },
+    {
+      "source": "08C0",
+      "before": null,
+      "after": "0649 0615 0306"
+    },
+    {
+      "source": "08C1",
+      "before": null,
+      "after": "0686 0306"
+    },
+    {
+      "source": "08C2",
+      "before": null,
+      "after": "0643 0306"
+    },
+    {
+      "source": "090D",
+      "before": "090F 0945",
+      "after": "090F 0306"
+    },
+    {
+      "source": "0910",
+      "before": "090F 0947",
+      "after": "090F 11B64"
+    },
+    {
+      "source": "0911",
+      "before": "0905 0949",
+      "after": "0905 093E 0306"
+    },
+    {
+      "source": "0913",
+      "before": "0905 093E 0947",
+      "after": "0905 093E 11B64"
+    },
+    {
+      "source": "093B",
+      "before": null,
+      "after": "093E 093A"
+    },
+    {
+      "source": "093F",
+      "before": null,
+      "after": "09BF"
+    },
+    {
+      "source": "0945",
+      "before": null,
+      "after": "0306"
+    },
+    {
+      "source": "0947",
+      "before": null,
+      "after": "11B64"
+    },
+    {
+      "source": "0949",
+      "before": null,
+      "after": "093E 0306"
+    },
+    {
+      "source": "0956",
+      "before": null,
+      "after": "11B62"
+    },
+    {
+      "source": "0957",
+      "before": null,
+      "after": "11B63"
+    },
+    {
+      "source": "0969",
+      "before": null,
+      "after": "0033"
+    },
+    {
+      "source": "0972",
+      "before": null,
+      "after": "0905 0306"
+    },
+    {
+      "source": "0973",
+      "before": null,
+      "after": "0905 093A"
+    },
+    {
+      "source": "0974",
+      "before": null,
+      "after": "0905 093E 093A"
+    },
+    {
+      "source": "0975",
+      "before": null,
+      "after": "0905 094F"
+    },
+    {
+      "source": "09E6",
+      "before": "004F",
+      "after": "006F"
+    },
+    {
+      "source": "09F0",
+      "before": null,
+      "after": "09B0"
+    },
+    {
+      "source": "0A07",
+      "before": "0A72 0A3F",
+      "after": "092A 094D 091F 09BF"
+    },
+    {
+      "source": "0A08",
+      "before": "0A72 0A40",
+      "after": "092A 094D 091F 0A40"
+    },
+    {
+      "source": "0A09",
+      "before": "0A73 0A41",
+      "after": "0A73 11B62"
+    },
+    {
+      "source": "0A0A",
+      "before": "0A73 0A42",
+      "after": "0A73 11B63"
+    },
+    {
+      "source": "0A0F",
+      "before": "0A72 0A47",
+      "after": "092A 094D 091F 11B64"
+    },
+    {
+      "source": "0A10",
+      "before": "0A05 0A48",
+      "after": "0A05 0948"
+    },
+    {
+      "source": "0A15",
+      "before": null,
+      "after": "0935"
+    },
+    {
+      "source": "0A1C",
+      "before": null,
+      "after": "0924 094D 0924"
+    },
+    {
+      "source": "0A1F",
+      "before": null,
+      "after": "091F"
+    },
+    {
+      "source": "0A20",
+      "before": null,
+      "after": "0920"
+    },
+    {
+      "source": "0A24",
+      "before": null,
+      "after": "0909"
+    },
+    {
+      "source": "0A27",
+      "before": null,
+      "after": "092A"
+    },
+    {
+      "source": "0A2B",
+      "before": null,
+      "after": "0922"
+    },
+    {
+      "source": "0A2E",
+      "before": null,
+      "after": "092D"
+    },
+    {
+      "source": "0A35",
+      "before": null,
+      "after": "0939"
+    },
+    {
+      "source": "0A38",
+      "before": null,
+      "after": "092E"
+    },
+    {
+      "source": "0A3F",
+      "before": null,
+      "after": "09BF"
+    },
+    {
+      "source": "0A41",
+      "before": null,
+      "after": "11B62"
+    },
+    {
+      "source": "0A42",
+      "before": null,
+      "after": "11B63"
+    },
+    {
+      "source": "0A47",
+      "before": null,
+      "after": "11B64"
+    },
+    {
+      "source": "0A48",
+      "before": null,
+      "after": "0948"
+    },
+    {
+      "source": "0A72",
+      "before": null,
+      "after": "092A 094D 091F"
+    },
+    {
+      "source": "0AAA",
+      "before": null,
+      "after": "0447"
+    },
+    {
+      "source": "0AB0",
+      "before": null,
+      "after": "0968"
+    },
+    {
+      "source": "0AE9",
+      "before": "0969",
+      "after": "0033"
+    },
+    {
+      "source": "0AEB",
+      "before": null,
+      "after": "0447"
+    },
+    {
+      "source": "0B66",
+      "before": "004F",
+      "after": "006F"
+    },
+    {
+      "source": "0B94",
+      "before": null,
+      "after": "0B92 0BB3"
+    },
+    {
+      "source": "0BB8",
+      "before": null,
+      "after": "0BB6"
+    },
+    {
+      "source": "0C16",
+      "before": null,
+      "after": "0C96 0323"
+    },
+    {
+      "source": "0C90",
+      "before": null,
+      "after": "0C10"
+    },
+    {
+      "source": "0C97",
+      "before": null,
+      "after": "0C17"
+    },
+    {
+      "source": "0C9D",
+      "before": null,
+      "after": "0C1D"
+    },
+    {
+      "source": "0C9F",
+      "before": null,
+      "after": "0C1F"
+    },
+    {
+      "source": "0CA6",
+      "before": null,
+      "after": "0C26"
+    },
+    {
+      "source": "0CA8",
+      "before": null,
+      "after": "0C28"
+    },
+    {
+      "source": "0CB0",
+      "before": null,
+      "after": "0C30"
+    },
+    {
+      "source": "0CB3",
+      "before": null,
+      "after": "0C33"
+    },
+    {
+      "source": "0CBF",
+      "before": null,
+      "after": "0C3F"
+    },
+    {
+      "source": "0CC1",
+      "before": null,
+      "after": "0C41"
+    },
+    {
+      "source": "0CC3",
+      "before": null,
+      "after": "0C43"
+    },
+    {
+      "source": "0CDC",
+      "before": null,
+      "after": "0C5C"
+    },
+    {
+      "source": "0CE6",
+      "before": "006F",
+      "after": "004F"
+    },
+    {
+      "source": "0D10",
+      "before": "0D0E 0D46",
+      "after": "0BC6 0D0E"
+    },
+    {
+      "source": "0D16",
+      "before": null,
+      "after": "0BB5"
+    },
+    {
+      "source": "0D1F",
+      "before": null,
+      "after": "0073"
+    },
+    {
+      "source": "0D25",
+      "before": null,
+      "after": "0BAE"
+    },
+    {
+      "source": "0D46",
+      "before": null,
+      "after": "0BC6"
+    },
+    {
+      "source": "0D47",
+      "before": null,
+      "after": "0BC7"
+    },
+    {
+      "source": "0D48",
+      "before": "0D46 0D46",
+      "after": "0BC6 0BC6"
+    },
+    {
+      "source": "0D7A",
+      "before": null,
+      "after": "0BA3 0D4D"
+    },
+    {
+      "source": "0D7D",
+      "before": null,
+      "after": "0D32 0D4D"
+    },
+    {
+      "source": "0D7E",
+      "before": null,
+      "after": "0D33 0D4D"
+    },
+    {
+      "source": "0D8D",
+      "before": null,
+      "after": "0DC3 0DD8"
+    },
+    {
+      "source": "0D92",
+      "before": null,
+      "after": "0D91 0DCA"
+    },
+    {
+      "source": "0D93",
+      "before": null,
+      "after": "0D91 0DD9"
+    },
+    {
+      "source": "0DB5",
+      "before": null,
+      "after": "0D91"
+    },
+    {
+      "source": "0DB6",
+      "before": null,
+      "after": "0D9B"
+    },
+    {
+      "source": "0DB9",
+      "before": null,
+      "after": "0D94"
+    },
+    {
+      "source": "0DC0",
+      "before": null,
+      "after": "0DA0"
+    },
+    {
+      "source": "0DC4",
+      "before": null,
+      "after": "0DB7"
+    },
+    {
+      "source": "0F7B",
+      "before": null,
+      "after": "0F7A 0F7A"
+    },
+    {
+      "source": "0F7D",
+      "before": null,
+      "after": "0F7C 0F7C"
+    },
+    {
+      "source": "1000",
+      "before": "1002 102C",
+      "after": "0D30 102C"
+    },
+    {
+      "source": "1002",
+      "before": null,
+      "after": "0D30"
+    },
+    {
+      "source": "1004",
+      "before": null,
+      "after": "0063"
+    },
+    {
+      "source": "1023",
+      "before": null,
+      "after": "0D30 102C 1039 0D30 102C"
+    },
+    {
+      "source": "102A",
+      "before": "101E 103C 1031 102C 103A",
+      "after": "101E 103C 0B47 102C 103A"
+    },
+    {
+      "source": "1031",
+      "before": null,
+      "after": "0B47"
+    },
+    {
+      "source": "105A",
+      "before": null,
+      "after": "0063"
+    },
+    {
+      "source": "1061",
+      "before": null,
+      "after": "101B 103E"
+    },
+    {
+      "source": "1081",
+      "before": "1002 103E",
+      "after": "0D30 103E"
+    },
+    {
+      "source": "10D7",
+      "before": null,
+      "after": "006F 102C"
+    },
+    {
+      "source": "10D8",
+      "before": null,
+      "after": "0D30"
+    },
+    {
+      "source": "178F",
+      "before": null,
+      "after": "178A"
+    },
+    {
+      "source": "17E0",
+      "before": null,
+      "after": "006F"
+    },
+    {
+      "source": "1AD9",
+      "before": null,
+      "after": "1AC6"
+    },
+    {
+      "source": "1AE2",
+      "before": null,
+      "after": "0304"
+    },
+    {
+      "source": "1AE7",
+      "before": null,
+      "after": "1AE5"
+    },
+    {
+      "source": "1AE8",
+      "before": null,
+      "after": "0304 0304"
+    },
+    {
+      "source": "1DE8",
+      "before": null,
+      "after": "1ADA"
+    },
+    {
+      "source": "20C1",
+      "before": null,
+      "after": "0631 0649 006C 0644"
+    },
+    {
+      "source": "21C4",
+      "before": null,
+      "after": "1F8D0"
+    },
+    {
+      "source": "21CC",
+      "before": null,
+      "after": "1F8D1"
+    },
+    {
+      "source": "256A",
+      "before": null,
+      "after": "01C2"
+    },
+    {
+      "source": "2630",
+      "before": "2CB6",
+      "after": "039E"
+    },
+    {
+      "source": "2657",
+      "before": null,
+      "after": "1FA55"
+    },
+    {
+      "source": "265D",
+      "before": null,
+      "after": "1FA57"
+    },
+    {
+      "source": "28FF",
+      "before": null,
+      "after": "1CEE0"
+    },
+    {
+      "source": "29B5",
+      "before": null,
+      "after": "1CEF0"
+    },
+    {
+      "source": "2B96",
+      "before": null,
+      "after": "003D 1AB2"
+    },
+    {
+      "source": "2C82",
+      "before": null,
+      "after": "0042"
+    },
+    {
+      "source": "2C83",
+      "before": null,
+      "after": "0299"
+    },
+    {
+      "source": "2C8B",
+      "before": null,
+      "after": "03C2"
+    },
+    {
+      "source": "2C8C",
+      "before": null,
+      "after": "2C6B"
+    },
+    {
+      "source": "2C8D",
+      "before": null,
+      "after": "2C6C"
+    },
+    {
+      "source": "2C8F",
+      "before": null,
+      "after": "029C"
+    },
+    {
+      "source": "2C90",
+      "before": null,
+      "after": "004F 0335"
+    },
+    {
+      "source": "2C91",
+      "before": null,
+      "after": "006F 0335"
+    },
+    {
+      "source": "2C93",
+      "before": null,
+      "after": "0069"
+    },
+    {
+      "source": "2C97",
+      "before": null,
+      "after": "028C"
+    },
+    {
+      "source": "2C99",
+      "before": null,
+      "after": "028D"
+    },
+    {
+      "source": "2C9B",
+      "before": null,
+      "after": "0274"
+    },
+    {
+      "source": "2C9C",
+      "before": null,
+      "after": "0033"
+    },
+    {
+      "source": "2C9D",
+      "before": null,
+      "after": "0293"
+    },
+    {
+      "source": "2CA1",
+      "before": null,
+      "after": "03C0"
+    },
+    {
+      "source": "2CA7",
+      "before": null,
+      "after": "1D1B"
+    },
+    {
+      "source": "2CA9",
+      "before": null,
+      "after": "0079"
+    },
+    {
+      "source": "2CAF",
+      "before": null,
+      "after": "03C8"
+    },
+    {
+      "source": "2CB0",
+      "before": null,
+      "after": "A64C"
+    },
+    {
+      "source": "2CB2",
+      "before": null,
+      "after": "002D 0307"
+    },
+    {
+      "source": "2CB3",
+      "before": null,
+      "after": "002D 0307"
+    },
+    {
+      "source": "2CB5",
+      "before": null,
+      "after": "003C 00B7"
+    },
+    {
+      "source": "2CB6",
+      "before": null,
+      "after": "039E"
+    },
+    {
+      "source": "2CB7",
+      "before": null,
+      "after": "2261"
+    },
+    {
+      "source": "2CBB",
+      "before": null,
+      "after": "002D"
+    },
+    {
+      "source": "2CBD",
+      "before": "0448",
+      "after": "0077"
+    },
+    {
+      "source": "2CC0",
+      "before": null,
+      "after": "0554"
+    },
+    {
+      "source": "2CC1",
+      "before": null,
+      "after": "03FC"
+    },
+    {
+      "source": "2CC4",
+      "before": null,
+      "after": "0033"
+    },
+    {
+      "source": "2CC5",
+      "before": null,
+      "after": "021D"
+    },
+    {
+      "source": "2CC7",
+      "before": null,
+      "after": "002F"
+    },
+    {
+      "source": "2CCB",
+      "before": null,
+      "after": "0039"
+    },
+    {
+      "source": "2CCE",
+      "before": null,
+      "after": "0050"
+    },
+    {
+      "source": "2CCF",
+      "before": null,
+      "after": "0070"
+    },
+    {
+      "source": "2CD3",
+      "before": null,
+      "after": "0036"
+    },
+    {
+      "source": "2CDC",
+      "before": "03EC",
+      "after": "0036"
+    },
+    {
+      "source": "2CDD",
+      "before": null,
+      "after": "1E9F"
+    },
+    {
+      "source": "2CE0",
+      "before": null,
+      "after": "0278"
+    },
+    {
+      "source": "2CE1",
+      "before": null,
+      "after": "0278"
+    },
+    {
+      "source": "2CE8",
+      "before": null,
+      "after": "0554"
+    },
+    {
+      "source": "2DEE",
+      "before": null,
+      "after": "1ADB"
+    },
+    {
+      "source": "2ED1",
+      "before": "9577",
+      "after": "1110 30FC 1102 110C"
+    },
+    {
+      "source": "2F59",
+      "before": "723F",
+      "after": "1102 116E 4E28"
+    },
+    {
+      "source": "2FA7",
+      "before": "9577",
+      "after": "1110 30FC 1102 110C"
+    },
+    {
+      "source": "4695",
+      "before": null,
+      "after": "278AE"
+    },
+    {
+      "source": "4E15",
+      "before": null,
+      "after": "110C 1169"
+    },
+    {
+      "source": "4E1B",
+      "before": null,
+      "after": "1109 1109 30FC"
+    },
+    {
+      "source": "4E8E",
+      "before": null,
+      "after": "1B122"
+    },
+    {
+      "source": "4ECA",
+      "before": null,
+      "after": "1109 30FC 1100"
+    },
+    {
+      "source": "5152",
+      "before": null,
+      "after": "16FF3"
+    },
+    {
+      "source": "535F",
+      "before": null,
+      "after": "1106 1161"
+    },
+    {
+      "source": "5408",
+      "before": null,
+      "after": "1109 30FC 1106"
+    },
+    {
+      "source": "6138",
+      "before": null,
+      "after": "2B73F"
+    },
+    {
+      "source": "723F",
+      "before": null,
+      "after": "1102 116E 4E28"
+    },
+    {
+      "source": "9577",
+      "before": null,
+      "after": "1110 30FC 1102 110C"
+    },
+    {
+      "source": "A7CF",
+      "before": null,
+      "after": "A7CE"
+    },
+    {
+      "source": "A7D2",
+      "before": null,
+      "after": "A7D3"
+    },
+    {
+      "source": "A7D4",
+      "before": null,
+      "after": "A7D5"
+    },
+    {
+      "source": "A7F1",
+      "before": null,
+      "after": "18F5"
+    },
+    {
+      "source": "FB5E",
+      "before": "067A",
+      "after": "062A"
+    },
+    {
+      "source": "FB5F",
+      "before": "067A",
+      "after": "062A"
+    },
+    {
+      "source": "FB60",
+      "before": "067A",
+      "after": "062A"
+    },
+    {
+      "source": "FB61",
+      "before": "067A",
+      "after": "062A"
+    },
+    {
+      "source": "101A0",
+      "before": "2CE8",
+      "after": "0554"
+    },
+    {
+      "source": "10EC6",
+      "before": null,
+      "after": "0646"
+    },
+    {
+      "source": "10EC7",
+      "before": null,
+      "after": "0680"
+    },
+    {
+      "source": "10ED0",
+      "before": null,
+      "after": "00B0 0332"
+    },
+    {
+      "source": "114D0",
+      "before": "004F",
+      "after": "006F"
+    },
+    {
+      "source": "11B60",
+      "before": null,
+      "after": "093A"
+    },
+    {
+      "source": "11B66",
+      "before": null,
+      "after": "0306"
+    },
+    {
+      "source": "11DD9",
+      "before": null,
+      "after": "003A"
+    },
+    {
+      "source": "11DDA",
+      "before": null,
+      "after": "006C"
+    },
+    {
+      "source": "11DE0",
+      "before": null,
+      "after": "004F"
+    },
+    {
+      "source": "11DE1",
+      "before": null,
+      "after": "006C"
+    },
+    {
+      "source": "16EA6",
+      "before": null,
+      "after": "03A0"
+    },
+    {
+      "source": "16EAA",
+      "before": null,
+      "after": "006C"
+    },
+    {
+      "source": "16EB6",
+      "before": null,
+      "after": "0062"
+    },
+    {
+      "source": "16EC1",
+      "before": null,
+      "after": "03C0"
+    },
+    {
+      "source": "16ED1",
+      "before": null,
+      "after": "0185"
+    },
+    {
+      "source": "16FF2",
+      "before": null,
+      "after": "513F"
+    },
+    {
+      "source": "1CCFB",
+      "before": null,
+      "after": "1F6F8"
+    },
+    {
+      "source": "1CEEF",
+      "before": null,
+      "after": "2D42"
+    },
+    {
+      "source": "1E6E9",
+      "before": null,
+      "after": "002B"
+    },
+    {
+      "source": "1E6EE",
+      "before": null,
+      "after": "1AC8"
+    },
+    {
+      "source": "1F333",
+      "before": null,
+      "after": "1CEBC"
+    },
+    {
+      "source": "1F34E",
+      "before": null,
+      "after": "1CEBD"
+    },
+    {
+      "source": "1F34F",
+      "before": null,
+      "after": "1CEBD"
+    },
+    {
+      "source": "1F352",
+      "before": null,
+      "after": "1CEBE"
+    },
+    {
+      "source": "1F353",
+      "before": null,
+      "after": "1CEBF"
+    },
+    {
+      "source": "1F377",
+      "before": null,
+      "after": "1CEBA"
+    },
+    {
+      "source": "1F3E2",
+      "before": null,
+      "after": "1CEBB"
+    },
+    {
+      "source": "1F40D",
+      "before": null,
+      "after": "1CCFA"
+    },
+    {
+      "source": "1F443",
+      "before": null,
+      "after": "1CCFC"
+    },
+    {
+      "source": "1F514",
+      "before": null,
+      "after": "1FBFA"
+    },
+    {
+      "source": "20674",
+      "before": null,
+      "after": "51F5"
+    },
+    {
+      "source": "21533",
+      "before": null,
+      "after": "58F7"
+    },
+    {
+      "source": "21587",
+      "before": null,
+      "after": "591A"
+    },
+    {
+      "source": "216A7",
+      "before": null,
+      "after": "216A8"
+    },
+    {
+      "source": "22505",
+      "before": null,
+      "after": "5F9A"
+    },
+    {
+      "source": "23D40",
+      "before": null,
+      "after": "6D85"
+    },
+    {
+      "source": "248FD",
+      "before": null,
+      "after": "73A5"
+    },
+    {
+      "source": "2511A",
+      "before": null,
+      "after": "25119"
+    },
+    {
+      "source": "25AD4",
+      "before": null,
+      "after": "8D1B"
+    },
+    {
+      "source": "2659D",
+      "before": null,
+      "after": "265A8"
+    },
+    {
+      "source": "26D06",
+      "before": null,
+      "after": "26C36"
+    },
+    {
+      "source": "2AEC5",
+      "before": null,
+      "after": "24814"
+    },
+    {
+      "source": "2B73A",
+      "before": null,
+      "after": "5CC0"
+    },
+    {
+      "source": "2B73E",
+      "before": null,
+      "after": "2335F"
+    },
+    {
+      "source": "2D161",
+      "before": null,
+      "after": "5351"
+    },
+    {
+      "source": "31E7C",
+      "before": null,
+      "after": "7DC7"
+    }
+  ],
+  "scope": "Data integrity against the upstream mapping table; not full UTS #39 conformance or a detection-rate estimate."
+}

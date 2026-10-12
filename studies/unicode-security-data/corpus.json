@@ -1,0 +1,122 @@
+{
+  "node": "v24.21.0",
+  "manifestSha256": "4918139517b95809158fbf484befc670943054fbacd9ad7ada50034a2146ce84",
+  "docs": 83494,
+  "bytes": 155361980,
+  "inputSha256": "1175ffa359bfdadcd06d38b6f7cbc850e390c174d319937decf41536796f3cc4",
+  "before": {
+    "findings": 18582,
+    "outputSha256": "e97f1fe18c174ff1de95293eb7d9f411b8761c18a9690b185b9663fc68f06a90",
+    "scanMs": 9586.973644000278
+  },
+  "after": {
+    "findings": 18583,
+    "outputSha256": "bf4cda1289bef0f427ecc67af7f41bba30e4a4466498acf6575fa396b72d4373",
+    "scanMs": 9356.040900999906
+  },
+  "timingScope": "One sequential local pass; baseline runs first for each input. Not an isolated benchmark.",
+  "changed": [
+    {
+      "source": "itw-jailbreak-prompts",
+      "file": "jailbreak_2023_12_25_train-00000-of-00001_000702.txt",
+      "inputSha256": "4066c6809868836e2c45c7c0c584e0d4d88497eb1fb354379384a39509471a01",
+      "before": 3,
+      "after": 3,
+      "added": [],
+      "removed": [],
+      "diagnosticsChanged": 3
+    },
+    {
+      "source": "itw-jailbreak-prompts",
+      "file": "regular_2023_12_25_train-00000-of-00001_012426.txt",
+      "inputSha256": "1b41d75f7777333a89a3fd6dfbcb2e071ae0c4957439598a5d2fb0534ff0e7b6",
+      "before": 2,
+      "after": 3,
+      "added": [
+        {
+          "rule": "confusable",
+          "severity": "warning",
+          "start": {
+            "line": 211,
+            "column": 1,
+            "offset": 20385
+          },
+          "end": {
+            "line": 211,
+            "column": 30,
+            "offset": 20414
+          },
+          "codePoints": [
+            83,
+            119,
+            97,
+            110,
+            107,
+            95,
+            100,
+            105,
+            115,
+            116,
+            114,
+            105,
+            99,
+            116,
+            95,
+            67,
+            72,
+            65,
+            78,
+            1096,
+            1080,
+            1076,
+            1078,
+            83,
+            117,
+            102,
+            102,
+            105,
+            120
+          ],
+          "names": [
+            "U+0053",
+            "U+0077",
+            "U+0061",
+            "U+006E",
+            "U+006B",
+            "U+005F",
+            "U+0064",
+            "U+0069",
+            "U+0073",
+            "U+0074",
+            "U+0072",
+            "U+0069",
+            "U+0063",
+            "U+0074",
+            "U+005F",
+            "U+0043",
+            "U+0048",
+            "U+0041",
+            "U+004E",
+            "U+0448",
+            "U+0438",
+            "U+0434",
+            "U+0436",
+            "U+0053",
+            "U+0075",
+            "U+0066",
+            "U+0066",
+            "U+0069",
+            "U+0078"
+          ],
+          "message": "\"Swank_district_CHANшиджSuffix\" mixes scripts (Latin, Cyrillic) in one word -- a common homoglyph-attack shape. Skeleton: \"Swank_district_CHANwᴎджSuffix\".",
+          "suggestion": "Confirm every character is intentional (e.g. a Greek variable name is fine on its own, but Latin+Cyrillic in one identifier rarely is), or rename to a single script.",
+          "skeleton": "Swank_district_CHANwᴎджSuffix",
+          "fixable": false
+        }
+      ],
+      "removed": [],
+      "diagnosticsChanged": 0
+    }
+  ],
+  "unrelatedRulesIdentical": true
+}

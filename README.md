@@ -53,6 +53,15 @@ node dist/cli.js .
 
 ## What it detects
 
+The source checkout uses Unicode 17's security mappings, including revised
+lookalikes that the previous table missed. A runnable JavaScript fixture with
+`apple` and an all-Cyrillic lookalike previously scanned clean; it now reports
+the distinct bindings as confusable. The update also removes an obsolete
+collision and leaves identifier text unchanged during repair. See the
+[data comparison, public-text replay and CLI/browser evidence](studies/unicode-security-data/README.md).
+This update is available from source; it is not an npm release or a hosted-demo
+deployment.
+
 The source checkout also catches **accented cross-script lookalikes** that the
 previous scanner missed entirely. A runnable JavaScript example returned a
 clean scan despite declaring two visually confusable, distinct variables.
@@ -248,8 +257,8 @@ Scanning runs in a local worker. Editing, clearing, or cancelling discards the p
 | Data | Source | Version |
 |---|---|---|
 | `Default_Ignorable_Code_Point`, `Scripts`, `ScriptExtensions`, `Emoji` | unicode.org UCD | **17.0.0** |
-| Confusables (UTS #39) | unicode.org Security data | **16.0.0** (latest published; the security-data track versions independently of the UCD and hadn't cut a 17.0.0-aligned release yet) |
-| RGI emoji tag sequences | unicode.org Emoji data | **Emoji 16.0** (same reason) |
+| Confusables (UTS #39) | [unicode.org Security data](https://www.unicode.org/Public/17.0.0/security/confusables.txt) | **17.0.0** |
+| RGI emoji tag sequences | [unicode.org Emoji data](https://www.unicode.org/Public/17.0.0/emoji/emoji-sequences.txt) | **Emoji 17.0** |
 
 `LICENSE-UNICODE` is the Unicode License that governs those files.
 

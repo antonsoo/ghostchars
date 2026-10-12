@@ -7,14 +7,9 @@
 // this script) so a re-run either reproduces byte-identical output or loudly
 // fails if unicode.org served something different than what we reviewed.
 //
-// Unicode version: 17.0.0 (https://www.unicode.org/versions/Unicode17.0.0/)
-// for the core UCD. Two related data tracks version independently of the UCD
-// and had not published a 17.0.0-aligned release at generation time, so they
-// are pinned to their latest available release instead -- this is normal
-// (both tracks lag the UCD by design) and is called out explicitly here
-// rather than silently mixed in:
-//   - UTS #39 (Unicode Security Mechanisms) confusables.txt -> 16.0.0
-//   - Emoji sequence data (emoji-sequences.txt) -> Emoji 16.0
+// Unicode version: 17.0.0 (https://www.unicode.org/versions/Unicode17.0.0/).
+// Security and emoji data moved into the versioned directory in Unicode 17;
+// the old /Public/security/17.0.0 path does not identify this release.
 
 import { createHash } from 'node:crypto';
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
@@ -26,8 +21,8 @@ const root = join(here, '..');
 const outDir = join(root, 'src', 'generated');
 
 const UCD_BASE = 'https://unicode.org/Public/17.0.0/ucd';
-const SECURITY_BASE = 'https://unicode.org/Public/security/16.0.0';
-const EMOJI_BASE = 'https://unicode.org/Public/emoji/16.0';
+const SECURITY_BASE = 'https://unicode.org/Public/17.0.0/security';
+const EMOJI_BASE = 'https://unicode.org/Public/17.0.0/emoji';
 
 const SOURCES = [
   { id: 'derivedCoreProperties', url: `${UCD_BASE}/DerivedCoreProperties.txt` },
@@ -245,7 +240,7 @@ export const standardizedVariants: ReadonlyArray<readonly [number, number]> = [
 async function main() {
   await mkdir(outDir, { recursive: true });
   const previous = JSON.parse(await readFile(join(outDir, 'manifest.json'), 'utf8'));
-  const manifest = { unicodeVersion: '17.0.0', emojiVersion: '16.0', generatedAt: new Date().toISOString(), sources: {} };
+  const manifest = { unicodeVersion: '17.0.0', emojiVersion: '17.0', generatedAt: new Date().toISOString(), sources: {} };
   const texts = {};
 
   for (const { id, url } of SOURCES) {

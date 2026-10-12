@@ -4,6 +4,11 @@ All notable changes to this project are documented in this file.
 
 ## [Unreleased]
 
+- Align security and emoji data with Unicode 17 at their versioned URLs.
+  Revised palochka and added Cyrillic-sha mappings recover missed identifier
+  collisions; the old palochka-to-i collision is removed. The parsed emoji tag
+  allowlist is unchanged. Identifier repair remains manual.
+
 ### Added
 
 - (source checkout) `styled-text` rule: letters in the mathematical, fullwidth, circled, squared and small-capital alphabets are reported with the plain text they read as (`decoded`, NFKC). A whole jailbreak written in circled letters, with no plain spelling beside it, was not reported at all before. Fullwidth letters and digits inside CJK text, runs of fewer than three letters and digit-only runs are not reported.
