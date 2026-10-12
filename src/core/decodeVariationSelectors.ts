@@ -1,8 +1,10 @@
 import { isEmoji } from './unicode-utils.js';
+import { standardizedVariants } from '../generated/standardized-variants.js';
 
 // Standard use: exactly one variation selector after a base character picks
 // a glyph variant (VS15/VS16 = text/emoji presentation, or an entry in the
-// Unicode Ideographic Variation Database for CJK ideographs).
+// Unicode Ideographic Variation Database for CJK ideographs). Standardized
+// pairs also select mathematical, punctuation and script-specific variants.
 //
 // Smuggling use (documented informally as "variation selector smuggling",
 // used to hide instructions in text shown to LLMs): a *run* of variation
@@ -15,6 +17,14 @@ const VS_LOW_START = 0xfe00;
 const VS_LOW_END = 0xfe0f;
 const VS_HIGH_START = 0xe0100;
 const VS_HIGH_END = 0xe01ef;
+
+// Packing two Unicode scalar values stays below Number.MAX_SAFE_INTEGER.
+const registeredVariants = new Set(standardizedVariants.map(([base, selector]) => base * 0x110000 + selector));
+
+function isRegisteredVariant(base: number, selectorByte: number): boolean {
+  const selector = selectorByte < 16 ? VS_LOW_START + selectorByte : VS_HIGH_START + selectorByte - 16;
+  return registeredVariants.has(base * 0x110000 + selector);
+}
 
 const CJK_IDEOGRAPH_RANGES: ReadonlyArray<readonly [number, number]> = [
   [0x3400, 0x4dbf], // CJK Unified Ideographs Extension A
@@ -47,10 +57,10 @@ export interface VariationSelectorRun {
   bytes: number[];
   /** `bytes` decoded as UTF-8, if valid; undefined otherwise. */
   decodedText: string | undefined;
-  /** True for an ordinary single presentation-selector use that should not be flagged. */
+  /** True for a recognized single variant (or an unverified CJK IVS under the existing policy). */
   isOrdinaryPresentationSelector: boolean;
   /**
-   * True when the run follows an emoji whose first selector already picked its presentation:
+   * True when the first selector already picked a recognized glyph/presentation variant:
    * `selectorsStart` is then the first selector after that one, and only those are stray.
    */
   afterPresentationSelector?: boolean;
@@ -75,20 +85,22 @@ export function decodeVariationSelectors(text: string): VariationSelectorRun[] {
         bytes.push(selectorToByte(c));
         j += c > 0xffff ? 2 : 1;
       }
-      // Emoji only ever take VS15 (text) / VS16 (emoji presentation). CJK
+      // Exact standardized pairs cover mathematics, punctuation and script
+      // variants as well as the existing emoji presentation policy. CJK
       // ideographs can take any single selector -- the actual registered
       // pairing lives in the Unicode Ideographic Variation Database, which
       // we don't vendor, so a single selector on a CJK base is treated as
       // an ordinary (if unverified) IVS rather than flagged.
-      const isOrdinaryPresentationSelector = bytes.length === 1 && base !== undefined && ((isEmoji(base) && (bytes[0] === 14 || bytes[0] === 15)) || isCjkIdeograph(base));
+      const recognizedFirst = base !== undefined && (isRegisteredVariant(base, bytes[0]!) || (isEmoji(base) && (bytes[0] === 14 || bytes[0] === 15)));
+      const isOrdinaryPresentationSelector = bytes.length === 1 && base !== undefined && (recognizedFirst || isCjkIdeograph(base));
       const decodedText = tryDecodeUtf8(bytes);
-      // A heart followed by VS16 twice, as editors and copy-paste leave it: the first selector
-      // is the registered emoji presentation and stays; the rest are the stray ones. Not when
+      // A recognized variant followed by extra selectors: the first selector
+      // stays; the rest are the stray ones. Not when
       // the run decodes as text, which is a payload that happens to begin with that byte.
-      const keepsFirst = bytes.length > 1 && decodedText === undefined && base !== undefined && isEmoji(base) && (bytes[0] === 14 || bytes[0] === 15);
+      const keepsFirst = bytes.length > 1 && decodedText === undefined && recognizedFirst;
       runs.push({
         start: runStart,
-        selectorsStart: keepsFirst ? i + 1 : i,
+        selectorsStart: keepsFirst ? i + (bytes[0]! < 16 ? 1 : 2) : i,
         end: j,
         baseCodePoint: base,
         bytes: keepsFirst ? bytes.slice(1) : bytes,

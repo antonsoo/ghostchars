@@ -76,6 +76,23 @@ test('overlapping findings remain visible and sanitized lookalikes remain explic
   await expect(page.locator('#remaining-findings')).toContainText('confusable');
 });
 
+test('registered variants survive offline inspection and output selection beside a real payload', async ({ page, context }) => {
+  await context.setOffline(true);
+  const source = '0\uFE00\n\u2205\uFE00\n\u3001\uFE01\n\u1000\uFE00\n';
+  await inspect(page, source);
+  await expect(page.locator('#scan-status')).toContainText('0 findings');
+  await expect(page.locator('#sanitized-output')).toHaveValue(source);
+  await page.locator('#select-clean').focus();
+  await page.keyboard.press('Enter');
+  await expect(page.locator('#sanitized-output')).toBeFocused();
+  expect(await page.locator('#sanitized-output').evaluate((el: HTMLTextAreaElement) => el.value.slice(el.selectionStart, el.selectionEnd))).toBe(source);
+  const payload = Array.from(new TextEncoder().encode('hidden message'), byte => String.fromCodePoint(byte < 16 ? 0xfe00 + byte : 0xe0100 + byte - 16)).join('');
+  await inspect(page, source + '\u2205' + payload);
+  await expect(page.locator('#decoded')).toContainText('hidden message');
+  await expect(page.locator('#scan-status')).toContainText('1 finding');
+  await expect(page.locator('#sanitized-output')).toHaveValue(source + '\u2205');
+});
+
 test('decoded display controls and markup stay inert', async ({ page }) => {
   const payload = '<img src=x onerror=alert(1)>\u202e\u200b';
   const selectors = [...new TextEncoder().encode(payload)].map((byte) => String.fromCodePoint(byte < 16 ? 0xfe00 + byte : 0xe0100 + byte - 16)).join('');

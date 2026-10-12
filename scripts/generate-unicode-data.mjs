@@ -17,7 +17,7 @@
 //   - Emoji sequence data (emoji-sequences.txt) -> Emoji 16.0
 
 import { createHash } from 'node:crypto';
-import { mkdir, writeFile } from 'node:fs/promises';
+import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -36,6 +36,7 @@ const SOURCES = [
   { id: 'emojiData', url: `${UCD_BASE}/emoji/emoji-data.txt` },
   { id: 'emojiSequences', url: `${EMOJI_BASE}/emoji-sequences.txt` },
   { id: 'confusables', url: `${SECURITY_BASE}/confusables.txt` },
+  { id: 'standardizedVariants', url: `${UCD_BASE}/StandardizedVariants.txt` },
 ];
 
 async function download(url) {
@@ -140,6 +141,21 @@ function extractTagSequences(text) {
   return sequences;
 }
 
+// Mongolian free variation selectors have separate script context rules. This
+// table covers the VS1-256 code points handled by decodeVariationSelectors.
+function extractStandardizedVariants(text) {
+  const pairs = [];
+  for (const raw of text.split('\n')) {
+    const line = raw.split('#')[0].trim();
+    if (!line) continue;
+    const pair = line.split(';')[0].trim().split(/\s+/).map(s => Number.parseInt(s, 16));
+    if (pair.length !== 2 || pair.some(cp => !Number.isSafeInteger(cp))) throw new Error(`Invalid variation sequence: ${line}`);
+    const selector = pair[1];
+    if ((selector >= 0xfe00 && selector <= 0xfe0f) || (selector >= 0xe0100 && selector <= 0xe01ef)) pairs.push(pair);
+  }
+  return pairs.sort((a, b) => a[0] - b[0] || a[1] - b[1]);
+}
+
 // ---- confusables.txt --------------------------------------------------
 
 function extractConfusables(text) {
@@ -216,8 +232,19 @@ export const confusablesTable: ReadonlyArray<readonly [number, readonly number[]
 `;
 }
 
+function emitStandardizedVariants(pairs) {
+  const body = pairs.map(([base, selector]) => `[0x${base.toString(16)},0x${selector.toString(16)}]`).join(',\n  ');
+  return `${banner('StandardizedVariants.txt (Unicode 17.0.0, VS1-256)')}
+/** Exact registered base/selector pairs, sorted by base then selector. */
+export const standardizedVariants: ReadonlyArray<readonly [number, number]> = [
+  ${body}
+];
+`;
+}
+
 async function main() {
   await mkdir(outDir, { recursive: true });
+  const previous = JSON.parse(await readFile(join(outDir, 'manifest.json'), 'utf8'));
   const manifest = { unicodeVersion: '17.0.0', emojiVersion: '16.0', generatedAt: new Date().toISOString(), sources: {} };
   const texts = {};
 
@@ -225,9 +252,11 @@ async function main() {
     process.stdout.write(`fetching ${url} ... `);
     const text = await download(url);
     const hash = sha256(text);
+    const expected = previous.sources[id];
+    if (expected?.url === url && expected.sha256 !== hash) throw new Error(`Unicode source changed: ${url}; expected ${expected.sha256}, received ${hash}. Review it before updating the pinned manifest.`);
     texts[id] = text;
-    manifest.sources[id] = { url, sha256: hash, bytes: text.length };
-    console.log(`sha256=${hash.slice(0, 12)}… (${text.length} bytes)`);
+    manifest.sources[id] = { url, sha256: hash, bytes: Buffer.byteLength(text, 'utf8') };
+    console.log(`sha256=${hash.slice(0, 12)}… (${manifest.sources[id].bytes} bytes)`);
   }
 
   const defaultIgnorable = extractDefaultIgnorable(texts.derivedCoreProperties);
@@ -236,6 +265,7 @@ async function main() {
   const emoji = extractEmoji(texts.emojiData);
   const tagSequences = extractTagSequences(texts.emojiSequences);
   const confusables = extractConfusables(texts.confusables);
+  const standardized = extractStandardizedVariants(texts.standardizedVariants);
 
   await writeFile(join(outDir, 'default-ignorable.ts'), emitRangeTable('defaultIgnorableRanges', defaultIgnorable, 'DerivedCoreProperties.txt (Default_Ignorable_Code_Point)'));
   await writeFile(join(outDir, 'scripts.ts'), emitScriptsTable(scriptNames, scriptRanges, 'Scripts.txt'));
@@ -243,6 +273,7 @@ async function main() {
   await writeFile(join(outDir, 'emoji.ts'), emitRangeTable('emojiRanges', emoji, 'emoji/emoji-data.txt (Emoji property)'));
   await writeFile(join(outDir, 'emoji-tag-sequences.ts'), emitTagSequences(tagSequences, 'emoji-sequences.txt (RGI_Emoji_Tag_Sequence)'));
   await writeFile(join(outDir, 'confusables.ts'), emitConfusables(confusables, 'confusables.txt'));
+  await writeFile(join(outDir, 'standardized-variants.ts'), emitStandardizedVariants(standardized));
 
   await writeFile(join(outDir, 'manifest.json'), JSON.stringify(manifest, null, 2) + '\n');
 
@@ -253,6 +284,7 @@ async function main() {
   console.log(`Emoji ranges: ${emoji.length}`);
   console.log(`RGI tag sequences: ${tagSequences.length}`);
   console.log(`Confusables entries: ${confusables.size}`);
+  console.log(`Standardized VS1-256 sequences: ${standardized.length}`);
 }
 
 main().catch((err) => {

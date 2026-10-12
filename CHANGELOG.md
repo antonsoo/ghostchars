@@ -14,6 +14,13 @@ All notable changes to this project are documented in this file.
 
 ### Fixed
 
+- Registered Unicode 17 standardized variation sequences now survive scans and
+  repairs, including mathematical symbols, punctuation and script variants.
+  Exact base/selector pairs come from pinned `StandardizedVariants.txt`; other
+  selectors and encoded payloads remain reported. A recognized first variant
+  survives removal of extra non-payload selectors. Existing CJK IVS and emoji
+  policies remain separate. The Unicode generator now enforces the source
+  hashes it previously only recorded and reports actual UTF-8 byte counts.
 - Canonical accents no longer hide cross-script identifier collisions. Comparison
   keys use NFD before and after confusable mapping; canonically equivalent-only
   prose spellings remain quiet. Original source ranges and text are preserved,

@@ -103,6 +103,15 @@ later passes. Its preview shows the actual proposed text; invalid encodings or
 invalid explicit configuration stop with exit 2 instead of being rewritten.
 See [repair behavior and before/after evidence](studies/repair-policy/README.md).
 
+Registered Unicode variants also survive scans and repairs in the source
+checkout. Previously, `--fix` removed valid selectors from slashed zero,
+mathematical symbols, CJK punctuation and script variants while claiming they
+were unregistered. Exact Unicode 17 pairs now come from the pinned normative
+table. Unsupported pairs and encoded payloads still produce findings.
+[Reproductions and independent Unicode checks](studies/standardized-variants/README.md)
+cover the correction; no npm release or hosted deployment is included.
+
+
 The source checkout also reports **incomplete scans** separately from clean
 results. Unreadable files, failed directory/Git enumeration and decoding errors
 return exit 2, with details in every report format. Discovered symbolic links

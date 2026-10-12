@@ -15,6 +15,8 @@ export function scanVariationSelectors(text: string, positionAt: PositionLookup)
     const bitIndex = bitCarriers.get(run);
     const isSmuggling = bitIndex !== undefined || (run.decodedText !== undefined && run.bytes.length > 1);
     const payload = bitIndex !== undefined ? { text: bitStream!.text, layers: 1 } : run.decodedText !== undefined ? unwrapPayload(run.decodedText) : undefined;
+    const firstSelector = run.baseCodePoint === undefined ? undefined : text.codePointAt(run.start + (run.baseCodePoint > 0xffff ? 2 : 1));
+    const keepsEmojiPresentation = run.afterPresentationSelector && (firstSelector === 0xfe0e || firstSelector === 0xfe0f);
 
     findings.push({
       rule: isSmuggling ? 'variation-selector-smuggling' : 'variation-selector-stray',
@@ -30,7 +32,9 @@ export function scanVariationSelectors(text: string, positionAt: PositionLookup)
             ? `${run.bytes.length} extra variation selector${run.bytes.length === 1 ? '' : 's'} after U+${run.baseCodePoint.toString(16).toUpperCase()} (${unicodeName(run.baseCodePoint)}) and the selector that already picks its presentation: ${run.bytes.length === 1 ? 'it does' : 'they do'} nothing and cannot be seen.`
           : `Variation selector on U+${run.baseCodePoint.toString(16).toUpperCase()} (${unicodeName(run.baseCodePoint)}), which has no registered variation sequence for it.`),
       suggestion: run.afterPresentationSelector
-        ? 'Remove the extra selectors; the first one, which keeps the emoji presentation, stays.'
+        ? keepsEmojiPresentation
+          ? 'Remove the extra selectors; the first one, which keeps the emoji presentation, stays.'
+          : 'Remove the extra selectors; the first one, which selects a glyph variant, stays.'
         : 'Remove these characters unless selecting a real registered variation sequence (see the Unicode IVD / StandardizedVariants.txt).',
       // On a bit stream the message is spread over every carrier; it is said once, at the first.
       decoded: bitIndex !== undefined && bitIndex > 0 ? undefined : payload?.text,
