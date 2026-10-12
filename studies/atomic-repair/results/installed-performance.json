@@ -1,0 +1,32 @@
+{
+  "platform": "Linux-6.18.54.1-microsoft-standard-WSL2-x86_64-with-glibc2.39",
+  "node": "v24.21.0",
+  "filesPerBatch": 200,
+  "bytesPerFile": 9622,
+  "repetitions": 5,
+  "note": "Synthetic 200-file batch; alternating before/after order, fresh files each time. Timing includes CLI startup, scan, repair and JSON output, excludes fixture creation and byte checks. One WSL2 filesystem; not a general storage benchmark.",
+  "results": {
+    "before": {
+      "cliSha256": "d3ccd26aa81a7ffd8a2b50466f303dd27a0e5c10efcad816bd3b7cfd0956e658",
+      "elapsedMs": [
+        1025.801956973737,
+        686.5990140067879,
+        780.4224010033067,
+        830.7057770143729,
+        1183.2331029872876
+      ],
+      "medianMs": 830.7057770143729
+    },
+    "after": {
+      "cliSha256": "69943f2809d8d643b5296cd8f0c69ca7f4406ba4d2f9277f4c9b7d0ae4365f4e",
+      "elapsedMs": [
+        3913.7053370068315,
+        3065.541021991521,
+        3019.5822110108566,
+        3374.220914003672,
+        2688.62507501035
+      ],
+      "medianMs": 3065.541021991521
+    }
+  }
+}

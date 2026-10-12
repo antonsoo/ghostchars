@@ -1,0 +1,2 @@
+npm notice run @antonsoloviev/ghostchars@0.1.5 lint
+npm notice run eslint .

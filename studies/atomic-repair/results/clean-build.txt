@@ -1,0 +1,7 @@
+npm notice run @antonsoloviev/ghostchars@0.1.5 build
+npm notice run npm run build:lib && npm run build:cli
+npm notice run @antonsoloviev/ghostchars@0.1.5 build:lib
+npm notice run tsc -p tsconfig.build.json
+npm notice run @antonsoloviev/ghostchars@0.1.5 build:cli
+npm notice run node esbuild.cli.mjs
+Built dist/cli.js

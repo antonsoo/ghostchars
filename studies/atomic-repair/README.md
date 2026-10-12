@@ -27,6 +27,16 @@ it is not a power-loss, physical disk-full, or filesystem-corruption experiment.
 hard-link aliases and temporary-file leftovers, using an unprivileged Linux
 account. All fixtures are disposable and removed by the parent process.
 
+![Actual installed CLI replay on Node 20.0.0](../../docs/assets/atomic-repair/installed-node20.png)
+
+Retained outputs: [baseline Node 20](results/before-node20.json),
+[installed Node 20](results/installed-node20.json),
+[installed Node 24](results/installed-node24.json), and
+[clean-build/package byte comparisons](results/artifacts.json).
+The [verification record](../../docs/verification-atomic-repair-2026-10-12.md)
+links the clean checks and their commands. Package metadata remains at 0.1.5;
+these results describe source changes and a locally packed artifact.
+
 ## Replacement protocol
 
 1. Read and decode every input; an incomplete scan still blocks all repairs.
@@ -63,6 +73,15 @@ probe compares five alternating fresh batches of 200 synthetic files per
 version, verifying every repaired byte after each run. It includes CLI startup,
 scanning and JSON output; fixture creation and verification are outside the
 timed region. Results are specific to the tested WSL2 filesystem.
+
+On this WSL2 Linux host (14 logical CPUs, approximately 47 GiB RAM), the final
+installed Node 24.21.0 comparison took a
+median **830.7 ms before** and **3,065.5 ms after** for 200 repaired files.
+Every file was 9,622 bytes before repair; all 2,000 before/after outputs matched
+the expected bytes. Extra staging, rechecks and per-file flushing add real I/O
+cost. [All ten timings and exact CLI hashes](results/installed-performance.json)
+are retained; this is not a scanner-speed improvement or a general storage
+benchmark.
 
 ## Boundaries
 

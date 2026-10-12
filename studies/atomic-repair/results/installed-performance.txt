@@ -1,0 +1,2 @@
+before: median 830.7 ms for 200 repaired files (5 fresh batches)
+after: median 3065.5 ms for 200 repaired files (5 fresh batches)

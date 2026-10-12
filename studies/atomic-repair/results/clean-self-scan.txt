@@ -1,0 +1,1 @@
+ghostchars: no findings in 53 file(s) (519ms).

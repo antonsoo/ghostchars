@@ -1,0 +1,4 @@
+npm notice run @antonsoloviev/ghostchars@0.1.5 prepare
+npm notice run npm run build:lib
+npm notice run @antonsoloviev/ghostchars@0.1.5 build:lib
+npm notice run tsc -p tsconfig.build.json
