@@ -1,0 +1,14 @@
+[4mlong-line.txt[0m
+  [90m1:430[0m  [33mwarn [0m  [2minvisible[0m
+    ZERO WIDTH SPACE (U+200B) is invisible and can hide or split identifiers/words without any visible trace.
+    [90m|[0m // ordinary context ordinary context ordinary context ordinary context ordinary context ordinary context ordinary context ordinary context ordinary context ordinary context ordinary context ordinary context ordinary context ordinary context ordinary context ordinary context ordinary context ordinary context ordinary context ordinary context ordinary context ordinary context ordinary context ordinary context ordinary context a⟦U+200B ZWSP⟧b⟦U+200B ZWSP⟧c
+    [90m|[0m                                                                                                                                                                                                                                                                                                                                                                                                                                              [35m^[0m
+    [2mfix:[0m Remove this character unless it is a documented, intentional zero-width joiner/non-joiner for the surrounding script or emoji sequence.
+
+  [90m1:432[0m  [33mwarn [0m  [2minvisible[0m
+    ZERO WIDTH SPACE (U+200B) is invisible and can hide or split identifiers/words without any visible trace.
+    [90m|[0m // ordinary context ordinary context ordinary context ordinary context ordinary context ordinary context ordinary context ordinary context ordinary context ordinary context ordinary context ordinary context ordinary context ordinary context ordinary context ordinary context ordinary context ordinary context ordinary context ordinary context ordinary context ordinary context ordinary context ordinary context ordinary context a⟦U+200B ZWSP⟧b⟦U+200B ZWSP⟧c
+    [90m|[0m                                                                                                                                                                                                                                                                                                                                                                                                                                                [35m^[0m
+    [2mfix:[0m Remove this character unless it is a documented, intentional zero-width joiner/non-joiner for the surrounding script or emoji sequence.
+
+[1mghostchars: 0 error(s), 2 warning(s), 0 info in 1 file(s) scanned (5ms).[0m

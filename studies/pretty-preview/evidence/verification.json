@@ -1,0 +1,59 @@
+{
+  "sourceCommit": "a896001f28098af962753da5703188007d5f7898",
+  "node": "24.21.0",
+  "npm": "12.0.1",
+  "unitTests": 250,
+  "screenshotsInspected": 2,
+  "commands": [
+    {
+      "command": "npm ci",
+      "exitStatus": 0,
+      "logBytes": 467,
+      "logSha256": "cf705a5028b0bbf8f6e569ca78044471d4a38b66a156b105b8909e8a767c5482"
+    },
+    {
+      "command": "npm run lint",
+      "exitStatus": 0,
+      "logBytes": 76,
+      "logSha256": "9816032d097de2b86ee0fe002a35bb3960ad089342879cf11d72cd62e427d9c8"
+    },
+    {
+      "command": "npm run typecheck",
+      "exitStatus": 0,
+      "logBytes": 85,
+      "logSha256": "3b5b905dfcf2e8234c734b5f1bbc2762f973b949323ff45b44c651201f3ed004"
+    },
+    {
+      "command": "npm test",
+      "exitStatus": 0,
+      "logBytes": 548,
+      "logSha256": "9c64821339e1d6afb39d84d7481238efb25283a72048621ee96efd6698261f2d"
+    },
+    {
+      "command": "npm run build",
+      "exitStatus": 0,
+      "logBytes": 317,
+      "logSha256": "9e993204c89115a68e24a33ab4ec6bf1a45b72cb7eaf62d16f2ceff849b7e7af"
+    },
+    {
+      "command": "node dist/cli.js --no-config src",
+      "exitStatus": 0,
+      "logBytes": 46,
+      "logSha256": "a64184bc62a0644291bf98b91c0ac7ac43b8e885c4714852fa65c5ffe624f52b"
+    }
+  ],
+  "inputs": 17,
+  "findingLocationsVerified": 20938,
+  "unchangedFormats": [
+    "json (excluding durationMs)",
+    "sarif",
+    "github",
+    "summary"
+  ],
+  "unchangedRepairWorkflows": 7,
+  "installedRuntimes": [
+    "20.0.0",
+    "24.21.0"
+  ],
+  "scope": "Source and separately installed local tarball. Core library bytes unchanged. No web changes, registry publication or deployment."
+}

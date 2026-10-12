@@ -1,0 +1,41 @@
+{
+  "node": "v26.7.0",
+  "platform": "Linux-6.18.54.1-microsoft-standard-WSL2-x86_64-with-glibc2.39",
+  "logicalCpus": 14,
+  "compiledCliSha256": "eb40858775addc66215ddcfd8ce4c344a5edeb605a02f983cb34ba1ef5984b54",
+  "results": [
+    {
+      "name": "dense-500",
+      "inputBytes": 2000,
+      "inputSha256": "56e76a13f7907e0e893641de6a42e2f0cc91938598787eff0bd65eccb4b4a961",
+      "status": 0,
+      "timedOut": false,
+      "seconds": 0.11472538398811594,
+      "outputBytes": 185506,
+      "outputSha256": "b865b98ef8bde27e496f79d2d31d2467091482297c6c5edf408e6caec88d6fe2",
+      "stderrBytes": 0
+    },
+    {
+      "name": "dense-1500",
+      "inputBytes": 6000,
+      "inputSha256": "33f7f3d6b200868cb737c53ee4c440e2d63942fdda03cec1315f28181d37376d",
+      "status": 0,
+      "timedOut": false,
+      "seconds": 0.1144677129923366,
+      "outputBytes": 558508,
+      "outputSha256": "dae6b7a4d29271f8c24a4007e232565269a96d16d7db46137be4b191c649380e",
+      "stderrBytes": 0
+    },
+    {
+      "name": "public-0",
+      "inputBytes": 97121,
+      "inputSha256": "c5ddaa0675c85cc168a45c7f0337ba20a767863320b40a317cf30c37a59c093b",
+      "status": 1,
+      "timedOut": false,
+      "seconds": 0.36514063901267946,
+      "outputBytes": 3888072,
+      "outputSha256": "263ff4c39dfd1701f2a0fb71620fc4a217a3bb4846fbac3e9c36ec8b118cd57f",
+      "stderrBytes": 0
+    }
+  ]
+}

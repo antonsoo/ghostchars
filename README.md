@@ -97,6 +97,15 @@ ghostchars . --fix --dry-run        # preview
 ghostchars . --fix                  # apply configured removals in place
 ```
 
+The source checkout's default terminal report shows a short excerpt around
+**every** finding, with `[[...]]` marking its exact source span. Locations use
+the original UTF-16 columns and exclusive end positions; long excerpts and
+diagnostic text declare their omissions. This avoids repeatedly scanning and
+printing whole lines: a recorded 97 KB document previously produced 91 MB of
+output. Full findings remain available in `--format json`; `--format summary`
+still groups repeated findings. [Before/after output and installed checks](studies/pretty-preview/README.md)
+cover this source-only change. npm 0.1.5 has not been updated with it.
+
 The source checkout includes an **unreleased repair fix**: `--fix` now honors
 the same rules, allowlist and matching file overrides as the scan, including
 later passes. Its preview shows the actual proposed text; invalid encodings or

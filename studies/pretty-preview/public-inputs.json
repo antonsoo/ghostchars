@@ -1,0 +1,82 @@
+[
+  {
+    "source": "L1B3RT4S",
+    "file": "GROK-MEGA.mkd",
+    "sha256": "c5ddaa0675c85cc168a45c7f0337ba20a767863320b40a317cf30c37a59c093b",
+    "bytes": 97121,
+    "provenance": {
+      "repo": "elder-plinius/L1B3RT4S",
+      "commit": "64960b783249d36f76a48a33103cc4b168332b9b"
+    }
+  },
+  {
+    "source": "TheBigPromptLibrary",
+    "file": "CustomInstructions/ChatGPT/knowledge/P0tS3c/SQL_InjectionFundamentals.md",
+    "sha256": "2d0d5fe5105ca51bc65c33a5d41c7bbef33f2322c117ca0ad7288ca22170533c",
+    "bytes": 103438,
+    "provenance": {
+      "repo": "0xeb/TheBigPromptLibrary",
+      "commit": "cabcdb04b5970211b1b6163d8725ae66bb48c5f0"
+    }
+  },
+  {
+    "source": "TheBigPromptLibrary",
+    "file": "CustomInstructions/ChatGPT/knowledge/P0tS3c/FileInclusion.md",
+    "sha256": "9f7d5c04166da5ef8c05e9d69697b7711571eb7a6be78e60cb437c8955df8cae",
+    "bytes": 101484,
+    "provenance": {
+      "repo": "0xeb/TheBigPromptLibrary",
+      "commit": "cabcdb04b5970211b1b6163d8725ae66bb48c5f0"
+    }
+  },
+  {
+    "source": "system-prompts-and-models",
+    "file": "Trae/Chat Prompt.txt",
+    "sha256": "2ae97aa8badea4fbdbc9ee63fe2fe83b911fa40128cfa0cd24bbf4d2d9ee61bc",
+    "bytes": 8443,
+    "provenance": {
+      "repo": "x1xhlol/system-prompts-and-models-of-ai-tools",
+      "commit": "1e4203a7d88873c1b37ab2d1c07074fea498c274"
+    }
+  },
+  {
+    "source": "TheBigPromptLibrary",
+    "file": "CustomInstructions/ChatGPT/knowledge/P0tS3c/SqlMap.md",
+    "sha256": "b0be3750f6baf15952dcf8a4f2de54ca1e077c940f5666b67e573c3cf1969c64",
+    "bytes": 96245,
+    "provenance": {
+      "repo": "0xeb/TheBigPromptLibrary",
+      "commit": "cabcdb04b5970211b1b6163d8725ae66bb48c5f0"
+    }
+  },
+  {
+    "source": "TheBigPromptLibrary",
+    "file": "CustomInstructions/ChatGPT/knowledge/P0tS3c/WebRequests.md",
+    "sha256": "d353a18c61c8fc1d1c4337893c311357ed5e1e8243962cad9a06cbe629fd4c3a",
+    "bytes": 62131,
+    "provenance": {
+      "repo": "0xeb/TheBigPromptLibrary",
+      "commit": "cabcdb04b5970211b1b6163d8725ae66bb48c5f0"
+    }
+  },
+  {
+    "source": "mosscap-prompt-injection",
+    "file": "data_test-00000-of-00001-06acab2d6a2bcf9f_007815.txt",
+    "sha256": "fe43503f85cbbdee612f12d84e1aec6529612c7ba68862db369685f5a082d8f7",
+    "bytes": 1710,
+    "provenance": {
+      "dataset": "Lakera/mosscap_prompt_injection",
+      "revision": "b7e495ff63373ff7f7dabc1e9390cf62b5838570"
+    }
+  },
+  {
+    "source": "mosscap-prompt-injection",
+    "file": "data_test-00000-of-00001-06acab2d6a2bcf9f_007825.txt",
+    "sha256": "fba04efc18d2a46420623a0d50047456368bfcc8b355a2c8efce01e98aab5e03",
+    "bytes": 1729,
+    "provenance": {
+      "dataset": "Lakera/mosscap_prompt_injection",
+      "revision": "b7e495ff63373ff7f7dabc1e9390cf62b5838570"
+    }
+  }
+]

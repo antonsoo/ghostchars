@@ -14,6 +14,13 @@ All notable changes to this project are documented in this file.
 
 ### Fixed
 
+- (source checkout) Default CLI diagnostics no longer rescan and repeat an entire
+  source line for every finding. Show bounded source excerpts with the reported
+  span bracketed, preserve every original location and full count, and label
+  shortened diagnostics. Avoid huge caret padding and alignment errors after
+  escaped controls or wide characters. JSON, SARIF, GitHub annotations, summary
+  reports and repairs remain unchanged. Retain actual public-input measurements
+  and installed-artifact checks in `studies/pretty-preview/`; no npm release.
 - CLI repairs stage and flush every replacement before renaming it over its
   original. A partial write failure no longer truncates source files; failed
   staging cancels the whole batch. POSIX ownership and permission bits are
