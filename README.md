@@ -182,9 +182,24 @@ All matching overrides merge in order; allowlists accumulate.
 findings, while exit 2 takes precedence for input or repair failures. Run a
 second scan to check what remains. In the source checkout, discovery and reading
 finish before any write; an input failure blocks every planned repair. A later
-write failure can still leave earlier files repaired. Writes are in place,
-without backups or a transaction across files. A file changed since the scan is
-refused when noticed; these checks do not provide an atomic filesystem sandbox.
+repair is written to an exclusive temporary file in the original's directory,
+flushed, and renamed over the original only after **all** replacements have been
+prepared. A failed staging write leaves every original untouched; a later rename
+failure can leave earlier files repaired. There are no backups or transaction
+across files. A file changed since the scan is refused when noticed; these checks
+do not provide an atomic filesystem sandbox against concurrent editors.
+
+Replacement requires a writable original and parent directory. It retains the
+text encoding/BOM and, on POSIX, the owner, group and permission bits (including
+executable bits), or fails before replacement. Hard-linked files are refused;
+make an independent copy to repair one. Replacement changes the inode and does
+**not** copy extended attributes, ACLs or alternate data streams. Use a
+metadata-aware editing workflow for files that depend on those properties.
+An abrupt process termination can leave a `.ghostchars-*.tmp` file beside an
+unchanged original. File flushing is not a power-loss durability guarantee, and
+network filesystems can have different failure semantics. `--dry-run` previews
+text without testing these write prerequisites.
+[Failure replay and exact boundaries](studies/atomic-repair/README.md).
 
 JSON reports add `summary.complete`, `summary.inputErrors` and an `errors` array.
 `skipped` records intentional exclusions (binary, over 5 MiB, symbolic links,

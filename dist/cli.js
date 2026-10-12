@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 // src/cli/index.ts
-import { readFileSync as readFileSync4, realpathSync as realpathSync2, writeFileSync } from "node:fs";
+import { readFileSync as readFileSync5, realpathSync as realpathSync2 } from "node:fs";
 import { fileURLToPath } from "node:url";
 
 // src/core/names.ts
@@ -172,7 +172,7 @@ function scanBidi(text, positionAt) {
   flushUnterminated();
   return findings;
 }
-function makeFinding(cp, text, rule, severity, message, suggestion) {
+function makeFinding(cp, text, rule, severity, message2, suggestion) {
   return {
     rule,
     severity,
@@ -180,7 +180,7 @@ function makeFinding(cp, text, rule, severity, message, suggestion) {
     end: { line: cp.line, column: cp.column + cp.width, offset: cp.index + cp.width },
     codePoints: [cp.codePoint],
     names: [unicodeName(cp.codePoint)],
-    message,
+    message: message2,
     suggestion,
     fixable: true
   };
@@ -8711,7 +8711,7 @@ function scanWhitespaceAndControl(text, positionAt) {
   }
   return findings;
 }
-function finding(cp, rule, severity, message, suggestion) {
+function finding(cp, rule, severity, message2, suggestion) {
   return {
     rule,
     severity,
@@ -8719,7 +8719,7 @@ function finding(cp, rule, severity, message, suggestion) {
     end: { line: cp.line, column: cp.column + cp.width, offset: cp.index + cp.width },
     codePoints: [cp.codePoint],
     names: [unicodeName(cp.codePoint)],
-    message,
+    message: message2,
     suggestion,
     fixable: true
   };
@@ -9199,8 +9199,8 @@ function formatGithub(report) {
     for (const f of file.findings) {
       const cmd = f.severity === "error" ? "error" : f.severity === "warning" ? "warning" : "notice";
       const title = `ghostchars: ${f.rule}`;
-      const message = escapeData(f.message);
-      lines.push(`::${cmd} file=${escapeProp(file.path)},line=${f.start.line},col=${f.start.column},endLine=${f.end.line},endColumn=${f.end.column},title=${escapeProp(title)}::${message}`);
+      const message2 = escapeData(f.message);
+      lines.push(`::${cmd} file=${escapeProp(file.path)},line=${f.start.line},col=${f.start.column},endLine=${f.end.line},endColumn=${f.end.column},title=${escapeProp(title)}::${message2}`);
     }
   }
   return lines.join("\n");
@@ -9484,6 +9484,157 @@ function revealCommand(target) {
   return 0;
 }
 
+// src/cli/replaceFiles.ts
+import {
+  closeSync,
+  constants,
+  fchmodSync,
+  fchownSync,
+  fstatSync,
+  fsyncSync,
+  lstatSync as lstatSync2,
+  openSync,
+  readFileSync as readFileSync4,
+  renameSync,
+  unlinkSync,
+  writeFileSync
+} from "node:fs";
+import { randomUUID } from "node:crypto";
+import { dirname as dirname2, join as join3 } from "node:path";
+function sameFile(a, b) {
+  return ["dev", "ino", "size", "mtimeNs", "ctimeNs", "mode", "uid", "gid", "nlink"].every((key) => a[key] === b[key]);
+}
+function removeTemporary(path, owned) {
+  try {
+    const current = lstatSync2(path, { bigint: true });
+    if (current.dev !== owned.dev || current.ino !== owned.ino || !current.isFile()) {
+      throw new Error("temporary path now belongs to a different file; left it untouched");
+    }
+    unlinkSync(path);
+  } catch (error) {
+    if (error.code !== "ENOENT") throw error;
+  }
+}
+function inspectOriginal(plan, expected) {
+  if (throughSymlink(plan.absPath)) throw new Error("path became a symbolic link after scanning");
+  const named = lstatSync2(plan.absPath, { bigint: true });
+  if (!named.isFile()) throw new Error("path is no longer a regular file");
+  const fd = openSync(plan.absPath, constants.O_RDWR | (constants.O_NOFOLLOW ?? 0));
+  try {
+    const before = fstatSync(fd, { bigint: true });
+    if (!sameFile(named, before) || expected && !sameFile(expected, before)) {
+      throw new Error("file or its metadata changed after scanning; scan it again before repairing");
+    }
+    if (before.nlink !== 1n) {
+      throw new Error("hard-linked files cannot be replaced safely; make an independent copy before repairing");
+    }
+    if (!readFileSync4(fd).equals(plan.original) || !sameFile(before, fstatSync(fd, { bigint: true }))) {
+      throw new Error("file changed after scanning; scan it again before repairing");
+    }
+    return before;
+  } finally {
+    closeSync(fd);
+  }
+}
+function stage(plan) {
+  const originalStat = inspectOriginal(plan);
+  const temporary = join3(dirname2(plan.absPath), `.ghostchars-${randomUUID()}.tmp`);
+  let fd;
+  let created;
+  try {
+    fd = openSync(temporary, "wx", 384);
+    created = fstatSync(fd, { bigint: true });
+    writeFileSync(fd, plan.replacement);
+    if (process.platform !== "win32") {
+      const current = fstatSync(fd, { bigint: true });
+      if (current.uid !== originalStat.uid || current.gid !== originalStat.gid) {
+        fchownSync(fd, Number(originalStat.uid), Number(originalStat.gid));
+      }
+    }
+    fchmodSync(fd, Number(originalStat.mode & 0o7777n));
+    if (process.platform !== "win32") {
+      const prepared = fstatSync(fd, { bigint: true });
+      if (prepared.uid !== originalStat.uid || prepared.gid !== originalStat.gid || (prepared.mode & 0o7777n) !== (originalStat.mode & 0o7777n)) {
+        throw new Error("replacement could not retain the original owner and permissions");
+      }
+    }
+    fsyncSync(fd);
+    const closing = fd;
+    fd = void 0;
+    closeSync(closing);
+    return { plan, originalStat, temporary, temporaryStat: lstatSync2(temporary, { bigint: true }) };
+  } catch (error) {
+    const failures = [message(error)];
+    if (fd !== void 0) {
+      try {
+        closeSync(fd);
+      } catch (closeError) {
+        failures.push(`closing replacement: ${message(closeError)}`);
+      }
+    }
+    if (created) {
+      try {
+        removeTemporary(temporary, created);
+      } catch (cleanupError) {
+        failures.push(`removing ${temporary}: ${message(cleanupError)}`);
+      }
+    }
+    throw new Error(failures.join("; "));
+  }
+}
+function message(error) {
+  return error instanceof Error ? error.message : String(error);
+}
+function replaceFiles(plans) {
+  const staged = [];
+  const errors = [];
+  let repaired = 0;
+  try {
+    for (const plan of plans) {
+      try {
+        staged.push(stage(plan));
+      } catch (error) {
+        errors.push({ path: plan.path, reason: `could not prepare repair: ${message(error)}` });
+        return { repaired, errors };
+      }
+    }
+    for (const entry of staged) {
+      try {
+        inspectOriginal(entry.plan, entry.originalStat);
+      } catch (error) {
+        errors.push({ path: entry.plan.path, reason: `could not repair file: ${message(error)}` });
+        return { repaired, errors };
+      }
+    }
+    for (const entry of staged) {
+      try {
+        if (throughSymlink(entry.plan.absPath) || !sameFile(entry.originalStat, lstatSync2(entry.plan.absPath, { bigint: true }))) {
+          throw new Error("file or its metadata changed before replacement; scan it again before repairing");
+        }
+        if (!sameFile(entry.temporaryStat, lstatSync2(entry.temporary, { bigint: true })) || !readFileSync4(entry.temporary).equals(entry.plan.replacement)) {
+          throw new Error("temporary replacement changed; original left untouched");
+        }
+        renameSync(entry.temporary, entry.plan.absPath);
+        repaired++;
+      } catch (error) {
+        errors.push({ path: entry.plan.path, reason: `could not replace file: ${message(error)}` });
+        break;
+      }
+    }
+  } finally {
+    for (const entry of staged.slice(repaired)) {
+      try {
+        removeTemporary(entry.temporary, entry.temporaryStat);
+      } catch (error) {
+        if (error.code !== "ENOENT") {
+          errors.push({ path: entry.plan.path, reason: `could not remove temporary repair ${entry.temporary}: ${message(error)}` });
+        }
+      }
+    }
+  }
+  return { repaired, errors };
+}
+
 // src/cli/index.ts
 var HELP = `ghostchars ${VERSION} -- catch invisible and deceptive Unicode
 
@@ -9571,7 +9722,7 @@ function main(argv) {
     let original;
     try {
       if (throughSymlink(file.absPath)) throw new Error("path became a symbolic link after discovery");
-      original = readFileSync4(file.absPath);
+      original = readFileSync5(file.absPath);
       ({ text: source, encoding } = decodeFile(original));
     } catch (err) {
       report.errors.push({ path: file.path, reason: `read error: ${err.message}` });
@@ -9596,14 +9747,10 @@ function main(argv) {
   if (repairs.length > 0 && report.errors.length > 0) {
     console.error("ghostchars: scan incomplete; no files were repaired.");
   } else {
-    for (const repair of repairs) {
-      try {
-        if (throughSymlink(repair.absPath)) throw new Error("path became a symbolic link after scanning");
-        if (!readFileSync4(repair.absPath).equals(repair.original)) throw new Error("file changed after scanning; scan it again before repairing");
-        writeFileSync(repair.absPath, repair.replacement);
-      } catch (err) {
-        report.errors.push({ path: repair.path, reason: `could not repair file: ${err.message}` });
-      }
+    const replacement = replaceFiles(repairs);
+    report.errors.push(...replacement.errors);
+    if (replacement.errors.length) {
+      console.error(replacement.repaired === 0 ? "ghostchars: repair failed; review the reported paths before retrying." : `ghostchars: repair stopped after ${replacement.repaired} successful replacement(s); review the reported paths before retrying.`);
     }
   }
   report.durationMs = performance.now() - start;

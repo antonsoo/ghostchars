@@ -14,6 +14,13 @@ All notable changes to this project are documented in this file.
 
 ### Fixed
 
+- CLI repairs stage and flush every replacement before renaming it over its
+  original. A partial write failure no longer truncates source files; failed
+  staging cancels the whole batch. POSIX ownership and permission bits are
+  retained. Hard links and noticed edits are refused. Replacements require a
+  writable parent and do not copy extended metadata or provide a transaction
+  across files. Actual kernel-limit and process-interruption replays are in
+  `studies/atomic-repair`.
 - Registered Unicode 17 standardized variation sequences now survive scans and
   repairs, including mathematical symbols, punctuation and script variants.
   Exact base/selector pairs come from pinned `StandardizedVariants.txt`; other

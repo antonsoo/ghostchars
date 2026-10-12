@@ -1,0 +1,12 @@
+ordinary-utf-8: exit 0; 9622 -> 9619 bytes; original replaced
+ordinary-utf-8-sig: exit 0; 9625 -> 9622 bytes; original replaced
+ordinary-utf-16-le: exit 0; 19242 -> 19240 bytes; original replaced
+ordinary-utf-16-be: exit 0; 19242 -> 19240 bytes; original replaced
+limited-utf-8: exit 2; 9622 -> 1024 bytes; original DAMAGED
+limited-utf-16-le: exit 2; 19242 -> 1024 bytes; original DAMAGED
+limited-utf-16-be: exit 2; 19242 -> 1024 bytes; original DAMAGED
+late-limit: exit 2; 9622 -> 1024 bytes; original DAMAGED
+readonly: exit 2; 9622 -> 9622 bytes; original preserved
+readonly-directory: exit 0; 9622 -> 9619 bytes; original replaced
+hardlink: exit 0; 9622 -> 9619 bytes; original replaced
+killed: exit -9; 9622 -> 32 bytes; original DAMAGED

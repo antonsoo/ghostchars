@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-import { readFileSync, realpathSync, writeFileSync } from 'node:fs';
+import { readFileSync, realpathSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { scanText } from '../core/index.js';
 import { diagnosticText } from '../core/diagnosticText.js';
@@ -18,6 +18,7 @@ import { severityCounts } from './report.js';
 import { colors } from './colors.js';
 import { discoverFiles, throughSymlink } from './walk.js';
 import { VERSION } from './version.js';
+import { replaceFiles, type RepairPlan } from './replaceFiles.js';
 
 
 const HELP = `ghostchars ${VERSION} -- catch invisible and deceptive Unicode
@@ -106,7 +107,7 @@ export function main(argv: string[]): number {
 
   const report: ScanReport = { files: [], skipped, errors, durationMs: 0 };
   let hadFixes = false;
-  const repairs: Array<{ path: string; absPath: string; original: Buffer; replacement: Buffer }> = [];
+  const repairs: RepairPlan[] = [];
 
   for (const file of files) {
     let source: string;
@@ -144,14 +145,12 @@ export function main(argv: string[]): number {
   if (repairs.length > 0 && report.errors.length > 0) {
     console.error('ghostchars: scan incomplete; no files were repaired.');
   } else {
-    for (const repair of repairs) {
-      try {
-        if (throughSymlink(repair.absPath)) throw new Error('path became a symbolic link after scanning');
-        if (!readFileSync(repair.absPath).equals(repair.original)) throw new Error('file changed after scanning; scan it again before repairing');
-        writeFileSync(repair.absPath, repair.replacement);
-      } catch (err) {
-        report.errors.push({ path: repair.path, reason: `could not repair file: ${(err as Error).message}` });
-      }
+    const replacement = replaceFiles(repairs);
+    report.errors.push(...replacement.errors);
+    if (replacement.errors.length) {
+      console.error(replacement.repaired === 0
+        ? 'ghostchars: repair failed; review the reported paths before retrying.'
+        : `ghostchars: repair stopped after ${replacement.repaired} successful replacement(s); review the reported paths before retrying.`);
     }
   }
 
