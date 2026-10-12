@@ -1,0 +1,338 @@
+{
+  "mode": "baseline",
+  "results": [
+    {
+      "engine": "chromium",
+      "browserVersion": "153.0.8010.12",
+      "width": 1440,
+      "serverStoppedBeforeNewInput": true,
+      "cacheControl": "no-store",
+      "offline": true,
+      "cases": [
+        {
+          "mixed": false,
+          "inputSha256": "c07186d304e032d1dd2169f718e3fb1cadbc44306fbd7569d60f311012f7d336",
+          "sanitizedSha256": "d689f90f8b5479c4857666cc995fe34097a0db29e10c0cdd85c1053683b6dda5",
+          "selectedTextSha256": "d689f90f8b5479c4857666cc995fe34097a0db29e10c0cdd85c1053683b6dda5",
+          "status": "Scanned 12 code units (12 code points); 4 findings.",
+          "findings": 4,
+          "outputFocused": true
+        },
+        {
+          "mixed": true,
+          "inputSha256": "b47a61ea9d0d5b72f1fcc895f8174c3221e504a19eb893a610ac35ae2a140db6",
+          "sanitizedSha256": "b9e82d41fca063aa9a06895f912d20c39f742756a400a7de8a78a8edcf30c528",
+          "selectedTextSha256": "b9e82d41fca063aa9a06895f912d20c39f742756a400a7de8a78a8edcf30c528",
+          "status": "Scanned 41 code units (27 code points); 5 findings.",
+          "findings": 5,
+          "outputFocused": true
+        }
+      ],
+      "workers": [
+        "/ghostchars/assets/scan.worker-7vXU2DQi.js"
+      ],
+      "served": {
+        "/ghostchars/index.html": {
+          "bytes": 2259,
+          "sha256": "db07d321b184279999506630652d48c1ec07294840b9a2a9282803753c03bbf5"
+        },
+        "/ghostchars/assets/index-EkR-YW6S.js": {
+          "bytes": 17094,
+          "sha256": "8b0a4115b4e2c6255c3eebba9a1520936765a5bea7347de38bbd18848c0e6e54"
+        },
+        "/ghostchars/assets/index-gL_LL1ZC.css": {
+          "bytes": 24131,
+          "sha256": "ee98171d105e9b37dbbfad72ae2ce4cbd1220950de77914dbaa4d4d95332ff4c"
+        },
+        "/ghostchars/assets/scan.worker-7vXU2DQi.js": {
+          "bytes": 154271,
+          "sha256": "d5f6dc81072add00f5268b6c719e0173f7d2846b8f45c1f343b2959d89e730bf"
+        },
+        "/ghostchars/assets/inter-latin-Dx4kXJAl.woff2": {
+          "bytes": 48256,
+          "sha256": "3100e775e8616cd2611beecfa23a4263d7037586789b43f035236a2e6fbd4c62"
+        },
+        "/ghostchars/assets/space-grotesk-latin-BhU9QXUp.woff2": {
+          "bytes": 22288,
+          "sha256": "0640890476fc1198ab4de571fb658de443c4d85b66466ec09534a8737ab1ce9d"
+        },
+        "/ghostchars/assets/ibm-plex-mono-500-latin-DSY6xOcd.woff2": {
+          "bytes": 14888,
+          "sha256": "01d285447409c8a588692162439a038b8cbd7871309ee20267b0d2d91c6e8e22"
+        },
+        "/ghostchars/assets/ibm-plex-mono-400-latin-DMJ8VG8y.woff2": {
+          "bytes": 14708,
+          "sha256": "08949f728dc52d528e69b1667d15c89a5686a4ee9a296ff90983985f99c380f7"
+        },
+        "/ghostchars/assets/ibm-plex-mono-600-latin-BgSNZQsw.woff2": {
+          "bytes": 15620,
+          "sha256": "0d1f0b8d0722224e32e9f28261bdc86c79115be73444ae5eceb73976a1bcdf83"
+        },
+        "/ghostchars/assets/inter-cyrillic-DqGufNeO.woff2": {
+          "bytes": 18748,
+          "sha256": "71d5ee93cc1e9f1d520a3a8b66456de18c7879d8df09d57fcd2eaff75fef0075"
+        }
+      },
+      "errors": [],
+      "lateRequests": [],
+      "policyViolations": [],
+      "axeViolations": 0,
+      "horizontalOverflow": false,
+      "screenshot": "chromium-1440.png",
+      "screenshotSha256": "5b38babcd8688b81c0a76ad3f7bafc66f243182d2928587700ab1fe9af98fe8e"
+    },
+    {
+      "engine": "chromium",
+      "browserVersion": "153.0.8010.12",
+      "width": 375,
+      "serverStoppedBeforeNewInput": true,
+      "cacheControl": "no-store",
+      "offline": true,
+      "cases": [
+        {
+          "mixed": false,
+          "inputSha256": "c07186d304e032d1dd2169f718e3fb1cadbc44306fbd7569d60f311012f7d336",
+          "sanitizedSha256": "d689f90f8b5479c4857666cc995fe34097a0db29e10c0cdd85c1053683b6dda5",
+          "selectedTextSha256": "d689f90f8b5479c4857666cc995fe34097a0db29e10c0cdd85c1053683b6dda5",
+          "status": "Scanned 12 code units (12 code points); 4 findings.",
+          "findings": 4,
+          "outputFocused": true
+        },
+        {
+          "mixed": true,
+          "inputSha256": "b47a61ea9d0d5b72f1fcc895f8174c3221e504a19eb893a610ac35ae2a140db6",
+          "sanitizedSha256": "b9e82d41fca063aa9a06895f912d20c39f742756a400a7de8a78a8edcf30c528",
+          "selectedTextSha256": "b9e82d41fca063aa9a06895f912d20c39f742756a400a7de8a78a8edcf30c528",
+          "status": "Scanned 41 code units (27 code points); 5 findings.",
+          "findings": 5,
+          "outputFocused": true
+        }
+      ],
+      "workers": [
+        "/ghostchars/assets/scan.worker-7vXU2DQi.js"
+      ],
+      "served": {
+        "/ghostchars/index.html": {
+          "bytes": 2259,
+          "sha256": "db07d321b184279999506630652d48c1ec07294840b9a2a9282803753c03bbf5"
+        },
+        "/ghostchars/assets/index-EkR-YW6S.js": {
+          "bytes": 17094,
+          "sha256": "8b0a4115b4e2c6255c3eebba9a1520936765a5bea7347de38bbd18848c0e6e54"
+        },
+        "/ghostchars/assets/index-gL_LL1ZC.css": {
+          "bytes": 24131,
+          "sha256": "ee98171d105e9b37dbbfad72ae2ce4cbd1220950de77914dbaa4d4d95332ff4c"
+        },
+        "/ghostchars/assets/scan.worker-7vXU2DQi.js": {
+          "bytes": 154271,
+          "sha256": "d5f6dc81072add00f5268b6c719e0173f7d2846b8f45c1f343b2959d89e730bf"
+        },
+        "/ghostchars/assets/inter-latin-Dx4kXJAl.woff2": {
+          "bytes": 48256,
+          "sha256": "3100e775e8616cd2611beecfa23a4263d7037586789b43f035236a2e6fbd4c62"
+        },
+        "/ghostchars/assets/space-grotesk-latin-BhU9QXUp.woff2": {
+          "bytes": 22288,
+          "sha256": "0640890476fc1198ab4de571fb658de443c4d85b66466ec09534a8737ab1ce9d"
+        },
+        "/ghostchars/assets/ibm-plex-mono-500-latin-DSY6xOcd.woff2": {
+          "bytes": 14888,
+          "sha256": "01d285447409c8a588692162439a038b8cbd7871309ee20267b0d2d91c6e8e22"
+        },
+        "/ghostchars/assets/ibm-plex-mono-400-latin-DMJ8VG8y.woff2": {
+          "bytes": 14708,
+          "sha256": "08949f728dc52d528e69b1667d15c89a5686a4ee9a296ff90983985f99c380f7"
+        },
+        "/ghostchars/assets/inter-cyrillic-DqGufNeO.woff2": {
+          "bytes": 18748,
+          "sha256": "71d5ee93cc1e9f1d520a3a8b66456de18c7879d8df09d57fcd2eaff75fef0075"
+        },
+        "/ghostchars/assets/ibm-plex-mono-600-latin-BgSNZQsw.woff2": {
+          "bytes": 15620,
+          "sha256": "0d1f0b8d0722224e32e9f28261bdc86c79115be73444ae5eceb73976a1bcdf83"
+        }
+      },
+      "errors": [],
+      "lateRequests": [],
+      "policyViolations": [],
+      "axeViolations": 0,
+      "horizontalOverflow": false,
+      "screenshot": "chromium-375.png",
+      "screenshotSha256": "a19a4a8968a7a7bf240b3db9765d2dace4b7bee8157bdfc087ba79551ddb427a"
+    },
+    {
+      "engine": "firefox",
+      "browserVersion": "155.0",
+      "width": 1440,
+      "serverStoppedBeforeNewInput": true,
+      "cacheControl": "no-store",
+      "offline": true,
+      "cases": [
+        {
+          "mixed": false,
+          "inputSha256": "c07186d304e032d1dd2169f718e3fb1cadbc44306fbd7569d60f311012f7d336",
+          "sanitizedSha256": "d689f90f8b5479c4857666cc995fe34097a0db29e10c0cdd85c1053683b6dda5",
+          "selectedTextSha256": "d689f90f8b5479c4857666cc995fe34097a0db29e10c0cdd85c1053683b6dda5",
+          "status": "Scanned 12 code units (12 code points); 4 findings.",
+          "findings": 4,
+          "outputFocused": true
+        },
+        {
+          "mixed": true,
+          "inputSha256": "b47a61ea9d0d5b72f1fcc895f8174c3221e504a19eb893a610ac35ae2a140db6",
+          "sanitizedSha256": "b9e82d41fca063aa9a06895f912d20c39f742756a400a7de8a78a8edcf30c528",
+          "selectedTextSha256": "b9e82d41fca063aa9a06895f912d20c39f742756a400a7de8a78a8edcf30c528",
+          "status": "Scanned 41 code units (27 code points); 5 findings.",
+          "findings": 5,
+          "outputFocused": true
+        }
+      ],
+      "workers": [
+        "/ghostchars/assets/scan.worker-7vXU2DQi.js"
+      ],
+      "served": {
+        "/ghostchars/index.html": {
+          "bytes": 2259,
+          "sha256": "db07d321b184279999506630652d48c1ec07294840b9a2a9282803753c03bbf5"
+        },
+        "/ghostchars/assets/index-gL_LL1ZC.css": {
+          "bytes": 24131,
+          "sha256": "ee98171d105e9b37dbbfad72ae2ce4cbd1220950de77914dbaa4d4d95332ff4c"
+        },
+        "/ghostchars/assets/index-EkR-YW6S.js": {
+          "bytes": 17094,
+          "sha256": "8b0a4115b4e2c6255c3eebba9a1520936765a5bea7347de38bbd18848c0e6e54"
+        },
+        "/ghostchars/assets/inter-latin-Dx4kXJAl.woff2": {
+          "bytes": 48256,
+          "sha256": "3100e775e8616cd2611beecfa23a4263d7037586789b43f035236a2e6fbd4c62"
+        },
+        "/ghostchars/assets/space-grotesk-latin-BhU9QXUp.woff2": {
+          "bytes": 22288,
+          "sha256": "0640890476fc1198ab4de571fb658de443c4d85b66466ec09534a8737ab1ce9d"
+        },
+        "/ghostchars/assets/ibm-plex-mono-500-latin-DSY6xOcd.woff2": {
+          "bytes": 14888,
+          "sha256": "01d285447409c8a588692162439a038b8cbd7871309ee20267b0d2d91c6e8e22"
+        },
+        "/ghostchars/assets/ibm-plex-mono-400-latin-DMJ8VG8y.woff2": {
+          "bytes": 14708,
+          "sha256": "08949f728dc52d528e69b1667d15c89a5686a4ee9a296ff90983985f99c380f7"
+        },
+        "/ghostchars/assets/inter-cyrillic-DqGufNeO.woff2": {
+          "bytes": 18748,
+          "sha256": "71d5ee93cc1e9f1d520a3a8b66456de18c7879d8df09d57fcd2eaff75fef0075"
+        },
+        "/ghostchars/assets/ibm-plex-mono-600-latin-BgSNZQsw.woff2": {
+          "bytes": 15620,
+          "sha256": "0d1f0b8d0722224e32e9f28261bdc86c79115be73444ae5eceb73976a1bcdf83"
+        },
+        "/ghostchars/assets/scan.worker-7vXU2DQi.js": {
+          "bytes": 154271,
+          "sha256": "d5f6dc81072add00f5268b6c719e0173f7d2846b8f45c1f343b2959d89e730bf"
+        },
+        "/ghostchars/favicon.svg": {
+          "bytes": 360,
+          "sha256": "8a223c5369b990e7795446b06d4c17559a05ff6ed0d1d66e85e64015ed05395f"
+        }
+      },
+      "errors": [],
+      "lateRequests": [
+        "http://127.0.0.1:57772/ghostchars/assets/space-grotesk-latin-BhU9QXUp.woff2"
+      ],
+      "policyViolations": [],
+      "axeViolations": 0,
+      "horizontalOverflow": false,
+      "screenshot": "firefox-1440.png",
+      "screenshotSha256": "263baeb476ad4f2463bda5f4e222f0a5e02321a6c02e1de2bc5f1c61b2ffd8e1"
+    },
+    {
+      "engine": "firefox",
+      "browserVersion": "155.0",
+      "width": 375,
+      "serverStoppedBeforeNewInput": true,
+      "cacheControl": "no-store",
+      "offline": true,
+      "cases": [
+        {
+          "mixed": false,
+          "inputSha256": "c07186d304e032d1dd2169f718e3fb1cadbc44306fbd7569d60f311012f7d336",
+          "sanitizedSha256": "d689f90f8b5479c4857666cc995fe34097a0db29e10c0cdd85c1053683b6dda5",
+          "selectedTextSha256": "d689f90f8b5479c4857666cc995fe34097a0db29e10c0cdd85c1053683b6dda5",
+          "status": "Scanned 12 code units (12 code points); 4 findings.",
+          "findings": 4,
+          "outputFocused": true
+        },
+        {
+          "mixed": true,
+          "inputSha256": "b47a61ea9d0d5b72f1fcc895f8174c3221e504a19eb893a610ac35ae2a140db6",
+          "sanitizedSha256": "b9e82d41fca063aa9a06895f912d20c39f742756a400a7de8a78a8edcf30c528",
+          "selectedTextSha256": "b9e82d41fca063aa9a06895f912d20c39f742756a400a7de8a78a8edcf30c528",
+          "status": "Scanned 41 code units (27 code points); 5 findings.",
+          "findings": 5,
+          "outputFocused": true
+        }
+      ],
+      "workers": [
+        "/ghostchars/assets/scan.worker-7vXU2DQi.js"
+      ],
+      "served": {
+        "/ghostchars/index.html": {
+          "bytes": 2259,
+          "sha256": "db07d321b184279999506630652d48c1ec07294840b9a2a9282803753c03bbf5"
+        },
+        "/ghostchars/assets/index-EkR-YW6S.js": {
+          "bytes": 17094,
+          "sha256": "8b0a4115b4e2c6255c3eebba9a1520936765a5bea7347de38bbd18848c0e6e54"
+        },
+        "/ghostchars/assets/index-gL_LL1ZC.css": {
+          "bytes": 24131,
+          "sha256": "ee98171d105e9b37dbbfad72ae2ce4cbd1220950de77914dbaa4d4d95332ff4c"
+        },
+        "/ghostchars/assets/inter-latin-Dx4kXJAl.woff2": {
+          "bytes": 48256,
+          "sha256": "3100e775e8616cd2611beecfa23a4263d7037586789b43f035236a2e6fbd4c62"
+        },
+        "/ghostchars/assets/space-grotesk-latin-BhU9QXUp.woff2": {
+          "bytes": 22288,
+          "sha256": "0640890476fc1198ab4de571fb658de443c4d85b66466ec09534a8737ab1ce9d"
+        },
+        "/ghostchars/assets/ibm-plex-mono-400-latin-DMJ8VG8y.woff2": {
+          "bytes": 14708,
+          "sha256": "08949f728dc52d528e69b1667d15c89a5686a4ee9a296ff90983985f99c380f7"
+        },
+        "/ghostchars/assets/ibm-plex-mono-500-latin-DSY6xOcd.woff2": {
+          "bytes": 14888,
+          "sha256": "01d285447409c8a588692162439a038b8cbd7871309ee20267b0d2d91c6e8e22"
+        },
+        "/ghostchars/assets/ibm-plex-mono-600-latin-BgSNZQsw.woff2": {
+          "bytes": 15620,
+          "sha256": "0d1f0b8d0722224e32e9f28261bdc86c79115be73444ae5eceb73976a1bcdf83"
+        },
+        "/ghostchars/assets/inter-cyrillic-DqGufNeO.woff2": {
+          "bytes": 18748,
+          "sha256": "71d5ee93cc1e9f1d520a3a8b66456de18c7879d8df09d57fcd2eaff75fef0075"
+        },
+        "/ghostchars/favicon.svg": {
+          "bytes": 360,
+          "sha256": "8a223c5369b990e7795446b06d4c17559a05ff6ed0d1d66e85e64015ed05395f"
+        },
+        "/ghostchars/assets/scan.worker-7vXU2DQi.js": {
+          "bytes": 154271,
+          "sha256": "d5f6dc81072add00f5268b6c719e0173f7d2846b8f45c1f343b2959d89e730bf"
+        }
+      },
+      "errors": [],
+      "lateRequests": [
+        "http://127.0.0.1:58608/ghostchars/assets/space-grotesk-latin-BhU9QXUp.woff2"
+      ],
+      "policyViolations": [],
+      "axeViolations": 0,
+      "horizontalOverflow": false,
+      "screenshot": "firefox-375.png",
+      "screenshotSha256": "b0349c50b80d04f4cd8cb4d43efe6f4f77939c8bec992243a8d713d628c3145a"
+    }
+  ],
+  "scope": "Actual built worker. Server stopped before edits. Keyboard output selection is checked; the operating-system clipboard is not read."
+}

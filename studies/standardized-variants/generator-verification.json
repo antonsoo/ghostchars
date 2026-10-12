@@ -1,0 +1,18 @@
+{
+  "node": "v24.21.0",
+  "sourcesChecked": 7,
+  "tablesExactlyReproduced": {
+    "emoji-tag-sequences.ts": "7e6242b5abd72b8d462568ff710771c0c2b2d35eab5c730f92666eb6792783b7",
+    "confusables.ts": "8c9d6d8231e56470e73fe018180c7ce7a92e19a8f3255190744fc57842198dc2",
+    "script-extensions.ts": "92105224a280ae4e1c188174398bb283e74b49ee171fcf43a466265ddbd495af",
+    "scripts.ts": "817ba157fee24b936a8706698bd34af58e65e22e82d99bd49b448a0c7e1329b5",
+    "standardized-variants.ts": "61bcc8246410424c5a2116bd45279a44217e41a05c9d40b897cb1c941b6056d3",
+    "emoji.ts": "22553f5b01204a6f8c8b9cd469b026e1864f80e0b69de75d693d0015c0e46887",
+    "default-ignorable.ts": "40b38c84b4b548b54c7972ad82dbf9ca3cf9dbbcbeade5b1e2a6470904a16e26"
+  },
+  "manifestEqualExceptGenerationTimestamp": true,
+  "incorrectExpectedHashExitCode": 1,
+  "tablesUnchangedAfterRefusal": true,
+  "successLogSha256": "7d894930c1ef8d954425be9be0aa624864a98e59170f61ea3d8d648b16b366b5",
+  "refusalLogSha256": "f37c3b1e60193ccad9fad036b78f40548ebb9bee732143b126ab7a676a4f62c0"
+}

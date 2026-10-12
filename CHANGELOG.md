@@ -21,6 +21,9 @@ All notable changes to this project are documented in this file.
   survives removal of extra non-payload selectors. Existing CJK IVS and emoji
   policies remain separate. The Unicode generator now enforces the source
   hashes it previously only recorded and reports actual UTF-8 byte counts.
+- Bundled Inter and Space Grotesk variable fonts use one face per file/range
+  across the existing weights. Changing offline report states no longer makes
+  Firefox fetch a second face backed by the same file.
 - Canonical accents no longer hide cross-script identifier collisions. Comparison
   keys use NFD before and after confusable mapping; canonically equivalent-only
   prose spellings remain quiet. Original source ranges and text are preserved,

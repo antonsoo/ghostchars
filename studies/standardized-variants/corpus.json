@@ -1,0 +1,21 @@
+{
+  "node": "v24.21.0",
+  "manifestSha256": "4918139517b95809158fbf484befc670943054fbacd9ad7ada50034a2146ce84",
+  "docs": 83494,
+  "bytes": 155361980,
+  "inputSha256": "1175ffa359bfdadcd06d38b6f7cbc850e390c174d319937decf41536796f3cc4",
+  "before": {
+    "findings": 18582,
+    "outputSha256": "cf89b01a4e81faeaabf86c763a03268b0be37d22bc3813dda924b4acf189f18d",
+    "scanMs": 10491.216293001356
+  },
+  "after": {
+    "findings": 18582,
+    "outputSha256": "cf89b01a4e81faeaabf86c763a03268b0be37d22bc3813dda924b4acf189f18d",
+    "scanMs": 10114.413508997874
+  },
+  "timingScope": "Initial scans only; repairs, reveal and hashing are outside scanMs. Baseline scans first. Not an isolated benchmark.",
+  "comparison": "Exact full scan, complete sanitizer result (text, fixed and remaining findings), and reveal output.",
+  "changed": [],
+  "unrelatedOriginalScanRulesIdentical": true
+}

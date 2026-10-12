@@ -1,0 +1,999 @@
+{
+  "node": "v24.21.0",
+  "cliSha256": {
+    "before": "b28fd1914b9513e415270a44ad35f4f0cb1a7928885f3e51257e4d0cce8ba798",
+    "after": "d3ccd26aa81a7ffd8a2b50466f303dd27a0e5c10efcad816bd3b7cfd0956e658"
+  },
+  "scope": "Actual CLI scan, preview and file repair. Synthetic registered/unsupported/payload cases. JSON stdout retains measured durationMs; file bytes and exit codes are asserted.",
+  "records": [
+    {
+      "version": "before",
+      "name": "registered",
+      "inputSha256": "c07186d304e032d1dd2169f718e3fb1cadbc44306fbd7569d60f311012f7d336",
+      "inputBytes": 26,
+      "inputCodePoints": [
+        "U+0030",
+        "U+FE00",
+        "U+000A",
+        "U+2205",
+        "U+FE00",
+        "U+000A",
+        "U+3001",
+        "U+FE01",
+        "U+000A",
+        "U+1000",
+        "U+FE00",
+        "U+000A"
+      ],
+      "steps": [
+        {
+          "mode": "scan",
+          "args": [
+            "registered.txt",
+            "--no-config",
+            "--format",
+            "json"
+          ],
+          "exitCode": 0,
+          "stdout": "{\n  \"ghostchars\": true,\n  \"summary\": {\n    \"error\": 0,\n    \"warning\": 4,\n    \"info\": 0,\n    \"total\": 4,\n    \"files\": 1,\n    \"durationMs\": 8.012214,\n    \"complete\": true,\n    \"inputErrors\": 0\n  },\n  \"skipped\": [],\n  \"errors\": [],\n  \"results\": [\n    {\n      \"path\": \"registered.txt\",\n      \"findings\": [\n        {\n          \"rule\": \"variation-selector-stray\",\n          \"severity\": \"warning\",\n          \"start\": {\n            \"line\": 1,\n            \"column\": 1,\n            \"offset\": 0\n          },\n          \"end\": {\n            \"line\": 1,\n            \"column\": 3,\n            \"offset\": 2\n          },\n          \"codePoints\": [\n            \"U+0030\",\n            \"U+FE00\"\n          ],\n          \"names\": [\n            \"U+0030\",\n            \"VARIATION SELECTOR-1\"\n          ],\n          \"message\": \"Variation selector on U+30 (U+0030), which has no registered variation sequence for it.\",\n          \"suggestion\": \"Remove these characters unless selecting a real registered variation sequence (see the Unicode IVD / StandardizedVariants.txt).\",\n          \"fixable\": true\n        },\n        {\n          \"rule\": \"variation-selector-stray\",\n          \"severity\": \"warning\",\n          \"start\": {\n            \"line\": 2,\n            \"column\": 1,\n            \"offset\": 3\n          },\n          \"end\": {\n            \"line\": 2,\n            \"column\": 3,\n            \"offset\": 5\n          },\n          \"codePoints\": [\n            \"U+2205\",\n            \"U+FE00\"\n          ],\n          \"names\": [\n            \"U+2205\",\n            \"VARIATION SELECTOR-1\"\n          ],\n          \"message\": \"Variation selector on U+2205 (U+2205), which has no registered variation sequence for it.\",\n          \"suggestion\": \"Remove these characters unless selecting a real registered variation sequence (see the Unicode IVD / StandardizedVariants.txt).\",\n          \"fixable\": true\n        },\n        {\n          \"rule\": \"variation-selector-stray\",\n          \"severity\": \"warning\",\n          \"start\": {\n            \"line\": 3,\n            \"column\": 1,\n            \"offset\": 6\n          },\n          \"end\": {\n            \"line\": 3,\n            \"column\": 3,\n            \"offset\": 8\n          },\n          \"codePoints\": [\n            \"U+3001\",\n            \"U+FE01\"\n          ],\n          \"names\": [\n            \"U+3001\",\n            \"VARIATION SELECTOR-2\"\n          ],\n          \"message\": \"Variation selector on U+3001 (U+3001), which has no registered variation sequence for it.\",\n          \"suggestion\": \"Remove these characters unless selecting a real registered variation sequence (see the Unicode IVD / StandardizedVariants.txt).\",\n          \"fixable\": true\n        },\n        {\n          \"rule\": \"variation-selector-stray\",\n          \"severity\": \"warning\",\n          \"start\": {\n            \"line\": 4,\n            \"column\": 1,\n            \"offset\": 9\n          },\n          \"end\": {\n            \"line\": 4,\n            \"column\": 3,\n            \"offset\": 11\n          },\n          \"codePoints\": [\n            \"U+1000\",\n            \"U+FE00\"\n          ],\n          \"names\": [\n            \"U+1000\",\n            \"VARIATION SELECTOR-1\"\n          ],\n          \"message\": \"Variation selector on U+1000 (U+1000), which has no registered variation sequence for it.\",\n          \"suggestion\": \"Remove these characters unless selecting a real registered variation sequence (see the Unicode IVD / StandardizedVariants.txt).\",\n          \"fixable\": true\n        }\n      ]\n    }\n  ]\n}\n",
+          "stdoutSha256": "b27f034439096be546d3efa9287046e632cd8b0e502eea334725d91fc5c55b76",
+          "resultingFileSha256": "c07186d304e032d1dd2169f718e3fb1cadbc44306fbd7569d60f311012f7d336",
+          "resultingCodePoints": [
+            "U+0030",
+            "U+FE00",
+            "U+000A",
+            "U+2205",
+            "U+FE00",
+            "U+000A",
+            "U+3001",
+            "U+FE01",
+            "U+000A",
+            "U+1000",
+            "U+FE00",
+            "U+000A"
+          ]
+        },
+        {
+          "mode": "preview",
+          "args": [
+            "registered.txt",
+            "--no-config",
+            "--format",
+            "json",
+            "--fix",
+            "--dry-run"
+          ],
+          "exitCode": 0,
+          "stdout": "registered.txt\n  1: - ⟦U+0030 U+0030 U+FE00 VARIATION SELECTOR-1⟧\n  1: + 0\n  2: - ⟦U+2205 U+2205 U+FE00 VARIATION SELECTOR-1⟧\n  2: + ∅\n  3: - ⟦U+3001 U+3001 U+FE01 VARIATION SELECTOR-2⟧\n  3: + 、\n  4: - ⟦U+1000 U+1000 U+FE00 VARIATION SELECTOR-1⟧\n  4: + က\n  4 finding(s) affected. Preview only; no file was written.\n\n",
+          "stdoutSha256": "094c90629ab60f772da61d4503d2305cbc026e44d60177c0fd651fe0bea0c042",
+          "resultingFileSha256": "c07186d304e032d1dd2169f718e3fb1cadbc44306fbd7569d60f311012f7d336",
+          "resultingCodePoints": [
+            "U+0030",
+            "U+FE00",
+            "U+000A",
+            "U+2205",
+            "U+FE00",
+            "U+000A",
+            "U+3001",
+            "U+FE01",
+            "U+000A",
+            "U+1000",
+            "U+FE00",
+            "U+000A"
+          ]
+        },
+        {
+          "mode": "repair",
+          "args": [
+            "registered.txt",
+            "--no-config",
+            "--format",
+            "json",
+            "--fix"
+          ],
+          "exitCode": 0,
+          "stdout": "{\n  \"ghostchars\": true,\n  \"summary\": {\n    \"error\": 0,\n    \"warning\": 4,\n    \"info\": 0,\n    \"total\": 4,\n    \"files\": 1,\n    \"durationMs\": 8.680304,\n    \"complete\": true,\n    \"inputErrors\": 0\n  },\n  \"skipped\": [],\n  \"errors\": [],\n  \"results\": [\n    {\n      \"path\": \"registered.txt\",\n      \"findings\": [\n        {\n          \"rule\": \"variation-selector-stray\",\n          \"severity\": \"warning\",\n          \"start\": {\n            \"line\": 1,\n            \"column\": 1,\n            \"offset\": 0\n          },\n          \"end\": {\n            \"line\": 1,\n            \"column\": 3,\n            \"offset\": 2\n          },\n          \"codePoints\": [\n            \"U+0030\",\n            \"U+FE00\"\n          ],\n          \"names\": [\n            \"U+0030\",\n            \"VARIATION SELECTOR-1\"\n          ],\n          \"message\": \"Variation selector on U+30 (U+0030), which has no registered variation sequence for it.\",\n          \"suggestion\": \"Remove these characters unless selecting a real registered variation sequence (see the Unicode IVD / StandardizedVariants.txt).\",\n          \"fixable\": true\n        },\n        {\n          \"rule\": \"variation-selector-stray\",\n          \"severity\": \"warning\",\n          \"start\": {\n            \"line\": 2,\n            \"column\": 1,\n            \"offset\": 3\n          },\n          \"end\": {\n            \"line\": 2,\n            \"column\": 3,\n            \"offset\": 5\n          },\n          \"codePoints\": [\n            \"U+2205\",\n            \"U+FE00\"\n          ],\n          \"names\": [\n            \"U+2205\",\n            \"VARIATION SELECTOR-1\"\n          ],\n          \"message\": \"Variation selector on U+2205 (U+2205), which has no registered variation sequence for it.\",\n          \"suggestion\": \"Remove these characters unless selecting a real registered variation sequence (see the Unicode IVD / StandardizedVariants.txt).\",\n          \"fixable\": true\n        },\n        {\n          \"rule\": \"variation-selector-stray\",\n          \"severity\": \"warning\",\n          \"start\": {\n            \"line\": 3,\n            \"column\": 1,\n            \"offset\": 6\n          },\n          \"end\": {\n            \"line\": 3,\n            \"column\": 3,\n            \"offset\": 8\n          },\n          \"codePoints\": [\n            \"U+3001\",\n            \"U+FE01\"\n          ],\n          \"names\": [\n            \"U+3001\",\n            \"VARIATION SELECTOR-2\"\n          ],\n          \"message\": \"Variation selector on U+3001 (U+3001), which has no registered variation sequence for it.\",\n          \"suggestion\": \"Remove these characters unless selecting a real registered variation sequence (see the Unicode IVD / StandardizedVariants.txt).\",\n          \"fixable\": true\n        },\n        {\n          \"rule\": \"variation-selector-stray\",\n          \"severity\": \"warning\",\n          \"start\": {\n            \"line\": 4,\n            \"column\": 1,\n            \"offset\": 9\n          },\n          \"end\": {\n            \"line\": 4,\n            \"column\": 3,\n            \"offset\": 11\n          },\n          \"codePoints\": [\n            \"U+1000\",\n            \"U+FE00\"\n          ],\n          \"names\": [\n            \"U+1000\",\n            \"VARIATION SELECTOR-1\"\n          ],\n          \"message\": \"Variation selector on U+1000 (U+1000), which has no registered variation sequence for it.\",\n          \"suggestion\": \"Remove these characters unless selecting a real registered variation sequence (see the Unicode IVD / StandardizedVariants.txt).\",\n          \"fixable\": true\n        }\n      ]\n    }\n  ]\n}\n",
+          "stdoutSha256": "b67aa06d5939f586492897b4c9eb61c8d29045fc2156d029b277e4f0f585fa1a",
+          "resultingFileSha256": "d689f90f8b5479c4857666cc995fe34097a0db29e10c0cdd85c1053683b6dda5",
+          "resultingCodePoints": [
+            "U+0030",
+            "U+000A",
+            "U+2205",
+            "U+000A",
+            "U+3001",
+            "U+000A",
+            "U+1000",
+            "U+000A"
+          ]
+        }
+      ]
+    },
+    {
+      "version": "before",
+      "name": "extra-selector",
+      "inputSha256": "508292b0a386cb8d572b62a2284b601d634ff33d7f20465356dfe418ee64b8a2",
+      "inputBytes": 9,
+      "inputCodePoints": [
+        "U+2205",
+        "U+FE00",
+        "U+FE00"
+      ],
+      "steps": [
+        {
+          "mode": "scan",
+          "args": [
+            "extra-selector.txt",
+            "--no-config",
+            "--format",
+            "json"
+          ],
+          "exitCode": 0,
+          "stdout": "{\n  \"ghostchars\": true,\n  \"summary\": {\n    \"error\": 0,\n    \"warning\": 1,\n    \"info\": 0,\n    \"total\": 1,\n    \"files\": 1,\n    \"durationMs\": 6.5826000000000064,\n    \"complete\": true,\n    \"inputErrors\": 0\n  },\n  \"skipped\": [],\n  \"errors\": [],\n  \"results\": [\n    {\n      \"path\": \"extra-selector.txt\",\n      \"findings\": [\n        {\n          \"rule\": \"variation-selector-stray\",\n          \"severity\": \"warning\",\n          \"start\": {\n            \"line\": 1,\n            \"column\": 1,\n            \"offset\": 0\n          },\n          \"end\": {\n            \"line\": 1,\n            \"column\": 4,\n            \"offset\": 3\n          },\n          \"codePoints\": [\n            \"U+2205\",\n            \"U+FE00\",\n            \"U+FE00\"\n          ],\n          \"names\": [\n            \"U+2205\",\n            \"VARIATION SELECTOR-1\",\n            \"VARIATION SELECTOR-1\"\n          ],\n          \"message\": \"Variation selector on U+2205 (U+2205), which has no registered variation sequence for it.\",\n          \"suggestion\": \"Remove these characters unless selecting a real registered variation sequence (see the Unicode IVD / StandardizedVariants.txt).\",\n          \"fixable\": true\n        }\n      ]\n    }\n  ]\n}\n",
+          "stdoutSha256": "b8c71905682d2879e159a627ff9365a707698474d7da02c638d0dc0d9385763c",
+          "resultingFileSha256": "508292b0a386cb8d572b62a2284b601d634ff33d7f20465356dfe418ee64b8a2",
+          "resultingCodePoints": [
+            "U+2205",
+            "U+FE00",
+            "U+FE00"
+          ]
+        },
+        {
+          "mode": "preview",
+          "args": [
+            "extra-selector.txt",
+            "--no-config",
+            "--format",
+            "json",
+            "--fix",
+            "--dry-run"
+          ],
+          "exitCode": 0,
+          "stdout": "extra-selector.txt\n  1: - ⟦U+2205 U+2205 U+FE00 VARIATION SELECTOR-1 U+FE00 VARIATION SELECTOR-1⟧\n  1: + ∅\n  1 finding(s) affected. Preview only; no file was written.\n\n",
+          "stdoutSha256": "4a22459dc179872e0acc303f939d5a7ccb8464ee447c49ff09d09c8f7e8f4564",
+          "resultingFileSha256": "508292b0a386cb8d572b62a2284b601d634ff33d7f20465356dfe418ee64b8a2",
+          "resultingCodePoints": [
+            "U+2205",
+            "U+FE00",
+            "U+FE00"
+          ]
+        },
+        {
+          "mode": "repair",
+          "args": [
+            "extra-selector.txt",
+            "--no-config",
+            "--format",
+            "json",
+            "--fix"
+          ],
+          "exitCode": 0,
+          "stdout": "{\n  \"ghostchars\": true,\n  \"summary\": {\n    \"error\": 0,\n    \"warning\": 1,\n    \"info\": 0,\n    \"total\": 1,\n    \"files\": 1,\n    \"durationMs\": 60.270016000000005,\n    \"complete\": true,\n    \"inputErrors\": 0\n  },\n  \"skipped\": [],\n  \"errors\": [],\n  \"results\": [\n    {\n      \"path\": \"extra-selector.txt\",\n      \"findings\": [\n        {\n          \"rule\": \"variation-selector-stray\",\n          \"severity\": \"warning\",\n          \"start\": {\n            \"line\": 1,\n            \"column\": 1,\n            \"offset\": 0\n          },\n          \"end\": {\n            \"line\": 1,\n            \"column\": 4,\n            \"offset\": 3\n          },\n          \"codePoints\": [\n            \"U+2205\",\n            \"U+FE00\",\n            \"U+FE00\"\n          ],\n          \"names\": [\n            \"U+2205\",\n            \"VARIATION SELECTOR-1\",\n            \"VARIATION SELECTOR-1\"\n          ],\n          \"message\": \"Variation selector on U+2205 (U+2205), which has no registered variation sequence for it.\",\n          \"suggestion\": \"Remove these characters unless selecting a real registered variation sequence (see the Unicode IVD / StandardizedVariants.txt).\",\n          \"fixable\": true\n        }\n      ]\n    }\n  ]\n}\n",
+          "stdoutSha256": "54fa4b6e8cc34b2a161817a587eb3d85e2edafc37bccc7a147dc24e5ad1de5ad",
+          "resultingFileSha256": "73c8ffe9553f8c24730219e392209eaa97d52ee18633550b3ce8526c9955e6e0",
+          "resultingCodePoints": [
+            "U+2205"
+          ]
+        }
+      ]
+    },
+    {
+      "version": "before",
+      "name": "unregistered-pair",
+      "inputSha256": "e2881ffc3db8f2d33fef8531fb07141c5086dd611f38dc49ffad91c417ecc30c",
+      "inputBytes": 6,
+      "inputCodePoints": [
+        "U+2205",
+        "U+FE07"
+      ],
+      "steps": [
+        {
+          "mode": "scan",
+          "args": [
+            "unregistered-pair.txt",
+            "--no-config",
+            "--format",
+            "json"
+          ],
+          "exitCode": 0,
+          "stdout": "{\n  \"ghostchars\": true,\n  \"summary\": {\n    \"error\": 0,\n    \"warning\": 1,\n    \"info\": 0,\n    \"total\": 1,\n    \"files\": 1,\n    \"durationMs\": 6.396861000000001,\n    \"complete\": true,\n    \"inputErrors\": 0\n  },\n  \"skipped\": [],\n  \"errors\": [],\n  \"results\": [\n    {\n      \"path\": \"unregistered-pair.txt\",\n      \"findings\": [\n        {\n          \"rule\": \"variation-selector-stray\",\n          \"severity\": \"warning\",\n          \"start\": {\n            \"line\": 1,\n            \"column\": 1,\n            \"offset\": 0\n          },\n          \"end\": {\n            \"line\": 1,\n            \"column\": 3,\n            \"offset\": 2\n          },\n          \"codePoints\": [\n            \"U+2205\",\n            \"U+FE07\"\n          ],\n          \"names\": [\n            \"U+2205\",\n            \"VARIATION SELECTOR-8\"\n          ],\n          \"message\": \"Variation selector on U+2205 (U+2205), which has no registered variation sequence for it.\",\n          \"suggestion\": \"Remove these characters unless selecting a real registered variation sequence (see the Unicode IVD / StandardizedVariants.txt).\",\n          \"fixable\": true\n        }\n      ]\n    }\n  ]\n}\n",
+          "stdoutSha256": "abd2fb2eaa213dc1053b27e28a02211d40462db2668f26a2b14367f5f8117b93",
+          "resultingFileSha256": "e2881ffc3db8f2d33fef8531fb07141c5086dd611f38dc49ffad91c417ecc30c",
+          "resultingCodePoints": [
+            "U+2205",
+            "U+FE07"
+          ]
+        },
+        {
+          "mode": "preview",
+          "args": [
+            "unregistered-pair.txt",
+            "--no-config",
+            "--format",
+            "json",
+            "--fix",
+            "--dry-run"
+          ],
+          "exitCode": 0,
+          "stdout": "unregistered-pair.txt\n  1: - ⟦U+2205 U+2205 U+FE07 VARIATION SELECTOR-8⟧\n  1: + ∅\n  1 finding(s) affected. Preview only; no file was written.\n\n",
+          "stdoutSha256": "03dc32661805b348d2ba5f06c7f08584d30d1c51995f46afe3b07614dc2f97a4",
+          "resultingFileSha256": "e2881ffc3db8f2d33fef8531fb07141c5086dd611f38dc49ffad91c417ecc30c",
+          "resultingCodePoints": [
+            "U+2205",
+            "U+FE07"
+          ]
+        },
+        {
+          "mode": "repair",
+          "args": [
+            "unregistered-pair.txt",
+            "--no-config",
+            "--format",
+            "json",
+            "--fix"
+          ],
+          "exitCode": 0,
+          "stdout": "{\n  \"ghostchars\": true,\n  \"summary\": {\n    \"error\": 0,\n    \"warning\": 1,\n    \"info\": 0,\n    \"total\": 1,\n    \"files\": 1,\n    \"durationMs\": 10.481958000000006,\n    \"complete\": true,\n    \"inputErrors\": 0\n  },\n  \"skipped\": [],\n  \"errors\": [],\n  \"results\": [\n    {\n      \"path\": \"unregistered-pair.txt\",\n      \"findings\": [\n        {\n          \"rule\": \"variation-selector-stray\",\n          \"severity\": \"warning\",\n          \"start\": {\n            \"line\": 1,\n            \"column\": 1,\n            \"offset\": 0\n          },\n          \"end\": {\n            \"line\": 1,\n            \"column\": 3,\n            \"offset\": 2\n          },\n          \"codePoints\": [\n            \"U+2205\",\n            \"U+FE07\"\n          ],\n          \"names\": [\n            \"U+2205\",\n            \"VARIATION SELECTOR-8\"\n          ],\n          \"message\": \"Variation selector on U+2205 (U+2205), which has no registered variation sequence for it.\",\n          \"suggestion\": \"Remove these characters unless selecting a real registered variation sequence (see the Unicode IVD / StandardizedVariants.txt).\",\n          \"fixable\": true\n        }\n      ]\n    }\n  ]\n}\n",
+          "stdoutSha256": "e70f5c8f9097966db7565c293d9b7fd65a47aff32a6ea2b43abc69653a6b58f2",
+          "resultingFileSha256": "73c8ffe9553f8c24730219e392209eaa97d52ee18633550b3ce8526c9955e6e0",
+          "resultingCodePoints": [
+            "U+2205"
+          ]
+        }
+      ]
+    },
+    {
+      "version": "before",
+      "name": "payload-with-registered-prefix",
+      "inputSha256": "cb13606b4aad74a9787e03b7ba48dca845a0a2148c1d3f6fdb0655e95db46ced",
+      "inputBytes": 62,
+      "inputCodePoints": [
+        "U+2205",
+        "U+FE00",
+        "U+E0158",
+        "U+E0159",
+        "U+E0154",
+        "U+E0154",
+        "U+E0155",
+        "U+E015E",
+        "U+E0110",
+        "U+E015D",
+        "U+E0155",
+        "U+E0163",
+        "U+E0163",
+        "U+E0151",
+        "U+E0157",
+        "U+E0155"
+      ],
+      "steps": [
+        {
+          "mode": "scan",
+          "args": [
+            "payload-with-registered-prefix.txt",
+            "--no-config",
+            "--format",
+            "json"
+          ],
+          "exitCode": 1,
+          "stdout": "{\n  \"ghostchars\": true,\n  \"summary\": {\n    \"error\": 1,\n    \"warning\": 0,\n    \"info\": 0,\n    \"total\": 1,\n    \"files\": 1,\n    \"durationMs\": 6.756601000000003,\n    \"complete\": true,\n    \"inputErrors\": 0\n  },\n  \"skipped\": [],\n  \"errors\": [],\n  \"results\": [\n    {\n      \"path\": \"payload-with-registered-prefix.txt\",\n      \"findings\": [\n        {\n          \"rule\": \"variation-selector-smuggling\",\n          \"severity\": \"error\",\n          \"start\": {\n            \"line\": 1,\n            \"column\": 1,\n            \"offset\": 0\n          },\n          \"end\": {\n            \"line\": 1,\n            \"column\": 31,\n            \"offset\": 30\n          },\n          \"codePoints\": [\n            \"U+2205\",\n            \"U+FE00\",\n            \"U+E0158\",\n            \"U+E0159\",\n            \"U+E0154\",\n            \"U+E0154\",\n            \"U+E0155\",\n            \"U+E015E\",\n            \"U+E0110\",\n            \"U+E015D\",\n            \"U+E0155\",\n            \"U+E0163\",\n            \"U+E0163\",\n            \"U+E0151\",\n            \"U+E0157\",\n            \"U+E0155\"\n          ],\n          \"names\": [\n            \"U+2205\",\n            \"VARIATION SELECTOR-1\",\n            \"VARIATION SELECTOR-105\",\n            \"VARIATION SELECTOR-106\",\n            \"VARIATION SELECTOR-101\",\n            \"VARIATION SELECTOR-101\",\n            \"VARIATION SELECTOR-102\",\n            \"VARIATION SELECTOR-111\",\n            \"VARIATION SELECTOR-33\",\n            \"VARIATION SELECTOR-110\",\n            \"VARIATION SELECTOR-102\",\n            \"VARIATION SELECTOR-116\",\n            \"VARIATION SELECTOR-116\",\n            \"VARIATION SELECTOR-98\",\n            \"VARIATION SELECTOR-104\",\n            \"VARIATION SELECTOR-102\"\n          ],\n          \"message\": \"15 variation selectors decode as hidden UTF-8 text via the byte-per-selector smuggling scheme (VS1-16 -> 0-15, VS17-256 -> 16-255): \\\"\\\\u0000hidden message\\\".\",\n          \"suggestion\": \"Remove these characters unless selecting a real registered variation sequence (see the Unicode IVD / StandardizedVariants.txt).\",\n          \"decoded\": \"\\u0000hidden message\",\n          \"fixable\": true\n        }\n      ]\n    }\n  ]\n}\n",
+          "stdoutSha256": "6e45b64f4ae78836c3f69d3b93bfeccc61dd1c12941893e62107123abc2721bd",
+          "resultingFileSha256": "cb13606b4aad74a9787e03b7ba48dca845a0a2148c1d3f6fdb0655e95db46ced",
+          "resultingCodePoints": [
+            "U+2205",
+            "U+FE00",
+            "U+E0158",
+            "U+E0159",
+            "U+E0154",
+            "U+E0154",
+            "U+E0155",
+            "U+E015E",
+            "U+E0110",
+            "U+E015D",
+            "U+E0155",
+            "U+E0163",
+            "U+E0163",
+            "U+E0151",
+            "U+E0157",
+            "U+E0155"
+          ]
+        },
+        {
+          "mode": "preview",
+          "args": [
+            "payload-with-registered-prefix.txt",
+            "--no-config",
+            "--format",
+            "json",
+            "--fix",
+            "--dry-run"
+          ],
+          "exitCode": 1,
+          "stdout": "payload-with-registered-prefix.txt\n  1: - ⟦U+2205 U+2205 .. U+E0155 VARIATION SELECTOR-102 (16 code points)⟧ → \"\\u0000hidden message\"\n  1: + ∅\n  1 finding(s) affected. Preview only; no file was written.\n\n",
+          "stdoutSha256": "d029f90adec5832191869dcc33d37162abb370dfe4a92edb6179a1212fbed12a",
+          "resultingFileSha256": "cb13606b4aad74a9787e03b7ba48dca845a0a2148c1d3f6fdb0655e95db46ced",
+          "resultingCodePoints": [
+            "U+2205",
+            "U+FE00",
+            "U+E0158",
+            "U+E0159",
+            "U+E0154",
+            "U+E0154",
+            "U+E0155",
+            "U+E015E",
+            "U+E0110",
+            "U+E015D",
+            "U+E0155",
+            "U+E0163",
+            "U+E0163",
+            "U+E0151",
+            "U+E0157",
+            "U+E0155"
+          ]
+        },
+        {
+          "mode": "repair",
+          "args": [
+            "payload-with-registered-prefix.txt",
+            "--no-config",
+            "--format",
+            "json",
+            "--fix"
+          ],
+          "exitCode": 1,
+          "stdout": "{\n  \"ghostchars\": true,\n  \"summary\": {\n    \"error\": 1,\n    \"warning\": 0,\n    \"info\": 0,\n    \"total\": 1,\n    \"files\": 1,\n    \"durationMs\": 10.010424,\n    \"complete\": true,\n    \"inputErrors\": 0\n  },\n  \"skipped\": [],\n  \"errors\": [],\n  \"results\": [\n    {\n      \"path\": \"payload-with-registered-prefix.txt\",\n      \"findings\": [\n        {\n          \"rule\": \"variation-selector-smuggling\",\n          \"severity\": \"error\",\n          \"start\": {\n            \"line\": 1,\n            \"column\": 1,\n            \"offset\": 0\n          },\n          \"end\": {\n            \"line\": 1,\n            \"column\": 31,\n            \"offset\": 30\n          },\n          \"codePoints\": [\n            \"U+2205\",\n            \"U+FE00\",\n            \"U+E0158\",\n            \"U+E0159\",\n            \"U+E0154\",\n            \"U+E0154\",\n            \"U+E0155\",\n            \"U+E015E\",\n            \"U+E0110\",\n            \"U+E015D\",\n            \"U+E0155\",\n            \"U+E0163\",\n            \"U+E0163\",\n            \"U+E0151\",\n            \"U+E0157\",\n            \"U+E0155\"\n          ],\n          \"names\": [\n            \"U+2205\",\n            \"VARIATION SELECTOR-1\",\n            \"VARIATION SELECTOR-105\",\n            \"VARIATION SELECTOR-106\",\n            \"VARIATION SELECTOR-101\",\n            \"VARIATION SELECTOR-101\",\n            \"VARIATION SELECTOR-102\",\n            \"VARIATION SELECTOR-111\",\n            \"VARIATION SELECTOR-33\",\n            \"VARIATION SELECTOR-110\",\n            \"VARIATION SELECTOR-102\",\n            \"VARIATION SELECTOR-116\",\n            \"VARIATION SELECTOR-116\",\n            \"VARIATION SELECTOR-98\",\n            \"VARIATION SELECTOR-104\",\n            \"VARIATION SELECTOR-102\"\n          ],\n          \"message\": \"15 variation selectors decode as hidden UTF-8 text via the byte-per-selector smuggling scheme (VS1-16 -> 0-15, VS17-256 -> 16-255): \\\"\\\\u0000hidden message\\\".\",\n          \"suggestion\": \"Remove these characters unless selecting a real registered variation sequence (see the Unicode IVD / StandardizedVariants.txt).\",\n          \"decoded\": \"\\u0000hidden message\",\n          \"fixable\": true\n        }\n      ]\n    }\n  ]\n}\n",
+          "stdoutSha256": "37369c1c94d8cc879bc52a930fd26a2dcb635841fcec171512f444635a29ef8e",
+          "resultingFileSha256": "73c8ffe9553f8c24730219e392209eaa97d52ee18633550b3ce8526c9955e6e0",
+          "resultingCodePoints": [
+            "U+2205"
+          ]
+        }
+      ]
+    },
+    {
+      "version": "before",
+      "name": "registered-beside-payload",
+      "inputSha256": "b47a61ea9d0d5b72f1fcc895f8174c3221e504a19eb893a610ac35ae2a140db6",
+      "inputBytes": 85,
+      "inputCodePoints": [
+        "U+0030",
+        "U+FE00",
+        "U+000A",
+        "U+2205",
+        "U+FE00",
+        "U+000A",
+        "U+3001",
+        "U+FE01",
+        "U+000A",
+        "U+1000",
+        "U+FE00",
+        "U+000A",
+        "U+2205",
+        "U+E0158",
+        "U+E0159",
+        "U+E0154",
+        "U+E0154",
+        "U+E0155",
+        "U+E015E",
+        "U+E0110",
+        "U+E015D",
+        "U+E0155",
+        "U+E0163",
+        "U+E0163",
+        "U+E0151",
+        "U+E0157",
+        "U+E0155"
+      ],
+      "steps": [
+        {
+          "mode": "scan",
+          "args": [
+            "registered-beside-payload.txt",
+            "--no-config",
+            "--format",
+            "json"
+          ],
+          "exitCode": 1,
+          "stdout": "{\n  \"ghostchars\": true,\n  \"summary\": {\n    \"error\": 1,\n    \"warning\": 4,\n    \"info\": 0,\n    \"total\": 5,\n    \"files\": 1,\n    \"durationMs\": 9.058817999999995,\n    \"complete\": true,\n    \"inputErrors\": 0\n  },\n  \"skipped\": [],\n  \"errors\": [],\n  \"results\": [\n    {\n      \"path\": \"registered-beside-payload.txt\",\n      \"findings\": [\n        {\n          \"rule\": \"variation-selector-stray\",\n          \"severity\": \"warning\",\n          \"start\": {\n            \"line\": 1,\n            \"column\": 1,\n            \"offset\": 0\n          },\n          \"end\": {\n            \"line\": 1,\n            \"column\": 3,\n            \"offset\": 2\n          },\n          \"codePoints\": [\n            \"U+0030\",\n            \"U+FE00\"\n          ],\n          \"names\": [\n            \"U+0030\",\n            \"VARIATION SELECTOR-1\"\n          ],\n          \"message\": \"Variation selector on U+30 (U+0030), which has no registered variation sequence for it.\",\n          \"suggestion\": \"Remove these characters unless selecting a real registered variation sequence (see the Unicode IVD / StandardizedVariants.txt).\",\n          \"fixable\": true\n        },\n        {\n          \"rule\": \"variation-selector-stray\",\n          \"severity\": \"warning\",\n          \"start\": {\n            \"line\": 2,\n            \"column\": 1,\n            \"offset\": 3\n          },\n          \"end\": {\n            \"line\": 2,\n            \"column\": 3,\n            \"offset\": 5\n          },\n          \"codePoints\": [\n            \"U+2205\",\n            \"U+FE00\"\n          ],\n          \"names\": [\n            \"U+2205\",\n            \"VARIATION SELECTOR-1\"\n          ],\n          \"message\": \"Variation selector on U+2205 (U+2205), which has no registered variation sequence for it.\",\n          \"suggestion\": \"Remove these characters unless selecting a real registered variation sequence (see the Unicode IVD / StandardizedVariants.txt).\",\n          \"fixable\": true\n        },\n        {\n          \"rule\": \"variation-selector-stray\",\n          \"severity\": \"warning\",\n          \"start\": {\n            \"line\": 3,\n            \"column\": 1,\n            \"offset\": 6\n          },\n          \"end\": {\n            \"line\": 3,\n            \"column\": 3,\n            \"offset\": 8\n          },\n          \"codePoints\": [\n            \"U+3001\",\n            \"U+FE01\"\n          ],\n          \"names\": [\n            \"U+3001\",\n            \"VARIATION SELECTOR-2\"\n          ],\n          \"message\": \"Variation selector on U+3001 (U+3001), which has no registered variation sequence for it.\",\n          \"suggestion\": \"Remove these characters unless selecting a real registered variation sequence (see the Unicode IVD / StandardizedVariants.txt).\",\n          \"fixable\": true\n        },\n        {\n          \"rule\": \"variation-selector-stray\",\n          \"severity\": \"warning\",\n          \"start\": {\n            \"line\": 4,\n            \"column\": 1,\n            \"offset\": 9\n          },\n          \"end\": {\n            \"line\": 4,\n            \"column\": 3,\n            \"offset\": 11\n          },\n          \"codePoints\": [\n            \"U+1000\",\n            \"U+FE00\"\n          ],\n          \"names\": [\n            \"U+1000\",\n            \"VARIATION SELECTOR-1\"\n          ],\n          \"message\": \"Variation selector on U+1000 (U+1000), which has no registered variation sequence for it.\",\n          \"suggestion\": \"Remove these characters unless selecting a real registered variation sequence (see the Unicode IVD / StandardizedVariants.txt).\",\n          \"fixable\": true\n        },\n        {\n          \"rule\": \"variation-selector-smuggling\",\n          \"severity\": \"error\",\n          \"start\": {\n            \"line\": 5,\n            \"column\": 1,\n            \"offset\": 12\n          },\n          \"end\": {\n            \"line\": 5,\n            \"column\": 30,\n            \"offset\": 41\n          },\n          \"codePoints\": [\n            \"U+2205\",\n            \"U+E0158\",\n            \"U+E0159\",\n            \"U+E0154\",\n            \"U+E0154\",\n            \"U+E0155\",\n            \"U+E015E\",\n            \"U+E0110\",\n            \"U+E015D\",\n            \"U+E0155\",\n            \"U+E0163\",\n            \"U+E0163\",\n            \"U+E0151\",\n            \"U+E0157\",\n            \"U+E0155\"\n          ],\n          \"names\": [\n            \"U+2205\",\n            \"VARIATION SELECTOR-105\",\n            \"VARIATION SELECTOR-106\",\n            \"VARIATION SELECTOR-101\",\n            \"VARIATION SELECTOR-101\",\n            \"VARIATION SELECTOR-102\",\n            \"VARIATION SELECTOR-111\",\n            \"VARIATION SELECTOR-33\",\n            \"VARIATION SELECTOR-110\",\n            \"VARIATION SELECTOR-102\",\n            \"VARIATION SELECTOR-116\",\n            \"VARIATION SELECTOR-116\",\n            \"VARIATION SELECTOR-98\",\n            \"VARIATION SELECTOR-104\",\n            \"VARIATION SELECTOR-102\"\n          ],\n          \"message\": \"14 variation selectors decode as hidden UTF-8 text via the byte-per-selector smuggling scheme (VS1-16 -> 0-15, VS17-256 -> 16-255): \\\"hidden message\\\".\",\n          \"suggestion\": \"Remove these characters unless selecting a real registered variation sequence (see the Unicode IVD / StandardizedVariants.txt).\",\n          \"decoded\": \"hidden message\",\n          \"fixable\": true\n        }\n      ]\n    }\n  ]\n}\n",
+          "stdoutSha256": "2d1df891fc8521b67dd45b2c289b593aec3d5e0fe54f5bb8b88362467321c53d",
+          "resultingFileSha256": "b47a61ea9d0d5b72f1fcc895f8174c3221e504a19eb893a610ac35ae2a140db6",
+          "resultingCodePoints": [
+            "U+0030",
+            "U+FE00",
+            "U+000A",
+            "U+2205",
+            "U+FE00",
+            "U+000A",
+            "U+3001",
+            "U+FE01",
+            "U+000A",
+            "U+1000",
+            "U+FE00",
+            "U+000A",
+            "U+2205",
+            "U+E0158",
+            "U+E0159",
+            "U+E0154",
+            "U+E0154",
+            "U+E0155",
+            "U+E015E",
+            "U+E0110",
+            "U+E015D",
+            "U+E0155",
+            "U+E0163",
+            "U+E0163",
+            "U+E0151",
+            "U+E0157",
+            "U+E0155"
+          ]
+        },
+        {
+          "mode": "preview",
+          "args": [
+            "registered-beside-payload.txt",
+            "--no-config",
+            "--format",
+            "json",
+            "--fix",
+            "--dry-run"
+          ],
+          "exitCode": 1,
+          "stdout": "registered-beside-payload.txt\n  1: - ⟦U+0030 U+0030 U+FE00 VARIATION SELECTOR-1⟧\n  1: + 0\n  2: - ⟦U+2205 U+2205 U+FE00 VARIATION SELECTOR-1⟧\n  2: + ∅\n  3: - ⟦U+3001 U+3001 U+FE01 VARIATION SELECTOR-2⟧\n  3: + 、\n  4: - ⟦U+1000 U+1000 U+FE00 VARIATION SELECTOR-1⟧\n  4: + က\n  5: - ⟦U+2205 U+2205 .. U+E0155 VARIATION SELECTOR-102 (15 code points)⟧ → \"hidden message\"\n  5: + ∅\n  5 finding(s) affected. Preview only; no file was written.\n\n",
+          "stdoutSha256": "fcde6418d4a8cd6d0e048fa9632770cf284f814b0b24393d3225bf9831296fff",
+          "resultingFileSha256": "b47a61ea9d0d5b72f1fcc895f8174c3221e504a19eb893a610ac35ae2a140db6",
+          "resultingCodePoints": [
+            "U+0030",
+            "U+FE00",
+            "U+000A",
+            "U+2205",
+            "U+FE00",
+            "U+000A",
+            "U+3001",
+            "U+FE01",
+            "U+000A",
+            "U+1000",
+            "U+FE00",
+            "U+000A",
+            "U+2205",
+            "U+E0158",
+            "U+E0159",
+            "U+E0154",
+            "U+E0154",
+            "U+E0155",
+            "U+E015E",
+            "U+E0110",
+            "U+E015D",
+            "U+E0155",
+            "U+E0163",
+            "U+E0163",
+            "U+E0151",
+            "U+E0157",
+            "U+E0155"
+          ]
+        },
+        {
+          "mode": "repair",
+          "args": [
+            "registered-beside-payload.txt",
+            "--no-config",
+            "--format",
+            "json",
+            "--fix"
+          ],
+          "exitCode": 1,
+          "stdout": "{\n  \"ghostchars\": true,\n  \"summary\": {\n    \"error\": 1,\n    \"warning\": 4,\n    \"info\": 0,\n    \"total\": 5,\n    \"files\": 1,\n    \"durationMs\": 9.502437999999998,\n    \"complete\": true,\n    \"inputErrors\": 0\n  },\n  \"skipped\": [],\n  \"errors\": [],\n  \"results\": [\n    {\n      \"path\": \"registered-beside-payload.txt\",\n      \"findings\": [\n        {\n          \"rule\": \"variation-selector-stray\",\n          \"severity\": \"warning\",\n          \"start\": {\n            \"line\": 1,\n            \"column\": 1,\n            \"offset\": 0\n          },\n          \"end\": {\n            \"line\": 1,\n            \"column\": 3,\n            \"offset\": 2\n          },\n          \"codePoints\": [\n            \"U+0030\",\n            \"U+FE00\"\n          ],\n          \"names\": [\n            \"U+0030\",\n            \"VARIATION SELECTOR-1\"\n          ],\n          \"message\": \"Variation selector on U+30 (U+0030), which has no registered variation sequence for it.\",\n          \"suggestion\": \"Remove these characters unless selecting a real registered variation sequence (see the Unicode IVD / StandardizedVariants.txt).\",\n          \"fixable\": true\n        },\n        {\n          \"rule\": \"variation-selector-stray\",\n          \"severity\": \"warning\",\n          \"start\": {\n            \"line\": 2,\n            \"column\": 1,\n            \"offset\": 3\n          },\n          \"end\": {\n            \"line\": 2,\n            \"column\": 3,\n            \"offset\": 5\n          },\n          \"codePoints\": [\n            \"U+2205\",\n            \"U+FE00\"\n          ],\n          \"names\": [\n            \"U+2205\",\n            \"VARIATION SELECTOR-1\"\n          ],\n          \"message\": \"Variation selector on U+2205 (U+2205), which has no registered variation sequence for it.\",\n          \"suggestion\": \"Remove these characters unless selecting a real registered variation sequence (see the Unicode IVD / StandardizedVariants.txt).\",\n          \"fixable\": true\n        },\n        {\n          \"rule\": \"variation-selector-stray\",\n          \"severity\": \"warning\",\n          \"start\": {\n            \"line\": 3,\n            \"column\": 1,\n            \"offset\": 6\n          },\n          \"end\": {\n            \"line\": 3,\n            \"column\": 3,\n            \"offset\": 8\n          },\n          \"codePoints\": [\n            \"U+3001\",\n            \"U+FE01\"\n          ],\n          \"names\": [\n            \"U+3001\",\n            \"VARIATION SELECTOR-2\"\n          ],\n          \"message\": \"Variation selector on U+3001 (U+3001), which has no registered variation sequence for it.\",\n          \"suggestion\": \"Remove these characters unless selecting a real registered variation sequence (see the Unicode IVD / StandardizedVariants.txt).\",\n          \"fixable\": true\n        },\n        {\n          \"rule\": \"variation-selector-stray\",\n          \"severity\": \"warning\",\n          \"start\": {\n            \"line\": 4,\n            \"column\": 1,\n            \"offset\": 9\n          },\n          \"end\": {\n            \"line\": 4,\n            \"column\": 3,\n            \"offset\": 11\n          },\n          \"codePoints\": [\n            \"U+1000\",\n            \"U+FE00\"\n          ],\n          \"names\": [\n            \"U+1000\",\n            \"VARIATION SELECTOR-1\"\n          ],\n          \"message\": \"Variation selector on U+1000 (U+1000), which has no registered variation sequence for it.\",\n          \"suggestion\": \"Remove these characters unless selecting a real registered variation sequence (see the Unicode IVD / StandardizedVariants.txt).\",\n          \"fixable\": true\n        },\n        {\n          \"rule\": \"variation-selector-smuggling\",\n          \"severity\": \"error\",\n          \"start\": {\n            \"line\": 5,\n            \"column\": 1,\n            \"offset\": 12\n          },\n          \"end\": {\n            \"line\": 5,\n            \"column\": 30,\n            \"offset\": 41\n          },\n          \"codePoints\": [\n            \"U+2205\",\n            \"U+E0158\",\n            \"U+E0159\",\n            \"U+E0154\",\n            \"U+E0154\",\n            \"U+E0155\",\n            \"U+E015E\",\n            \"U+E0110\",\n            \"U+E015D\",\n            \"U+E0155\",\n            \"U+E0163\",\n            \"U+E0163\",\n            \"U+E0151\",\n            \"U+E0157\",\n            \"U+E0155\"\n          ],\n          \"names\": [\n            \"U+2205\",\n            \"VARIATION SELECTOR-105\",\n            \"VARIATION SELECTOR-106\",\n            \"VARIATION SELECTOR-101\",\n            \"VARIATION SELECTOR-101\",\n            \"VARIATION SELECTOR-102\",\n            \"VARIATION SELECTOR-111\",\n            \"VARIATION SELECTOR-33\",\n            \"VARIATION SELECTOR-110\",\n            \"VARIATION SELECTOR-102\",\n            \"VARIATION SELECTOR-116\",\n            \"VARIATION SELECTOR-116\",\n            \"VARIATION SELECTOR-98\",\n            \"VARIATION SELECTOR-104\",\n            \"VARIATION SELECTOR-102\"\n          ],\n          \"message\": \"14 variation selectors decode as hidden UTF-8 text via the byte-per-selector smuggling scheme (VS1-16 -> 0-15, VS17-256 -> 16-255): \\\"hidden message\\\".\",\n          \"suggestion\": \"Remove these characters unless selecting a real registered variation sequence (see the Unicode IVD / StandardizedVariants.txt).\",\n          \"decoded\": \"hidden message\",\n          \"fixable\": true\n        }\n      ]\n    }\n  ]\n}\n",
+          "stdoutSha256": "8bc5c7f66209e5f1556fe0f974f40a0f72cd77533f41a167d850feaa745cfe97",
+          "resultingFileSha256": "b9e82d41fca063aa9a06895f912d20c39f742756a400a7de8a78a8edcf30c528",
+          "resultingCodePoints": [
+            "U+0030",
+            "U+000A",
+            "U+2205",
+            "U+000A",
+            "U+3001",
+            "U+000A",
+            "U+1000",
+            "U+000A",
+            "U+2205"
+          ]
+        }
+      ]
+    },
+    {
+      "version": "after",
+      "name": "registered",
+      "inputSha256": "c07186d304e032d1dd2169f718e3fb1cadbc44306fbd7569d60f311012f7d336",
+      "inputBytes": 26,
+      "inputCodePoints": [
+        "U+0030",
+        "U+FE00",
+        "U+000A",
+        "U+2205",
+        "U+FE00",
+        "U+000A",
+        "U+3001",
+        "U+FE01",
+        "U+000A",
+        "U+1000",
+        "U+FE00",
+        "U+000A"
+      ],
+      "steps": [
+        {
+          "mode": "scan",
+          "args": [
+            "registered.txt",
+            "--no-config",
+            "--format",
+            "json"
+          ],
+          "exitCode": 0,
+          "stdout": "{\n  \"ghostchars\": true,\n  \"summary\": {\n    \"error\": 0,\n    \"warning\": 0,\n    \"info\": 0,\n    \"total\": 0,\n    \"files\": 1,\n    \"durationMs\": 7.4216829999999945,\n    \"complete\": true,\n    \"inputErrors\": 0\n  },\n  \"skipped\": [],\n  \"errors\": [],\n  \"results\": []\n}\n",
+          "stdoutSha256": "ad69a49c9f07744c08d827495f615246dc9f4626a47d6475b8e1012df43761d1",
+          "resultingFileSha256": "c07186d304e032d1dd2169f718e3fb1cadbc44306fbd7569d60f311012f7d336",
+          "resultingCodePoints": [
+            "U+0030",
+            "U+FE00",
+            "U+000A",
+            "U+2205",
+            "U+FE00",
+            "U+000A",
+            "U+3001",
+            "U+FE01",
+            "U+000A",
+            "U+1000",
+            "U+FE00",
+            "U+000A"
+          ]
+        },
+        {
+          "mode": "preview",
+          "args": [
+            "registered.txt",
+            "--no-config",
+            "--format",
+            "json",
+            "--fix",
+            "--dry-run"
+          ],
+          "exitCode": 0,
+          "stdout": "ghostchars: nothing to fix.\n",
+          "stdoutSha256": "a977d8f37f570430516c63f663ff783f138006307177054e9862fd0028e5c7e8",
+          "resultingFileSha256": "c07186d304e032d1dd2169f718e3fb1cadbc44306fbd7569d60f311012f7d336",
+          "resultingCodePoints": [
+            "U+0030",
+            "U+FE00",
+            "U+000A",
+            "U+2205",
+            "U+FE00",
+            "U+000A",
+            "U+3001",
+            "U+FE01",
+            "U+000A",
+            "U+1000",
+            "U+FE00",
+            "U+000A"
+          ]
+        },
+        {
+          "mode": "repair",
+          "args": [
+            "registered.txt",
+            "--no-config",
+            "--format",
+            "json",
+            "--fix"
+          ],
+          "exitCode": 0,
+          "stdout": "{\n  \"ghostchars\": true,\n  \"summary\": {\n    \"error\": 0,\n    \"warning\": 0,\n    \"info\": 0,\n    \"total\": 0,\n    \"files\": 1,\n    \"durationMs\": 6.168122000000004,\n    \"complete\": true,\n    \"inputErrors\": 0\n  },\n  \"skipped\": [],\n  \"errors\": [],\n  \"results\": []\n}\n",
+          "stdoutSha256": "b641633fcd66af07a3bb4a32b460aa05931e70f797d4e6bed25d727668be50c6",
+          "resultingFileSha256": "c07186d304e032d1dd2169f718e3fb1cadbc44306fbd7569d60f311012f7d336",
+          "resultingCodePoints": [
+            "U+0030",
+            "U+FE00",
+            "U+000A",
+            "U+2205",
+            "U+FE00",
+            "U+000A",
+            "U+3001",
+            "U+FE01",
+            "U+000A",
+            "U+1000",
+            "U+FE00",
+            "U+000A"
+          ]
+        }
+      ]
+    },
+    {
+      "version": "after",
+      "name": "extra-selector",
+      "inputSha256": "508292b0a386cb8d572b62a2284b601d634ff33d7f20465356dfe418ee64b8a2",
+      "inputBytes": 9,
+      "inputCodePoints": [
+        "U+2205",
+        "U+FE00",
+        "U+FE00"
+      ],
+      "steps": [
+        {
+          "mode": "scan",
+          "args": [
+            "extra-selector.txt",
+            "--no-config",
+            "--format",
+            "json"
+          ],
+          "exitCode": 0,
+          "stdout": "{\n  \"ghostchars\": true,\n  \"summary\": {\n    \"error\": 0,\n    \"warning\": 1,\n    \"info\": 0,\n    \"total\": 1,\n    \"files\": 1,\n    \"durationMs\": 6.372179000000003,\n    \"complete\": true,\n    \"inputErrors\": 0\n  },\n  \"skipped\": [],\n  \"errors\": [],\n  \"results\": [\n    {\n      \"path\": \"extra-selector.txt\",\n      \"findings\": [\n        {\n          \"rule\": \"variation-selector-stray\",\n          \"severity\": \"warning\",\n          \"start\": {\n            \"line\": 1,\n            \"column\": 1,\n            \"offset\": 0\n          },\n          \"end\": {\n            \"line\": 1,\n            \"column\": 4,\n            \"offset\": 3\n          },\n          \"codePoints\": [\n            \"U+2205\",\n            \"U+FE00\"\n          ],\n          \"names\": [\n            \"U+2205\",\n            \"VARIATION SELECTOR-1\"\n          ],\n          \"message\": \"1 extra variation selector after U+2205 (U+2205) and the selector that already picks its presentation: it does nothing and cannot be seen.\",\n          \"suggestion\": \"Remove the extra selectors; the first one, which selects a glyph variant, stays.\",\n          \"fixable\": true\n        }\n      ]\n    }\n  ]\n}\n",
+          "stdoutSha256": "e01aae2307c934b48ce585d163be6702490c6d860a0af12a5e08d4907ef8de45",
+          "resultingFileSha256": "508292b0a386cb8d572b62a2284b601d634ff33d7f20465356dfe418ee64b8a2",
+          "resultingCodePoints": [
+            "U+2205",
+            "U+FE00",
+            "U+FE00"
+          ]
+        },
+        {
+          "mode": "preview",
+          "args": [
+            "extra-selector.txt",
+            "--no-config",
+            "--format",
+            "json",
+            "--fix",
+            "--dry-run"
+          ],
+          "exitCode": 0,
+          "stdout": "extra-selector.txt\n  1: - ⟦U+2205 U+2205 U+FE00 VARIATION SELECTOR-1⟧\n  1: + ∅\\u{FE00}\n  1 finding(s) affected. Preview only; no file was written.\n\n",
+          "stdoutSha256": "ccc21f93318b93c96b63a424502277f1b7b500182de5be4372ae0502846a5dd2",
+          "resultingFileSha256": "508292b0a386cb8d572b62a2284b601d634ff33d7f20465356dfe418ee64b8a2",
+          "resultingCodePoints": [
+            "U+2205",
+            "U+FE00",
+            "U+FE00"
+          ]
+        },
+        {
+          "mode": "repair",
+          "args": [
+            "extra-selector.txt",
+            "--no-config",
+            "--format",
+            "json",
+            "--fix"
+          ],
+          "exitCode": 0,
+          "stdout": "{\n  \"ghostchars\": true,\n  \"summary\": {\n    \"error\": 0,\n    \"warning\": 1,\n    \"info\": 0,\n    \"total\": 1,\n    \"files\": 1,\n    \"durationMs\": 9.178961999999999,\n    \"complete\": true,\n    \"inputErrors\": 0\n  },\n  \"skipped\": [],\n  \"errors\": [],\n  \"results\": [\n    {\n      \"path\": \"extra-selector.txt\",\n      \"findings\": [\n        {\n          \"rule\": \"variation-selector-stray\",\n          \"severity\": \"warning\",\n          \"start\": {\n            \"line\": 1,\n            \"column\": 1,\n            \"offset\": 0\n          },\n          \"end\": {\n            \"line\": 1,\n            \"column\": 4,\n            \"offset\": 3\n          },\n          \"codePoints\": [\n            \"U+2205\",\n            \"U+FE00\"\n          ],\n          \"names\": [\n            \"U+2205\",\n            \"VARIATION SELECTOR-1\"\n          ],\n          \"message\": \"1 extra variation selector after U+2205 (U+2205) and the selector that already picks its presentation: it does nothing and cannot be seen.\",\n          \"suggestion\": \"Remove the extra selectors; the first one, which selects a glyph variant, stays.\",\n          \"fixable\": true\n        }\n      ]\n    }\n  ]\n}\n",
+          "stdoutSha256": "6f2c5b9aa5e1f937d6221cb584477d4b7ac0d1728618478907abb5a252651650",
+          "resultingFileSha256": "7af44a02770775c2e9a63cc1f45e8c113ae733dad7bc48d69cadc08bd0c654fd",
+          "resultingCodePoints": [
+            "U+2205",
+            "U+FE00"
+          ]
+        }
+      ]
+    },
+    {
+      "version": "after",
+      "name": "unregistered-pair",
+      "inputSha256": "e2881ffc3db8f2d33fef8531fb07141c5086dd611f38dc49ffad91c417ecc30c",
+      "inputBytes": 6,
+      "inputCodePoints": [
+        "U+2205",
+        "U+FE07"
+      ],
+      "steps": [
+        {
+          "mode": "scan",
+          "args": [
+            "unregistered-pair.txt",
+            "--no-config",
+            "--format",
+            "json"
+          ],
+          "exitCode": 0,
+          "stdout": "{\n  \"ghostchars\": true,\n  \"summary\": {\n    \"error\": 0,\n    \"warning\": 1,\n    \"info\": 0,\n    \"total\": 1,\n    \"files\": 1,\n    \"durationMs\": 6.220801999999999,\n    \"complete\": true,\n    \"inputErrors\": 0\n  },\n  \"skipped\": [],\n  \"errors\": [],\n  \"results\": [\n    {\n      \"path\": \"unregistered-pair.txt\",\n      \"findings\": [\n        {\n          \"rule\": \"variation-selector-stray\",\n          \"severity\": \"warning\",\n          \"start\": {\n            \"line\": 1,\n            \"column\": 1,\n            \"offset\": 0\n          },\n          \"end\": {\n            \"line\": 1,\n            \"column\": 3,\n            \"offset\": 2\n          },\n          \"codePoints\": [\n            \"U+2205\",\n            \"U+FE07\"\n          ],\n          \"names\": [\n            \"U+2205\",\n            \"VARIATION SELECTOR-8\"\n          ],\n          \"message\": \"Variation selector on U+2205 (U+2205), which has no registered variation sequence for it.\",\n          \"suggestion\": \"Remove these characters unless selecting a real registered variation sequence (see the Unicode IVD / StandardizedVariants.txt).\",\n          \"fixable\": true\n        }\n      ]\n    }\n  ]\n}\n",
+          "stdoutSha256": "b852859067f57071896094279c4c89291219bd97b4ee7281cfb2d50a73eab663",
+          "resultingFileSha256": "e2881ffc3db8f2d33fef8531fb07141c5086dd611f38dc49ffad91c417ecc30c",
+          "resultingCodePoints": [
+            "U+2205",
+            "U+FE07"
+          ]
+        },
+        {
+          "mode": "preview",
+          "args": [
+            "unregistered-pair.txt",
+            "--no-config",
+            "--format",
+            "json",
+            "--fix",
+            "--dry-run"
+          ],
+          "exitCode": 0,
+          "stdout": "unregistered-pair.txt\n  1: - ⟦U+2205 U+2205 U+FE07 VARIATION SELECTOR-8⟧\n  1: + ∅\n  1 finding(s) affected. Preview only; no file was written.\n\n",
+          "stdoutSha256": "03dc32661805b348d2ba5f06c7f08584d30d1c51995f46afe3b07614dc2f97a4",
+          "resultingFileSha256": "e2881ffc3db8f2d33fef8531fb07141c5086dd611f38dc49ffad91c417ecc30c",
+          "resultingCodePoints": [
+            "U+2205",
+            "U+FE07"
+          ]
+        },
+        {
+          "mode": "repair",
+          "args": [
+            "unregistered-pair.txt",
+            "--no-config",
+            "--format",
+            "json",
+            "--fix"
+          ],
+          "exitCode": 0,
+          "stdout": "{\n  \"ghostchars\": true,\n  \"summary\": {\n    \"error\": 0,\n    \"warning\": 1,\n    \"info\": 0,\n    \"total\": 1,\n    \"files\": 1,\n    \"durationMs\": 7.822172999999999,\n    \"complete\": true,\n    \"inputErrors\": 0\n  },\n  \"skipped\": [],\n  \"errors\": [],\n  \"results\": [\n    {\n      \"path\": \"unregistered-pair.txt\",\n      \"findings\": [\n        {\n          \"rule\": \"variation-selector-stray\",\n          \"severity\": \"warning\",\n          \"start\": {\n            \"line\": 1,\n            \"column\": 1,\n            \"offset\": 0\n          },\n          \"end\": {\n            \"line\": 1,\n            \"column\": 3,\n            \"offset\": 2\n          },\n          \"codePoints\": [\n            \"U+2205\",\n            \"U+FE07\"\n          ],\n          \"names\": [\n            \"U+2205\",\n            \"VARIATION SELECTOR-8\"\n          ],\n          \"message\": \"Variation selector on U+2205 (U+2205), which has no registered variation sequence for it.\",\n          \"suggestion\": \"Remove these characters unless selecting a real registered variation sequence (see the Unicode IVD / StandardizedVariants.txt).\",\n          \"fixable\": true\n        }\n      ]\n    }\n  ]\n}\n",
+          "stdoutSha256": "53a484eb459695c07edb42314c0c4dc7d00e575845a09418c7b1476efe07834e",
+          "resultingFileSha256": "73c8ffe9553f8c24730219e392209eaa97d52ee18633550b3ce8526c9955e6e0",
+          "resultingCodePoints": [
+            "U+2205"
+          ]
+        }
+      ]
+    },
+    {
+      "version": "after",
+      "name": "payload-with-registered-prefix",
+      "inputSha256": "cb13606b4aad74a9787e03b7ba48dca845a0a2148c1d3f6fdb0655e95db46ced",
+      "inputBytes": 62,
+      "inputCodePoints": [
+        "U+2205",
+        "U+FE00",
+        "U+E0158",
+        "U+E0159",
+        "U+E0154",
+        "U+E0154",
+        "U+E0155",
+        "U+E015E",
+        "U+E0110",
+        "U+E015D",
+        "U+E0155",
+        "U+E0163",
+        "U+E0163",
+        "U+E0151",
+        "U+E0157",
+        "U+E0155"
+      ],
+      "steps": [
+        {
+          "mode": "scan",
+          "args": [
+            "payload-with-registered-prefix.txt",
+            "--no-config",
+            "--format",
+            "json"
+          ],
+          "exitCode": 1,
+          "stdout": "{\n  \"ghostchars\": true,\n  \"summary\": {\n    \"error\": 1,\n    \"warning\": 0,\n    \"info\": 0,\n    \"total\": 1,\n    \"files\": 1,\n    \"durationMs\": 5.943006000000004,\n    \"complete\": true,\n    \"inputErrors\": 0\n  },\n  \"skipped\": [],\n  \"errors\": [],\n  \"results\": [\n    {\n      \"path\": \"payload-with-registered-prefix.txt\",\n      \"findings\": [\n        {\n          \"rule\": \"variation-selector-smuggling\",\n          \"severity\": \"error\",\n          \"start\": {\n            \"line\": 1,\n            \"column\": 1,\n            \"offset\": 0\n          },\n          \"end\": {\n            \"line\": 1,\n            \"column\": 31,\n            \"offset\": 30\n          },\n          \"codePoints\": [\n            \"U+2205\",\n            \"U+FE00\",\n            \"U+E0158\",\n            \"U+E0159\",\n            \"U+E0154\",\n            \"U+E0154\",\n            \"U+E0155\",\n            \"U+E015E\",\n            \"U+E0110\",\n            \"U+E015D\",\n            \"U+E0155\",\n            \"U+E0163\",\n            \"U+E0163\",\n            \"U+E0151\",\n            \"U+E0157\",\n            \"U+E0155\"\n          ],\n          \"names\": [\n            \"U+2205\",\n            \"VARIATION SELECTOR-1\",\n            \"VARIATION SELECTOR-105\",\n            \"VARIATION SELECTOR-106\",\n            \"VARIATION SELECTOR-101\",\n            \"VARIATION SELECTOR-101\",\n            \"VARIATION SELECTOR-102\",\n            \"VARIATION SELECTOR-111\",\n            \"VARIATION SELECTOR-33\",\n            \"VARIATION SELECTOR-110\",\n            \"VARIATION SELECTOR-102\",\n            \"VARIATION SELECTOR-116\",\n            \"VARIATION SELECTOR-116\",\n            \"VARIATION SELECTOR-98\",\n            \"VARIATION SELECTOR-104\",\n            \"VARIATION SELECTOR-102\"\n          ],\n          \"message\": \"15 variation selectors decode as hidden UTF-8 text via the byte-per-selector smuggling scheme (VS1-16 -> 0-15, VS17-256 -> 16-255): \\\"\\\\u0000hidden message\\\".\",\n          \"suggestion\": \"Remove these characters unless selecting a real registered variation sequence (see the Unicode IVD / StandardizedVariants.txt).\",\n          \"decoded\": \"\\u0000hidden message\",\n          \"fixable\": true\n        }\n      ]\n    }\n  ]\n}\n",
+          "stdoutSha256": "f6b9536f6ae97d8f5be01610e2dc448feac4f38324151ee740e5ba27a859b846",
+          "resultingFileSha256": "cb13606b4aad74a9787e03b7ba48dca845a0a2148c1d3f6fdb0655e95db46ced",
+          "resultingCodePoints": [
+            "U+2205",
+            "U+FE00",
+            "U+E0158",
+            "U+E0159",
+            "U+E0154",
+            "U+E0154",
+            "U+E0155",
+            "U+E015E",
+            "U+E0110",
+            "U+E015D",
+            "U+E0155",
+            "U+E0163",
+            "U+E0163",
+            "U+E0151",
+            "U+E0157",
+            "U+E0155"
+          ]
+        },
+        {
+          "mode": "preview",
+          "args": [
+            "payload-with-registered-prefix.txt",
+            "--no-config",
+            "--format",
+            "json",
+            "--fix",
+            "--dry-run"
+          ],
+          "exitCode": 1,
+          "stdout": "payload-with-registered-prefix.txt\n  1: - ⟦U+2205 U+2205 .. U+E0155 VARIATION SELECTOR-102 (16 code points)⟧ → \"\\u0000hidden message\"\n  1: + ∅\n  1 finding(s) affected. Preview only; no file was written.\n\n",
+          "stdoutSha256": "d029f90adec5832191869dcc33d37162abb370dfe4a92edb6179a1212fbed12a",
+          "resultingFileSha256": "cb13606b4aad74a9787e03b7ba48dca845a0a2148c1d3f6fdb0655e95db46ced",
+          "resultingCodePoints": [
+            "U+2205",
+            "U+FE00",
+            "U+E0158",
+            "U+E0159",
+            "U+E0154",
+            "U+E0154",
+            "U+E0155",
+            "U+E015E",
+            "U+E0110",
+            "U+E015D",
+            "U+E0155",
+            "U+E0163",
+            "U+E0163",
+            "U+E0151",
+            "U+E0157",
+            "U+E0155"
+          ]
+        },
+        {
+          "mode": "repair",
+          "args": [
+            "payload-with-registered-prefix.txt",
+            "--no-config",
+            "--format",
+            "json",
+            "--fix"
+          ],
+          "exitCode": 1,
+          "stdout": "{\n  \"ghostchars\": true,\n  \"summary\": {\n    \"error\": 1,\n    \"warning\": 0,\n    \"info\": 0,\n    \"total\": 1,\n    \"files\": 1,\n    \"durationMs\": 11.410204,\n    \"complete\": true,\n    \"inputErrors\": 0\n  },\n  \"skipped\": [],\n  \"errors\": [],\n  \"results\": [\n    {\n      \"path\": \"payload-with-registered-prefix.txt\",\n      \"findings\": [\n        {\n          \"rule\": \"variation-selector-smuggling\",\n          \"severity\": \"error\",\n          \"start\": {\n            \"line\": 1,\n            \"column\": 1,\n            \"offset\": 0\n          },\n          \"end\": {\n            \"line\": 1,\n            \"column\": 31,\n            \"offset\": 30\n          },\n          \"codePoints\": [\n            \"U+2205\",\n            \"U+FE00\",\n            \"U+E0158\",\n            \"U+E0159\",\n            \"U+E0154\",\n            \"U+E0154\",\n            \"U+E0155\",\n            \"U+E015E\",\n            \"U+E0110\",\n            \"U+E015D\",\n            \"U+E0155\",\n            \"U+E0163\",\n            \"U+E0163\",\n            \"U+E0151\",\n            \"U+E0157\",\n            \"U+E0155\"\n          ],\n          \"names\": [\n            \"U+2205\",\n            \"VARIATION SELECTOR-1\",\n            \"VARIATION SELECTOR-105\",\n            \"VARIATION SELECTOR-106\",\n            \"VARIATION SELECTOR-101\",\n            \"VARIATION SELECTOR-101\",\n            \"VARIATION SELECTOR-102\",\n            \"VARIATION SELECTOR-111\",\n            \"VARIATION SELECTOR-33\",\n            \"VARIATION SELECTOR-110\",\n            \"VARIATION SELECTOR-102\",\n            \"VARIATION SELECTOR-116\",\n            \"VARIATION SELECTOR-116\",\n            \"VARIATION SELECTOR-98\",\n            \"VARIATION SELECTOR-104\",\n            \"VARIATION SELECTOR-102\"\n          ],\n          \"message\": \"15 variation selectors decode as hidden UTF-8 text via the byte-per-selector smuggling scheme (VS1-16 -> 0-15, VS17-256 -> 16-255): \\\"\\\\u0000hidden message\\\".\",\n          \"suggestion\": \"Remove these characters unless selecting a real registered variation sequence (see the Unicode IVD / StandardizedVariants.txt).\",\n          \"decoded\": \"\\u0000hidden message\",\n          \"fixable\": true\n        }\n      ]\n    }\n  ]\n}\n",
+          "stdoutSha256": "33c8129e7a58ffcf38a645ac4a2a4a1dcb9a8c325223b2c4fa0b85cc3dbebf95",
+          "resultingFileSha256": "73c8ffe9553f8c24730219e392209eaa97d52ee18633550b3ce8526c9955e6e0",
+          "resultingCodePoints": [
+            "U+2205"
+          ]
+        }
+      ]
+    },
+    {
+      "version": "after",
+      "name": "registered-beside-payload",
+      "inputSha256": "b47a61ea9d0d5b72f1fcc895f8174c3221e504a19eb893a610ac35ae2a140db6",
+      "inputBytes": 85,
+      "inputCodePoints": [
+        "U+0030",
+        "U+FE00",
+        "U+000A",
+        "U+2205",
+        "U+FE00",
+        "U+000A",
+        "U+3001",
+        "U+FE01",
+        "U+000A",
+        "U+1000",
+        "U+FE00",
+        "U+000A",
+        "U+2205",
+        "U+E0158",
+        "U+E0159",
+        "U+E0154",
+        "U+E0154",
+        "U+E0155",
+        "U+E015E",
+        "U+E0110",
+        "U+E015D",
+        "U+E0155",
+        "U+E0163",
+        "U+E0163",
+        "U+E0151",
+        "U+E0157",
+        "U+E0155"
+      ],
+      "steps": [
+        {
+          "mode": "scan",
+          "args": [
+            "registered-beside-payload.txt",
+            "--no-config",
+            "--format",
+            "json"
+          ],
+          "exitCode": 1,
+          "stdout": "{\n  \"ghostchars\": true,\n  \"summary\": {\n    \"error\": 1,\n    \"warning\": 0,\n    \"info\": 0,\n    \"total\": 1,\n    \"files\": 1,\n    \"durationMs\": 6.586801999999999,\n    \"complete\": true,\n    \"inputErrors\": 0\n  },\n  \"skipped\": [],\n  \"errors\": [],\n  \"results\": [\n    {\n      \"path\": \"registered-beside-payload.txt\",\n      \"findings\": [\n        {\n          \"rule\": \"variation-selector-smuggling\",\n          \"severity\": \"error\",\n          \"start\": {\n            \"line\": 5,\n            \"column\": 1,\n            \"offset\": 12\n          },\n          \"end\": {\n            \"line\": 5,\n            \"column\": 30,\n            \"offset\": 41\n          },\n          \"codePoints\": [\n            \"U+2205\",\n            \"U+E0158\",\n            \"U+E0159\",\n            \"U+E0154\",\n            \"U+E0154\",\n            \"U+E0155\",\n            \"U+E015E\",\n            \"U+E0110\",\n            \"U+E015D\",\n            \"U+E0155\",\n            \"U+E0163\",\n            \"U+E0163\",\n            \"U+E0151\",\n            \"U+E0157\",\n            \"U+E0155\"\n          ],\n          \"names\": [\n            \"U+2205\",\n            \"VARIATION SELECTOR-105\",\n            \"VARIATION SELECTOR-106\",\n            \"VARIATION SELECTOR-101\",\n            \"VARIATION SELECTOR-101\",\n            \"VARIATION SELECTOR-102\",\n            \"VARIATION SELECTOR-111\",\n            \"VARIATION SELECTOR-33\",\n            \"VARIATION SELECTOR-110\",\n            \"VARIATION SELECTOR-102\",\n            \"VARIATION SELECTOR-116\",\n            \"VARIATION SELECTOR-116\",\n            \"VARIATION SELECTOR-98\",\n            \"VARIATION SELECTOR-104\",\n            \"VARIATION SELECTOR-102\"\n          ],\n          \"message\": \"14 variation selectors decode as hidden UTF-8 text via the byte-per-selector smuggling scheme (VS1-16 -> 0-15, VS17-256 -> 16-255): \\\"hidden message\\\".\",\n          \"suggestion\": \"Remove these characters unless selecting a real registered variation sequence (see the Unicode IVD / StandardizedVariants.txt).\",\n          \"decoded\": \"hidden message\",\n          \"fixable\": true\n        }\n      ]\n    }\n  ]\n}\n",
+          "stdoutSha256": "cc5bdff7f8f4528e0634b1f6ca1ac56b48fef49453faccec8d0ddfe7320d0e6f",
+          "resultingFileSha256": "b47a61ea9d0d5b72f1fcc895f8174c3221e504a19eb893a610ac35ae2a140db6",
+          "resultingCodePoints": [
+            "U+0030",
+            "U+FE00",
+            "U+000A",
+            "U+2205",
+            "U+FE00",
+            "U+000A",
+            "U+3001",
+            "U+FE01",
+            "U+000A",
+            "U+1000",
+            "U+FE00",
+            "U+000A",
+            "U+2205",
+            "U+E0158",
+            "U+E0159",
+            "U+E0154",
+            "U+E0154",
+            "U+E0155",
+            "U+E015E",
+            "U+E0110",
+            "U+E015D",
+            "U+E0155",
+            "U+E0163",
+            "U+E0163",
+            "U+E0151",
+            "U+E0157",
+            "U+E0155"
+          ]
+        },
+        {
+          "mode": "preview",
+          "args": [
+            "registered-beside-payload.txt",
+            "--no-config",
+            "--format",
+            "json",
+            "--fix",
+            "--dry-run"
+          ],
+          "exitCode": 1,
+          "stdout": "registered-beside-payload.txt\n  5: - ⟦U+2205 U+2205 .. U+E0155 VARIATION SELECTOR-102 (15 code points)⟧ → \"hidden message\"\n  5: + ∅\n  1 finding(s) affected. Preview only; no file was written.\n\n",
+          "stdoutSha256": "7d599fb2e9a8352971b035b36b12d93d4643413c1dab3382d52361cd7409ca2a",
+          "resultingFileSha256": "b47a61ea9d0d5b72f1fcc895f8174c3221e504a19eb893a610ac35ae2a140db6",
+          "resultingCodePoints": [
+            "U+0030",
+            "U+FE00",
+            "U+000A",
+            "U+2205",
+            "U+FE00",
+            "U+000A",
+            "U+3001",
+            "U+FE01",
+            "U+000A",
+            "U+1000",
+            "U+FE00",
+            "U+000A",
+            "U+2205",
+            "U+E0158",
+            "U+E0159",
+            "U+E0154",
+            "U+E0154",
+            "U+E0155",
+            "U+E015E",
+            "U+E0110",
+            "U+E015D",
+            "U+E0155",
+            "U+E0163",
+            "U+E0163",
+            "U+E0151",
+            "U+E0157",
+            "U+E0155"
+          ]
+        },
+        {
+          "mode": "repair",
+          "args": [
+            "registered-beside-payload.txt",
+            "--no-config",
+            "--format",
+            "json",
+            "--fix"
+          ],
+          "exitCode": 1,
+          "stdout": "{\n  \"ghostchars\": true,\n  \"summary\": {\n    \"error\": 1,\n    \"warning\": 0,\n    \"info\": 0,\n    \"total\": 1,\n    \"files\": 1,\n    \"durationMs\": 9.033363000000001,\n    \"complete\": true,\n    \"inputErrors\": 0\n  },\n  \"skipped\": [],\n  \"errors\": [],\n  \"results\": [\n    {\n      \"path\": \"registered-beside-payload.txt\",\n      \"findings\": [\n        {\n          \"rule\": \"variation-selector-smuggling\",\n          \"severity\": \"error\",\n          \"start\": {\n            \"line\": 5,\n            \"column\": 1,\n            \"offset\": 12\n          },\n          \"end\": {\n            \"line\": 5,\n            \"column\": 30,\n            \"offset\": 41\n          },\n          \"codePoints\": [\n            \"U+2205\",\n            \"U+E0158\",\n            \"U+E0159\",\n            \"U+E0154\",\n            \"U+E0154\",\n            \"U+E0155\",\n            \"U+E015E\",\n            \"U+E0110\",\n            \"U+E015D\",\n            \"U+E0155\",\n            \"U+E0163\",\n            \"U+E0163\",\n            \"U+E0151\",\n            \"U+E0157\",\n            \"U+E0155\"\n          ],\n          \"names\": [\n            \"U+2205\",\n            \"VARIATION SELECTOR-105\",\n            \"VARIATION SELECTOR-106\",\n            \"VARIATION SELECTOR-101\",\n            \"VARIATION SELECTOR-101\",\n            \"VARIATION SELECTOR-102\",\n            \"VARIATION SELECTOR-111\",\n            \"VARIATION SELECTOR-33\",\n            \"VARIATION SELECTOR-110\",\n            \"VARIATION SELECTOR-102\",\n            \"VARIATION SELECTOR-116\",\n            \"VARIATION SELECTOR-116\",\n            \"VARIATION SELECTOR-98\",\n            \"VARIATION SELECTOR-104\",\n            \"VARIATION SELECTOR-102\"\n          ],\n          \"message\": \"14 variation selectors decode as hidden UTF-8 text via the byte-per-selector smuggling scheme (VS1-16 -> 0-15, VS17-256 -> 16-255): \\\"hidden message\\\".\",\n          \"suggestion\": \"Remove these characters unless selecting a real registered variation sequence (see the Unicode IVD / StandardizedVariants.txt).\",\n          \"decoded\": \"hidden message\",\n          \"fixable\": true\n        }\n      ]\n    }\n  ]\n}\n",
+          "stdoutSha256": "0f51356d1b9b85dc7ddb86a898ee81dc78a54672ec62cc5b7b2f4fda66945e7f",
+          "resultingFileSha256": "38881ec681f462e1d35a94b1dd3ba5e1cb18dd6a410a5d1b5351a2f1b6db7d07",
+          "resultingCodePoints": [
+            "U+0030",
+            "U+FE00",
+            "U+000A",
+            "U+2205",
+            "U+FE00",
+            "U+000A",
+            "U+3001",
+            "U+FE01",
+            "U+000A",
+            "U+1000",
+            "U+FE00",
+            "U+000A",
+            "U+2205"
+          ]
+        }
+      ]
+    }
+  ]
+}
