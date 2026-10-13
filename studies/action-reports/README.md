@@ -52,9 +52,46 @@ JSON reports, bounded text previews, file hashes, exit codes and actual errors.
 Raw report hashes can differ because they include elapsed times.
 
 Retained captures: [baseline](results/before.json) and
-[corrected source](results/after.json). The clean-build and installed-package
-receipt follows after verification. Package version remains 0.1.5; these are
-source changes with no registry release or hosted deployment.
+[corrected source](results/after.json), [clean-build and installed-package
+receipt](results/verification.json), and [actual local workflow assertions](results/workflow.json).
+Package version remains 0.1.5; these are source changes with no registry release
+or hosted deployment.
+
+![The actual Action returns clean after erasing its input before the fix, while the installed correction refuses the collision and retains every input byte](../../docs/assets/action-reports/installed-node20.png)
+
+[`demo.py`](demo.py) captures the [unedited report/error output and actual source
+byte comparison](results/demo.txt) rendered in this inspected screenshot.
+
+## Clean archive and installed package
+
+Implementation revision `ac5a72a8e38d59d118103a996a079cc5eead0020` was archived
+into a fresh directory. With Node 24.21.0, a fresh installation, lint, type
+checking, **284 tests in 22 files**, library/CLI builds, benchmark smoke and
+package creation all passed. All **327** tracked archive files retained their
+exact bytes, including the rebuilt committed CLI.
+
+The local **170,374-byte** npm tarball was installed in a separate directory
+with install scripts disabled. All **53** installed runtime files match the
+clean build. On **Node 20.0.0** and **24.21.0**, all 26 Action replays have the
+same exit, integrity and delivery verdicts. Every protected source/config and
+previous-report hash matches the corrected capture. Each of the ten ordinary
+deliveries also matches that installed CLI's direct stdout report after timing
+normalization. The prior 34-case literal-directory replay still passes on the
+installed Node 20 CLI, as do version/reveal and library scan/sanitize examples.
+
+The actual Action self-test job's shell assertions were also executed locally
+on Node 20 against the clean archive: source scan exits 0, fixture scan writes
+a complete SARIF report with findings and exits 1, and the collision exits 2
+while the source matches its original with `cmp`. Checkout/setup-node are
+represented by the archive and explicit executable; this does not establish
+a hosted workflow result.
+
+Tarball SHA-256:
+`9006d29a3e1181f4c0989515933501366a2779b51a6253d1b522ee21ace40f3e`.
+Installed CLI SHA-256:
+`2d8d3dea74f268cee7485179b7d6ce5b4d6b5c47a61d961af44de2b67fbce267`.
+
+## Reproduce
 
 ```sh
 git show 14a9f46ab5a57a5bf9f5848e3b5ac2916928e122:dist/cli.js > /tmp/ghostchars-before.mjs

@@ -1,0 +1,230 @@
+{
+  "sourceCommit": "ac5a72a8e38d59d118103a996a079cc5eead0020",
+  "nodeBuild": "v24.21.0",
+  "git": "git version 2.43.0",
+  "platform": "WSL2 Linux, unprivileged process, case-sensitive filesystem",
+  "trackedArchiveFilesUnchanged": 327,
+  "checks": [
+    {
+      "label": "install",
+      "command": [
+        "npm",
+        "ci"
+      ],
+      "exit": 0,
+      "seconds": 5.421,
+      "logSha256": "ac247fcc23ab50b02d22d489c09511305c4b55eca3f74e8ba8badb43a023e0e5"
+    },
+    {
+      "label": "lint",
+      "command": [
+        "npm",
+        "run",
+        "lint"
+      ],
+      "exit": 0,
+      "seconds": 2.806,
+      "logSha256": "9816032d097de2b86ee0fe002a35bb3960ad089342879cf11d72cd62e427d9c8"
+    },
+    {
+      "label": "typecheck",
+      "command": [
+        "npm",
+        "run",
+        "typecheck"
+      ],
+      "exit": 0,
+      "seconds": 1.867,
+      "logSha256": "3b5b905dfcf2e8234c734b5f1bbc2762f973b949323ff45b44c651201f3ed004"
+    },
+    {
+      "label": "test",
+      "command": [
+        "npm",
+        "test"
+      ],
+      "exit": 0,
+      "seconds": 2.98,
+      "logSha256": "6a98e83a99626c1a043a8df60e9f6096d056861c7701cee2d1c33b78abc83173",
+      "filesPassed": 22,
+      "testsPassed": 284
+    },
+    {
+      "label": "build",
+      "command": [
+        "npm",
+        "run",
+        "build"
+      ],
+      "exit": 0,
+      "seconds": 2.175,
+      "logSha256": "9e993204c89115a68e24a33ab4ec6bf1a45b72cb7eaf62d16f2ceff849b7e7af"
+    },
+    {
+      "label": "benchmark",
+      "command": [
+        "node",
+        "scripts/benchmark.mjs",
+        "2"
+      ],
+      "exit": 0,
+      "seconds": 3.222,
+      "logSha256": "1380ed0ffb76093d9fe599bdf7fe1ffa40c86f4ac7fd3258179a14c94abd43eb"
+    },
+    {
+      "label": "pack",
+      "command": [
+        "npm",
+        "pack",
+        "--json",
+        "--pack-destination",
+        "<scratch>"
+      ],
+      "exit": 0,
+      "seconds": 2.834,
+      "logSha256": "c7c98cef07b88fa16620ad2273c40f0b7a44b9d742e74e6c1e3d0137d70ab465"
+    },
+    {
+      "label": "install-artifact",
+      "command": [
+        "npm",
+        "install",
+        "--ignore-scripts",
+        "--no-audit",
+        "--no-fund",
+        "<scratch>/antonsoloviev-ghostchars-0.1.5.tgz"
+      ],
+      "exit": 0,
+      "seconds": 0.903,
+      "logSha256": "ed14a08ab396fcb3a0453125a4b36161473673e554c18f17512c8d9cb5db15c8"
+    },
+    {
+      "label": "node20",
+      "command": [
+        "python",
+        "<archive>/studies/action-reports/replay.py",
+        "--node",
+        "<node20>",
+        "--cli",
+        "<installed>/node_modules/@antonsoloviev/ghostchars/dist/cli.js",
+        "--action",
+        "<archive>/action.yml",
+        "--expect",
+        "after",
+        "--output",
+        "<scratch>/node20.json"
+      ],
+      "exit": 0,
+      "seconds": 3.991,
+      "logSha256": "ecb2df7a050b89b25cc0d2fdedbde0a1f78c6c8248b4a4ddde39b73739c2cf07"
+    },
+    {
+      "label": "node24",
+      "command": [
+        "python",
+        "<archive>/studies/action-reports/replay.py",
+        "--node",
+        "<node24>",
+        "--cli",
+        "<installed>/node_modules/@antonsoloviev/ghostchars/dist/cli.js",
+        "--action",
+        "<archive>/action.yml",
+        "--expect",
+        "after",
+        "--output",
+        "<scratch>/node24.json"
+      ],
+      "exit": 0,
+      "seconds": 2.983,
+      "logSha256": "ecb2df7a050b89b25cc0d2fdedbde0a1f78c6c8248b4a4ddde39b73739c2cf07"
+    },
+    {
+      "label": "literal-scopes",
+      "command": [
+        "python",
+        "<archive>/studies/literal-directories/replay.py",
+        "--node",
+        "<node20>",
+        "--cli",
+        "<installed>/node_modules/@antonsoloviev/ghostchars/dist/cli.js",
+        "--expect",
+        "after",
+        "--output",
+        "<scratch>/literal-scopes.json"
+      ],
+      "exit": 0,
+      "seconds": 4.141,
+      "logSha256": "e7f3cc7cde093e1dd2a384a38b153b6843b5f2d97f6aab6e14c411581da2a5fe"
+    },
+    {
+      "label": "installed-version",
+      "command": [
+        "<node20>",
+        "<installed>/node_modules/@antonsoloviev/ghostchars/dist/cli.js",
+        "--version"
+      ],
+      "exit": 0,
+      "seconds": 0.056,
+      "logSha256": "800cf1c0392b24de7c0a1c6ea6778ecb433dec71c49a150bce96a98477527b2f"
+    },
+    {
+      "label": "installed-reveal",
+      "command": [
+        "<node20>",
+        "<installed>/node_modules/@antonsoloviev/ghostchars/dist/cli.js",
+        "reveal",
+        "<archive>/examples/trojan-source.c"
+      ],
+      "exit": 0,
+      "seconds": 0.07,
+      "logSha256": "eb7da05e5777ce1cfccee2fab9c11a654c39604fbad1b919968039d827eff0b5"
+    },
+    {
+      "label": "installed-library",
+      "command": [
+        "<node20>",
+        "--input-type=module",
+        "-e",
+        "import { scanText, sanitize } from '@antonsoloviev/ghostchars'; const text = 'hello\\u202eworld'; if (!scanText(text).findings.some(f => f.severity === 'error') || sanitize(text).text !== 'helloworld') throw Error('library failed'); console.log('installed scan and sanitize match expected text');"
+      ],
+      "exit": 0,
+      "seconds": 0.089,
+      "logSha256": "e51adeae4fde7ac6f9e16f63c3e7c80da6f7da7e9315661e94d04aab0fbd77ff"
+    }
+  ],
+  "package": {
+    "filename": "antonsoloviev-ghostchars-0.1.5.tgz",
+    "bytes": 170374,
+    "sha256": "9006d29a3e1181f4c0989515933501366a2779b51a6253d1b522ee21ace40f3e",
+    "installedRuntimeFilesMatchArchive": 53
+  },
+  "cli": {
+    "bytes": 277204,
+    "sha256": "2d8d3dea74f268cee7485179b7d6ce5b4d6b5c47a61d961af44de2b67fbce267",
+    "matchesArchiveAndCommittedBundle": true
+  },
+  "action": {
+    "bytes": 1981,
+    "sha256": "b9f7a6ef5b60f3fce4cff20b270f1ccbe1a9e8a051bb0c135202ff44fe0377a5"
+  },
+  "installedReplays": [
+    {
+      "node": "v20.0.0",
+      "cases": 26,
+      "allExitIntegrityAndDeliveryVerdictsMatch": true,
+      "allProtectedFileHashesMatch": true,
+      "allTenDeliveredReportsMatchDirectStdout": true,
+      "stableVerdictsSha256": "ca2b776b336964eb5cbf5b6cbf50d78d727ca6eea56f3eeff8f0e93fcdec1412"
+    },
+    {
+      "node": "v24.21.0",
+      "cases": 26,
+      "allExitIntegrityAndDeliveryVerdictsMatch": true,
+      "allProtectedFileHashesMatch": true,
+      "allTenDeliveredReportsMatchDirectStdout": true,
+      "stableVerdictsSha256": "ca2b776b336964eb5cbf5b6cbf50d78d727ca6eea56f3eeff8f0e93fcdec1412"
+    }
+  ],
+  "scope": "Local source archive and locally installed artifact. Actual Action Bash body run locally, not on hosted Actions. No npm release, tag, or deployment. Browser runtime unchanged.",
+  "pathPlaceholders": "Machine-specific paths are replaced by <archive>, <installed>, <scratch>, <node20> and <node24>."
+}

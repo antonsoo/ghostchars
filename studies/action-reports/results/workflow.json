@@ -1,0 +1,51 @@
+{
+  "scope": "Local execution of the actual Action self-test job run blocks and composite Bash body; checkout/setup-node simulated by fresh archive and explicit Node 20.0.0. Not a hosted Actions run.",
+  "workflowSha256": "baaa23e1d374460c8f49ad834e781f163f643c9d8de13c91f156fab30e2f9635",
+  "actionSha256": "b9f7a6ef5b60f3fce4cff20b270f1ccbe1a9e8a051bb0c135202ff44fe0377a5",
+  "node": "v20.0.0",
+  "steps": [
+    {
+      "name": "Must pass on real source",
+      "exit": 0,
+      "stdout": "ghostchars: no findings in 47 file(s) (44ms).\n",
+      "stderr": "",
+      "continueOnError": false
+    },
+    {
+      "name": "Must fail on examples/fixtures",
+      "exit": 1,
+      "stdout": "",
+      "stderr": "",
+      "continueOnError": true
+    },
+    {
+      "name": "Assert the fixtures step actually failed",
+      "exit": 0,
+      "stdout": "ok: the Action correctly failed on examples/fixtures/bad.js\n",
+      "stderr": "",
+      "continueOnError": false
+    },
+    {
+      "name": "Prepare an input/output collision",
+      "exit": 0,
+      "stdout": "",
+      "stderr": "",
+      "continueOnError": false
+    },
+    {
+      "name": "Must refuse to overwrite the input",
+      "exit": 2,
+      "stdout": "",
+      "stderr": "ghostchars: could not prepare report output: report output overlaps an input or configuration file; choose a separate path outside the scan or ignore the report\n",
+      "continueOnError": true
+    },
+    {
+      "name": "Assert the original input survived",
+      "exit": 0,
+      "stdout": "",
+      "stderr": "",
+      "continueOnError": false
+    }
+  ],
+  "allAssertionsPassed": true
+}

@@ -1,0 +1,26 @@
+BASELINE Action: paths=source.js format=json output=source.js
+Exit: 0
+Source: 33 -> 256 bytes; original preserved: False
+Report now occupying source.js:
+{
+  "ghostchars": true,
+  "summary": {
+    "error": 0,
+    "warning": 0,
+    "info": 0,
+    "total": 0,
+    "files": 1,
+    "durationMs": 1.462000995874405,
+    "complete": true,
+    "inputErrors": 0
+  },
+  "skipped": [],
+  "errors": [],
+  "results": []
+}
+
+INSTALLED FIX Action: paths=source.js format=json output=source.js
+ghostchars: could not prepare report output: report output overlaps an input or configuration file; choose a separate path outside the scan or ignore the report
+Exit: 2
+Source: 33 -> 33 bytes; original preserved: True
+
