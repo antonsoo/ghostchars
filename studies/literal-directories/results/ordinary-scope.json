@@ -1,0 +1,263 @@
+{
+  "scope": [
+    "src",
+    ".github"
+  ],
+  "checkout": "f64c533",
+  "node": "v26.7.0",
+  "exit": 0,
+  "summary": {
+    "error": 0,
+    "warning": 0,
+    "info": 0,
+    "total": 0,
+    "files": 48,
+    "complete": true,
+    "inputErrors": 0
+  },
+  "normalizedReportBytes": 153,
+  "normalizedReportSha256": "183f7fdefbe051ff26a6c66ea2ef3ae04583160be4978f9a2025494ebef8f9ae",
+  "beforeAfterEqual": true,
+  "inputs": [
+    {
+      "path": ".github/ISSUE_TEMPLATE/bug_report.yml",
+      "bytes": 1479,
+      "sha256": "15e9947400907d1f2e53475067b07af7a1dff012f244d1ab802a7731bf5eaef4"
+    },
+    {
+      "path": ".github/ISSUE_TEMPLATE/config.yml",
+      "bytes": 285,
+      "sha256": "a8be2d1f766ecbe6f57bc4d27ebf50c6826cb88ec3f63e57b7cf7c5ed692e786"
+    },
+    {
+      "path": ".github/ISSUE_TEMPLATE/feature_request.yml",
+      "bytes": 885,
+      "sha256": "0a7a9e288a0cb0c245d511df7e02dbd5c99680b90000e5f04ae3a6c04806c9bf"
+    },
+    {
+      "path": ".github/workflows/ci.yml",
+      "bytes": 3729,
+      "sha256": "420bee4dc3a3dc1a7fe094a1d7b69c651565807c4db4bf9b8a0e458c8601ac94"
+    },
+    {
+      "path": ".github/workflows/pages.yml",
+      "bytes": 1417,
+      "sha256": "5cb278123d8e656f72fd35db90d1d15cacee9a60f1e302f0cb7aae118dfdd632"
+    },
+    {
+      "path": "src/cli/colors.ts",
+      "bytes": 447,
+      "sha256": "5747a2a465e0a7afe27d8fb146de91a942cee61b37727fcc3cdcbd0e3ee4b6d3"
+    },
+    {
+      "path": "src/cli/config.ts",
+      "bytes": 4274,
+      "sha256": "304dda3688d3a4394c007a27131adbd2ea61b8b955b52df5899ce49090d4b76f"
+    },
+    {
+      "path": "src/cli/encoding.ts",
+      "bytes": 1768,
+      "sha256": "9a725c5abac4ff540563c84aa6836c7b7dee766e39a9d7e4ee74390561a71659"
+    },
+    {
+      "path": "src/cli/fix.ts",
+      "bytes": 2329,
+      "sha256": "2b52d36e0d1f752f54e10b1626cf4ae13f186d8087fb9dff5295913c9f259adc"
+    },
+    {
+      "path": "src/cli/formatters/excerpt.ts",
+      "bytes": 2896,
+      "sha256": "f474b328b89f2dac982bfbeb622f351d9882704c7ba61540b5b2f20928406aaa"
+    },
+    {
+      "path": "src/cli/formatters/github.ts",
+      "bytes": 1431,
+      "sha256": "2fd5e202213f6cad376a8b66b8edc459bf9e751e5e1eb4dd349b52d01564878c"
+    },
+    {
+      "path": "src/cli/formatters/json.ts",
+      "bytes": 1165,
+      "sha256": "49c82843b4be3ec57f8741a6f792dd1abc6c0892c0ae4cb3fd22bd56f45778d8"
+    },
+    {
+      "path": "src/cli/formatters/pretty.ts",
+      "bytes": 2471,
+      "sha256": "6e53b42e3bc1924da82c1a3295fa092db11010ff89564359c7adcb1c9af0ebf0"
+    },
+    {
+      "path": "src/cli/formatters/sarif.ts",
+      "bytes": 2796,
+      "sha256": "242f064f79c4a08d00a0e932ec6f7d1e474740218532c61df5f9e33331ef66c1"
+    },
+    {
+      "path": "src/cli/formatters/summary.ts",
+      "bytes": 3524,
+      "sha256": "c53d54dd082a0d0147c3ddb9613fc75cb2670298d1c1cdc7f14f51ee9fbcc647"
+    },
+    {
+      "path": "src/cli/index.ts",
+      "bytes": 8094,
+      "sha256": "b43015f749f1670e7215b6346376875aacfd7d97664737074d4b3dc093fb9917"
+    },
+    {
+      "path": "src/cli/replaceFiles.ts",
+      "bytes": 7071,
+      "sha256": "e64830d35b0c0e074ecdecc152ec6358d669a90078fa55a7318cbfd26f285133"
+    },
+    {
+      "path": "src/cli/report.ts",
+      "bytes": 791,
+      "sha256": "408a82699e9c67ecade699665c8650737ae522f31c7635fd222e5bacdb4cddd4"
+    },
+    {
+      "path": "src/cli/revealCommand.ts",
+      "bytes": 1296,
+      "sha256": "eb183999ce35e741ab1f7144c71b59139c8d109502e433c0a1649679d85d7add"
+    },
+    {
+      "path": "src/cli/version.ts",
+      "bytes": 138,
+      "sha256": "e92dc720ea1f2814150dcb4868c2bb627b315aa604443b642f2dedef95cfd581"
+    },
+    {
+      "path": "src/cli/walk.ts",
+      "bytes": 9672,
+      "sha256": "5b62c93828dd3eb5d80b072871fe4e84de4b4076ef3db2585e2cc48ab42408b5"
+    },
+    {
+      "path": "src/core/decodeTags.ts",
+      "bytes": 3894,
+      "sha256": "735abc7e8427d04fa469cf4e552329898f8309badd65317d66750679f56edb0a"
+    },
+    {
+      "path": "src/core/decodeVariationSelectors.ts",
+      "bytes": 9186,
+      "sha256": "243b0364919e2f35257f1991efb04dcb7712b06a1051173e892f534b2f7411ce"
+    },
+    {
+      "path": "src/core/diagnosticText.ts",
+      "bytes": 502,
+      "sha256": "2729ca8583941fbee21826212a37c275c409c8ffdea21d382f4a1c02fc5ec119"
+    },
+    {
+      "path": "src/core/index.ts",
+      "bytes": 549,
+      "sha256": "89ccc04102be3b48d1649c482ac74ca562b0b48bb25ad6f7f0ce207a09756ecc"
+    },
+    {
+      "path": "src/core/names.ts",
+      "bytes": 3417,
+      "sha256": "f4b9e6adf7cc39ae891d5b06de5be68e7c22286d3863d5f08ef0a6bea92c268a"
+    },
+    {
+      "path": "src/core/reveal.ts",
+      "bytes": 2935,
+      "sha256": "2e4475a327f78c65c599132393e926efce7d25a1fb139645d8a9fcf4cbd54da9"
+    },
+    {
+      "path": "src/core/rules/bidi.ts",
+      "bytes": 5616,
+      "sha256": "991eb5dd48e3a1a50cb745b22c1849f1671bfd8c6f3dae44c5d5f498f0429f0a"
+    },
+    {
+      "path": "src/core/rules/confusables.ts",
+      "bytes": 20382,
+      "sha256": "de9c3c39e54dedcbf79c1ba8c578edaa411624bee4c014335babfac2c22d7997"
+    },
+    {
+      "path": "src/core/rules/invisible.ts",
+      "bytes": 6027,
+      "sha256": "9bd2dff13c5410860ba9a61e5864c65e861e4259834a42a5e258cd37039af238"
+    },
+    {
+      "path": "src/core/rules/position.ts",
+      "bytes": 2276,
+      "sha256": "db7971711bd20d87161abacd0c6330268d31f9a6f5af94244924b181ee86de15"
+    },
+    {
+      "path": "src/core/rules/styledText.ts",
+      "bytes": 5381,
+      "sha256": "4460fe780e4c1ce35607f3db43ed7f9ef1f4f49cd812b159c62f0a55283cfb80"
+    },
+    {
+      "path": "src/core/rules/tags.ts",
+      "bytes": 1314,
+      "sha256": "b987dd77fc8b8902219e656f67f328c69fa4b8f52b7cdd3b659028af17af1537"
+    },
+    {
+      "path": "src/core/rules/variationSelectors.ts",
+      "bytes": 4483,
+      "sha256": "2d9f13a4c3948371c9ca5620855e75f61f4243ae588dcb7e57eb37d4d0c4388d"
+    },
+    {
+      "path": "src/core/rules/whitespaceControl.ts",
+      "bytes": 6655,
+      "sha256": "041dfef2f90ff09a8ccb1b07a84e9b039c353becaa1a5b9d535ff4d3e998a8a3"
+    },
+    {
+      "path": "src/core/sanitize.ts",
+      "bytes": 3720,
+      "sha256": "200a0b823929bea29bced74f08237fe2aae6c2b67b161cfc5021c69c5d61156e"
+    },
+    {
+      "path": "src/core/scanText.ts",
+      "bytes": 2876,
+      "sha256": "bd0238203becda9eba14b41dc77da8cac5f1df6a970a8cf98e19ff3bdfa49b00"
+    },
+    {
+      "path": "src/core/types.ts",
+      "bytes": 3835,
+      "sha256": "395e261b58972758f4cfe1eb53cc9e6666ebda11e83d19c1c6e63d0f2f91799c"
+    },
+    {
+      "path": "src/core/unicode-utils.ts",
+      "bytes": 3314,
+      "sha256": "32fd443fcc3c70ce0f3215a174abfba574d21837aad9d23909cb73c0fc537f9b"
+    },
+    {
+      "path": "src/generated/confusables.ts",
+      "bytes": 149802,
+      "sha256": "1ae51c81a23b6ffeb8b7777cba7ae600ddfdd552ac9804db873f0138bb283ad0"
+    },
+    {
+      "path": "src/generated/default-ignorable.ts",
+      "bytes": 612,
+      "sha256": "40b38c84b4b548b54c7972ad82dbf9ca3cf9dbbcbeade5b1e2a6470904a16e26"
+    },
+    {
+      "path": "src/generated/emoji-tag-sequences.ts",
+      "bytes": 578,
+      "sha256": "7e6242b5abd72b8d462568ff710771c0c2b2d35eab5c730f92666eb6792783b7"
+    },
+    {
+      "path": "src/generated/emoji.ts",
+      "bytes": 2830,
+      "sha256": "22553f5b01204a6f8c8b9cd469b026e1864f80e0b69de75d693d0015c0e46887"
+    },
+    {
+      "path": "src/generated/manifest.json",
+      "bytes": 1607,
+      "sha256": "ecde6a72fb0bf90468f474dd95da7dbb6ae64f5b0e6cde4f32ae34ec51e3b98d"
+    },
+    {
+      "path": "src/generated/script-extensions.ts",
+      "bytes": 812,
+      "sha256": "92105224a280ae4e1c188174398bb283e74b49ee171fcf43a466265ddbd495af"
+    },
+    {
+      "path": "src/generated/scripts.ts",
+      "bytes": 21624,
+      "sha256": "817ba157fee24b936a8706698bd34af58e65e22e82d99bd49b448a0c7e1329b5"
+    },
+    {
+      "path": "src/generated/standardized-variants.ts",
+      "bytes": 25213,
+      "sha256": "61bcc8246410424c5a2116bd45279a44217e41a05c9d40b897cb1c941b6056d3"
+    },
+    {
+      "path": "src/index.ts",
+      "bytes": 217,
+      "sha256": "74c53f9f5531c99ca727c1a41de8f76a8d1d0e39e005009b76778584daa1206d"
+    }
+  ]
+}

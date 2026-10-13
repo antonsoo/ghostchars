@@ -1,0 +1,189 @@
+{
+  "sourceCommit": "f64c533a5f1badde774bb63e962aa3db8d1138e9",
+  "environment": {
+    "nodeBuild": "v24.21.0",
+    "git": "git version 2.43.0",
+    "platform": "WSL2 Linux, case-sensitive filesystem"
+  },
+  "trackedArchiveFilesUnchanged": 316,
+  "checks": [
+    {
+      "label": "install",
+      "exit": 0,
+      "logSha256": "cf705a5028b0bbf8f6e569ca78044471d4a38b66a156b105b8909e8a767c5482",
+      "command": [
+        "npm",
+        "ci"
+      ]
+    },
+    {
+      "label": "lint",
+      "exit": 0,
+      "logSha256": "9816032d097de2b86ee0fe002a35bb3960ad089342879cf11d72cd62e427d9c8",
+      "command": [
+        "npm",
+        "run",
+        "lint"
+      ]
+    },
+    {
+      "label": "typecheck",
+      "exit": 0,
+      "logSha256": "3b5b905dfcf2e8234c734b5f1bbc2762f973b949323ff45b44c651201f3ed004",
+      "command": [
+        "npm",
+        "run",
+        "typecheck"
+      ]
+    },
+    {
+      "label": "test",
+      "exit": 0,
+      "logSha256": "b04467f46b1b3d3b8deafaf1deebf760ce37d4d3bc568d60a353ca06aea35ca9",
+      "command": [
+        "npm",
+        "test"
+      ],
+      "filesPassed": 21,
+      "testsPassed": 261
+    },
+    {
+      "label": "build",
+      "exit": 0,
+      "logSha256": "9e993204c89115a68e24a33ab4ec6bf1a45b72cb7eaf62d16f2ceff849b7e7af",
+      "command": [
+        "npm",
+        "run",
+        "build"
+      ]
+    },
+    {
+      "label": "benchmark",
+      "exit": 0,
+      "logSha256": "bf87d53466186cd7a23cfa439a2185938f32591f3f88401a967bac4817e5204b",
+      "command": [
+        "node",
+        "scripts/benchmark.mjs",
+        "2"
+      ]
+    },
+    {
+      "label": "pack",
+      "exit": 0,
+      "logSha256": "c693ac6ddffbcc571e55fc33663f4d29222d25707e32faee79fcdb67e2e05e72",
+      "command": [
+        "npm",
+        "pack",
+        "--json",
+        "--pack-destination",
+        "<scratch>"
+      ]
+    },
+    {
+      "label": "install-artifact",
+      "command": [
+        "npm",
+        "install",
+        "--ignore-scripts",
+        "--no-audit",
+        "--no-fund",
+        "<scratch>/antonsoloviev-ghostchars-0.1.5.tgz"
+      ],
+      "exit": 0,
+      "seconds": 0.541
+    },
+    {
+      "label": "node20",
+      "command": [
+        "python",
+        "<archive>/studies/literal-directories/replay.py",
+        "--node",
+        "<node20>",
+        "--cli",
+        "<installed>/node_modules/@antonsoloviev/ghostchars/dist/cli.js",
+        "--expect",
+        "after",
+        "--output",
+        "<scratch>/node20.json"
+      ],
+      "exit": 0,
+      "seconds": 3.484
+    },
+    {
+      "label": "node24",
+      "command": [
+        "python",
+        "<archive>/studies/literal-directories/replay.py",
+        "--node",
+        "<node24>",
+        "--cli",
+        "<installed>/node_modules/@antonsoloviev/ghostchars/dist/cli.js",
+        "--expect",
+        "after",
+        "--output",
+        "<scratch>/node24.json"
+      ],
+      "exit": 0,
+      "seconds": 3.196
+    },
+    {
+      "label": "installed-version",
+      "command": [
+        "<node20>",
+        "<installed>/node_modules/@antonsoloviev/ghostchars/dist/cli.js",
+        "--version"
+      ],
+      "exit": 0,
+      "seconds": 0.047
+    },
+    {
+      "label": "installed-reveal",
+      "command": [
+        "<node20>",
+        "<installed>/node_modules/@antonsoloviev/ghostchars/dist/cli.js",
+        "reveal",
+        "<archive>/examples/trojan-source.c"
+      ],
+      "exit": 0,
+      "seconds": 0.06
+    },
+    {
+      "label": "installed-library",
+      "command": [
+        "<node20>",
+        "--input-type=module",
+        "-e",
+        "import { scanText, sanitize } from '@antonsoloviev/ghostchars'; const text = 'hello\\u202eworld'; if (!scanText(text).findings.some(f => f.severity === 'error') || sanitize(text).text !== 'helloworld') throw Error('library failed'); console.log('installed scan and sanitize match expected text');"
+      ],
+      "exit": 0,
+      "seconds": 0.071
+    }
+  ],
+  "package": {
+    "filename": "antonsoloviev-ghostchars-0.1.5.tgz",
+    "bytes": 168688,
+    "sha256": "b3cb6d298ec78758587b2ba24eb8f867f8724c31d480e7186f302f5103064089",
+    "installedRuntimeFilesMatchArchive": 53
+  },
+  "cli": {
+    "bytes": 271713,
+    "sha256": "a95385f89f406242d26cd02680f67869b92ee80f3ad331986be8ebe43196cf66",
+    "matchesArchiveAndCommittedBundle": true
+  },
+  "installedReplays": [
+    {
+      "node": "v20.0.0",
+      "runs": 34,
+      "allCasesByteEquivalentToRetainedAfter": true,
+      "casesSha256": "22af7cfcc29e2133addd64ca3ac84e8585e0f758131d561b9494e43ac5e74b87"
+    },
+    {
+      "node": "v24.21.0",
+      "runs": 34,
+      "allCasesByteEquivalentToRetainedAfter": true,
+      "casesSha256": "22af7cfcc29e2133addd64ca3ac84e8585e0f758131d561b9494e43ac5e74b87"
+    }
+  ],
+  "scope": "Local source archive and locally packed/installed artifact; no npm release, tag or hosted deployment. Browser runtime unchanged.",
+  "pathPlaceholders": "Machine-specific paths are replaced by <archive>, <installed>, <scratch>, <node20> and <node24>."
+}

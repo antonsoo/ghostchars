@@ -45,9 +45,43 @@ The retained results use Git 2.43.0 on case-sensitive WSL2 Linux; reserved filen
 spellings and the `App`/`app` pair are not portable to every filesystem.
 
 Retained results: [baseline](results/before.json), [corrected development
-bundle](results/after.json). The installed-artifact and clean-check receipt is
-added after verification. No npm release, tag or hosted deployment is part of
+bundle](results/after.json), [clean-build and installed-artifact
+receipt](results/verification.json), [ordinary source/workflow scan
+control](results/ordinary-scope.json).
+
+![Actual baseline and installed Node 20 CLI output, with an outside-file byte comparison](../../docs/assets/literal-directories/installed-node20.png)
+
+The screenshot renders [unedited CLI summaries and actual byte comparisons](results/demo.txt)
+from [`demo.py`](demo.py). It uses one selected file per case for readability;
+the 34-run replay above checks both tracked and untracked inputs.
+
+## Clean build and installed artifact
+
+Implementation revision `f64c533a5f1badde774bb63e962aa3db8d1138e9` was archived
+into a fresh directory. With Node 24.21.0, `npm ci`, lint, type checking,
+261 tests in 21 files, the library/CLI build and the benchmark smoke command
+all completed successfully. All 316 archived files retained their exact bytes,
+including the committed CLI bundle after rebuilding it.
+
+`npm pack` produced a 168,688-byte tarball. It was installed into a separate
+directory with install scripts disabled; all 53 installed runtime files
+matched the clean build. The installed CLI replayed all 34 cases on **Node
+20.0.0** and **Node 24.21.0**. Every normalized report, file hash, exit code and
+scope verdict matched the retained corrected result. Installed version/reveal
+commands and a library scan/sanitize example also passed.
+
+An additional before/after scan of this checkout's 48 source and workflow
+files produced byte-identical normalized reports. The receipt records every
+input hash. Browser runtime code is unchanged, so no new browser validation or
+hosted-demo claim is made. No npm release, tag or hosted deployment is part of
 this source correction; package metadata remains 0.1.5.
+
+The package SHA-256 is
+`b3cb6d298ec78758587b2ba24eb8f867f8724c31d480e7186f302f5103064089`.
+Its CLI SHA-256 is
+`a95385f89f406242d26cd02680f67869b92ee80f3ad331986be8ebe43196cf66`.
+
+## Reproduce
 
 ```sh
 git show 2513948d5bb3e2cb83391d200e7eff838cd7485c:dist/cli.js > /tmp/ghostchars-before.mjs
