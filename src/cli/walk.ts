@@ -151,9 +151,14 @@ function findGitRoot(startAbs: string): string | undefined {
 
 function listGitFiles(repoRoot: string, scopeAbs: string, fail: DiscoveryFailure): string[] {
   const scopeRel = relative(repoRoot, scopeAbs);
-  const args = ['-C', repoRoot, 'ls-files', '-z', '--cached', '--others', '--exclude-standard', '--', scopeRel === '' ? '.' : scopeRel];
+  // Discovery has already resolved a real directory. Git must not reinterpret
+  // its name as a glob or :(exclude) pathspec, especially before --fix writes.
+  // Inherited pathspec modes can conflict with --literal-pathspecs; override
+  // only those modes for this child, retaining the repository/ignore settings.
+  const env = { ...process.env, GIT_GLOB_PATHSPECS: '0', GIT_NOGLOB_PATHSPECS: '0', GIT_ICASE_PATHSPECS: '0' };
+  const args = ['--literal-pathspecs', '-C', repoRoot, 'ls-files', '-z', '--cached', '--others', '--exclude-standard', '--', scopeRel === '' ? '.' : scopeRel];
   try {
-    const out = execFileSync('git', args, { stdio: ['ignore', 'pipe', 'pipe'], maxBuffer: 64 * 1024 * 1024 }).toString();
+    const out = execFileSync('git', args, { env, stdio: ['ignore', 'pipe', 'pipe'], maxBuffer: 64 * 1024 * 1024 }).toString();
     return out
       .split('\0')
       .filter(Boolean)

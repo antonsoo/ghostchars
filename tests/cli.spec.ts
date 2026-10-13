@@ -1,7 +1,8 @@
 import { mkdtempSync, readFileSync, rmSync, writeFileSync, mkdirSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
-import { afterEach, beforeEach, describe, expect, it } from 'vitest';
+import { execFileSync } from 'node:child_process';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { main } from '../src/cli/index.js';
 import { discoverFiles } from '../src/cli/walk.js';
 import { loadConfig, scanOptionsForFile } from '../src/cli/config.js';
@@ -33,6 +34,7 @@ beforeEach(() => {
 });
 
 afterEach(() => {
+  vi.unstubAllEnvs();
   process.chdir(originalCwd);
   rmSync(dir, { recursive: true, force: true });
 });
@@ -55,6 +57,47 @@ describe('discoverFiles', () => {
     const { files, skipped } = discoverFiles(['.'], dir);
     expect(files.some((f) => f.path === 'binary.bin')).toBe(false);
     expect(skipped.find((s) => s.path === 'binary.bin')?.reason).toBe('binary');
+  });
+});
+
+describe.skipIf(process.platform === 'win32')('literal Git directory scopes', () => {
+  it.each([
+    [':victim', 'victim'],
+    [':(glob)docs*', 'docs-old'],
+    [':(exclude)draft', 'production'],
+    ['docs*', 'docs-old'],
+    ['packages/docs*', 'packages/docs-old'],
+    ['[id]', 'i'],
+  ])('scans and repairs only the existing %s directory', (scope, sibling) => {
+    execFileSync('git', ['init', '-q', dir]);
+    const original = 'const value = 1; // \u202e reversed\n';
+    mkdirSync(join(dir, scope), { recursive: true });
+    mkdirSync(join(dir, sibling), { recursive: true });
+    writeFileSync(join(dir, '.gitignore'), 'ignored.js\n');
+    for (const file of ['tracked.js', 'untracked.js', 'ignored.js']) writeFileSync(join(dir, scope, file), original);
+    writeFileSync(join(dir, sibling, 'outside.js'), original);
+    execFileSync('git', ['--literal-pathspecs', 'add', '--', `${scope}/tracked.js`, `${sibling}/outside.js`]);
+
+    const found = discoverFiles([scope], dir);
+    expect(found.errors).toEqual([]);
+    expect(found.files.map((file) => file.path).sort()).toEqual([`${scope}/tracked.js`, `${scope}/untracked.js`]);
+    expect(withSilencedConsole(() => main([scope, '--fix', '--no-config']))).toBe(1);
+    for (const file of ['tracked.js', 'untracked.js']) expect(readFileSync(join(dir, scope, file), 'utf8')).toBe(original.replace('\u202e', ''));
+    expect(readFileSync(join(dir, scope, 'ignored.js'), 'utf8')).toBe(original);
+    expect(readFileSync(join(dir, sibling, 'outside.js'), 'utf8')).toBe(original);
+  });
+
+  it.each(['GIT_GLOB_PATHSPECS', 'GIT_NOGLOB_PATHSPECS', 'GIT_ICASE_PATHSPECS'])('ignores inherited %s for literal enumeration', (variable) => {
+    execFileSync('git', ['init', '-q', dir]);
+    mkdirSync(join(dir, ':victim'));
+    writeFileSync(join(dir, ':victim', 'input.js'), 'text');
+    vi.stubEnv(variable, '1');
+    vi.stubEnv('GIT_LITERAL_PATHSPECS', '0');
+    const found = discoverFiles([':victim'], dir);
+    expect(found.errors).toEqual([]);
+    expect(found.files.map((file) => file.path)).toEqual([':victim/input.js']);
+    expect(process.env[variable]).toBe('1');
+    expect(process.env.GIT_LITERAL_PATHSPECS).toBe('0');
   });
 });
 

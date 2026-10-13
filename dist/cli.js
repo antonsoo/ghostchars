@@ -9241,9 +9241,10 @@ function findGitRoot(startAbs) {
 }
 function listGitFiles(repoRoot, scopeAbs, fail) {
   const scopeRel = relative(repoRoot, scopeAbs);
-  const args = ["-C", repoRoot, "ls-files", "-z", "--cached", "--others", "--exclude-standard", "--", scopeRel === "" ? "." : scopeRel];
+  const env = { ...process.env, GIT_GLOB_PATHSPECS: "0", GIT_NOGLOB_PATHSPECS: "0", GIT_ICASE_PATHSPECS: "0" };
+  const args = ["--literal-pathspecs", "-C", repoRoot, "ls-files", "-z", "--cached", "--others", "--exclude-standard", "--", scopeRel === "" ? "." : scopeRel];
   try {
-    const out = execFileSync("git", args, { stdio: ["ignore", "pipe", "pipe"], maxBuffer: 64 * 1024 * 1024 }).toString();
+    const out = execFileSync("git", args, { env, stdio: ["ignore", "pipe", "pipe"], maxBuffer: 64 * 1024 * 1024 }).toString();
     return out.split("\0").filter(Boolean).map((p) => join(repoRoot, p));
   } catch (error) {
     fail(scopeAbs, "could not enumerate git files", error);

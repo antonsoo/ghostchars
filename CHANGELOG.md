@@ -19,6 +19,11 @@ All notable changes to this project are documented in this file.
 
 ### Fixed
 
+- Directory scans pass literal paths to Git. Leading-colon names can no longer
+  skip selected inputs or choose unrelated paths; `--fix 'docs*'` no longer
+  repairs `docs-old` as well. Override inherited Git pathspec modes only for
+  enumeration, preserving ignore policies. Real Git/CLI before-and-after
+  file-hash replays are in `studies/literal-directories`.
 - (source checkout) Default CLI diagnostics no longer rescan and repeat an entire
   source line for every finding. Show bounded source excerpts with the reported
   span bracketed, preserve every original location and full count, and label

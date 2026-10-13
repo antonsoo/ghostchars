@@ -106,6 +106,16 @@ ghostchars . --fix --dry-run        # preview
 ghostchars . --fix                  # apply configured removals in place
 ```
 
+Directory arguments are literal filesystem paths in the source checkout.
+`ghostchars 'docs*' --fix` repairs the directory actually named `docs*`; it
+does not also repair `docs-old`. Leading colons no longer turn a directory
+name into Git pathspec syntax that can select unrelated files or skip every
+input. Shell expansion still happens before the CLI receives arguments; quote
+special names. Git ignore rules continue to apply to directory scans.
+[Before/after scan and repair evidence](studies/literal-directories/README.md)
+includes exact hashes of selected, ignored and unrelated files. This correction
+is not yet in the npm release.
+
 The source checkout's default terminal report shows a short excerpt around
 **every** finding, with `[[...]]` marking its exact source span. Locations use
 the original UTF-16 columns and exclusive end positions; long excerpts and
