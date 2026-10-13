@@ -19,6 +19,13 @@ All notable changes to this project are documented in this file.
 
 ### Fixed
 
+- Action report output no longer truncates its destination before scanning.
+  Route it through the source CLI's new `--output`: protect scanned/skipped
+  input identities and the Ghostchars config, reject symbolic output files,
+  stage and flush reports before replacement, and retain prior reports on
+  staging failure. Keep input failures in reports with exit 2. The SARIF
+  workflow example writes outside the checkout. Actual Action-body and kernel
+  file-size-limit replays are retained in `studies/action-reports`.
 - Directory scans pass literal paths to Git. Leading-colon names can no longer
   skip selected inputs or choose unrelated paths; `--fix 'docs*'` no longer
   repairs `docs-old` as well. Override inherited Git pathspec modes only for

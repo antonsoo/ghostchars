@@ -1,0 +1,2023 @@
+{
+  "scope": "Actual composite Action Bash body, run locally on synthetic Linux files; not a hosted GitHub Actions run.",
+  "node": "v26.7.0",
+  "cli": {
+    "bytes": 277204,
+    "sha256": "2d8d3dea74f268cee7485179b7d6ce5b4d6b5c47a61d961af44de2b67fbce267"
+  },
+  "action": {
+    "bytes": 1981,
+    "sha256": "b9f7a6ef5b60f3fce4cff20b270f1ccbe1a9e8a051bb0c135202ff44fe0377a5"
+  },
+  "fileSizeLimitBytes": 2048,
+  "cases": [
+    {
+      "case": "source",
+      "actionInputs": {
+        "paths": "source.js",
+        "format": "json",
+        "output": "source.js",
+        "config": "config.json"
+      },
+      "exit": 2,
+      "correct": true,
+      "sourceIntact": true,
+      "configIntact": true,
+      "outputBefore": {
+        "bytes": 33,
+        "sha256": "bffa975fdc362d637edd8ddd411a52815eca6bdfccc1250cab025b32d471331f"
+      },
+      "outputAfter": {
+        "bytes": 33,
+        "sha256": "bffa975fdc362d637edd8ddd411a52815eca6bdfccc1250cab025b32d471331f"
+      },
+      "outputReportOrPreview": "const value = 1; // \u202e reversed\n",
+      "stdout": "",
+      "stderr": "ghostchars: could not prepare report output: report output overlaps an input or configuration file; choose a separate path outside the scan or ignore the report\n",
+      "files": [
+        {
+          "path": "source.js",
+          "before": {
+            "bytes": 33,
+            "sha256": "bffa975fdc362d637edd8ddd411a52815eca6bdfccc1250cab025b32d471331f"
+          },
+          "after": {
+            "bytes": 33,
+            "sha256": "bffa975fdc362d637edd8ddd411a52815eca6bdfccc1250cab025b32d471331f"
+          }
+        },
+        {
+          "path": "config.json",
+          "before": {
+            "bytes": 2,
+            "sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+          },
+          "after": {
+            "bytes": 2,
+            "sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+          }
+        }
+      ],
+      "temporaryFiles": [],
+      "matchesDirectStdoutReport": null
+    },
+    {
+      "case": "relative-source",
+      "actionInputs": {
+        "paths": "source.js",
+        "format": "json",
+        "output": "./source.js",
+        "config": "config.json"
+      },
+      "exit": 2,
+      "correct": true,
+      "sourceIntact": true,
+      "configIntact": true,
+      "outputBefore": {
+        "bytes": 33,
+        "sha256": "bffa975fdc362d637edd8ddd411a52815eca6bdfccc1250cab025b32d471331f"
+      },
+      "outputAfter": {
+        "bytes": 33,
+        "sha256": "bffa975fdc362d637edd8ddd411a52815eca6bdfccc1250cab025b32d471331f"
+      },
+      "outputReportOrPreview": "const value = 1; // \u202e reversed\n",
+      "stdout": "",
+      "stderr": "ghostchars: could not prepare report output: report output overlaps an input or configuration file; choose a separate path outside the scan or ignore the report\n",
+      "files": [
+        {
+          "path": "source.js",
+          "before": {
+            "bytes": 33,
+            "sha256": "bffa975fdc362d637edd8ddd411a52815eca6bdfccc1250cab025b32d471331f"
+          },
+          "after": {
+            "bytes": 33,
+            "sha256": "bffa975fdc362d637edd8ddd411a52815eca6bdfccc1250cab025b32d471331f"
+          }
+        },
+        {
+          "path": "config.json",
+          "before": {
+            "bytes": 2,
+            "sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+          },
+          "after": {
+            "bytes": 2,
+            "sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+          }
+        }
+      ],
+      "temporaryFiles": [],
+      "matchesDirectStdoutReport": null
+    },
+    {
+      "case": "directory-source",
+      "actionInputs": {
+        "paths": "src",
+        "format": "json",
+        "output": "src/source.js",
+        "config": "config.json"
+      },
+      "exit": 2,
+      "correct": true,
+      "sourceIntact": true,
+      "configIntact": true,
+      "outputBefore": {
+        "bytes": 33,
+        "sha256": "bffa975fdc362d637edd8ddd411a52815eca6bdfccc1250cab025b32d471331f"
+      },
+      "outputAfter": {
+        "bytes": 33,
+        "sha256": "bffa975fdc362d637edd8ddd411a52815eca6bdfccc1250cab025b32d471331f"
+      },
+      "outputReportOrPreview": "const value = 1; // \u202e reversed\n",
+      "stdout": "",
+      "stderr": "ghostchars: could not prepare report output: report output overlaps an input or configuration file; choose a separate path outside the scan or ignore the report\n",
+      "files": [
+        {
+          "path": "config.json",
+          "before": {
+            "bytes": 2,
+            "sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+          },
+          "after": {
+            "bytes": 2,
+            "sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+          }
+        },
+        {
+          "path": "src/source.js",
+          "before": {
+            "bytes": 33,
+            "sha256": "bffa975fdc362d637edd8ddd411a52815eca6bdfccc1250cab025b32d471331f"
+          },
+          "after": {
+            "bytes": 33,
+            "sha256": "bffa975fdc362d637edd8ddd411a52815eca6bdfccc1250cab025b32d471331f"
+          }
+        }
+      ],
+      "temporaryFiles": [],
+      "matchesDirectStdoutReport": null
+    },
+    {
+      "case": "hardlink-source",
+      "actionInputs": {
+        "paths": "source.js",
+        "format": "json",
+        "output": "report.json",
+        "config": "config.json"
+      },
+      "exit": 2,
+      "correct": true,
+      "sourceIntact": true,
+      "configIntact": true,
+      "outputBefore": {
+        "bytes": 33,
+        "sha256": "bffa975fdc362d637edd8ddd411a52815eca6bdfccc1250cab025b32d471331f"
+      },
+      "outputAfter": {
+        "bytes": 33,
+        "sha256": "bffa975fdc362d637edd8ddd411a52815eca6bdfccc1250cab025b32d471331f"
+      },
+      "outputReportOrPreview": "const value = 1; // \u202e reversed\n",
+      "stdout": "",
+      "stderr": "ghostchars: could not prepare report output: report output overlaps an input or configuration file; choose a separate path outside the scan or ignore the report\n",
+      "files": [
+        {
+          "path": "report.json",
+          "before": {
+            "bytes": 33,
+            "sha256": "bffa975fdc362d637edd8ddd411a52815eca6bdfccc1250cab025b32d471331f"
+          },
+          "after": {
+            "bytes": 33,
+            "sha256": "bffa975fdc362d637edd8ddd411a52815eca6bdfccc1250cab025b32d471331f"
+          }
+        },
+        {
+          "path": "source.js",
+          "before": {
+            "bytes": 33,
+            "sha256": "bffa975fdc362d637edd8ddd411a52815eca6bdfccc1250cab025b32d471331f"
+          },
+          "after": {
+            "bytes": 33,
+            "sha256": "bffa975fdc362d637edd8ddd411a52815eca6bdfccc1250cab025b32d471331f"
+          }
+        },
+        {
+          "path": "config.json",
+          "before": {
+            "bytes": 2,
+            "sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+          },
+          "after": {
+            "bytes": 2,
+            "sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+          }
+        }
+      ],
+      "temporaryFiles": [],
+      "matchesDirectStdoutReport": null
+    },
+    {
+      "case": "symlink-source",
+      "actionInputs": {
+        "paths": "source.js",
+        "format": "json",
+        "output": "report.json",
+        "config": "config.json"
+      },
+      "exit": 2,
+      "correct": true,
+      "sourceIntact": true,
+      "configIntact": true,
+      "outputBefore": {
+        "bytes": 33,
+        "sha256": "bffa975fdc362d637edd8ddd411a52815eca6bdfccc1250cab025b32d471331f"
+      },
+      "outputAfter": {
+        "bytes": 33,
+        "sha256": "bffa975fdc362d637edd8ddd411a52815eca6bdfccc1250cab025b32d471331f"
+      },
+      "outputReportOrPreview": "const value = 1; // \u202e reversed\n",
+      "stdout": "",
+      "stderr": "ghostchars: could not prepare report output: report output must be a regular file, not a symbolic link or special file\n",
+      "files": [
+        {
+          "path": "report.json",
+          "before": {
+            "bytes": 33,
+            "sha256": "bffa975fdc362d637edd8ddd411a52815eca6bdfccc1250cab025b32d471331f"
+          },
+          "after": {
+            "bytes": 33,
+            "sha256": "bffa975fdc362d637edd8ddd411a52815eca6bdfccc1250cab025b32d471331f"
+          }
+        },
+        {
+          "path": "source.js",
+          "before": {
+            "bytes": 33,
+            "sha256": "bffa975fdc362d637edd8ddd411a52815eca6bdfccc1250cab025b32d471331f"
+          },
+          "after": {
+            "bytes": 33,
+            "sha256": "bffa975fdc362d637edd8ddd411a52815eca6bdfccc1250cab025b32d471331f"
+          }
+        },
+        {
+          "path": "config.json",
+          "before": {
+            "bytes": 2,
+            "sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+          },
+          "after": {
+            "bytes": 2,
+            "sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+          }
+        }
+      ],
+      "temporaryFiles": [],
+      "matchesDirectStdoutReport": null
+    },
+    {
+      "case": "parent-symlink-source",
+      "actionInputs": {
+        "paths": "source.js",
+        "format": "json",
+        "output": "alias/source.js",
+        "config": "config.json"
+      },
+      "exit": 2,
+      "correct": true,
+      "sourceIntact": true,
+      "configIntact": true,
+      "outputBefore": {
+        "bytes": 33,
+        "sha256": "bffa975fdc362d637edd8ddd411a52815eca6bdfccc1250cab025b32d471331f"
+      },
+      "outputAfter": {
+        "bytes": 33,
+        "sha256": "bffa975fdc362d637edd8ddd411a52815eca6bdfccc1250cab025b32d471331f"
+      },
+      "outputReportOrPreview": "const value = 1; // \u202e reversed\n",
+      "stdout": "",
+      "stderr": "ghostchars: could not prepare report output: report output overlaps an input or configuration file; choose a separate path outside the scan or ignore the report\n",
+      "files": [
+        {
+          "path": "source.js",
+          "before": {
+            "bytes": 33,
+            "sha256": "bffa975fdc362d637edd8ddd411a52815eca6bdfccc1250cab025b32d471331f"
+          },
+          "after": {
+            "bytes": 33,
+            "sha256": "bffa975fdc362d637edd8ddd411a52815eca6bdfccc1250cab025b32d471331f"
+          }
+        },
+        {
+          "path": "config.json",
+          "before": {
+            "bytes": 2,
+            "sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+          },
+          "after": {
+            "bytes": 2,
+            "sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+          }
+        }
+      ],
+      "temporaryFiles": [],
+      "matchesDirectStdoutReport": null
+    },
+    {
+      "case": "binary-source",
+      "actionInputs": {
+        "paths": "source.js",
+        "format": "json",
+        "output": "source.js",
+        "config": "config.json"
+      },
+      "exit": 2,
+      "correct": true,
+      "sourceIntact": true,
+      "configIntact": true,
+      "outputBefore": {
+        "bytes": 8,
+        "sha256": "9fd3a54984d2b6d1479e45cf854090ed7b49913e4a724a35c6ca8b18ef58871c"
+      },
+      "outputAfter": {
+        "bytes": 8,
+        "sha256": "9fd3a54984d2b6d1479e45cf854090ed7b49913e4a724a35c6ca8b18ef58871c"
+      },
+      "outputReportOrPreview": "\u0000binary\u0000",
+      "stdout": "",
+      "stderr": "ghostchars: could not prepare report output: report output overlaps an input or configuration file; choose a separate path outside the scan or ignore the report\n",
+      "files": [
+        {
+          "path": "source.js",
+          "before": {
+            "bytes": 8,
+            "sha256": "9fd3a54984d2b6d1479e45cf854090ed7b49913e4a724a35c6ca8b18ef58871c"
+          },
+          "after": {
+            "bytes": 8,
+            "sha256": "9fd3a54984d2b6d1479e45cf854090ed7b49913e4a724a35c6ca8b18ef58871c"
+          }
+        },
+        {
+          "path": "config.json",
+          "before": {
+            "bytes": 2,
+            "sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+          },
+          "after": {
+            "bytes": 2,
+            "sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+          }
+        }
+      ],
+      "temporaryFiles": [],
+      "matchesDirectStdoutReport": null
+    },
+    {
+      "case": "invalid-utf8-source",
+      "actionInputs": {
+        "paths": "source.js",
+        "format": "json",
+        "output": "source.js",
+        "config": "config.json"
+      },
+      "exit": 2,
+      "correct": true,
+      "sourceIntact": true,
+      "configIntact": true,
+      "outputBefore": {
+        "bytes": 14,
+        "sha256": "8c854f4683aed0eab022c2d976ca1edaa931c1a56f930e19339b06fdce1bb866"
+      },
+      "outputAfter": {
+        "bytes": 14,
+        "sha256": "8c854f4683aed0eab022c2d976ca1edaa931c1a56f930e19339b06fdce1bb866"
+      },
+      "outputReportOrPreview": "\ufffdinvalid UTF-8",
+      "stdout": "",
+      "stderr": "ghostchars: could not prepare report output: report output overlaps an input or configuration file; choose a separate path outside the scan or ignore the report\n",
+      "files": [
+        {
+          "path": "source.js",
+          "before": {
+            "bytes": 14,
+            "sha256": "8c854f4683aed0eab022c2d976ca1edaa931c1a56f930e19339b06fdce1bb866"
+          },
+          "after": {
+            "bytes": 14,
+            "sha256": "8c854f4683aed0eab022c2d976ca1edaa931c1a56f930e19339b06fdce1bb866"
+          }
+        },
+        {
+          "path": "config.json",
+          "before": {
+            "bytes": 2,
+            "sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+          },
+          "after": {
+            "bytes": 2,
+            "sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+          }
+        }
+      ],
+      "temporaryFiles": [],
+      "matchesDirectStdoutReport": null
+    },
+    {
+      "case": "large-source",
+      "actionInputs": {
+        "paths": "source.js",
+        "format": "json",
+        "output": "source.js",
+        "config": "config.json"
+      },
+      "exit": 2,
+      "correct": true,
+      "sourceIntact": true,
+      "configIntact": true,
+      "outputBefore": {
+        "bytes": 6291489,
+        "sha256": "2bcc96ed0ef56a4b342eceb9e3298fcd8324d82bc9cbda204b1fef4bc5136605"
+      },
+      "outputAfter": {
+        "bytes": 6291489,
+        "sha256": "2bcc96ed0ef56a4b342eceb9e3298fcd8324d82bc9cbda204b1fef4bc5136605"
+      },
+      "outputReportOrPreview": "const value = 1; // \u202e reversed\n                                                                                                                                                                                                                                                                             ",
+      "stdout": "",
+      "stderr": "ghostchars: could not prepare report output: report output overlaps an input or configuration file; choose a separate path outside the scan or ignore the report\n",
+      "files": [
+        {
+          "path": "source.js",
+          "before": {
+            "bytes": 6291489,
+            "sha256": "2bcc96ed0ef56a4b342eceb9e3298fcd8324d82bc9cbda204b1fef4bc5136605"
+          },
+          "after": {
+            "bytes": 6291489,
+            "sha256": "2bcc96ed0ef56a4b342eceb9e3298fcd8324d82bc9cbda204b1fef4bc5136605"
+          }
+        },
+        {
+          "path": "config.json",
+          "before": {
+            "bytes": 2,
+            "sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+          },
+          "after": {
+            "bytes": 2,
+            "sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+          }
+        }
+      ],
+      "temporaryFiles": [],
+      "matchesDirectStdoutReport": null
+    },
+    {
+      "case": "explicit-config",
+      "actionInputs": {
+        "paths": "source.js",
+        "format": "json",
+        "output": "config.json",
+        "config": "config.json"
+      },
+      "exit": 2,
+      "correct": true,
+      "sourceIntact": true,
+      "configIntact": true,
+      "outputBefore": {
+        "bytes": 2,
+        "sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      "outputAfter": {
+        "bytes": 2,
+        "sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      "outputReportOrPreview": {},
+      "stdout": "",
+      "stderr": "ghostchars: could not prepare report output: report output overlaps an input or configuration file; choose a separate path outside the scan or ignore the report\n",
+      "files": [
+        {
+          "path": "source.js",
+          "before": {
+            "bytes": 33,
+            "sha256": "bffa975fdc362d637edd8ddd411a52815eca6bdfccc1250cab025b32d471331f"
+          },
+          "after": {
+            "bytes": 33,
+            "sha256": "bffa975fdc362d637edd8ddd411a52815eca6bdfccc1250cab025b32d471331f"
+          }
+        },
+        {
+          "path": "config.json",
+          "before": {
+            "bytes": 2,
+            "sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+          },
+          "after": {
+            "bytes": 2,
+            "sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+          }
+        }
+      ],
+      "temporaryFiles": [],
+      "matchesDirectStdoutReport": null
+    },
+    {
+      "case": "implicit-config",
+      "actionInputs": {
+        "paths": "source.js",
+        "format": "json",
+        "output": ".ghostcharsrc.json",
+        "config": ""
+      },
+      "exit": 2,
+      "correct": true,
+      "sourceIntact": true,
+      "configIntact": true,
+      "outputBefore": {
+        "bytes": 2,
+        "sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      "outputAfter": {
+        "bytes": 2,
+        "sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      "outputReportOrPreview": {},
+      "stdout": "",
+      "stderr": "ghostchars: could not prepare report output: report output overlaps an input or configuration file; choose a separate path outside the scan or ignore the report\n",
+      "files": [
+        {
+          "path": "source.js",
+          "before": {
+            "bytes": 33,
+            "sha256": "bffa975fdc362d637edd8ddd411a52815eca6bdfccc1250cab025b32d471331f"
+          },
+          "after": {
+            "bytes": 33,
+            "sha256": "bffa975fdc362d637edd8ddd411a52815eca6bdfccc1250cab025b32d471331f"
+          }
+        },
+        {
+          "path": ".ghostcharsrc.json",
+          "before": {
+            "bytes": 2,
+            "sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+          },
+          "after": {
+            "bytes": 2,
+            "sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+          }
+        }
+      ],
+      "temporaryFiles": [],
+      "matchesDirectStdoutReport": null
+    },
+    {
+      "case": "hardlink-config",
+      "actionInputs": {
+        "paths": "source.js",
+        "format": "json",
+        "output": "report.json",
+        "config": "config.json"
+      },
+      "exit": 2,
+      "correct": true,
+      "sourceIntact": true,
+      "configIntact": true,
+      "outputBefore": {
+        "bytes": 2,
+        "sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      "outputAfter": {
+        "bytes": 2,
+        "sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      "outputReportOrPreview": {},
+      "stdout": "",
+      "stderr": "ghostchars: could not prepare report output: report output overlaps an input or configuration file; choose a separate path outside the scan or ignore the report\n",
+      "files": [
+        {
+          "path": "report.json",
+          "before": {
+            "bytes": 2,
+            "sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+          },
+          "after": {
+            "bytes": 2,
+            "sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+          }
+        },
+        {
+          "path": "source.js",
+          "before": {
+            "bytes": 33,
+            "sha256": "bffa975fdc362d637edd8ddd411a52815eca6bdfccc1250cab025b32d471331f"
+          },
+          "after": {
+            "bytes": 33,
+            "sha256": "bffa975fdc362d637edd8ddd411a52815eca6bdfccc1250cab025b32d471331f"
+          }
+        },
+        {
+          "path": "config.json",
+          "before": {
+            "bytes": 2,
+            "sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+          },
+          "after": {
+            "bytes": 2,
+            "sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+          }
+        }
+      ],
+      "temporaryFiles": [],
+      "matchesDirectStdoutReport": null
+    },
+    {
+      "case": "invalid-config",
+      "actionInputs": {
+        "paths": "source.js",
+        "format": "json",
+        "output": "report.json",
+        "config": "config.json"
+      },
+      "exit": 2,
+      "correct": true,
+      "sourceIntact": true,
+      "configIntact": true,
+      "outputBefore": {
+        "bytes": 12800,
+        "sha256": "337fe67b1b199ffd391b5a4c99909f40421f10ca41feccad99c7fecdfee4d876"
+      },
+      "outputAfter": {
+        "bytes": 12800,
+        "sha256": "337fe67b1b199ffd391b5a4c99909f40421f10ca41feccad99c7fecdfee4d876"
+      },
+      "outputReportOrPreview": "previous complete report\nprevious complete report\nprevious complete report\nprevious complete report\nprevious complete report\nprevious complete report\nprevious complete report\nprevious complete report\nprevious complete report\nprevious complete report\nprevious complete report\nprevious complete report\n",
+      "stdout": "",
+      "stderr": "Failed to parse config.json: Expected property name or '}' in JSON at position 1 (line 1 column 2)\n",
+      "files": [
+        {
+          "path": "report.json",
+          "before": {
+            "bytes": 12800,
+            "sha256": "337fe67b1b199ffd391b5a4c99909f40421f10ca41feccad99c7fecdfee4d876"
+          },
+          "after": {
+            "bytes": 12800,
+            "sha256": "337fe67b1b199ffd391b5a4c99909f40421f10ca41feccad99c7fecdfee4d876"
+          }
+        },
+        {
+          "path": "source.js",
+          "before": {
+            "bytes": 33,
+            "sha256": "bffa975fdc362d637edd8ddd411a52815eca6bdfccc1250cab025b32d471331f"
+          },
+          "after": {
+            "bytes": 33,
+            "sha256": "bffa975fdc362d637edd8ddd411a52815eca6bdfccc1250cab025b32d471331f"
+          }
+        },
+        {
+          "path": "config.json",
+          "before": {
+            "bytes": 21,
+            "sha256": "82f9d676f43327a723fd63da2e1c98ca1859bdd46d272160cda486000688eaf0"
+          },
+          "after": {
+            "bytes": 21,
+            "sha256": "82f9d676f43327a723fd63da2e1c98ca1859bdd46d272160cda486000688eaf0"
+          }
+        }
+      ],
+      "temporaryFiles": [],
+      "matchesDirectStdoutReport": null
+    },
+    {
+      "case": "existing-scanned-report",
+      "actionInputs": {
+        "paths": ".",
+        "format": "json",
+        "output": "report.json",
+        "config": "config.json"
+      },
+      "exit": 2,
+      "correct": true,
+      "sourceIntact": true,
+      "configIntact": true,
+      "outputBefore": {
+        "bytes": 12800,
+        "sha256": "337fe67b1b199ffd391b5a4c99909f40421f10ca41feccad99c7fecdfee4d876"
+      },
+      "outputAfter": {
+        "bytes": 12800,
+        "sha256": "337fe67b1b199ffd391b5a4c99909f40421f10ca41feccad99c7fecdfee4d876"
+      },
+      "outputReportOrPreview": "previous complete report\nprevious complete report\nprevious complete report\nprevious complete report\nprevious complete report\nprevious complete report\nprevious complete report\nprevious complete report\nprevious complete report\nprevious complete report\nprevious complete report\nprevious complete report\n",
+      "stdout": "",
+      "stderr": "ghostchars: could not prepare report output: report output overlaps an input or configuration file; choose a separate path outside the scan or ignore the report\n",
+      "files": [
+        {
+          "path": "report.json",
+          "before": {
+            "bytes": 12800,
+            "sha256": "337fe67b1b199ffd391b5a4c99909f40421f10ca41feccad99c7fecdfee4d876"
+          },
+          "after": {
+            "bytes": 12800,
+            "sha256": "337fe67b1b199ffd391b5a4c99909f40421f10ca41feccad99c7fecdfee4d876"
+          }
+        },
+        {
+          "path": "source.js",
+          "before": {
+            "bytes": 33,
+            "sha256": "bffa975fdc362d637edd8ddd411a52815eca6bdfccc1250cab025b32d471331f"
+          },
+          "after": {
+            "bytes": 33,
+            "sha256": "bffa975fdc362d637edd8ddd411a52815eca6bdfccc1250cab025b32d471331f"
+          }
+        },
+        {
+          "path": "config.json",
+          "before": {
+            "bytes": 2,
+            "sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+          },
+          "after": {
+            "bytes": 2,
+            "sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+          }
+        }
+      ],
+      "temporaryFiles": [],
+      "matchesDirectStdoutReport": null
+    },
+    {
+      "case": "limited-existing",
+      "actionInputs": {
+        "paths": "source.js",
+        "format": "json",
+        "output": "report.json",
+        "config": "config.json"
+      },
+      "exit": 2,
+      "correct": true,
+      "sourceIntact": true,
+      "configIntact": true,
+      "outputBefore": {
+        "bytes": 12800,
+        "sha256": "337fe67b1b199ffd391b5a4c99909f40421f10ca41feccad99c7fecdfee4d876"
+      },
+      "outputAfter": {
+        "bytes": 12800,
+        "sha256": "337fe67b1b199ffd391b5a4c99909f40421f10ca41feccad99c7fecdfee4d876"
+      },
+      "outputReportOrPreview": "previous complete report\nprevious complete report\nprevious complete report\nprevious complete report\nprevious complete report\nprevious complete report\nprevious complete report\nprevious complete report\nprevious complete report\nprevious complete report\nprevious complete report\nprevious complete report\n",
+      "stdout": "",
+      "stderr": "ghostchars: could not write report output: EFBIG: file too large, write\n",
+      "files": [
+        {
+          "path": "report.json",
+          "before": {
+            "bytes": 12800,
+            "sha256": "337fe67b1b199ffd391b5a4c99909f40421f10ca41feccad99c7fecdfee4d876"
+          },
+          "after": {
+            "bytes": 12800,
+            "sha256": "337fe67b1b199ffd391b5a4c99909f40421f10ca41feccad99c7fecdfee4d876"
+          }
+        },
+        {
+          "path": "source.js",
+          "before": {
+            "bytes": 33792,
+            "sha256": "12e4fe43dc436e4d57641c9424d6304606a487d5f2cb48c4a70bd9c1fee4ad6d"
+          },
+          "after": {
+            "bytes": 33792,
+            "sha256": "12e4fe43dc436e4d57641c9424d6304606a487d5f2cb48c4a70bd9c1fee4ad6d"
+          }
+        },
+        {
+          "path": "config.json",
+          "before": {
+            "bytes": 2,
+            "sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+          },
+          "after": {
+            "bytes": 2,
+            "sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+          }
+        }
+      ],
+      "temporaryFiles": [],
+      "matchesDirectStdoutReport": null
+    },
+    {
+      "case": "limited-new",
+      "actionInputs": {
+        "paths": "source.js",
+        "format": "json",
+        "output": "report.json",
+        "config": "config.json"
+      },
+      "exit": 2,
+      "correct": true,
+      "sourceIntact": true,
+      "configIntact": true,
+      "outputBefore": null,
+      "outputAfter": null,
+      "outputReportOrPreview": "",
+      "stdout": "",
+      "stderr": "ghostchars: could not write report output: EFBIG: file too large, write\n",
+      "files": [
+        {
+          "path": "source.js",
+          "before": {
+            "bytes": 33792,
+            "sha256": "12e4fe43dc436e4d57641c9424d6304606a487d5f2cb48c4a70bd9c1fee4ad6d"
+          },
+          "after": {
+            "bytes": 33792,
+            "sha256": "12e4fe43dc436e4d57641c9424d6304606a487d5f2cb48c4a70bd9c1fee4ad6d"
+          }
+        },
+        {
+          "path": "config.json",
+          "before": {
+            "bytes": 2,
+            "sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+          },
+          "after": {
+            "bytes": 2,
+            "sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+          }
+        }
+      ],
+      "temporaryFiles": [],
+      "matchesDirectStdoutReport": null
+    },
+    {
+      "case": "json",
+      "actionInputs": {
+        "paths": "source.js",
+        "format": "json",
+        "output": "report.json",
+        "config": "config.json"
+      },
+      "exit": 1,
+      "correct": true,
+      "sourceIntact": true,
+      "configIntact": true,
+      "outputBefore": {
+        "bytes": 12800,
+        "sha256": "337fe67b1b199ffd391b5a4c99909f40421f10ca41feccad99c7fecdfee4d876"
+      },
+      "outputAfter": {
+        "bytes": 1883,
+        "sha256": "6910940047c611ea683fc0dfab1d56c02c566da9c701055e6f824a608efef6d4"
+      },
+      "outputReportOrPreview": {
+        "ghostchars": true,
+        "summary": {
+          "error": 2,
+          "warning": 0,
+          "info": 0,
+          "total": 2,
+          "files": 1,
+          "complete": true,
+          "inputErrors": 0
+        },
+        "skipped": [],
+        "errors": [],
+        "results": [
+          {
+            "path": "source.js",
+            "findings": [
+              {
+                "rule": "bidi-control",
+                "severity": "error",
+                "start": {
+                  "line": 1,
+                  "column": 21,
+                  "offset": 20
+                },
+                "end": {
+                  "line": 1,
+                  "column": 22,
+                  "offset": 21
+                },
+                "codePoints": [
+                  "U+202E"
+                ],
+                "names": [
+                  "RIGHT-TO-LEFT OVERRIDE"
+                ],
+                "message": "RIGHT-TO-LEFT OVERRIDE changes the visual order of surrounding text without changing the underlying code -- the mechanism behind Trojan Source (CVE-2021-42574).",
+                "suggestion": "Remove this character unless the file is deliberately handling bidirectional text, in which case keep embeddings short, always balanced, and never spanning a comment/string boundary.",
+                "fixable": true
+              },
+              {
+                "rule": "bidi-unbalanced",
+                "severity": "error",
+                "start": {
+                  "line": 1,
+                  "column": 21,
+                  "offset": 20
+                },
+                "end": {
+                  "line": 1,
+                  "column": 22,
+                  "offset": 21
+                },
+                "codePoints": [
+                  "U+202E"
+                ],
+                "names": [
+                  "RIGHT-TO-LEFT OVERRIDE"
+                ],
+                "message": "RIGHT-TO-LEFT OVERRIDE is opened but never closed before the end of the line.",
+                "suggestion": "Add the matching POP DIRECTIONAL FORMATTING (U+202C) or POP DIRECTIONAL ISOLATE (U+2069), or remove this character.",
+                "fixable": true
+              }
+            ]
+          }
+        ]
+      },
+      "stdout": "",
+      "stderr": "",
+      "files": [
+        {
+          "path": "report.json",
+          "before": {
+            "bytes": 12800,
+            "sha256": "337fe67b1b199ffd391b5a4c99909f40421f10ca41feccad99c7fecdfee4d876"
+          },
+          "after": {
+            "bytes": 1883,
+            "sha256": "6910940047c611ea683fc0dfab1d56c02c566da9c701055e6f824a608efef6d4"
+          }
+        },
+        {
+          "path": "source.js",
+          "before": {
+            "bytes": 33,
+            "sha256": "bffa975fdc362d637edd8ddd411a52815eca6bdfccc1250cab025b32d471331f"
+          },
+          "after": {
+            "bytes": 33,
+            "sha256": "bffa975fdc362d637edd8ddd411a52815eca6bdfccc1250cab025b32d471331f"
+          }
+        },
+        {
+          "path": "config.json",
+          "before": {
+            "bytes": 2,
+            "sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+          },
+          "after": {
+            "bytes": 2,
+            "sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+          }
+        }
+      ],
+      "temporaryFiles": [],
+      "matchesDirectStdoutReport": true
+    },
+    {
+      "case": "new-json",
+      "actionInputs": {
+        "paths": "source.js",
+        "format": "json",
+        "output": "report.json",
+        "config": "config.json"
+      },
+      "exit": 1,
+      "correct": true,
+      "sourceIntact": true,
+      "configIntact": true,
+      "outputBefore": null,
+      "outputAfter": {
+        "bytes": 1883,
+        "sha256": "39adfbda3a97fd838d3c6836257cc36bc76c5cd846791f14ac3eea962179771d"
+      },
+      "outputReportOrPreview": {
+        "ghostchars": true,
+        "summary": {
+          "error": 2,
+          "warning": 0,
+          "info": 0,
+          "total": 2,
+          "files": 1,
+          "complete": true,
+          "inputErrors": 0
+        },
+        "skipped": [],
+        "errors": [],
+        "results": [
+          {
+            "path": "source.js",
+            "findings": [
+              {
+                "rule": "bidi-control",
+                "severity": "error",
+                "start": {
+                  "line": 1,
+                  "column": 21,
+                  "offset": 20
+                },
+                "end": {
+                  "line": 1,
+                  "column": 22,
+                  "offset": 21
+                },
+                "codePoints": [
+                  "U+202E"
+                ],
+                "names": [
+                  "RIGHT-TO-LEFT OVERRIDE"
+                ],
+                "message": "RIGHT-TO-LEFT OVERRIDE changes the visual order of surrounding text without changing the underlying code -- the mechanism behind Trojan Source (CVE-2021-42574).",
+                "suggestion": "Remove this character unless the file is deliberately handling bidirectional text, in which case keep embeddings short, always balanced, and never spanning a comment/string boundary.",
+                "fixable": true
+              },
+              {
+                "rule": "bidi-unbalanced",
+                "severity": "error",
+                "start": {
+                  "line": 1,
+                  "column": 21,
+                  "offset": 20
+                },
+                "end": {
+                  "line": 1,
+                  "column": 22,
+                  "offset": 21
+                },
+                "codePoints": [
+                  "U+202E"
+                ],
+                "names": [
+                  "RIGHT-TO-LEFT OVERRIDE"
+                ],
+                "message": "RIGHT-TO-LEFT OVERRIDE is opened but never closed before the end of the line.",
+                "suggestion": "Add the matching POP DIRECTIONAL FORMATTING (U+202C) or POP DIRECTIONAL ISOLATE (U+2069), or remove this character.",
+                "fixable": true
+              }
+            ]
+          }
+        ]
+      },
+      "stdout": "",
+      "stderr": "",
+      "files": [
+        {
+          "path": "source.js",
+          "before": {
+            "bytes": 33,
+            "sha256": "bffa975fdc362d637edd8ddd411a52815eca6bdfccc1250cab025b32d471331f"
+          },
+          "after": {
+            "bytes": 33,
+            "sha256": "bffa975fdc362d637edd8ddd411a52815eca6bdfccc1250cab025b32d471331f"
+          }
+        },
+        {
+          "path": "config.json",
+          "before": {
+            "bytes": 2,
+            "sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+          },
+          "after": {
+            "bytes": 2,
+            "sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+          }
+        }
+      ],
+      "temporaryFiles": [],
+      "matchesDirectStdoutReport": true
+    },
+    {
+      "case": "long-name",
+      "actionInputs": {
+        "paths": "source.js",
+        "format": "json",
+        "output": "rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr.json",
+        "config": "config.json"
+      },
+      "exit": 1,
+      "correct": true,
+      "sourceIntact": true,
+      "configIntact": true,
+      "outputBefore": null,
+      "outputAfter": {
+        "bytes": 1874,
+        "sha256": "9913ab5fccb3ce7ebfc4437745d5c71ed94de4ca3e7f183c8001fb22eaa3ab92"
+      },
+      "outputReportOrPreview": {
+        "ghostchars": true,
+        "summary": {
+          "error": 2,
+          "warning": 0,
+          "info": 0,
+          "total": 2,
+          "files": 1,
+          "complete": true,
+          "inputErrors": 0
+        },
+        "skipped": [],
+        "errors": [],
+        "results": [
+          {
+            "path": "source.js",
+            "findings": [
+              {
+                "rule": "bidi-control",
+                "severity": "error",
+                "start": {
+                  "line": 1,
+                  "column": 21,
+                  "offset": 20
+                },
+                "end": {
+                  "line": 1,
+                  "column": 22,
+                  "offset": 21
+                },
+                "codePoints": [
+                  "U+202E"
+                ],
+                "names": [
+                  "RIGHT-TO-LEFT OVERRIDE"
+                ],
+                "message": "RIGHT-TO-LEFT OVERRIDE changes the visual order of surrounding text without changing the underlying code -- the mechanism behind Trojan Source (CVE-2021-42574).",
+                "suggestion": "Remove this character unless the file is deliberately handling bidirectional text, in which case keep embeddings short, always balanced, and never spanning a comment/string boundary.",
+                "fixable": true
+              },
+              {
+                "rule": "bidi-unbalanced",
+                "severity": "error",
+                "start": {
+                  "line": 1,
+                  "column": 21,
+                  "offset": 20
+                },
+                "end": {
+                  "line": 1,
+                  "column": 22,
+                  "offset": 21
+                },
+                "codePoints": [
+                  "U+202E"
+                ],
+                "names": [
+                  "RIGHT-TO-LEFT OVERRIDE"
+                ],
+                "message": "RIGHT-TO-LEFT OVERRIDE is opened but never closed before the end of the line.",
+                "suggestion": "Add the matching POP DIRECTIONAL FORMATTING (U+202C) or POP DIRECTIONAL ISOLATE (U+2069), or remove this character.",
+                "fixable": true
+              }
+            ]
+          }
+        ]
+      },
+      "stdout": "",
+      "stderr": "",
+      "files": [
+        {
+          "path": "source.js",
+          "before": {
+            "bytes": 33,
+            "sha256": "bffa975fdc362d637edd8ddd411a52815eca6bdfccc1250cab025b32d471331f"
+          },
+          "after": {
+            "bytes": 33,
+            "sha256": "bffa975fdc362d637edd8ddd411a52815eca6bdfccc1250cab025b32d471331f"
+          }
+        },
+        {
+          "path": "config.json",
+          "before": {
+            "bytes": 2,
+            "sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+          },
+          "after": {
+            "bytes": 2,
+            "sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+          }
+        }
+      ],
+      "temporaryFiles": [],
+      "matchesDirectStdoutReport": true
+    },
+    {
+      "case": "sarif",
+      "actionInputs": {
+        "paths": "source.js",
+        "format": "sarif",
+        "output": "report.json",
+        "config": "config.json"
+      },
+      "exit": 1,
+      "correct": true,
+      "sourceIntact": true,
+      "configIntact": true,
+      "outputBefore": {
+        "bytes": 12800,
+        "sha256": "337fe67b1b199ffd391b5a4c99909f40421f10ca41feccad99c7fecdfee4d876"
+      },
+      "outputAfter": {
+        "bytes": 4995,
+        "sha256": "ffd5299a9d0008515faa715875aec15618c6af257b64942e9969bc8586d44146"
+      },
+      "outputReportOrPreview": {
+        "$schema": "https://docs.oasis-open.org/sarif/sarif/v2.1.0/errata01/os/schemas/sarif-schema-2.1.0.json",
+        "version": "2.1.0",
+        "runs": [
+          {
+            "tool": {
+              "driver": {
+                "name": "ghostchars",
+                "informationUri": "https://github.com/antonsoo/ghostchars",
+                "version": "0.1.5",
+                "rules": [
+                  {
+                    "id": "bidi-control",
+                    "shortDescription": {
+                      "text": "Explicit bidirectional formatting character (Trojan Source, CVE-2021-42574)."
+                    },
+                    "helpUri": "https://github.com/antonsoo/ghostchars#detections"
+                  },
+                  {
+                    "id": "bidi-mark",
+                    "shortDescription": {
+                      "text": "Bidirectional mark character."
+                    },
+                    "helpUri": "https://github.com/antonsoo/ghostchars#detections"
+                  },
+                  {
+                    "id": "bidi-unbalanced",
+                    "shortDescription": {
+                      "text": "Unbalanced or unterminated bidirectional embedding/isolate."
+                    },
+                    "helpUri": "https://github.com/antonsoo/ghostchars#detections"
+                  },
+                  {
+                    "id": "tag-smuggling",
+                    "shortDescription": {
+                      "text": "Unicode tag characters outside a valid emoji tag sequence (ASCII smuggling)."
+                    },
+                    "helpUri": "https://github.com/antonsoo/ghostchars#detections"
+                  },
+                  {
+                    "id": "variation-selector-smuggling",
+                    "shortDescription": {
+                      "text": "Variation selector run decodes to a hidden payload."
+                    },
+                    "helpUri": "https://github.com/antonsoo/ghostchars#detections"
+                  },
+                  {
+                    "id": "variation-selector-stray",
+                    "shortDescription": {
+                      "text": "Variation selector with no valid base character."
+                    },
+                    "helpUri": "https://github.com/antonsoo/ghostchars#detections"
+                  },
+                  {
+                    "id": "invisible",
+                    "shortDescription": {
+                      "text": "Invisible / default-ignorable character."
+                    },
+                    "helpUri": "https://github.com/antonsoo/ghostchars#detections"
+                  },
+                  {
+                    "id": "confusable",
+                    "shortDescription": {
+                      "text": "Visually confusable identifier (mixed script or skeleton collision)."
+                    },
+                    "helpUri": "https://github.com/antonsoo/ghostchars#detections"
+                  },
+                  {
+                    "id": "styled-text",
+                    "shortDescription": {
+                      "text": "Letters in a styled Unicode alphabet (mathematical, fullwidth, circled, squared) that read as plain text."
+                    },
+                    "helpUri": "https://github.com/antonsoo/ghostchars#detections"
+                  },
+                  {
+                    "id": "unusual-whitespace",
+                    "shortDescription": {
+                      "text": "Unusual whitespace character."
+                    },
+                    "helpUri": "https://github.com/antonsoo/ghostchars#detections"
+                  },
+                  {
+                    "id": "control-character",
+                    "shortDescription": {
+                      "text": "Unexpected control character."
+                    },
+                    "helpUri": "https://github.com/antonsoo/ghostchars#detections"
+                  }
+                ]
+              }
+            },
+            "results": [
+              {
+                "ruleId": "bidi-control",
+                "level": "error",
+                "message": {
+                  "text": "RIGHT-TO-LEFT OVERRIDE changes the visual order of surrounding text without changing the underlying code -- the mechanism behind Trojan Source (CVE-2021-42574)."
+                },
+                "locations": [
+                  {
+                    "physicalLocation": {
+                      "artifactLocation": {
+                        "uri": "source.js"
+                      },
+                      "region": {
+                        "startLine": 1,
+                        "startColumn": 21,
+                        "endLine": 1,
+                        "endColumn": 22
+                      }
+                    }
+                  }
+                ]
+              },
+              {
+                "ruleId": "bidi-unbalanced",
+                "level": "error",
+                "message": {
+                  "text": "RIGHT-TO-LEFT OVERRIDE is opened but never closed before the end of the line."
+                },
+                "locations": [
+                  {
+                    "physicalLocation": {
+                      "artifactLocation": {
+                        "uri": "source.js"
+                      },
+                      "region": {
+                        "startLine": 1,
+                        "startColumn": 21,
+                        "endLine": 1,
+                        "endColumn": 22
+                      }
+                    }
+                  }
+                ]
+              }
+            ],
+            "invocations": [
+              {
+                "executionSuccessful": true,
+                "toolExecutionNotifications": []
+              }
+            ],
+            "properties": {
+              "skipped": []
+            }
+          }
+        ]
+      },
+      "stdout": "",
+      "stderr": "",
+      "files": [
+        {
+          "path": "report.json",
+          "before": {
+            "bytes": 12800,
+            "sha256": "337fe67b1b199ffd391b5a4c99909f40421f10ca41feccad99c7fecdfee4d876"
+          },
+          "after": {
+            "bytes": 4995,
+            "sha256": "ffd5299a9d0008515faa715875aec15618c6af257b64942e9969bc8586d44146"
+          }
+        },
+        {
+          "path": "source.js",
+          "before": {
+            "bytes": 33,
+            "sha256": "bffa975fdc362d637edd8ddd411a52815eca6bdfccc1250cab025b32d471331f"
+          },
+          "after": {
+            "bytes": 33,
+            "sha256": "bffa975fdc362d637edd8ddd411a52815eca6bdfccc1250cab025b32d471331f"
+          }
+        },
+        {
+          "path": "config.json",
+          "before": {
+            "bytes": 2,
+            "sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+          },
+          "after": {
+            "bytes": 2,
+            "sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+          }
+        }
+      ],
+      "temporaryFiles": [],
+      "matchesDirectStdoutReport": true
+    },
+    {
+      "case": "github",
+      "actionInputs": {
+        "paths": "source.js",
+        "format": "github",
+        "output": "report.json",
+        "config": "config.json"
+      },
+      "exit": 1,
+      "correct": true,
+      "sourceIntact": true,
+      "configIntact": true,
+      "outputBefore": {
+        "bytes": 12800,
+        "sha256": "337fe67b1b199ffd391b5a4c99909f40421f10ca41feccad99c7fecdfee4d876"
+      },
+      "outputAfter": {
+        "bytes": 430,
+        "sha256": "01330ab8abe7fba3872e984d6589b3ba4b02fdd8179ecfbe5af0b61df9c27c88"
+      },
+      "outputReportOrPreview": "::error file=source.js,line=1,col=21,endLine=1,endColumn=22,title=ghostchars%3A bidi-control::RIGHT-TO-LEFT OVERRIDE changes the visual order of surrounding text without changing the underlying code -- the mechanism behind Trojan Source (CVE-2021-42574).\n::error file=source.js,line=1,col=21,endLine=",
+      "stdout": "",
+      "stderr": "",
+      "files": [
+        {
+          "path": "report.json",
+          "before": {
+            "bytes": 12800,
+            "sha256": "337fe67b1b199ffd391b5a4c99909f40421f10ca41feccad99c7fecdfee4d876"
+          },
+          "after": {
+            "bytes": 430,
+            "sha256": "01330ab8abe7fba3872e984d6589b3ba4b02fdd8179ecfbe5af0b61df9c27c88"
+          }
+        },
+        {
+          "path": "source.js",
+          "before": {
+            "bytes": 33,
+            "sha256": "bffa975fdc362d637edd8ddd411a52815eca6bdfccc1250cab025b32d471331f"
+          },
+          "after": {
+            "bytes": 33,
+            "sha256": "bffa975fdc362d637edd8ddd411a52815eca6bdfccc1250cab025b32d471331f"
+          }
+        },
+        {
+          "path": "config.json",
+          "before": {
+            "bytes": 2,
+            "sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+          },
+          "after": {
+            "bytes": 2,
+            "sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+          }
+        }
+      ],
+      "temporaryFiles": [],
+      "matchesDirectStdoutReport": true
+    },
+    {
+      "case": "pretty",
+      "actionInputs": {
+        "paths": "source.js",
+        "format": "pretty",
+        "output": "report.json",
+        "config": "config.json"
+      },
+      "exit": 1,
+      "correct": true,
+      "sourceIntact": true,
+      "configIntact": true,
+      "outputBefore": {
+        "bytes": 12800,
+        "sha256": "337fe67b1b199ffd391b5a4c99909f40421f10ca41feccad99c7fecdfee4d876"
+      },
+      "outputAfter": {
+        "bytes": 899,
+        "sha256": "d3b6ba5dad3d914a868a61d5a2b750eed84447ebfd0fc0a3d781c617653ff092"
+      },
+      "outputReportOrPreview": "source.js\n  Bounded source excerpts: [[...]] marks each finding. End positions are exclusive.\n  1:21-1:22  error  bidi-control\n    RIGHT-TO-LEFT OVERRIDE changes the visual order of surrounding text without changing the underlying code -- the mechanism behind Trojan Source (CVE-2021-42574).\n    | co",
+      "stdout": "",
+      "stderr": "",
+      "files": [
+        {
+          "path": "report.json",
+          "before": {
+            "bytes": 12800,
+            "sha256": "337fe67b1b199ffd391b5a4c99909f40421f10ca41feccad99c7fecdfee4d876"
+          },
+          "after": {
+            "bytes": 899,
+            "sha256": "d3b6ba5dad3d914a868a61d5a2b750eed84447ebfd0fc0a3d781c617653ff092"
+          }
+        },
+        {
+          "path": "source.js",
+          "before": {
+            "bytes": 33,
+            "sha256": "bffa975fdc362d637edd8ddd411a52815eca6bdfccc1250cab025b32d471331f"
+          },
+          "after": {
+            "bytes": 33,
+            "sha256": "bffa975fdc362d637edd8ddd411a52815eca6bdfccc1250cab025b32d471331f"
+          }
+        },
+        {
+          "path": "config.json",
+          "before": {
+            "bytes": 2,
+            "sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+          },
+          "after": {
+            "bytes": 2,
+            "sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+          }
+        }
+      ],
+      "temporaryFiles": [],
+      "matchesDirectStdoutReport": true
+    },
+    {
+      "case": "summary",
+      "actionInputs": {
+        "paths": "source.js",
+        "format": "summary",
+        "output": "report.json",
+        "config": "config.json"
+      },
+      "exit": 1,
+      "correct": true,
+      "sourceIntact": true,
+      "configIntact": true,
+      "outputBefore": {
+        "bytes": 12800,
+        "sha256": "337fe67b1b199ffd391b5a4c99909f40421f10ca41feccad99c7fecdfee4d876"
+      },
+      "outputAfter": {
+        "bytes": 169,
+        "sha256": "b6aff8f4e3a9a1c5697e40b375184646f0eb77cf5e7835328b09c10d25adfc00"
+      },
+      "outputReportOrPreview": "source.js\n  error  bidi-control  RIGHT-TO-LEFT OVERRIDE  x1  1:21\n  error  bidi-unbalanced  x1  1:21\n\nghostchars: 2 error(s), 0 warning(s), 0 info in 1 file(s) scanned.\n",
+      "stdout": "",
+      "stderr": "",
+      "files": [
+        {
+          "path": "report.json",
+          "before": {
+            "bytes": 12800,
+            "sha256": "337fe67b1b199ffd391b5a4c99909f40421f10ca41feccad99c7fecdfee4d876"
+          },
+          "after": {
+            "bytes": 169,
+            "sha256": "b6aff8f4e3a9a1c5697e40b375184646f0eb77cf5e7835328b09c10d25adfc00"
+          }
+        },
+        {
+          "path": "source.js",
+          "before": {
+            "bytes": 33,
+            "sha256": "bffa975fdc362d637edd8ddd411a52815eca6bdfccc1250cab025b32d471331f"
+          },
+          "after": {
+            "bytes": 33,
+            "sha256": "bffa975fdc362d637edd8ddd411a52815eca6bdfccc1250cab025b32d471331f"
+          }
+        },
+        {
+          "path": "config.json",
+          "before": {
+            "bytes": 2,
+            "sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+          },
+          "after": {
+            "bytes": 2,
+            "sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+          }
+        }
+      ],
+      "temporaryFiles": [],
+      "matchesDirectStdoutReport": true
+    },
+    {
+      "case": "no-output",
+      "actionInputs": {
+        "paths": "source.js",
+        "format": "json",
+        "output": "",
+        "config": "config.json"
+      },
+      "exit": 1,
+      "correct": true,
+      "sourceIntact": true,
+      "configIntact": true,
+      "outputBefore": {
+        "bytes": 12800,
+        "sha256": "337fe67b1b199ffd391b5a4c99909f40421f10ca41feccad99c7fecdfee4d876"
+      },
+      "outputAfter": {
+        "bytes": 12800,
+        "sha256": "337fe67b1b199ffd391b5a4c99909f40421f10ca41feccad99c7fecdfee4d876"
+      },
+      "outputReportOrPreview": "previous complete report\nprevious complete report\nprevious complete report\nprevious complete report\nprevious complete report\nprevious complete report\nprevious complete report\nprevious complete report\nprevious complete report\nprevious complete report\nprevious complete report\nprevious complete report\n",
+      "stdout": {
+        "ghostchars": true,
+        "summary": {
+          "error": 2,
+          "warning": 0,
+          "info": 0,
+          "total": 2,
+          "files": 1,
+          "complete": true,
+          "inputErrors": 0
+        },
+        "skipped": [],
+        "errors": [],
+        "results": [
+          {
+            "path": "source.js",
+            "findings": [
+              {
+                "rule": "bidi-control",
+                "severity": "error",
+                "start": {
+                  "line": 1,
+                  "column": 21,
+                  "offset": 20
+                },
+                "end": {
+                  "line": 1,
+                  "column": 22,
+                  "offset": 21
+                },
+                "codePoints": [
+                  "U+202E"
+                ],
+                "names": [
+                  "RIGHT-TO-LEFT OVERRIDE"
+                ],
+                "message": "RIGHT-TO-LEFT OVERRIDE changes the visual order of surrounding text without changing the underlying code -- the mechanism behind Trojan Source (CVE-2021-42574).",
+                "suggestion": "Remove this character unless the file is deliberately handling bidirectional text, in which case keep embeddings short, always balanced, and never spanning a comment/string boundary.",
+                "fixable": true
+              },
+              {
+                "rule": "bidi-unbalanced",
+                "severity": "error",
+                "start": {
+                  "line": 1,
+                  "column": 21,
+                  "offset": 20
+                },
+                "end": {
+                  "line": 1,
+                  "column": 22,
+                  "offset": 21
+                },
+                "codePoints": [
+                  "U+202E"
+                ],
+                "names": [
+                  "RIGHT-TO-LEFT OVERRIDE"
+                ],
+                "message": "RIGHT-TO-LEFT OVERRIDE is opened but never closed before the end of the line.",
+                "suggestion": "Add the matching POP DIRECTIONAL FORMATTING (U+202C) or POP DIRECTIONAL ISOLATE (U+2069), or remove this character.",
+                "fixable": true
+              }
+            ]
+          }
+        ]
+      },
+      "stderr": "",
+      "files": [
+        {
+          "path": "report.json",
+          "before": {
+            "bytes": 12800,
+            "sha256": "337fe67b1b199ffd391b5a4c99909f40421f10ca41feccad99c7fecdfee4d876"
+          },
+          "after": {
+            "bytes": 12800,
+            "sha256": "337fe67b1b199ffd391b5a4c99909f40421f10ca41feccad99c7fecdfee4d876"
+          }
+        },
+        {
+          "path": "source.js",
+          "before": {
+            "bytes": 33,
+            "sha256": "bffa975fdc362d637edd8ddd411a52815eca6bdfccc1250cab025b32d471331f"
+          },
+          "after": {
+            "bytes": 33,
+            "sha256": "bffa975fdc362d637edd8ddd411a52815eca6bdfccc1250cab025b32d471331f"
+          }
+        },
+        {
+          "path": "config.json",
+          "before": {
+            "bytes": 2,
+            "sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+          },
+          "after": {
+            "bytes": 2,
+            "sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+          }
+        }
+      ],
+      "temporaryFiles": [],
+      "matchesDirectStdoutReport": true
+    },
+    {
+      "case": "incomplete",
+      "actionInputs": {
+        "paths": "source.js missing.js",
+        "format": "json",
+        "output": "report.json",
+        "config": "config.json"
+      },
+      "exit": 2,
+      "correct": true,
+      "sourceIntact": true,
+      "configIntact": true,
+      "outputBefore": {
+        "bytes": 12800,
+        "sha256": "337fe67b1b199ffd391b5a4c99909f40421f10ca41feccad99c7fecdfee4d876"
+      },
+      "outputAfter": {
+        "bytes": 2073,
+        "sha256": "c0a0e9ab9729dc6f77c83ceee3be81b5ec1e143b6e70a71f5387f4984e459d8a"
+      },
+      "outputReportOrPreview": {
+        "ghostchars": true,
+        "summary": {
+          "error": 2,
+          "warning": 0,
+          "info": 0,
+          "total": 2,
+          "files": 1,
+          "complete": false,
+          "inputErrors": 1
+        },
+        "skipped": [],
+        "errors": [
+          {
+            "path": "missing.js",
+            "reason": "could not inspect path: ENOENT: no such file or directory, lstat '<fixture>/missing.js'"
+          }
+        ],
+        "results": [
+          {
+            "path": "source.js",
+            "findings": [
+              {
+                "rule": "bidi-control",
+                "severity": "error",
+                "start": {
+                  "line": 1,
+                  "column": 21,
+                  "offset": 20
+                },
+                "end": {
+                  "line": 1,
+                  "column": 22,
+                  "offset": 21
+                },
+                "codePoints": [
+                  "U+202E"
+                ],
+                "names": [
+                  "RIGHT-TO-LEFT OVERRIDE"
+                ],
+                "message": "RIGHT-TO-LEFT OVERRIDE changes the visual order of surrounding text without changing the underlying code -- the mechanism behind Trojan Source (CVE-2021-42574).",
+                "suggestion": "Remove this character unless the file is deliberately handling bidirectional text, in which case keep embeddings short, always balanced, and never spanning a comment/string boundary.",
+                "fixable": true
+              },
+              {
+                "rule": "bidi-unbalanced",
+                "severity": "error",
+                "start": {
+                  "line": 1,
+                  "column": 21,
+                  "offset": 20
+                },
+                "end": {
+                  "line": 1,
+                  "column": 22,
+                  "offset": 21
+                },
+                "codePoints": [
+                  "U+202E"
+                ],
+                "names": [
+                  "RIGHT-TO-LEFT OVERRIDE"
+                ],
+                "message": "RIGHT-TO-LEFT OVERRIDE is opened but never closed before the end of the line.",
+                "suggestion": "Add the matching POP DIRECTIONAL FORMATTING (U+202C) or POP DIRECTIONAL ISOLATE (U+2069), or remove this character.",
+                "fixable": true
+              }
+            ]
+          }
+        ]
+      },
+      "stdout": "",
+      "stderr": "",
+      "files": [
+        {
+          "path": "report.json",
+          "before": {
+            "bytes": 12800,
+            "sha256": "337fe67b1b199ffd391b5a4c99909f40421f10ca41feccad99c7fecdfee4d876"
+          },
+          "after": {
+            "bytes": 2073,
+            "sha256": "c0a0e9ab9729dc6f77c83ceee3be81b5ec1e143b6e70a71f5387f4984e459d8a"
+          }
+        },
+        {
+          "path": "source.js",
+          "before": {
+            "bytes": 33,
+            "sha256": "bffa975fdc362d637edd8ddd411a52815eca6bdfccc1250cab025b32d471331f"
+          },
+          "after": {
+            "bytes": 33,
+            "sha256": "bffa975fdc362d637edd8ddd411a52815eca6bdfccc1250cab025b32d471331f"
+          }
+        },
+        {
+          "path": "config.json",
+          "before": {
+            "bytes": 2,
+            "sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+          },
+          "after": {
+            "bytes": 2,
+            "sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+          }
+        }
+      ],
+      "temporaryFiles": [],
+      "matchesDirectStdoutReport": true
+    },
+    {
+      "case": "ignored-report",
+      "actionInputs": {
+        "paths": ".",
+        "format": "json",
+        "output": "report.json",
+        "config": "config.json"
+      },
+      "exit": 1,
+      "correct": true,
+      "sourceIntact": true,
+      "configIntact": true,
+      "outputBefore": {
+        "bytes": 12800,
+        "sha256": "337fe67b1b199ffd391b5a4c99909f40421f10ca41feccad99c7fecdfee4d876"
+      },
+      "outputAfter": {
+        "bytes": 1883,
+        "sha256": "cbcb926abf396b62cd7c24c94dd873adb07a776222dd8db9df9b203878ecbb85"
+      },
+      "outputReportOrPreview": {
+        "ghostchars": true,
+        "summary": {
+          "error": 2,
+          "warning": 0,
+          "info": 0,
+          "total": 2,
+          "files": 3,
+          "complete": true,
+          "inputErrors": 0
+        },
+        "skipped": [],
+        "errors": [],
+        "results": [
+          {
+            "path": "source.js",
+            "findings": [
+              {
+                "rule": "bidi-control",
+                "severity": "error",
+                "start": {
+                  "line": 1,
+                  "column": 21,
+                  "offset": 20
+                },
+                "end": {
+                  "line": 1,
+                  "column": 22,
+                  "offset": 21
+                },
+                "codePoints": [
+                  "U+202E"
+                ],
+                "names": [
+                  "RIGHT-TO-LEFT OVERRIDE"
+                ],
+                "message": "RIGHT-TO-LEFT OVERRIDE changes the visual order of surrounding text without changing the underlying code -- the mechanism behind Trojan Source (CVE-2021-42574).",
+                "suggestion": "Remove this character unless the file is deliberately handling bidirectional text, in which case keep embeddings short, always balanced, and never spanning a comment/string boundary.",
+                "fixable": true
+              },
+              {
+                "rule": "bidi-unbalanced",
+                "severity": "error",
+                "start": {
+                  "line": 1,
+                  "column": 21,
+                  "offset": 20
+                },
+                "end": {
+                  "line": 1,
+                  "column": 22,
+                  "offset": 21
+                },
+                "codePoints": [
+                  "U+202E"
+                ],
+                "names": [
+                  "RIGHT-TO-LEFT OVERRIDE"
+                ],
+                "message": "RIGHT-TO-LEFT OVERRIDE is opened but never closed before the end of the line.",
+                "suggestion": "Add the matching POP DIRECTIONAL FORMATTING (U+202C) or POP DIRECTIONAL ISOLATE (U+2069), or remove this character.",
+                "fixable": true
+              }
+            ]
+          }
+        ]
+      },
+      "stdout": "",
+      "stderr": "",
+      "files": [
+        {
+          "path": "report.json",
+          "before": {
+            "bytes": 12800,
+            "sha256": "337fe67b1b199ffd391b5a4c99909f40421f10ca41feccad99c7fecdfee4d876"
+          },
+          "after": {
+            "bytes": 1883,
+            "sha256": "cbcb926abf396b62cd7c24c94dd873adb07a776222dd8db9df9b203878ecbb85"
+          }
+        },
+        {
+          "path": "source.js",
+          "before": {
+            "bytes": 33,
+            "sha256": "bffa975fdc362d637edd8ddd411a52815eca6bdfccc1250cab025b32d471331f"
+          },
+          "after": {
+            "bytes": 33,
+            "sha256": "bffa975fdc362d637edd8ddd411a52815eca6bdfccc1250cab025b32d471331f"
+          }
+        },
+        {
+          "path": ".gitignore",
+          "before": {
+            "bytes": 12,
+            "sha256": "b3e4bef7ee70b0141983dd6a53031f539354aef91e616cad058ec89f696c9196"
+          },
+          "after": {
+            "bytes": 12,
+            "sha256": "b3e4bef7ee70b0141983dd6a53031f539354aef91e616cad058ec89f696c9196"
+          }
+        },
+        {
+          "path": "config.json",
+          "before": {
+            "bytes": 2,
+            "sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+          },
+          "after": {
+            "bytes": 2,
+            "sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+          }
+        }
+      ],
+      "temporaryFiles": [],
+      "matchesDirectStdoutReport": true
+    }
+  ],
+  "summary": {
+    "cases": 26,
+    "correct": 26,
+    "inputOrConfigChanged": 0,
+    "falseCleanWithChangedSource": 0
+  }
+}

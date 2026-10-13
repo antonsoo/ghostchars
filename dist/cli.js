@@ -1,8 +1,9 @@
 #!/usr/bin/env node
 
 // src/cli/index.ts
-import { readFileSync as readFileSync5, realpathSync as realpathSync2 } from "node:fs";
+import { readFileSync as readFileSync5, realpathSync as realpathSync3 } from "node:fs";
 import { fileURLToPath } from "node:url";
+import { resolve as resolve3 } from "node:path";
 
 // src/core/names.ts
 var NAMES = /* @__PURE__ */ new Map([
@@ -9888,6 +9889,105 @@ function replaceFiles(plans) {
   return { repaired, errors };
 }
 
+// src/cli/writeReport.ts
+import { randomUUID as randomUUID2 } from "node:crypto";
+import {
+  accessSync,
+  closeSync as closeSync2,
+  constants as constants2,
+  fstatSync as fstatSync2,
+  fsyncSync as fsyncSync2,
+  lstatSync as lstatSync3,
+  openSync as openSync2,
+  realpathSync as realpathSync2,
+  renameSync as renameSync2,
+  statSync,
+  unlinkSync as unlinkSync2,
+  writeFileSync as writeFileSync2
+} from "node:fs";
+import { basename, dirname as dirname3, join as join4, resolve as resolve2 } from "node:path";
+function absent(error) {
+  return ["ENOENT", "ENOTDIR"].includes(error.code ?? "");
+}
+function inputIdentity(path) {
+  try {
+    return { path: realpathSync2(path), stat: statSync(path, { bigint: true }) };
+  } catch (error) {
+    if (!absent(error)) throw error;
+    try {
+      return { path: join4(realpathSync2(dirname3(path)), basename(path)) };
+    } catch (parentError) {
+      if (!absent(parentError)) throw parentError;
+    }
+    return { path: resolve2(path) };
+  }
+}
+function sameIdentity(a, b) {
+  return a.dev === b.dev && a.ino === b.ino;
+}
+function sameDestination(a, b) {
+  if (!a || !b) return a === b;
+  return ["dev", "ino", "size", "mtimeNs", "ctimeNs", "mode", "uid", "gid", "nlink"].every((key) => a[key] === b[key]);
+}
+function prepareReportOutput(output, inputs) {
+  const destination = resolve2(output);
+  const canonical = join4(realpathSync2(dirname3(destination)), basename(destination));
+  const inputPaths = [...new Set(inputs.map((path) => resolve2(path)))];
+  const originals = inputPaths.map(inputIdentity);
+  const inspect = (refreshInputs = true) => {
+    if (join4(realpathSync2(dirname3(destination)), basename(destination)) !== canonical) {
+      throw new Error("report parent directory changed; choose a stable output path");
+    }
+    let info;
+    try {
+      info = lstatSync3(destination, { bigint: true });
+    } catch (error) {
+      if (!absent(error)) throw error;
+    }
+    if (info && !info.isFile()) throw new Error("report output must be a regular file, not a symbolic link or special file");
+    for (const input of refreshInputs ? [...originals, ...inputPaths.map(inputIdentity)] : originals) {
+      if (input.path === canonical || info && input.stat && sameIdentity(info, input.stat)) {
+        throw new Error("report output overlaps an input or configuration file; choose a separate path outside the scan or ignore the report");
+      }
+    }
+    if (info) accessSync(destination, constants2.W_OK);
+    return info;
+  };
+  const expected = inspect(false);
+  return (text) => {
+    if (!sameDestination(expected, inspect())) throw new Error("report destination changed since scanning; previous output left untouched");
+    const temporary = join4(dirname3(destination), `.ghostchars-report-${randomUUID2()}.tmp`);
+    let owned;
+    const failures = [];
+    try {
+      const fd = openSync2(temporary, "wx", 384);
+      try {
+        owned = fstatSync2(fd, { bigint: true });
+        writeFileSync2(fd, text, "utf8");
+        fsyncSync2(fd);
+      } finally {
+        closeSync2(fd);
+      }
+      if (!sameDestination(expected, inspect())) throw new Error("report destination changed while writing; previous output left untouched");
+      const staged = lstatSync3(temporary, { bigint: true });
+      if (!staged.isFile() || !sameIdentity(staged, owned)) throw new Error("temporary report path changed; output left untouched");
+      renameSync2(temporary, destination);
+    } catch (error) {
+      failures.push(error);
+    } finally {
+      if (owned) {
+        try {
+          const current = lstatSync3(temporary, { bigint: true });
+          if (current.isFile() && sameIdentity(current, owned)) unlinkSync2(temporary);
+        } catch (error) {
+          if (!absent(error)) failures.push(error);
+        }
+      }
+    }
+    if (failures.length) throw new Error(failures.map((error) => error instanceof Error ? error.message : String(error)).join("; "));
+  };
+}
+
 // src/cli/index.ts
 var HELP = `ghostchars ${VERSION} -- catch invisible and deceptive Unicode
 
@@ -9902,12 +10002,13 @@ Options:
   --dry-run                             With --fix, preview changes instead of writing
   --config <path>                       Path to a .ghostcharsrc.json (default: ./.ghostcharsrc.json)
   --no-config                           Ignore any .ghostcharsrc.json
+  --output <path>                       Write the scan report to a separate file after scanning
   --quiet                               Suppress the summary line
 
 Exit codes: 0 = no error-level findings, 1 = error-level findings present, 2 = usage/runtime error.
 `;
 function parseArgs(argv) {
-  const args = { format: "pretty", fix: false, dryRun: false, config: void 0, noConfig: false, quiet: false, help: false, version: false, paths: [], command: "scan" };
+  const args = { format: "pretty", fix: false, dryRun: false, config: void 0, output: void 0, noConfig: false, quiet: false, help: false, version: false, paths: [], command: "scan" };
   let i = 0;
   if (argv[0] === "reveal") {
     args.command = "reveal";
@@ -9928,10 +10029,17 @@ function parseArgs(argv) {
       if (!value || value.startsWith("--")) throw new UsageError("--config requires a file path");
       args.config = value;
     } else if (a.startsWith("--config=")) args.config = a.slice("--config=".length);
+    else if (a === "--output") {
+      const value = argv[++i];
+      if (!value || value.startsWith("--")) throw new UsageError("--output requires a file path");
+      args.output = value;
+    } else if (a.startsWith("--output=")) args.output = a.slice("--output=".length);
     else if (a !== "-" && a.startsWith("-")) throw new UsageError(`Unknown option: ${a}`);
     else args.paths.push(a);
   }
   if (args.config === "") throw new UsageError("--config requires a file path");
+  if (args.output === "") throw new UsageError("--output requires a file path");
+  if (args.output && args.command === "reveal") throw new UsageError("--output is for scan reports; reveal writes to stdout");
   return args;
 }
 var UsageError = class extends Error {
@@ -9966,6 +10074,26 @@ function main(argv) {
   }
   const start = performance.now();
   const { files, skipped, errors } = discoverFiles(args.paths, cwd);
+  let writeOutput;
+  if (args.output) {
+    try {
+      writeOutput = prepareReportOutput(args.output, [
+        ...args.paths.map((path) => resolve3(cwd, path)),
+        ...files.map((file) => file.absPath),
+        ...skipped.map((file) => resolve3(cwd, file.path)),
+        ...errors.map((file) => resolve3(cwd, file.path)),
+        ...!args.noConfig ? [resolve3(cwd, args.config ?? ".ghostcharsrc.json")] : []
+      ]);
+    } catch (error) {
+      console.error(diagnosticText(`ghostchars: could not prepare report output: ${error.message}`));
+      return 2;
+    }
+  }
+  const outputLines = [];
+  const print = (text) => {
+    if (writeOutput) outputLines.push(text + "\n");
+    else console.log(text);
+  };
   const report = { files: [], skipped, errors, durationMs: 0 };
   let hadFixes = false;
   const repairs = [];
@@ -9990,7 +10118,7 @@ function main(argv) {
         hadFixes = true;
         if (args.dryRun) {
           const preview = formatDryRun(outcome, source);
-          if (preview) console.log(preview + "\n");
+          if (preview) print(preview + "\n");
         } else {
           repairs.push({ ...file, original, replacement: encodeFile(outcome.newText, encoding) });
         }
@@ -10009,12 +10137,12 @@ function main(argv) {
   report.durationMs = performance.now() - start;
   if (!(args.fix && args.dryRun)) {
     const output = args.format === "json" ? formatJson(report) : args.format === "sarif" ? formatSarif(report) : args.format === "github" ? formatGithub(report) : args.format === "summary" ? formatSummary(report) : formatPretty(report);
-    console.log(output);
+    print(output);
   } else if (!hadFixes && !args.quiet) {
-    if (report.errors.length) console.log("ghostchars: scan incomplete; no fix preview is available for failed inputs.");
+    if (report.errors.length) print("ghostchars: scan incomplete; no fix preview is available for failed inputs.");
     else if (report.files.some((file) => file.findings.length > 0)) {
-      console.log("ghostchars: no automatic removals under the current policy. Review the remaining findings.\n\n" + formatSummary(report));
-    } else console.log(colors.green("ghostchars: nothing to fix."));
+      print("ghostchars: no automatic removals under the current policy. Review the remaining findings.\n\n" + formatSummary(report));
+    } else print(colors.green("ghostchars: nothing to fix."));
   }
   if (args.fix && args.dryRun) {
     if (report.errors.length) console.error("ghostchars: preview incomplete; failed inputs have no repair plan.");
@@ -10022,6 +10150,14 @@ function main(argv) {
     for (const error of report.errors) console.error(diagnosticText(`error ${error.path}: ${error.reason}`));
   }
   const counts = severityCounts(report);
+  if (writeOutput) {
+    try {
+      writeOutput(outputLines.join(""));
+    } catch (error) {
+      console.error(diagnosticText(`ghostchars: could not write report output: ${error.message}`));
+      return 2;
+    }
+  }
   if (report.errors.length) return 2;
   if (counts.error > 0) return 1;
   return 0;
@@ -10030,7 +10166,7 @@ function invokedDirectly() {
   const entry = process.argv[1];
   if (!entry) return false;
   try {
-    return realpathSync2(entry) === realpathSync2(fileURLToPath(import.meta.url));
+    return realpathSync3(entry) === realpathSync3(fileURLToPath(import.meta.url));
   } catch {
     return false;
   }

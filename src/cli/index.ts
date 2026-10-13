@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 import { readFileSync, realpathSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
+import { resolve } from 'node:path';
 import { scanText } from '../core/index.js';
 import { diagnosticText } from '../core/diagnosticText.js';
 import type { ScanOptions } from '../core/index.js';
@@ -19,6 +20,7 @@ import { colors } from './colors.js';
 import { discoverFiles, throughSymlink } from './walk.js';
 import { VERSION } from './version.js';
 import { replaceFiles, type RepairPlan } from './replaceFiles.js';
+import { prepareReportOutput } from './writeReport.js';
 
 
 const HELP = `ghostchars ${VERSION} -- catch invisible and deceptive Unicode
@@ -34,13 +36,14 @@ Options:
   --dry-run                             With --fix, preview changes instead of writing
   --config <path>                       Path to a .ghostcharsrc.json (default: ./.ghostcharsrc.json)
   --no-config                           Ignore any .ghostcharsrc.json
+  --output <path>                       Write the scan report to a separate file after scanning
   --quiet                               Suppress the summary line
 
 Exit codes: 0 = no error-level findings, 1 = error-level findings present, 2 = usage/runtime error.
 `;
 
 function parseArgs(argv: string[]) {
-  const args = { format: 'pretty', fix: false, dryRun: false, config: undefined as string | undefined, noConfig: false, quiet: false, help: false, version: false, paths: [] as string[], command: 'scan' as 'scan' | 'reveal' };
+  const args = { format: 'pretty', fix: false, dryRun: false, config: undefined as string | undefined, output: undefined as string | undefined, noConfig: false, quiet: false, help: false, version: false, paths: [] as string[], command: 'scan' as 'scan' | 'reveal' };
   let i = 0;
   if (argv[0] === 'reveal') {
     args.command = 'reveal';
@@ -62,10 +65,18 @@ function parseArgs(argv: string[]) {
       args.config = value;
     }
     else if (a.startsWith('--config=')) args.config = a.slice('--config='.length);
+    else if (a === '--output') {
+      const value = argv[++i];
+      if (!value || value.startsWith('--')) throw new UsageError('--output requires a file path');
+      args.output = value;
+    }
+    else if (a.startsWith('--output=')) args.output = a.slice('--output='.length);
     else if (a !== '-' && a.startsWith('-')) throw new UsageError(`Unknown option: ${a}`);
     else args.paths.push(a);
   }
   if (args.config === '') throw new UsageError('--config requires a file path');
+  if (args.output === '') throw new UsageError('--output requires a file path');
+  if (args.output && args.command === 'reveal') throw new UsageError('--output is for scan reports; reveal writes to stdout');
   return args;
 }
 
@@ -105,6 +116,27 @@ export function main(argv: string[]): number {
   const start = performance.now();
   const { files, skipped, errors } = discoverFiles(args.paths, cwd);
 
+  let writeOutput: ((text: string) => void) | undefined;
+  if (args.output) {
+    try {
+      writeOutput = prepareReportOutput(args.output, [
+        ...args.paths.map(path => resolve(cwd, path)),
+        ...files.map(file => file.absPath),
+        ...skipped.map(file => resolve(cwd, file.path)),
+        ...errors.map(file => resolve(cwd, file.path)),
+        ...(!args.noConfig ? [resolve(cwd, args.config ?? '.ghostcharsrc.json')] : []),
+      ]);
+    } catch (error) {
+      console.error(diagnosticText(`ghostchars: could not prepare report output: ${(error as Error).message}`));
+      return 2;
+    }
+  }
+  const outputLines: string[] = [];
+  const print = (text: string): void => {
+    if (writeOutput) outputLines.push(text + '\n');
+    else console.log(text);
+  };
+
   const report: ScanReport = { files: [], skipped, errors, durationMs: 0 };
   let hadFixes = false;
   const repairs: RepairPlan[] = [];
@@ -132,7 +164,7 @@ export function main(argv: string[]): number {
         hadFixes = true;
         if (args.dryRun) {
           const preview = formatDryRun(outcome, source);
-          if (preview) console.log(preview + '\n');
+          if (preview) print(preview + '\n');
         } else {
           repairs.push({ ...file, original, replacement: encodeFile(outcome.newText, encoding) });
         }
@@ -158,12 +190,12 @@ export function main(argv: string[]): number {
 
   if (!(args.fix && args.dryRun)) {
     const output = args.format === 'json' ? formatJson(report) : args.format === 'sarif' ? formatSarif(report) : args.format === 'github' ? formatGithub(report) : args.format === 'summary' ? formatSummary(report) : formatPretty(report);
-    console.log(output);
+    print(output);
   } else if (!hadFixes && !args.quiet) {
-    if (report.errors.length) console.log('ghostchars: scan incomplete; no fix preview is available for failed inputs.');
+    if (report.errors.length) print('ghostchars: scan incomplete; no fix preview is available for failed inputs.');
     else if (report.files.some((file) => file.findings.length > 0)) {
-      console.log('ghostchars: no automatic removals under the current policy. Review the remaining findings.\n\n' + formatSummary(report));
-    } else console.log(colors.green('ghostchars: nothing to fix.'));
+      print('ghostchars: no automatic removals under the current policy. Review the remaining findings.\n\n' + formatSummary(report));
+    } else print(colors.green('ghostchars: nothing to fix.'));
   }
 
   if (args.fix && args.dryRun) {
@@ -173,6 +205,13 @@ export function main(argv: string[]): number {
   }
 
   const counts = severityCounts(report);
+  if (writeOutput) {
+    try { writeOutput(outputLines.join('')); }
+    catch (error) {
+      console.error(diagnosticText(`ghostchars: could not write report output: ${(error as Error).message}`));
+      return 2;
+    }
+  }
   if (report.errors.length) return 2;
   if (counts.error > 0) return 1;
   return 0;

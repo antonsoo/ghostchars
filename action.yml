@@ -15,7 +15,7 @@ inputs:
     required: false
     default: 'github'
   output:
-    description: 'File to write the report to. If empty, the report goes to stdout (and, for format=github, becomes inline PR annotations).'
+    description: 'Separate file to write the report to after scanning. Existing scanned inputs and configuration cannot be overwritten. If empty, the report goes to stdout (and, for format=github, becomes inline PR annotations).'
     required: false
     default: ''
   config:
@@ -49,16 +49,11 @@ runs:
         if [ -n "$GC_CONFIG" ]; then
           args+=(--config "$GC_CONFIG")
         fi
+        if [ -n "$GC_OUTPUT" ]; then
+          args+=(--output "$GC_OUTPUT")
+        fi
         # shellcheck disable=SC2206 # intentional word-splitting: paths is a
         # space-separated list of paths/globs, same convention as `git add`.
         args+=($GC_PATHS)
 
-        set +e
-        if [ -n "$GC_OUTPUT" ]; then
-          node "$GC_ACTION_PATH/dist/cli.js" "${args[@]}" > "$GC_OUTPUT"
-        else
-          node "$GC_ACTION_PATH/dist/cli.js" "${args[@]}"
-        fi
-        status=$?
-        set -e
-        exit "$status"
+        node "$GC_ACTION_PATH/dist/cli.js" "${args[@]}"

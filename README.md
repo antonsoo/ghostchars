@@ -100,6 +100,9 @@ ghostchars . --format summary
 ghostchars . --format sarif > ghostchars.sarif
 ghostchars . --format github        # ::error file=...,line=...::... annotations
 
+# Safe report-file output (source checkout, unreleased)
+ghostchars . --format sarif --output ../ghostchars.sarif
+
 # See (and fix) what's hiding
 ghostchars reveal suspicious.txt
 ghostchars . --fix --dry-run        # preview
@@ -186,6 +189,25 @@ not establish that a prompt is trustworthy. The source checkout also accepts
 ```
 
 See [`examples/workflows/ghostchars.yml`](examples/workflows/ghostchars.yml) and [`examples/workflows/ghostchars-sarif.yml`](examples/workflows/ghostchars-sarif.yml) (code-scanning upload) for full workflow files.
+
+The Action's `output` input now uses the source CLI's `--output` writer. It
+refuses paths that overlap selected inputs or the Ghostchars configuration,
+including hard-link aliases, and refuses symbolic-link output files. Reports
+are written after scanning to a private temporary file beside the destination,
+flushed and renamed into place. A failed staging write preserves an earlier
+report; a scan with incomplete inputs can still produce a report with exit 2.
+The SARIF example uses `${{ runner.temp }}` outside the scanned checkout.
+An existing report inside a selected directory must be ignored or moved outside
+that directory; it is not silently excluded from scanning.
+
+Shell `>` redirection opens its destination before the CLI starts and cannot
+receive these protections. Use `--output` from a source build, or the Action's
+`output` input. Reports use mode 0600 on POSIX and replace the inode without
+preserving old report metadata. A report-write failure does not undo completed
+`--fix` repairs; notices of concurrent changes are checked, but this is not a
+filesystem sandbox or a power-loss durability guarantee.
+[Actual Action-body, alias and kernel write-failure replay](studies/action-reports/README.md).
+The npm release has not yet gained `--output`.
 
 ### Config (`.ghostcharsrc.json`)
 

@@ -25,9 +25,9 @@ jobs:
         continue-on-error: true # let the SARIF upload run even if findings fail the step
         with:
           format: sarif
-          output: ghostchars.sarif
+          output: ${{ runner.temp }}/ghostchars.sarif
 
       - name: Upload SARIF to code scanning
         uses: github/codeql-action/upload-sarif@v3
         with:
-          sarif_file: ghostchars.sarif
+          sarif_file: ${{ runner.temp }}/ghostchars.sarif

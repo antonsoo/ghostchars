@@ -67,7 +67,8 @@ jobs:
         continue-on-error: true
         with:
           paths: 'examples/fixtures'
-          format: pretty
+          format: sarif
+          output: ${{ runner.temp }}/ghostchars-fixtures.sarif
 
       - name: Assert the fixtures step actually failed
         run: |
@@ -76,6 +77,30 @@ jobs:
             exit 1
           fi
           echo "ok: the Action correctly failed on examples/fixtures/bad.js"
+          node --input-type=module -e '
+            import { readFileSync } from "node:fs";
+            const report = JSON.parse(readFileSync(process.env.RUNNER_TEMP + "/ghostchars-fixtures.sarif", "utf8"));
+            if (!report.runs[0].invocations[0].executionSuccessful || !report.runs[0].results.length) {
+              throw Error("expected a complete SARIF report with findings");
+            }
+          '
+
+      - name: Prepare an input/output collision
+        run: cp examples/fixtures/bad.js "$RUNNER_TEMP/ghostchars-action-input.js"
+
+      - name: Must refuse to overwrite the input
+        id: collision
+        uses: ./
+        continue-on-error: true
+        with:
+          paths: ${{ runner.temp }}/ghostchars-action-input.js
+          format: json
+          output: ${{ runner.temp }}/ghostchars-action-input.js
+
+      - name: Assert the original input survived
+        run: |
+          test "${{ steps.collision.outcome }}" = failure
+          cmp examples/fixtures/bad.js "$RUNNER_TEMP/ghostchars-action-input.js"
 
   web:
     name: web app (build and browser workflows)
