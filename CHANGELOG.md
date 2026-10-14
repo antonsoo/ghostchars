@@ -19,6 +19,14 @@ All notable changes to this project are documented in this file.
 
 ### Fixed
 
+- CLI `--fix` normalizes unusual whitespace to ASCII spaces/newlines rather
+  than deleting word and line boundaries. Native JavaScript reproductions
+  retain `return false` and code following Unicode line-comment separators.
+  The library adds `mode: 'normalize'` while retaining its default and explicit
+  removal contracts, configured rules and scalar allowlists. Repair previews
+  continue to display the actual proposed text; this is not a language parser
+  or a semantic safety guarantee.
+
 - Action report output no longer truncates its destination before scanning.
   Route it through the source CLI's new `--output`: protect scanned/skipped
   input identities and the Ghostchars config, reject symbolic output files,

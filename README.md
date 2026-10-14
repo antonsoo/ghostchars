@@ -106,7 +106,7 @@ ghostchars . --format sarif --output ../ghostchars.sarif
 # See (and fix) what's hiding
 ghostchars reveal suspicious.txt
 ghostchars . --fix --dry-run        # preview
-ghostchars . --fix                  # apply configured removals in place
+ghostchars . --fix                  # normalize whitespace and apply other configured repairs
 ```
 
 Directory arguments are literal filesystem paths in the source checkout.
@@ -133,6 +133,15 @@ the same rules, allowlist and matching file overrides as the scan, including
 later passes. Its preview shows the actual proposed text; invalid encodings or
 invalid explicit configuration stop with exit 2 instead of being rewritten.
 See [repair behavior and before/after evidence](studies/repair-policy/README.md).
+
+CLI repair in the source checkout also preserves whitespace boundaries.
+Unusual spaces become ASCII spaces; NEL and Unicode line/paragraph separators
+become newlines. Deleting a no-break space used to turn `return false` into
+`returnfalse`. Deleting a Unicode line separator after a JavaScript comment
+could comment out the next statement and turn a failing check into a green
+exit. [Native before/after CLI execution](studies/whitespace-repair/README.md)
+retains those reproductions. Allowlisted and disabled findings stay protected;
+previews show the actual proposed text. This correction is not in the npm release.
 
 Registered Unicode variants also survive scans and repairs in the source
 checkout. Previously, `--fix` removed valid selectors from slashed zero,
@@ -179,6 +188,11 @@ Removal is textual: it can join words, change typography or affect code. It does
 not establish that a prompt is trustworthy. The source checkout also accepts
 `sanitize(text, { scanOptions: { allowCodePoints: [0xA0], severityOverrides:
 { invisible: false } } })` to apply the same policy on every pass.
+Use `sanitize(text, { mode: 'normalize' })` to retain word and line boundaries
+when replacing unusual whitespace; the CLI uses that mode. Default and explicit
+`mode: 'remove'` keep their documented deletion behavior. Neither mode parses a
+program or guarantees semantic equivalence: review changes to string data,
+comments and language-specific whitespace before applying them.
 
 ### GitHub Action
 

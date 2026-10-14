@@ -44,7 +44,7 @@ export interface Finding {
   decoded?: string;
   /** For confusables: the skeleton string this identifier/span is confusable with. */
   skeleton?: string;
-  /** True if `sanitize()` knows how to safely auto-fix this finding. */
+  /** True if `sanitize()` can edit this finding. Text edits still need review. */
   fixable: boolean;
   /**
    * The part of the span `sanitize()` deletes, as UTF-16 offsets, when that is less than the
@@ -71,19 +71,20 @@ export interface ScanResult {
   codePointCount: number;
 }
 
-export type FixPolicyMode = 'remove' | 'keep';
+export type FixPolicyMode = 'remove' | 'normalize' | 'keep';
 
 export interface SanitizePolicy {
-  /** Which rules to act on; defaults to every rule that is safely fixable. */
+  /** Which rules to act on; defaults to every fixable rule. */
   rules?: RuleId[];
-  /** 'remove' deletes the offending code points; 'keep' leaves them (dry inspection). Default 'remove'. */
+  /** 'normalize' replaces unusual whitespace with spaces/newlines and removes other permitted findings.
+   * 'remove' deletes all offending code points; 'keep' leaves them (dry inspection). Default 'remove'. */
   mode?: FixPolicyMode;
   /** Apply the same severity/allowlist policy on every rescan. Allowed scalars are never removed. */
   scanOptions?: ScanOptions;
 }
 
 export interface SanitizeResult {
-  /** Text after permitted removals; unfixable or protected findings may remain. */
+  /** Text after permitted edits; unfixable or protected findings may remain. */
   text: string;
   /**
    * Findings that were fixed. Removing a character can change what its neighbor is (a joiner

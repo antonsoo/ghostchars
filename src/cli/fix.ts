@@ -10,7 +10,7 @@ export interface FixOutcome {
 }
 
 export function computeFix(path: string, source: string, options: ScanOptions = {}): FixOutcome {
-  const { text, fixed } = sanitize(source, { scanOptions: options });
+  const { text, fixed } = sanitize(source, { mode: 'normalize', scanOptions: options });
   return { path, fixed, newText: text };
 }
 

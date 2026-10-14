@@ -8970,7 +8970,8 @@ function sanitize(text, policy = {}) {
   const rules = new Set(policy.rules ?? DEFAULT_FIXABLE_RULES);
   const allowed = new Set(policy.scanOptions?.allowCodePoints ?? []);
   const options = { ...policy.scanOptions, allowCodePoints: allowed };
-  if ((policy.mode ?? "remove") === "keep") {
+  const mode = policy.mode ?? "remove";
+  if (mode === "keep") {
     return { text, fixed: [], remaining: scanText(text, options).findings };
   }
   let current = text;
@@ -8978,6 +8979,7 @@ function sanitize(text, policy = {}) {
   for (; ; ) {
     const remaining = [];
     const spans = [];
+    const normalized = mode === "normalize" ? /* @__PURE__ */ new Map() : null;
     for (const finding2 of scanText(current, options).findings) {
       if (finding2.fixable && rules.has(finding2.rule)) {
         const start = finding2.removal?.start ?? finding2.start.offset;
@@ -8986,6 +8988,14 @@ function sanitize(text, policy = {}) {
         if (removable.length) {
           fixed.push(finding2);
           spans.push(...removable);
+          if (normalized && finding2.rule === "unusual-whitespace") {
+            for (const [from, to] of removable) {
+              for (let i = from; i < to; i++) {
+                const cp = current.charCodeAt(i);
+                normalized.set(i, cp === 133 || cp === 8232 || cp === 8233 ? "\n" : " ");
+              }
+            }
+          }
         } else remaining.push(finding2);
       } else {
         remaining.push(finding2);
@@ -8996,11 +9006,17 @@ function sanitize(text, policy = {}) {
     let cursor = 0;
     for (const [start, end] of mergeSpans(spans)) {
       kept.push(current.slice(cursor, start));
+      if (normalized?.size) {
+        for (let i = start; i < end; i++) {
+          const replacement = normalized.get(i);
+          if (replacement !== void 0) kept.push(replacement);
+        }
+      }
       cursor = end;
     }
     kept.push(current.slice(cursor));
     const out = kept.join("");
-    if (out.length === current.length) return { text: current, fixed, remaining };
+    if (out === current) return { text: current, fixed, remaining };
     current = out;
   }
 }
@@ -9682,7 +9698,7 @@ function formatSummary(report) {
 
 // src/cli/fix.ts
 function computeFix(path, source, options = {}) {
-  const { text, fixed } = sanitize(source, { scanOptions: options });
+  const { text, fixed } = sanitize(source, { mode: "normalize", scanOptions: options });
   return { path, fixed, newText: text };
 }
 function formatDryRun(outcome, source) {
@@ -9998,7 +10014,7 @@ Usage:
 
 Options:
   --format <pretty|summary|json|sarif|github>  Output format (default: pretty; summary is one line per kind of finding in a file)
-  --fix                                 Remove fixable findings in place
+  --fix                                 Normalize unusual whitespace and remove other fixable findings
   --dry-run                             With --fix, preview changes instead of writing
   --config <path>                       Path to a .ghostcharsrc.json (default: ./.ghostcharsrc.json)
   --no-config                           Ignore any .ghostcharsrc.json

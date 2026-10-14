@@ -32,7 +32,7 @@ Usage:
 
 Options:
   --format <pretty|summary|json|sarif|github>  Output format (default: pretty; summary is one line per kind of finding in a file)
-  --fix                                 Remove fixable findings in place
+  --fix                                 Normalize unusual whitespace and remove other fixable findings
   --dry-run                             With --fix, preview changes instead of writing
   --config <path>                       Path to a .ghostcharsrc.json (default: ./.ghostcharsrc.json)
   --no-config                           Ignore any .ghostcharsrc.json
