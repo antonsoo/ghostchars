@@ -59,6 +59,40 @@ the eighteenth is the newly added normalization policy. The
 [corrected replay](results/after.json) has zero disagreements. Default removal,
 explicit removal and keep policy controls retain their previous results.
 
+## Installed artifact verification
+
+The [verification receipt](results/verification.json) identifies code commit
+`26e1ab1`, the packed artifact, source hashes and retained clean-check logs.
+A fresh archive passed lint, type checks, all 304 unit checks, library/CLI and
+web builds, and all 36 Chromium/Firefox checks, including offline use and
+375px gallery/accessibility checks. All six browser-generated screenshots were
+inspected. The committed single-file CLI exactly matches its clean rebuild.
+
+| Installed runtime | Actual CLI + native execution | Library policy controls |
+| --- | --- | --- |
+| Node 26.7.0 | [21 cases; zero disagreements](results/installed-current.json) | Four; zero disagreements |
+| Node 20.20.2 | [21 cases; zero disagreements](results/installed-floor.json) | Four; zero disagreements |
+
+All 57 packed files match the clean build and installation; all 44 runtime
+source files match the archive. All 32 served files from the production preview
+match the tested web build. These browser checks retain the existing removal
+policy and are not evidence of a new browser normalization mode.
+
+The [installed-package measurement](results/performance.json) normalizes
+100,000 flagged spaces in a 1.2 MB synthetic repeated-word input in 251 ms,
+with exact expected output and no remaining findings. A separate
+[source measurement](results/source-performance.json) took 325 ms on that
+input. Both are single runs on 14-logical-CPU WSL2 Linux, with memory details
+retained in the records; they do not establish a general performance bound.
+Reproduce with `node studies/whitespace-repair/measure.mjs --lib dist/index.js`.
+
+The [unedited terminal output](../../docs/assets/whitespace-repair.ansi)
+was captured from the demo against the installed package, with
+`WHITESPACE_CLI` set to its actual `dist/cli.js`. The preview retains an ASCII
+newline and native execution still returns exit 7 after applying the repair.
+
+![Installed CLI preview keeps the comment boundary and the native failing exit](../../docs/assets/whitespace-repair.png)
+
 This source correction has no npm release or verified hosted deployment.
 Build the library/CLI with `npm run build`; build the existing demo with
 `npm run web:build`, producing `web/dist/`.

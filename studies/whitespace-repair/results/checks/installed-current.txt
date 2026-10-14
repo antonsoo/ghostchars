@@ -1,0 +1,6 @@
+{
+  "node": "v26.7.0",
+  "cliCases": 21,
+  "libraryCases": 4,
+  "disagreements": 0
+}

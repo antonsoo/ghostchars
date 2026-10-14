@@ -1,0 +1,8 @@
+Synthetic check: original native Node exit 7.
+check.mjs
+  1: - // Check below⟦U+2028 LINE SEPARATOR⟧process.exitCode = 7;
+  1: + // Check below
+  2: + process.exitCode = 7;
+  1 finding(s) affected. Preview only; no file was written.
+
+Repaired native Node exit 7; comment boundary retained.

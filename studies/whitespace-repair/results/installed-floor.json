@@ -1,0 +1,738 @@
+{
+  "node": "v20.20.2",
+  "population": "Synthetic JavaScript programs and policy controls. Native Node executes before/after; no general language/semantic safety claim.",
+  "artifactSha256": {
+    "cli": "2148db6edc859975f361a9cefd3452e5337478503c8da175e3c822c72663fe8b",
+    "index": "74c53f9f5531c99ca727c1a41de8f76a8d1d0e39e005009b76778584daa1206d",
+    "sanitize": "15401892576ea027a54bf167130b88057cce9e6c79199f2dbeee0a3f85238941"
+  },
+  "cliCases": 21,
+  "libraryCases": 4,
+  "disagreements": 0,
+  "observations": [
+    {
+      "name": "return-U+A0",
+      "source": "function allowed() { return false; }\nconsole.log(allowed());\n",
+      "expected": "function allowed() { return false; }\nconsole.log(allowed());\n",
+      "config": null,
+      "originalExecution": {
+        "exit": 0,
+        "stdout": "false\n",
+        "stderr": ""
+      },
+      "preview": {
+        "exit": 0,
+        "stdout": "check.mjs\n  1: - function allowed() { return⟦U+00A0 NBSP⟧false; }\n  1: + function allowed() { return false; }\n  1 finding(s) affected. Preview only; no file was written.\n\n",
+        "stderr": ""
+      },
+      "originalUnchangedAfterPreview": true,
+      "previewShowsNormalizedPlan": true,
+      "repair": {
+        "exit": 0,
+        "stdout": "{\n  \"ghostchars\": true,\n  \"summary\": {\n    \"error\": 0,\n    \"warning\": 1,\n    \"info\": 0,\n    \"total\": 1,\n    \"files\": 1,\n    \"durationMs\": 10.821911999999998,\n    \"complete\": true,\n    \"inputErrors\": 0\n  },\n  \"skipped\": [],\n  \"errors\": [],\n  \"results\": [\n    {\n      \"path\": \"check.mjs\",\n      \"findings\": [\n        {\n          \"rule\": \"unusual-whitespace\",\n          \"severity\": \"warning\",\n          \"start\": {\n            \"line\": 1,\n            \"column\": 28,\n            \"offset\": 27\n          },\n          \"end\": {\n            \"line\": 1,\n            \"column\": 29,\n            \"offset\": 28\n          },\n          \"codePoints\": [\n            \"U+00A0\"\n          ],\n          \"names\": [\n            \"NO-BREAK SPACE\"\n          ],\n          \"message\": \"NO-BREAK SPACE looks like a normal space or line break but is a distinct code point -- it can split tokens, defeat string/keyword matching, or hide in a diff. Usually left by pasting from a web page or chat window.\",\n          \"suggestion\": \"Replace with a regular space (U+0020) or ASCII newline.\",\n          \"fixable\": true\n        }\n      ]\n    }\n  ]\n}\n",
+        "stderr": ""
+      },
+      "repaired": "function allowed() { return false; }\nconsole.log(allowed());\n",
+      "repairedSha256": "0d4306d84fe4ee44bab060d8122db3b10cdc4dded6820478e6fd9510a050ca1b",
+      "repairedExecution": {
+        "exit": 0,
+        "stdout": "false\n",
+        "stderr": ""
+      },
+      "reportComplete": true,
+      "agrees": true
+    },
+    {
+      "name": "return-U+2000",
+      "source": "function allowed() { return false; }\nconsole.log(allowed());\n",
+      "expected": "function allowed() { return false; }\nconsole.log(allowed());\n",
+      "config": null,
+      "originalExecution": {
+        "exit": 0,
+        "stdout": "false\n",
+        "stderr": ""
+      },
+      "preview": {
+        "exit": 0,
+        "stdout": "check.mjs\n  1: - function allowed() { return⟦U+2000 EN QUAD⟧false; }\n  1: + function allowed() { return false; }\n  1 finding(s) affected. Preview only; no file was written.\n\n",
+        "stderr": ""
+      },
+      "originalUnchangedAfterPreview": true,
+      "previewShowsNormalizedPlan": true,
+      "repair": {
+        "exit": 0,
+        "stdout": "{\n  \"ghostchars\": true,\n  \"summary\": {\n    \"error\": 0,\n    \"warning\": 1,\n    \"info\": 0,\n    \"total\": 1,\n    \"files\": 1,\n    \"durationMs\": 13.700695999999994,\n    \"complete\": true,\n    \"inputErrors\": 0\n  },\n  \"skipped\": [],\n  \"errors\": [],\n  \"results\": [\n    {\n      \"path\": \"check.mjs\",\n      \"findings\": [\n        {\n          \"rule\": \"unusual-whitespace\",\n          \"severity\": \"warning\",\n          \"start\": {\n            \"line\": 1,\n            \"column\": 28,\n            \"offset\": 27\n          },\n          \"end\": {\n            \"line\": 1,\n            \"column\": 29,\n            \"offset\": 28\n          },\n          \"codePoints\": [\n            \"U+2000\"\n          ],\n          \"names\": [\n            \"EN QUAD\"\n          ],\n          \"message\": \"EN QUAD looks like a normal space or line break but is a distinct code point -- it can split tokens, defeat string/keyword matching, or hide in a diff.\",\n          \"suggestion\": \"Replace with a regular space (U+0020) or ASCII newline.\",\n          \"fixable\": true\n        }\n      ]\n    }\n  ]\n}\n",
+        "stderr": ""
+      },
+      "repaired": "function allowed() { return false; }\nconsole.log(allowed());\n",
+      "repairedSha256": "0d4306d84fe4ee44bab060d8122db3b10cdc4dded6820478e6fd9510a050ca1b",
+      "repairedExecution": {
+        "exit": 0,
+        "stdout": "false\n",
+        "stderr": ""
+      },
+      "reportComplete": true,
+      "agrees": true
+    },
+    {
+      "name": "return-U+2001",
+      "source": "function allowed() { return false; }\nconsole.log(allowed());\n",
+      "expected": "function allowed() { return false; }\nconsole.log(allowed());\n",
+      "config": null,
+      "originalExecution": {
+        "exit": 0,
+        "stdout": "false\n",
+        "stderr": ""
+      },
+      "preview": {
+        "exit": 0,
+        "stdout": "check.mjs\n  1: - function allowed() { return⟦U+2001 EM QUAD⟧false; }\n  1: + function allowed() { return false; }\n  1 finding(s) affected. Preview only; no file was written.\n\n",
+        "stderr": ""
+      },
+      "originalUnchangedAfterPreview": true,
+      "previewShowsNormalizedPlan": true,
+      "repair": {
+        "exit": 0,
+        "stdout": "{\n  \"ghostchars\": true,\n  \"summary\": {\n    \"error\": 0,\n    \"warning\": 1,\n    \"info\": 0,\n    \"total\": 1,\n    \"files\": 1,\n    \"durationMs\": 13.08536500000001,\n    \"complete\": true,\n    \"inputErrors\": 0\n  },\n  \"skipped\": [],\n  \"errors\": [],\n  \"results\": [\n    {\n      \"path\": \"check.mjs\",\n      \"findings\": [\n        {\n          \"rule\": \"unusual-whitespace\",\n          \"severity\": \"warning\",\n          \"start\": {\n            \"line\": 1,\n            \"column\": 28,\n            \"offset\": 27\n          },\n          \"end\": {\n            \"line\": 1,\n            \"column\": 29,\n            \"offset\": 28\n          },\n          \"codePoints\": [\n            \"U+2001\"\n          ],\n          \"names\": [\n            \"EM QUAD\"\n          ],\n          \"message\": \"EM QUAD looks like a normal space or line break but is a distinct code point -- it can split tokens, defeat string/keyword matching, or hide in a diff.\",\n          \"suggestion\": \"Replace with a regular space (U+0020) or ASCII newline.\",\n          \"fixable\": true\n        }\n      ]\n    }\n  ]\n}\n",
+        "stderr": ""
+      },
+      "repaired": "function allowed() { return false; }\nconsole.log(allowed());\n",
+      "repairedSha256": "0d4306d84fe4ee44bab060d8122db3b10cdc4dded6820478e6fd9510a050ca1b",
+      "repairedExecution": {
+        "exit": 0,
+        "stdout": "false\n",
+        "stderr": ""
+      },
+      "reportComplete": true,
+      "agrees": true
+    },
+    {
+      "name": "return-U+2002",
+      "source": "function allowed() { return false; }\nconsole.log(allowed());\n",
+      "expected": "function allowed() { return false; }\nconsole.log(allowed());\n",
+      "config": null,
+      "originalExecution": {
+        "exit": 0,
+        "stdout": "false\n",
+        "stderr": ""
+      },
+      "preview": {
+        "exit": 0,
+        "stdout": "check.mjs\n  1: - function allowed() { return⟦U+2002 EN SPACE⟧false; }\n  1: + function allowed() { return false; }\n  1 finding(s) affected. Preview only; no file was written.\n\n",
+        "stderr": ""
+      },
+      "originalUnchangedAfterPreview": true,
+      "previewShowsNormalizedPlan": true,
+      "repair": {
+        "exit": 0,
+        "stdout": "{\n  \"ghostchars\": true,\n  \"summary\": {\n    \"error\": 0,\n    \"warning\": 1,\n    \"info\": 0,\n    \"total\": 1,\n    \"files\": 1,\n    \"durationMs\": 11.686998999999993,\n    \"complete\": true,\n    \"inputErrors\": 0\n  },\n  \"skipped\": [],\n  \"errors\": [],\n  \"results\": [\n    {\n      \"path\": \"check.mjs\",\n      \"findings\": [\n        {\n          \"rule\": \"unusual-whitespace\",\n          \"severity\": \"warning\",\n          \"start\": {\n            \"line\": 1,\n            \"column\": 28,\n            \"offset\": 27\n          },\n          \"end\": {\n            \"line\": 1,\n            \"column\": 29,\n            \"offset\": 28\n          },\n          \"codePoints\": [\n            \"U+2002\"\n          ],\n          \"names\": [\n            \"EN SPACE\"\n          ],\n          \"message\": \"EN SPACE looks like a normal space or line break but is a distinct code point -- it can split tokens, defeat string/keyword matching, or hide in a diff.\",\n          \"suggestion\": \"Replace with a regular space (U+0020) or ASCII newline.\",\n          \"fixable\": true\n        }\n      ]\n    }\n  ]\n}\n",
+        "stderr": ""
+      },
+      "repaired": "function allowed() { return false; }\nconsole.log(allowed());\n",
+      "repairedSha256": "0d4306d84fe4ee44bab060d8122db3b10cdc4dded6820478e6fd9510a050ca1b",
+      "repairedExecution": {
+        "exit": 0,
+        "stdout": "false\n",
+        "stderr": ""
+      },
+      "reportComplete": true,
+      "agrees": true
+    },
+    {
+      "name": "return-U+2003",
+      "source": "function allowed() { return false; }\nconsole.log(allowed());\n",
+      "expected": "function allowed() { return false; }\nconsole.log(allowed());\n",
+      "config": null,
+      "originalExecution": {
+        "exit": 0,
+        "stdout": "false\n",
+        "stderr": ""
+      },
+      "preview": {
+        "exit": 0,
+        "stdout": "check.mjs\n  1: - function allowed() { return⟦U+2003 EM SPACE⟧false; }\n  1: + function allowed() { return false; }\n  1 finding(s) affected. Preview only; no file was written.\n\n",
+        "stderr": ""
+      },
+      "originalUnchangedAfterPreview": true,
+      "previewShowsNormalizedPlan": true,
+      "repair": {
+        "exit": 0,
+        "stdout": "{\n  \"ghostchars\": true,\n  \"summary\": {\n    \"error\": 0,\n    \"warning\": 1,\n    \"info\": 0,\n    \"total\": 1,\n    \"files\": 1,\n    \"durationMs\": 13.927404000000003,\n    \"complete\": true,\n    \"inputErrors\": 0\n  },\n  \"skipped\": [],\n  \"errors\": [],\n  \"results\": [\n    {\n      \"path\": \"check.mjs\",\n      \"findings\": [\n        {\n          \"rule\": \"unusual-whitespace\",\n          \"severity\": \"warning\",\n          \"start\": {\n            \"line\": 1,\n            \"column\": 28,\n            \"offset\": 27\n          },\n          \"end\": {\n            \"line\": 1,\n            \"column\": 29,\n            \"offset\": 28\n          },\n          \"codePoints\": [\n            \"U+2003\"\n          ],\n          \"names\": [\n            \"EM SPACE\"\n          ],\n          \"message\": \"EM SPACE looks like a normal space or line break but is a distinct code point -- it can split tokens, defeat string/keyword matching, or hide in a diff.\",\n          \"suggestion\": \"Replace with a regular space (U+0020) or ASCII newline.\",\n          \"fixable\": true\n        }\n      ]\n    }\n  ]\n}\n",
+        "stderr": ""
+      },
+      "repaired": "function allowed() { return false; }\nconsole.log(allowed());\n",
+      "repairedSha256": "0d4306d84fe4ee44bab060d8122db3b10cdc4dded6820478e6fd9510a050ca1b",
+      "repairedExecution": {
+        "exit": 0,
+        "stdout": "false\n",
+        "stderr": ""
+      },
+      "reportComplete": true,
+      "agrees": true
+    },
+    {
+      "name": "return-U+2004",
+      "source": "function allowed() { return false; }\nconsole.log(allowed());\n",
+      "expected": "function allowed() { return false; }\nconsole.log(allowed());\n",
+      "config": null,
+      "originalExecution": {
+        "exit": 0,
+        "stdout": "false\n",
+        "stderr": ""
+      },
+      "preview": {
+        "exit": 0,
+        "stdout": "check.mjs\n  1: - function allowed() { return⟦U+2004 THREE-PER-EM SPACE⟧false; }\n  1: + function allowed() { return false; }\n  1 finding(s) affected. Preview only; no file was written.\n\n",
+        "stderr": ""
+      },
+      "originalUnchangedAfterPreview": true,
+      "previewShowsNormalizedPlan": true,
+      "repair": {
+        "exit": 0,
+        "stdout": "{\n  \"ghostchars\": true,\n  \"summary\": {\n    \"error\": 0,\n    \"warning\": 1,\n    \"info\": 0,\n    \"total\": 1,\n    \"files\": 1,\n    \"durationMs\": 15.955967000000001,\n    \"complete\": true,\n    \"inputErrors\": 0\n  },\n  \"skipped\": [],\n  \"errors\": [],\n  \"results\": [\n    {\n      \"path\": \"check.mjs\",\n      \"findings\": [\n        {\n          \"rule\": \"unusual-whitespace\",\n          \"severity\": \"warning\",\n          \"start\": {\n            \"line\": 1,\n            \"column\": 28,\n            \"offset\": 27\n          },\n          \"end\": {\n            \"line\": 1,\n            \"column\": 29,\n            \"offset\": 28\n          },\n          \"codePoints\": [\n            \"U+2004\"\n          ],\n          \"names\": [\n            \"THREE-PER-EM SPACE\"\n          ],\n          \"message\": \"THREE-PER-EM SPACE looks like a normal space or line break but is a distinct code point -- it can split tokens, defeat string/keyword matching, or hide in a diff.\",\n          \"suggestion\": \"Replace with a regular space (U+0020) or ASCII newline.\",\n          \"fixable\": true\n        }\n      ]\n    }\n  ]\n}\n",
+        "stderr": ""
+      },
+      "repaired": "function allowed() { return false; }\nconsole.log(allowed());\n",
+      "repairedSha256": "0d4306d84fe4ee44bab060d8122db3b10cdc4dded6820478e6fd9510a050ca1b",
+      "repairedExecution": {
+        "exit": 0,
+        "stdout": "false\n",
+        "stderr": ""
+      },
+      "reportComplete": true,
+      "agrees": true
+    },
+    {
+      "name": "return-U+2005",
+      "source": "function allowed() { return false; }\nconsole.log(allowed());\n",
+      "expected": "function allowed() { return false; }\nconsole.log(allowed());\n",
+      "config": null,
+      "originalExecution": {
+        "exit": 0,
+        "stdout": "false\n",
+        "stderr": ""
+      },
+      "preview": {
+        "exit": 0,
+        "stdout": "check.mjs\n  1: - function allowed() { return⟦U+2005 FOUR-PER-EM SPACE⟧false; }\n  1: + function allowed() { return false; }\n  1 finding(s) affected. Preview only; no file was written.\n\n",
+        "stderr": ""
+      },
+      "originalUnchangedAfterPreview": true,
+      "previewShowsNormalizedPlan": true,
+      "repair": {
+        "exit": 0,
+        "stdout": "{\n  \"ghostchars\": true,\n  \"summary\": {\n    \"error\": 0,\n    \"warning\": 1,\n    \"info\": 0,\n    \"total\": 1,\n    \"files\": 1,\n    \"durationMs\": 11.69981,\n    \"complete\": true,\n    \"inputErrors\": 0\n  },\n  \"skipped\": [],\n  \"errors\": [],\n  \"results\": [\n    {\n      \"path\": \"check.mjs\",\n      \"findings\": [\n        {\n          \"rule\": \"unusual-whitespace\",\n          \"severity\": \"warning\",\n          \"start\": {\n            \"line\": 1,\n            \"column\": 28,\n            \"offset\": 27\n          },\n          \"end\": {\n            \"line\": 1,\n            \"column\": 29,\n            \"offset\": 28\n          },\n          \"codePoints\": [\n            \"U+2005\"\n          ],\n          \"names\": [\n            \"FOUR-PER-EM SPACE\"\n          ],\n          \"message\": \"FOUR-PER-EM SPACE looks like a normal space or line break but is a distinct code point -- it can split tokens, defeat string/keyword matching, or hide in a diff.\",\n          \"suggestion\": \"Replace with a regular space (U+0020) or ASCII newline.\",\n          \"fixable\": true\n        }\n      ]\n    }\n  ]\n}\n",
+        "stderr": ""
+      },
+      "repaired": "function allowed() { return false; }\nconsole.log(allowed());\n",
+      "repairedSha256": "0d4306d84fe4ee44bab060d8122db3b10cdc4dded6820478e6fd9510a050ca1b",
+      "repairedExecution": {
+        "exit": 0,
+        "stdout": "false\n",
+        "stderr": ""
+      },
+      "reportComplete": true,
+      "agrees": true
+    },
+    {
+      "name": "return-U+2006",
+      "source": "function allowed() { return false; }\nconsole.log(allowed());\n",
+      "expected": "function allowed() { return false; }\nconsole.log(allowed());\n",
+      "config": null,
+      "originalExecution": {
+        "exit": 0,
+        "stdout": "false\n",
+        "stderr": ""
+      },
+      "preview": {
+        "exit": 0,
+        "stdout": "check.mjs\n  1: - function allowed() { return⟦U+2006 SIX-PER-EM SPACE⟧false; }\n  1: + function allowed() { return false; }\n  1 finding(s) affected. Preview only; no file was written.\n\n",
+        "stderr": ""
+      },
+      "originalUnchangedAfterPreview": true,
+      "previewShowsNormalizedPlan": true,
+      "repair": {
+        "exit": 0,
+        "stdout": "{\n  \"ghostchars\": true,\n  \"summary\": {\n    \"error\": 0,\n    \"warning\": 1,\n    \"info\": 0,\n    \"total\": 1,\n    \"files\": 1,\n    \"durationMs\": 15.728245999999999,\n    \"complete\": true,\n    \"inputErrors\": 0\n  },\n  \"skipped\": [],\n  \"errors\": [],\n  \"results\": [\n    {\n      \"path\": \"check.mjs\",\n      \"findings\": [\n        {\n          \"rule\": \"unusual-whitespace\",\n          \"severity\": \"warning\",\n          \"start\": {\n            \"line\": 1,\n            \"column\": 28,\n            \"offset\": 27\n          },\n          \"end\": {\n            \"line\": 1,\n            \"column\": 29,\n            \"offset\": 28\n          },\n          \"codePoints\": [\n            \"U+2006\"\n          ],\n          \"names\": [\n            \"SIX-PER-EM SPACE\"\n          ],\n          \"message\": \"SIX-PER-EM SPACE looks like a normal space or line break but is a distinct code point -- it can split tokens, defeat string/keyword matching, or hide in a diff.\",\n          \"suggestion\": \"Replace with a regular space (U+0020) or ASCII newline.\",\n          \"fixable\": true\n        }\n      ]\n    }\n  ]\n}\n",
+        "stderr": ""
+      },
+      "repaired": "function allowed() { return false; }\nconsole.log(allowed());\n",
+      "repairedSha256": "0d4306d84fe4ee44bab060d8122db3b10cdc4dded6820478e6fd9510a050ca1b",
+      "repairedExecution": {
+        "exit": 0,
+        "stdout": "false\n",
+        "stderr": ""
+      },
+      "reportComplete": true,
+      "agrees": true
+    },
+    {
+      "name": "return-U+2007",
+      "source": "function allowed() { return false; }\nconsole.log(allowed());\n",
+      "expected": "function allowed() { return false; }\nconsole.log(allowed());\n",
+      "config": null,
+      "originalExecution": {
+        "exit": 0,
+        "stdout": "false\n",
+        "stderr": ""
+      },
+      "preview": {
+        "exit": 0,
+        "stdout": "check.mjs\n  1: - function allowed() { return⟦U+2007 FIGURE SPACE⟧false; }\n  1: + function allowed() { return false; }\n  1 finding(s) affected. Preview only; no file was written.\n\n",
+        "stderr": ""
+      },
+      "originalUnchangedAfterPreview": true,
+      "previewShowsNormalizedPlan": true,
+      "repair": {
+        "exit": 0,
+        "stdout": "{\n  \"ghostchars\": true,\n  \"summary\": {\n    \"error\": 0,\n    \"warning\": 1,\n    \"info\": 0,\n    \"total\": 1,\n    \"files\": 1,\n    \"durationMs\": 10.995911999999997,\n    \"complete\": true,\n    \"inputErrors\": 0\n  },\n  \"skipped\": [],\n  \"errors\": [],\n  \"results\": [\n    {\n      \"path\": \"check.mjs\",\n      \"findings\": [\n        {\n          \"rule\": \"unusual-whitespace\",\n          \"severity\": \"warning\",\n          \"start\": {\n            \"line\": 1,\n            \"column\": 28,\n            \"offset\": 27\n          },\n          \"end\": {\n            \"line\": 1,\n            \"column\": 29,\n            \"offset\": 28\n          },\n          \"codePoints\": [\n            \"U+2007\"\n          ],\n          \"names\": [\n            \"FIGURE SPACE\"\n          ],\n          \"message\": \"FIGURE SPACE looks like a normal space or line break but is a distinct code point -- it can split tokens, defeat string/keyword matching, or hide in a diff.\",\n          \"suggestion\": \"Replace with a regular space (U+0020) or ASCII newline.\",\n          \"fixable\": true\n        }\n      ]\n    }\n  ]\n}\n",
+        "stderr": ""
+      },
+      "repaired": "function allowed() { return false; }\nconsole.log(allowed());\n",
+      "repairedSha256": "0d4306d84fe4ee44bab060d8122db3b10cdc4dded6820478e6fd9510a050ca1b",
+      "repairedExecution": {
+        "exit": 0,
+        "stdout": "false\n",
+        "stderr": ""
+      },
+      "reportComplete": true,
+      "agrees": true
+    },
+    {
+      "name": "return-U+2008",
+      "source": "function allowed() { return false; }\nconsole.log(allowed());\n",
+      "expected": "function allowed() { return false; }\nconsole.log(allowed());\n",
+      "config": null,
+      "originalExecution": {
+        "exit": 0,
+        "stdout": "false\n",
+        "stderr": ""
+      },
+      "preview": {
+        "exit": 0,
+        "stdout": "check.mjs\n  1: - function allowed() { return⟦U+2008 PUNCTUATION SPACE⟧false; }\n  1: + function allowed() { return false; }\n  1 finding(s) affected. Preview only; no file was written.\n\n",
+        "stderr": ""
+      },
+      "originalUnchangedAfterPreview": true,
+      "previewShowsNormalizedPlan": true,
+      "repair": {
+        "exit": 0,
+        "stdout": "{\n  \"ghostchars\": true,\n  \"summary\": {\n    \"error\": 0,\n    \"warning\": 1,\n    \"info\": 0,\n    \"total\": 1,\n    \"files\": 1,\n    \"durationMs\": 14.503954,\n    \"complete\": true,\n    \"inputErrors\": 0\n  },\n  \"skipped\": [],\n  \"errors\": [],\n  \"results\": [\n    {\n      \"path\": \"check.mjs\",\n      \"findings\": [\n        {\n          \"rule\": \"unusual-whitespace\",\n          \"severity\": \"warning\",\n          \"start\": {\n            \"line\": 1,\n            \"column\": 28,\n            \"offset\": 27\n          },\n          \"end\": {\n            \"line\": 1,\n            \"column\": 29,\n            \"offset\": 28\n          },\n          \"codePoints\": [\n            \"U+2008\"\n          ],\n          \"names\": [\n            \"PUNCTUATION SPACE\"\n          ],\n          \"message\": \"PUNCTUATION SPACE looks like a normal space or line break but is a distinct code point -- it can split tokens, defeat string/keyword matching, or hide in a diff.\",\n          \"suggestion\": \"Replace with a regular space (U+0020) or ASCII newline.\",\n          \"fixable\": true\n        }\n      ]\n    }\n  ]\n}\n",
+        "stderr": ""
+      },
+      "repaired": "function allowed() { return false; }\nconsole.log(allowed());\n",
+      "repairedSha256": "0d4306d84fe4ee44bab060d8122db3b10cdc4dded6820478e6fd9510a050ca1b",
+      "repairedExecution": {
+        "exit": 0,
+        "stdout": "false\n",
+        "stderr": ""
+      },
+      "reportComplete": true,
+      "agrees": true
+    },
+    {
+      "name": "return-U+2009",
+      "source": "function allowed() { return false; }\nconsole.log(allowed());\n",
+      "expected": "function allowed() { return false; }\nconsole.log(allowed());\n",
+      "config": null,
+      "originalExecution": {
+        "exit": 0,
+        "stdout": "false\n",
+        "stderr": ""
+      },
+      "preview": {
+        "exit": 0,
+        "stdout": "check.mjs\n  1: - function allowed() { return⟦U+2009 THIN SPACE⟧false; }\n  1: + function allowed() { return false; }\n  1 finding(s) affected. Preview only; no file was written.\n\n",
+        "stderr": ""
+      },
+      "originalUnchangedAfterPreview": true,
+      "previewShowsNormalizedPlan": true,
+      "repair": {
+        "exit": 0,
+        "stdout": "{\n  \"ghostchars\": true,\n  \"summary\": {\n    \"error\": 0,\n    \"warning\": 1,\n    \"info\": 0,\n    \"total\": 1,\n    \"files\": 1,\n    \"durationMs\": 19.881228,\n    \"complete\": true,\n    \"inputErrors\": 0\n  },\n  \"skipped\": [],\n  \"errors\": [],\n  \"results\": [\n    {\n      \"path\": \"check.mjs\",\n      \"findings\": [\n        {\n          \"rule\": \"unusual-whitespace\",\n          \"severity\": \"warning\",\n          \"start\": {\n            \"line\": 1,\n            \"column\": 28,\n            \"offset\": 27\n          },\n          \"end\": {\n            \"line\": 1,\n            \"column\": 29,\n            \"offset\": 28\n          },\n          \"codePoints\": [\n            \"U+2009\"\n          ],\n          \"names\": [\n            \"THIN SPACE\"\n          ],\n          \"message\": \"THIN SPACE looks like a normal space or line break but is a distinct code point -- it can split tokens, defeat string/keyword matching, or hide in a diff.\",\n          \"suggestion\": \"Replace with a regular space (U+0020) or ASCII newline.\",\n          \"fixable\": true\n        }\n      ]\n    }\n  ]\n}\n",
+        "stderr": ""
+      },
+      "repaired": "function allowed() { return false; }\nconsole.log(allowed());\n",
+      "repairedSha256": "0d4306d84fe4ee44bab060d8122db3b10cdc4dded6820478e6fd9510a050ca1b",
+      "repairedExecution": {
+        "exit": 0,
+        "stdout": "false\n",
+        "stderr": ""
+      },
+      "reportComplete": true,
+      "agrees": true
+    },
+    {
+      "name": "return-U+200A",
+      "source": "function allowed() { return false; }\nconsole.log(allowed());\n",
+      "expected": "function allowed() { return false; }\nconsole.log(allowed());\n",
+      "config": null,
+      "originalExecution": {
+        "exit": 0,
+        "stdout": "false\n",
+        "stderr": ""
+      },
+      "preview": {
+        "exit": 0,
+        "stdout": "check.mjs\n  1: - function allowed() { return⟦U+200A HAIR SPACE⟧false; }\n  1: + function allowed() { return false; }\n  1 finding(s) affected. Preview only; no file was written.\n\n",
+        "stderr": ""
+      },
+      "originalUnchangedAfterPreview": true,
+      "previewShowsNormalizedPlan": true,
+      "repair": {
+        "exit": 0,
+        "stdout": "{\n  \"ghostchars\": true,\n  \"summary\": {\n    \"error\": 0,\n    \"warning\": 1,\n    \"info\": 0,\n    \"total\": 1,\n    \"files\": 1,\n    \"durationMs\": 16.778506999999998,\n    \"complete\": true,\n    \"inputErrors\": 0\n  },\n  \"skipped\": [],\n  \"errors\": [],\n  \"results\": [\n    {\n      \"path\": \"check.mjs\",\n      \"findings\": [\n        {\n          \"rule\": \"unusual-whitespace\",\n          \"severity\": \"warning\",\n          \"start\": {\n            \"line\": 1,\n            \"column\": 28,\n            \"offset\": 27\n          },\n          \"end\": {\n            \"line\": 1,\n            \"column\": 29,\n            \"offset\": 28\n          },\n          \"codePoints\": [\n            \"U+200A\"\n          ],\n          \"names\": [\n            \"HAIR SPACE\"\n          ],\n          \"message\": \"HAIR SPACE looks like a normal space or line break but is a distinct code point -- it can split tokens, defeat string/keyword matching, or hide in a diff.\",\n          \"suggestion\": \"Replace with a regular space (U+0020) or ASCII newline.\",\n          \"fixable\": true\n        }\n      ]\n    }\n  ]\n}\n",
+        "stderr": ""
+      },
+      "repaired": "function allowed() { return false; }\nconsole.log(allowed());\n",
+      "repairedSha256": "0d4306d84fe4ee44bab060d8122db3b10cdc4dded6820478e6fd9510a050ca1b",
+      "repairedExecution": {
+        "exit": 0,
+        "stdout": "false\n",
+        "stderr": ""
+      },
+      "reportComplete": true,
+      "agrees": true
+    },
+    {
+      "name": "return-U+202F",
+      "source": "function allowed() { return false; }\nconsole.log(allowed());\n",
+      "expected": "function allowed() { return false; }\nconsole.log(allowed());\n",
+      "config": null,
+      "originalExecution": {
+        "exit": 0,
+        "stdout": "false\n",
+        "stderr": ""
+      },
+      "preview": {
+        "exit": 0,
+        "stdout": "check.mjs\n  1: - function allowed() { return⟦U+202F NARROW NO-BREAK SPACE⟧false; }\n  1: + function allowed() { return false; }\n  1 finding(s) affected. Preview only; no file was written.\n\n",
+        "stderr": ""
+      },
+      "originalUnchangedAfterPreview": true,
+      "previewShowsNormalizedPlan": true,
+      "repair": {
+        "exit": 0,
+        "stdout": "{\n  \"ghostchars\": true,\n  \"summary\": {\n    \"error\": 0,\n    \"warning\": 1,\n    \"info\": 0,\n    \"total\": 1,\n    \"files\": 1,\n    \"durationMs\": 14.593075999999996,\n    \"complete\": true,\n    \"inputErrors\": 0\n  },\n  \"skipped\": [],\n  \"errors\": [],\n  \"results\": [\n    {\n      \"path\": \"check.mjs\",\n      \"findings\": [\n        {\n          \"rule\": \"unusual-whitespace\",\n          \"severity\": \"warning\",\n          \"start\": {\n            \"line\": 1,\n            \"column\": 28,\n            \"offset\": 27\n          },\n          \"end\": {\n            \"line\": 1,\n            \"column\": 29,\n            \"offset\": 28\n          },\n          \"codePoints\": [\n            \"U+202F\"\n          ],\n          \"names\": [\n            \"NARROW NO-BREAK SPACE\"\n          ],\n          \"message\": \"NARROW NO-BREAK SPACE looks like a normal space or line break but is a distinct code point -- it can split tokens, defeat string/keyword matching, or hide in a diff.\",\n          \"suggestion\": \"Replace with a regular space (U+0020) or ASCII newline.\",\n          \"fixable\": true\n        }\n      ]\n    }\n  ]\n}\n",
+        "stderr": ""
+      },
+      "repaired": "function allowed() { return false; }\nconsole.log(allowed());\n",
+      "repairedSha256": "0d4306d84fe4ee44bab060d8122db3b10cdc4dded6820478e6fd9510a050ca1b",
+      "repairedExecution": {
+        "exit": 0,
+        "stdout": "false\n",
+        "stderr": ""
+      },
+      "reportComplete": true,
+      "agrees": true
+    },
+    {
+      "name": "return-U+205F",
+      "source": "function allowed() { return false; }\nconsole.log(allowed());\n",
+      "expected": "function allowed() { return false; }\nconsole.log(allowed());\n",
+      "config": null,
+      "originalExecution": {
+        "exit": 0,
+        "stdout": "false\n",
+        "stderr": ""
+      },
+      "preview": {
+        "exit": 0,
+        "stdout": "check.mjs\n  1: - function allowed() { return⟦U+205F MEDIUM MATHEMATICAL SPACE⟧false; }\n  1: + function allowed() { return false; }\n  1 finding(s) affected. Preview only; no file was written.\n\n",
+        "stderr": ""
+      },
+      "originalUnchangedAfterPreview": true,
+      "previewShowsNormalizedPlan": true,
+      "repair": {
+        "exit": 0,
+        "stdout": "{\n  \"ghostchars\": true,\n  \"summary\": {\n    \"error\": 0,\n    \"warning\": 1,\n    \"info\": 0,\n    \"total\": 1,\n    \"files\": 1,\n    \"durationMs\": 14.143101999999999,\n    \"complete\": true,\n    \"inputErrors\": 0\n  },\n  \"skipped\": [],\n  \"errors\": [],\n  \"results\": [\n    {\n      \"path\": \"check.mjs\",\n      \"findings\": [\n        {\n          \"rule\": \"unusual-whitespace\",\n          \"severity\": \"warning\",\n          \"start\": {\n            \"line\": 1,\n            \"column\": 28,\n            \"offset\": 27\n          },\n          \"end\": {\n            \"line\": 1,\n            \"column\": 29,\n            \"offset\": 28\n          },\n          \"codePoints\": [\n            \"U+205F\"\n          ],\n          \"names\": [\n            \"MEDIUM MATHEMATICAL SPACE\"\n          ],\n          \"message\": \"MEDIUM MATHEMATICAL SPACE looks like a normal space or line break but is a distinct code point -- it can split tokens, defeat string/keyword matching, or hide in a diff.\",\n          \"suggestion\": \"Replace with a regular space (U+0020) or ASCII newline.\",\n          \"fixable\": true\n        }\n      ]\n    }\n  ]\n}\n",
+        "stderr": ""
+      },
+      "repaired": "function allowed() { return false; }\nconsole.log(allowed());\n",
+      "repairedSha256": "0d4306d84fe4ee44bab060d8122db3b10cdc4dded6820478e6fd9510a050ca1b",
+      "repairedExecution": {
+        "exit": 0,
+        "stdout": "false\n",
+        "stderr": ""
+      },
+      "reportComplete": true,
+      "agrees": true
+    },
+    {
+      "name": "return-U+3000",
+      "source": "function allowed() { return　false; }\nconsole.log(allowed());\n",
+      "expected": "function allowed() { return false; }\nconsole.log(allowed());\n",
+      "config": null,
+      "originalExecution": {
+        "exit": 0,
+        "stdout": "false\n",
+        "stderr": ""
+      },
+      "preview": {
+        "exit": 0,
+        "stdout": "check.mjs\n  1: - function allowed() { return⟦U+3000 IDEOGRAPHIC SPACE⟧false; }\n  1: + function allowed() { return false; }\n  1 finding(s) affected. Preview only; no file was written.\n\n",
+        "stderr": ""
+      },
+      "originalUnchangedAfterPreview": true,
+      "previewShowsNormalizedPlan": true,
+      "repair": {
+        "exit": 0,
+        "stdout": "{\n  \"ghostchars\": true,\n  \"summary\": {\n    \"error\": 0,\n    \"warning\": 1,\n    \"info\": 0,\n    \"total\": 1,\n    \"files\": 1,\n    \"durationMs\": 19.606251,\n    \"complete\": true,\n    \"inputErrors\": 0\n  },\n  \"skipped\": [],\n  \"errors\": [],\n  \"results\": [\n    {\n      \"path\": \"check.mjs\",\n      \"findings\": [\n        {\n          \"rule\": \"unusual-whitespace\",\n          \"severity\": \"warning\",\n          \"start\": {\n            \"line\": 1,\n            \"column\": 28,\n            \"offset\": 27\n          },\n          \"end\": {\n            \"line\": 1,\n            \"column\": 29,\n            \"offset\": 28\n          },\n          \"codePoints\": [\n            \"U+3000\"\n          ],\n          \"names\": [\n            \"IDEOGRAPHIC SPACE\"\n          ],\n          \"message\": \"IDEOGRAPHIC SPACE looks like a normal space or line break but is a distinct code point -- it can split tokens, defeat string/keyword matching, or hide in a diff.\",\n          \"suggestion\": \"Replace with a regular space (U+0020) or ASCII newline.\",\n          \"fixable\": true\n        }\n      ]\n    }\n  ]\n}\n",
+        "stderr": ""
+      },
+      "repaired": "function allowed() { return false; }\nconsole.log(allowed());\n",
+      "repairedSha256": "0d4306d84fe4ee44bab060d8122db3b10cdc4dded6820478e6fd9510a050ca1b",
+      "repairedExecution": {
+        "exit": 0,
+        "stdout": "false\n",
+        "stderr": ""
+      },
+      "reportComplete": true,
+      "agrees": true
+    },
+    {
+      "name": "comment-U+2028",
+      "source": "// Check below process.exitCode = 7;\n",
+      "expected": "// Check below\nprocess.exitCode = 7;\n",
+      "config": null,
+      "originalExecution": {
+        "exit": 7,
+        "stdout": "",
+        "stderr": ""
+      },
+      "preview": {
+        "exit": 0,
+        "stdout": "check.mjs\n  1: - // Check below⟦U+2028 LINE SEPARATOR⟧process.exitCode = 7;\n  1: + // Check below\n  2: + process.exitCode = 7;\n  1 finding(s) affected. Preview only; no file was written.\n\n",
+        "stderr": ""
+      },
+      "originalUnchangedAfterPreview": true,
+      "previewShowsNormalizedPlan": true,
+      "repair": {
+        "exit": 0,
+        "stdout": "{\n  \"ghostchars\": true,\n  \"summary\": {\n    \"error\": 0,\n    \"warning\": 1,\n    \"info\": 0,\n    \"total\": 1,\n    \"files\": 1,\n    \"durationMs\": 9.778838999999998,\n    \"complete\": true,\n    \"inputErrors\": 0\n  },\n  \"skipped\": [],\n  \"errors\": [],\n  \"results\": [\n    {\n      \"path\": \"check.mjs\",\n      \"findings\": [\n        {\n          \"rule\": \"unusual-whitespace\",\n          \"severity\": \"warning\",\n          \"start\": {\n            \"line\": 1,\n            \"column\": 15,\n            \"offset\": 14\n          },\n          \"end\": {\n            \"line\": 1,\n            \"column\": 16,\n            \"offset\": 15\n          },\n          \"codePoints\": [\n            \"U+2028\"\n          ],\n          \"names\": [\n            \"LINE SEPARATOR\"\n          ],\n          \"message\": \"LINE SEPARATOR looks like a normal space or line break but is a distinct code point -- it can split tokens, defeat string/keyword matching, or hide in a diff. Usually left by pasting from a web page or chat window.\",\n          \"suggestion\": \"Replace with a regular space (U+0020) or ASCII newline.\",\n          \"fixable\": true\n        }\n      ]\n    }\n  ]\n}\n",
+        "stderr": ""
+      },
+      "repaired": "// Check below\nprocess.exitCode = 7;\n",
+      "repairedSha256": "31b1ebb6a56007bee091e341e9bb0e67f847f99bf2e9cd12b8fd92a304f44d07",
+      "repairedExecution": {
+        "exit": 7,
+        "stdout": "",
+        "stderr": ""
+      },
+      "reportComplete": true,
+      "agrees": true
+    },
+    {
+      "name": "comment-U+2029",
+      "source": "// Check below process.exitCode = 7;\n",
+      "expected": "// Check below\nprocess.exitCode = 7;\n",
+      "config": null,
+      "originalExecution": {
+        "exit": 7,
+        "stdout": "",
+        "stderr": ""
+      },
+      "preview": {
+        "exit": 0,
+        "stdout": "check.mjs\n  1: - // Check below⟦U+2029 PARAGRAPH SEPARATOR⟧process.exitCode = 7;\n  1: + // Check below\n  2: + process.exitCode = 7;\n  1 finding(s) affected. Preview only; no file was written.\n\n",
+        "stderr": ""
+      },
+      "originalUnchangedAfterPreview": true,
+      "previewShowsNormalizedPlan": true,
+      "repair": {
+        "exit": 0,
+        "stdout": "{\n  \"ghostchars\": true,\n  \"summary\": {\n    \"error\": 0,\n    \"warning\": 1,\n    \"info\": 0,\n    \"total\": 1,\n    \"files\": 1,\n    \"durationMs\": 14.215201000000008,\n    \"complete\": true,\n    \"inputErrors\": 0\n  },\n  \"skipped\": [],\n  \"errors\": [],\n  \"results\": [\n    {\n      \"path\": \"check.mjs\",\n      \"findings\": [\n        {\n          \"rule\": \"unusual-whitespace\",\n          \"severity\": \"warning\",\n          \"start\": {\n            \"line\": 1,\n            \"column\": 15,\n            \"offset\": 14\n          },\n          \"end\": {\n            \"line\": 1,\n            \"column\": 16,\n            \"offset\": 15\n          },\n          \"codePoints\": [\n            \"U+2029\"\n          ],\n          \"names\": [\n            \"PARAGRAPH SEPARATOR\"\n          ],\n          \"message\": \"PARAGRAPH SEPARATOR looks like a normal space or line break but is a distinct code point -- it can split tokens, defeat string/keyword matching, or hide in a diff. Usually left by pasting from a web page or chat window.\",\n          \"suggestion\": \"Replace with a regular space (U+0020) or ASCII newline.\",\n          \"fixable\": true\n        }\n      ]\n    }\n  ]\n}\n",
+        "stderr": ""
+      },
+      "repaired": "// Check below\nprocess.exitCode = 7;\n",
+      "repairedSha256": "31b1ebb6a56007bee091e341e9bb0e67f847f99bf2e9cd12b8fd92a304f44d07",
+      "repairedExecution": {
+        "exit": 7,
+        "stdout": "",
+        "stderr": ""
+      },
+      "reportComplete": true,
+      "agrees": true
+    },
+    {
+      "name": "allowlisted-nbsp",
+      "source": "console.log(1 + 1);\n",
+      "expected": "console.log(1 + 1);\n",
+      "config": {
+        "allow": [
+          "U+00A0"
+        ]
+      },
+      "originalExecution": {
+        "exit": 0,
+        "stdout": "2\n",
+        "stderr": ""
+      },
+      "preview": {
+        "exit": 0,
+        "stdout": "ghostchars: nothing to fix.\n",
+        "stderr": ""
+      },
+      "originalUnchangedAfterPreview": true,
+      "previewShowsNormalizedPlan": true,
+      "repair": {
+        "exit": 0,
+        "stdout": "{\n  \"ghostchars\": true,\n  \"summary\": {\n    \"error\": 0,\n    \"warning\": 0,\n    \"info\": 0,\n    \"total\": 0,\n    \"files\": 1,\n    \"durationMs\": 4.172376,\n    \"complete\": true,\n    \"inputErrors\": 0\n  },\n  \"skipped\": [],\n  \"errors\": [],\n  \"results\": []\n}\n",
+        "stderr": ""
+      },
+      "repaired": "console.log(1 + 1);\n",
+      "repairedSha256": "e6d686c06ad282f4ca7c2364101d0e07f85078e25794e1af2d664f9473bdbbc9",
+      "repairedExecution": {
+        "exit": 0,
+        "stdout": "2\n",
+        "stderr": ""
+      },
+      "reportComplete": true,
+      "agrees": true
+    },
+    {
+      "name": "disabled-whitespace",
+      "source": "console.log(1 + 1);\n",
+      "expected": "console.log(1 + 1);\n",
+      "config": {
+        "rules": {
+          "unusual-whitespace": false
+        }
+      },
+      "originalExecution": {
+        "exit": 0,
+        "stdout": "2\n",
+        "stderr": ""
+      },
+      "preview": {
+        "exit": 0,
+        "stdout": "ghostchars: nothing to fix.\n",
+        "stderr": ""
+      },
+      "originalUnchangedAfterPreview": true,
+      "previewShowsNormalizedPlan": true,
+      "repair": {
+        "exit": 0,
+        "stdout": "{\n  \"ghostchars\": true,\n  \"summary\": {\n    \"error\": 0,\n    \"warning\": 0,\n    \"info\": 0,\n    \"total\": 0,\n    \"files\": 1,\n    \"durationMs\": 5.102924000000002,\n    \"complete\": true,\n    \"inputErrors\": 0\n  },\n  \"skipped\": [],\n  \"errors\": [],\n  \"results\": []\n}\n",
+        "stderr": ""
+      },
+      "repaired": "console.log(1 + 1);\n",
+      "repairedSha256": "e6d686c06ad282f4ca7c2364101d0e07f85078e25794e1af2d664f9473bdbbc9",
+      "repairedExecution": {
+        "exit": 0,
+        "stdout": "2\n",
+        "stderr": ""
+      },
+      "reportComplete": true,
+      "agrees": true
+    },
+    {
+      "name": "ordinary-ascii",
+      "source": "console.log(false);\n",
+      "expected": "console.log(false);\n",
+      "config": null,
+      "originalExecution": {
+        "exit": 0,
+        "stdout": "false\n",
+        "stderr": ""
+      },
+      "preview": {
+        "exit": 0,
+        "stdout": "ghostchars: nothing to fix.\n",
+        "stderr": ""
+      },
+      "originalUnchangedAfterPreview": true,
+      "previewShowsNormalizedPlan": true,
+      "repair": {
+        "exit": 0,
+        "stdout": "{\n  \"ghostchars\": true,\n  \"summary\": {\n    \"error\": 0,\n    \"warning\": 0,\n    \"info\": 0,\n    \"total\": 0,\n    \"files\": 1,\n    \"durationMs\": 1.6361190000000008,\n    \"complete\": true,\n    \"inputErrors\": 0\n  },\n  \"skipped\": [],\n  \"errors\": [],\n  \"results\": []\n}\n",
+        "stderr": ""
+      },
+      "repaired": "console.log(false);\n",
+      "repairedSha256": "06f908d6b3afc6f6b61cdae9036e8342b575b9d6c935625eb620b75be832eb65",
+      "repairedExecution": {
+        "exit": 0,
+        "stdout": "false\n",
+        "stderr": ""
+      },
+      "reportComplete": true,
+      "agrees": true
+    },
+    {
+      "name": "protected-typography",
+      "source": "console.log(\"« bonjour » 漢　字 ⠁⠀⠃\");\n",
+      "expected": "console.log(\"« bonjour » 漢　字 ⠁⠀⠃\");\n",
+      "config": null,
+      "originalExecution": {
+        "exit": 0,
+        "stdout": "« bonjour » 漢　字 ⠁⠀⠃\n",
+        "stderr": ""
+      },
+      "preview": {
+        "exit": 0,
+        "stdout": "ghostchars: nothing to fix.\n",
+        "stderr": ""
+      },
+      "originalUnchangedAfterPreview": true,
+      "previewShowsNormalizedPlan": true,
+      "repair": {
+        "exit": 0,
+        "stdout": "{\n  \"ghostchars\": true,\n  \"summary\": {\n    \"error\": 0,\n    \"warning\": 0,\n    \"info\": 0,\n    \"total\": 0,\n    \"files\": 1,\n    \"durationMs\": 6.545468,\n    \"complete\": true,\n    \"inputErrors\": 0\n  },\n  \"skipped\": [],\n  \"errors\": [],\n  \"results\": []\n}\n",
+        "stderr": ""
+      },
+      "repaired": "console.log(\"« bonjour » 漢　字 ⠁⠀⠃\");\n",
+      "repairedSha256": "73dca1de113a169f941e841d1a901b8dd4b37851554496984e17df22446d289f",
+      "repairedExecution": {
+        "exit": 0,
+        "stdout": "« bonjour » 漢　字 ⠁⠀⠃\n",
+        "stderr": ""
+      },
+      "reportComplete": true,
+      "agrees": true
+    }
+  ],
+  "library": [
+    {
+      "mode": "default",
+      "policy": {},
+      "expected": "pleasedonot",
+      "actual": "pleasedonot",
+      "fixed": 2,
+      "remaining": 0,
+      "agrees": true
+    },
+    {
+      "mode": "remove",
+      "policy": {
+        "mode": "remove"
+      },
+      "expected": "pleasedonot",
+      "actual": "pleasedonot",
+      "fixed": 2,
+      "remaining": 0,
+      "agrees": true
+    },
+    {
+      "mode": "keep",
+      "policy": {
+        "mode": "keep"
+      },
+      "expected": "please do not",
+      "actual": "please do not",
+      "fixed": 0,
+      "remaining": 2,
+      "agrees": true
+    },
+    {
+      "mode": "normalize",
+      "policy": {
+        "mode": "normalize"
+      },
+      "expected": "please do not",
+      "actual": "please do not",
+      "fixed": 2,
+      "remaining": 0,
+      "agrees": true
+    }
+  ]
+}

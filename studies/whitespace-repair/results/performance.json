@@ -1,0 +1,33 @@
+{
+  "population": "Synthetic repeated word pairs. Single runs, not a general complexity or performance guarantee.",
+  "node": "v26.7.0",
+  "platform": "linux",
+  "cpus": 14,
+  "totalMemoryBytes": 50516529152,
+  "rows": [
+    {
+      "flaggedSpaces": 3000,
+      "inputBytes": 36000,
+      "elapsedMilliseconds": 56.88322500000001,
+      "exactOutputMatched": true,
+      "fixed": 3000,
+      "remaining": 0
+    },
+    {
+      "flaggedSpaces": 30000,
+      "inputBytes": 360000,
+      "elapsedMilliseconds": 147.93395500000003,
+      "exactOutputMatched": true,
+      "fixed": 30000,
+      "remaining": 0
+    },
+    {
+      "flaggedSpaces": 100000,
+      "inputBytes": 1200000,
+      "elapsedMilliseconds": 250.68087200000002,
+      "exactOutputMatched": true,
+      "fixed": 100000,
+      "remaining": 0
+    }
+  ]
+}
