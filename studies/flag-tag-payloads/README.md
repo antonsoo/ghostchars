@@ -112,5 +112,5 @@ first authored input. All 12 wrapped/registered/appended cases passed, including
 payload decoding, exact selected output and no external requests, CSP violations,
 page errors or horizontal overflow. `hosted.mjs` repeats this check.
 
-The local wheel/package checks, public source and hosted demo are separate
+The local package checks, public source and hosted demo are separate
 receipts. No npm release was performed; the package metadata remains 0.1.5.
