@@ -74,7 +74,7 @@ installed artifacts; no npm release was made for this change.
 | # | Rule ID(s) | Catches | Severity |
 |---|---|---|---|
 | 1 | `bidi-control`, `bidi-mark`, `bidi-unbalanced` | Explicit bidi formatting characters (U+202A-202E, U+2066-2069), bidi marks (U+200E, U+200F, U+061C), and embeddings/isolates that open without closing on a line | error / warning / error |
-| 2 | `tag-smuggling` | Unicode tag characters (U+E0000-U+E007F) outside a valid emoji tag sequence -- decodes the hidden ASCII | error |
+| 2 | `tag-smuggling` | Unicode tag characters (U+E0000-U+E007F) outside a registered RGI emoji tag sequence -- decodes the hidden ASCII | error |
 | 3 | `variation-selector-smuggling`, `variation-selector-stray` | Variation-selector runs that decode to a hidden payload, or selectors on a base that can't take one | error / warning |
 | 4 | `invisible` | Any `Default_Ignorable_Code_Point` character without a legitimate emoji-ZWJ or script-joining context (a ZWJ/ZWNJ after an Indic virama, such as a Malayalam chillu, counts as one) | warning |
 | 5 | `confusable` | Words that mix scripts beyond what UTS #39 allows and hold a lookalike (`paypal` with a Cyrillic letter, U+0430, for its `a`), or that reduce to the same TR39 "skeleton" as a different spelling elsewhere in the file | warning / error |
@@ -314,7 +314,14 @@ Every explicit formatting character (LRE/RLE/LRO/RLO/LRI/RLI/FSI/PDI) is flagged
 
 ### Tag smuggling (rule 2)
 
-Tag characters mirror ASCII 1:1 (U+E0020-U+E007E ↔ 0x20-0x7E). `decodeTags()` finds every maximal run, decodes it, and checks whether it's exactly `U+1F3F4` (waving flag) + tag letters + `U+E007F` (cancel) -- the only legitimate use (regional flag emoji). Anything else -- no base, wrong base, unterminated -- is flagged with the decoded ASCII shown.
+Tag characters mirror ASCII 1:1 (U+E0020-U+E007E ↔ 0x20-0x7E).
+In this checkout, `decodeTags()` exempts only exact RGI emoji tag sequences from
+the vendored Unicode data. A black flag plus arbitrary hidden text and a cancel
+character has the same structural shape and previously bypassed both scanning
+and sanitization. `TagRun.isValidEmojiTagSequence` now denotes registered RGI
+recognition. A registered prefix forms its own run, so suspicious trailing tags
+can be removed while preserving the flag; other repairs keep the visible carrier.
+[Native library, installed CLI and browser reproduction](studies/flag-tag-payloads/README.md).
 
 ### Variation-selector smuggling (rule 3)
 

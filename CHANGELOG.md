@@ -19,6 +19,14 @@ All notable changes to this project are documented in this file.
 
 ### Fixed
 
+- Exempt only registered RGI emoji tag sequences. A black flag wrapping arbitrary
+  tag-encoded instructions previously produced no finding and survived sanitization.
+  `decodeTags().isValidEmojiTagSequence` now indicates exact RGI recognition,
+  rather than structural shape. Split off registered prefixes before inspecting
+  appended payloads. Repairs remove suspicious tags and preserve visible carriers
+  and legitimate flag prefixes. Retain authored controls and an independent
+  Unicode-data oracle under `studies/flag-tag-payloads`.
+
 - CLI `--fix` normalizes unusual whitespace to ASCII spaces/newlines rather
   than deleting word and line boundaries. Native JavaScript reproductions
   retain `return false` and code following Unicode line-comment separators.

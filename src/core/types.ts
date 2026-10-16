@@ -48,7 +48,7 @@ export interface Finding {
   fixable: boolean;
   /**
    * The part of the span `sanitize()` deletes, as UTF-16 offsets, when that is less than the
-   * whole span: a variation-selector finding is located at its base character, which is visible
+   * whole span: a selector/tag finding can be located at its base character, which is visible
    * text and stays. Absent means the whole span is removed.
    */
   removal?: { start: number; end: number };

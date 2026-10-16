@@ -1,0 +1,43 @@
+{
+  "source": "https://unicode.org/Public/17.0.0/emoji/emoji-sequences.txt",
+  "sha256": "12cc8267dc33cbd11ed32bcf6fc5dc2ad9c7a77bae1bdfba2f41b1b9b3ead8dd",
+  "bytes": 194868,
+  "registered": [
+    {
+      "codepoints": [
+        127988,
+        917607,
+        917602,
+        917605,
+        917614,
+        917607,
+        917631
+      ],
+      "description": "flag: England"
+    },
+    {
+      "codepoints": [
+        127988,
+        917607,
+        917602,
+        917619,
+        917603,
+        917620,
+        917631
+      ],
+      "description": "flag: Scotland"
+    },
+    {
+      "codepoints": [
+        127988,
+        917607,
+        917602,
+        917623,
+        917612,
+        917619,
+        917631
+      ],
+      "description": "flag: Wales"
+    }
+  ]
+}

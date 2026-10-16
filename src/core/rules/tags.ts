@@ -16,11 +16,14 @@ export function scanTags(text: string, positionAt: PositionLookup): Finding[] {
       codePoints: run.codePoints,
       names: run.codePoints.map(unicodeName),
       message: run.hasEmojiBase
-        ? `Unicode tag characters after an emoji base do not form a valid emoji tag sequence (only flag sequences like U+1F3F4 + letters + U+E007F are legitimate). Decoded payload: ${JSON.stringify(printable)}.`
+        ? `Unicode tag characters after the black flag are not a registered RGI emoji tag sequence. A flag-shaped wrapper does not make a hidden payload legitimate. Decoded payload: ${JSON.stringify(printable)}.`
         : `Unicode tag characters (U+E0000-U+E007F) with no legitimate emoji base -- these are invisible outside the code point inspector and decode to hidden ASCII: ${JSON.stringify(printable)}.`,
       suggestion: 'Remove these characters. Legitimate use is limited to RGI emoji tag sequences (regional flags).',
       decoded: printable,
       fixable: true,
+      // The visible carrier is not the hidden payload. Preserve it just as
+      // variation-selector repair preserves its base character.
+      ...(run.hasEmojiBase ? { removal: { start: run.start + 2, end: run.end } } : {}),
     });
   }
   return findings;

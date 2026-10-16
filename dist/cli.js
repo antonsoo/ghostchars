@@ -7189,7 +7189,15 @@ function scanConfusables(text, positionAt = positionIndex(text)) {
   return findings;
 }
 
+// src/generated/emoji-tag-sequences.ts
+var rgiEmojiTagSequences = [
+  [127988, 917607, 917602, 917605, 917614, 917607, 917631],
+  [127988, 917607, 917602, 917619, 917603, 917620, 917631],
+  [127988, 917607, 917602, 917623, 917612, 917619, 917631]
+];
+
 // src/core/decodeTags.ts
+var REGISTERED_FLAGS = rgiEmojiTagSequences.map((sequence) => String.fromCodePoint(...sequence));
 var TAG_BASE = 917504;
 var TAG_LETTER_START = 917536;
 var TAG_LETTER_END = 917630;
@@ -7208,19 +7216,20 @@ function decodeTags(text) {
     if (cp >= TAG_BASE && cp <= TAG_CANCEL) {
       const prevIsBase = precedingCodePoint(text, i) === EMOJI_TAG_BASE;
       const start = prevIsBase ? i - 2 : i;
+      const registered = prevIsBase ? REGISTERED_FLAGS.find((sequence) => text.startsWith(sequence, start)) : void 0;
+      const registeredEnd = registered === void 0 ? void 0 : start + registered.length;
       let j = i;
       const codePoints = [];
       let decoded = "";
       while (j < text.length) {
+        if (registeredEnd !== void 0 && j >= registeredEnd) break;
         const c = text.codePointAt(j);
         if (c < TAG_BASE || c > TAG_CANCEL) break;
         codePoints.push(c);
         decoded += tagCharToAscii(c);
         j += c > 65535 ? 2 : 1;
       }
-      const endsWithCancel = codePoints[codePoints.length - 1] === TAG_CANCEL;
-      const middleAllLetters = codePoints.slice(0, endsWithCancel ? -1 : void 0).every((c) => c >= TAG_LETTER_START && c <= TAG_LETTER_END);
-      const isValidEmojiTagSequence = prevIsBase && endsWithCancel && middleAllLetters && codePoints.length > 1;
+      const isValidEmojiTagSequence = registered !== void 0;
       runs.push({
         start: prevIsBase ? start : i,
         end: j,
@@ -8790,10 +8799,13 @@ function scanTags(text, positionAt) {
       end: positionAt(run.end),
       codePoints: run.codePoints,
       names: run.codePoints.map(unicodeName),
-      message: run.hasEmojiBase ? `Unicode tag characters after an emoji base do not form a valid emoji tag sequence (only flag sequences like U+1F3F4 + letters + U+E007F are legitimate). Decoded payload: ${JSON.stringify(printable)}.` : `Unicode tag characters (U+E0000-U+E007F) with no legitimate emoji base -- these are invisible outside the code point inspector and decode to hidden ASCII: ${JSON.stringify(printable)}.`,
+      message: run.hasEmojiBase ? `Unicode tag characters after the black flag are not a registered RGI emoji tag sequence. A flag-shaped wrapper does not make a hidden payload legitimate. Decoded payload: ${JSON.stringify(printable)}.` : `Unicode tag characters (U+E0000-U+E007F) with no legitimate emoji base -- these are invisible outside the code point inspector and decode to hidden ASCII: ${JSON.stringify(printable)}.`,
       suggestion: "Remove these characters. Legitimate use is limited to RGI emoji tag sequences (regional flags).",
       decoded: printable,
-      fixable: true
+      fixable: true,
+      // The visible carrier is not the hidden payload. Preserve it just as
+      // variation-selector repair preserves its base character.
+      ...run.hasEmojiBase ? { removal: { start: run.start + 2, end: run.end } } : {}
     });
   }
   return findings;

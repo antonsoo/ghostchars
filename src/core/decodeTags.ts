@@ -9,6 +9,10 @@
 // used in the wild against LLM chat UIs to hide instructions in copy-pasted
 // or rendered text.
 
+import { rgiEmojiTagSequences } from '../generated/emoji-tag-sequences.js';
+
+const REGISTERED_FLAGS = rgiEmojiTagSequences.map(sequence => String.fromCodePoint(...sequence));
+
 export const TAG_BASE = 0xe0000;
 export const TAG_LANGUAGE_TAG = 0xe0001;
 export const TAG_LETTER_START = 0xe0020;
@@ -24,7 +28,7 @@ export interface TagRun {
   codePoints: number[];
   /** ASCII decoded from the tag letters (tag chars map 1:1 onto U+0020-U+007E). */
   decoded: string;
-  /** True if this is a well-formed emoji tag sequence: BASE + letters + CANCEL. */
+  /** True only for a registered RGI emoji tag sequence in the vendored Unicode data. */
   isValidEmojiTagSequence: boolean;
   /** True if the sequence starts with a recognized emoji base (e.g. the waving flag). */
   hasEmojiBase: boolean;
@@ -37,10 +41,10 @@ function tagCharToAscii(cp: number): string {
 
 /**
  * Finds every maximal run of tag characters in `text` and reports whether
- * each is a structurally valid emoji tag sequence (U+1F3F4 + tag letters +
- * U+E007F) or a stray run -- the latter being the smuggling case. Decodes
- * the tag letters to ASCII either way, since even a "valid" flag sequence's
- * payload is worth showing.
+ * each is a registered RGI emoji tag sequence or a stray run. Structure alone
+ * cannot establish an exemption: BASE + arbitrary instructions + CANCEL has
+ * that same shape. A registered prefix is its own run, so trailing payloads
+ * can be removed without destroying the legitimate flag.
  */
 export function decodeTags(text: string): TagRun[] {
   const runs: TagRun[] = [];
@@ -52,19 +56,20 @@ export function decodeTags(text: string): TagRun[] {
       // Look back precisely for a directly-adjacent EMOJI_TAG_BASE code point.
       const prevIsBase = precedingCodePoint(text, i) === EMOJI_TAG_BASE;
       const start = prevIsBase ? i - 2 : i; // 1F3F4 is a supplementary-plane char: 2 UTF-16 units
+      const registered = prevIsBase ? REGISTERED_FLAGS.find(sequence => text.startsWith(sequence, start)) : undefined;
+      const registeredEnd = registered === undefined ? undefined : start + registered.length;
       let j = i;
       const codePoints: number[] = [];
       let decoded = '';
       while (j < text.length) {
+        if (registeredEnd !== undefined && j >= registeredEnd) break;
         const c = text.codePointAt(j)!;
         if (c < TAG_BASE || c > TAG_CANCEL) break;
         codePoints.push(c);
         decoded += tagCharToAscii(c);
         j += c > 0xffff ? 2 : 1;
       }
-      const endsWithCancel = codePoints[codePoints.length - 1] === TAG_CANCEL;
-      const middleAllLetters = codePoints.slice(0, endsWithCancel ? -1 : undefined).every((c) => c >= TAG_LETTER_START && c <= TAG_LETTER_END);
-      const isValidEmojiTagSequence = prevIsBase && endsWithCancel && middleAllLetters && codePoints.length > 1;
+      const isValidEmojiTagSequence = registered !== undefined;
       runs.push({
         start: prevIsBase ? start : i,
         end: j,
