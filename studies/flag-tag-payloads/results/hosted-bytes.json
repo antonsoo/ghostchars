@@ -1,0 +1,171 @@
+{
+  "site": "https://antonsoo.github.io/ghostchars/",
+  "gh_pages_commit": "6fd27089211a7e5e9369506da02e9363922835d9",
+  "remote_gh_pages": "6fd27089211a7e5e9369506da02e9363922835d9",
+  "checked_at_utc": "2026-10-16T01:40:25.035933+00:00",
+  "tested_source_commit": "d1c9ada12f5c1942b1320735179e5748ca16015e",
+  "matched_files": 32,
+  "files": [
+    {
+      "path": "assets/ibm-plex-mono-400-cyrillic-BSMlKf0J.woff2",
+      "bytes": 8356,
+      "sha256": "7635422bd10ddbbcb0e0caa1154b928298f5c8319b8c00b30978d4395f4783ce"
+    },
+    {
+      "path": "assets/ibm-plex-mono-400-cyrillic-ext-xuaO2J-f.woff2",
+      "bytes": 6912,
+      "sha256": "f8c22ec1804bd6966b70f43ac7c327025645b4c09597117fca2a5a6c750106fe"
+    },
+    {
+      "path": "assets/ibm-plex-mono-400-latin-DMJ8VG8y.woff2",
+      "bytes": 14708,
+      "sha256": "08949f728dc52d528e69b1667d15c89a5686a4ee9a296ff90983985f99c380f7"
+    },
+    {
+      "path": "assets/ibm-plex-mono-400-latin-ext-BmRBH3aV.woff2",
+      "bytes": 13348,
+      "sha256": "6bc0f226a5b7884a8170e3f62c63d7675609d4631bdc5931b5cdab81821f00eb"
+    },
+    {
+      "path": "assets/ibm-plex-mono-400-vietnamese-BulugwFq.woff2",
+      "bytes": 5868,
+      "sha256": "62632b6375305e70ddcafdd895218e6ae41a184fcd280a69c739460604ca00a9"
+    },
+    {
+      "path": "assets/ibm-plex-mono-500-cyrillic-Bq9vWWag.woff2",
+      "bytes": 8460,
+      "sha256": "1d89462e86cb8e87e7e9d6f6635605bd7c3081baca6caaecee84916bf7b60edc"
+    },
+    {
+      "path": "assets/ibm-plex-mono-500-cyrillic-ext-BqneJy0T.woff2",
+      "bytes": 6972,
+      "sha256": "3febe5c7f22e4b07b4552738673c3dbe8bced2dc5f48b866edf7ccd9552d109a"
+    },
+    {
+      "path": "assets/ibm-plex-mono-500-latin-DSY6xOcd.woff2",
+      "bytes": 14888,
+      "sha256": "01d285447409c8a588692162439a038b8cbd7871309ee20267b0d2d91c6e8e22"
+    },
+    {
+      "path": "assets/ibm-plex-mono-500-latin-ext-CAhNIIs5.woff2",
+      "bytes": 13432,
+      "sha256": "6bb06407c97584b0867a959e05e8874693bfeb8c317de190811c51598f2d99ea"
+    },
+    {
+      "path": "assets/ibm-plex-mono-500-vietnamese-DZ4AoWbu.woff2",
+      "bytes": 6040,
+      "sha256": "781633d95de88040fb77141d1e65d928c87c0144691fbc74da5a64d137a7e910"
+    },
+    {
+      "path": "assets/ibm-plex-mono-600-cyrillic-CTOM6hUh.woff2",
+      "bytes": 9352,
+      "sha256": "2b05a8695c7f9f4abd7178b279646a3b005a8ce57546bef6fd145f25d131e0aa"
+    },
+    {
+      "path": "assets/ibm-plex-mono-600-cyrillic-ext-V-xxqcpd.woff2",
+      "bytes": 7692,
+      "sha256": "83109cdd4f8665b475dfc11d61bd44da328bf7e6eab3d3953d39c49b1b9f6015"
+    },
+    {
+      "path": "assets/ibm-plex-mono-600-latin-BgSNZQsw.woff2",
+      "bytes": 15620,
+      "sha256": "0d1f0b8d0722224e32e9f28261bdc86c79115be73444ae5eceb73976a1bcdf83"
+    },
+    {
+      "path": "assets/ibm-plex-mono-600-latin-ext-D38SheWl.woff2",
+      "bytes": 14328,
+      "sha256": "32057cf50dd14bdb21a2c93766c4a2c43e4abe688ea3922df3203cac7751a98b"
+    },
+    {
+      "path": "assets/ibm-plex-mono-600-vietnamese-D2EvbN8M.woff2",
+      "bytes": 6932,
+      "sha256": "51b74d53e106ba8a26dd33464b231a562069be2a234b923c115beb622e6f6bc6"
+    },
+    {
+      "path": "assets/index-D-URW2Iy.css",
+      "bytes": 17707,
+      "sha256": "f7da8186ed0fcac032c424a13f2601ece4d04ad6192a85c9b4b4e239223bae52"
+    },
+    {
+      "path": "assets/index-Dr4oDMwB.js",
+      "bytes": 17094,
+      "sha256": "948358ccc26386574f2a39d348e4ec8d37bc91b094be234456aad161f3a0ebaa"
+    },
+    {
+      "path": "assets/index-Dr4oDMwB.js.map",
+      "bytes": 29863,
+      "sha256": "44dabe2534f95d23fadebea311ee2bc56e48b386ff4a9d99c8ef56cd1e14e9a2"
+    },
+    {
+      "path": "assets/inter-cyrillic-DqGufNeO.woff2",
+      "bytes": 18748,
+      "sha256": "71d5ee93cc1e9f1d520a3a8b66456de18c7879d8df09d57fcd2eaff75fef0075"
+    },
+    {
+      "path": "assets/inter-cyrillic-ext-BOeWTOD4.woff2",
+      "bytes": 25960,
+      "sha256": "ca157063339ac4ad418f214f3abfed119b0798ab4d377386ce5c9e5a7a435ebd"
+    },
+    {
+      "path": "assets/inter-greek-CkhJZR-_.woff2",
+      "bytes": 18996,
+      "sha256": "1be3448e292fbf05ffe176fe1e43f135013d50b1e7d324ad1a558f623d3bb6f6"
+    },
+    {
+      "path": "assets/inter-greek-ext-DlzME5K_.woff2",
+      "bytes": 11232,
+      "sha256": "6e9e020a25f9b56d418f2c085b1d3c09725a4da23fe693a5b463064606732190"
+    },
+    {
+      "path": "assets/inter-latin-Dx4kXJAl.woff2",
+      "bytes": 48256,
+      "sha256": "3100e775e8616cd2611beecfa23a4263d7037586789b43f035236a2e6fbd4c62"
+    },
+    {
+      "path": "assets/inter-latin-ext-DO1Apj_S.woff2",
+      "bytes": 85068,
+      "sha256": "34b9c504cab7a73e37b746343a449132e56cf7b5481af2cb81dc74dcff25c956"
+    },
+    {
+      "path": "assets/inter-vietnamese-CBcvBZtf.woff2",
+      "bytes": 10252,
+      "sha256": "5c66f9e07e90c6d4ac4922cc68d60de26c17b1858e677fb5e603fce3952b3ff2"
+    },
+    {
+      "path": "assets/scan.worker-Bc_bzmph.js",
+      "bytes": 176748,
+      "sha256": "92d484f109da2c128cd730966d2ac15567bf57adbdbaa8736920c637746cb0c9"
+    },
+    {
+      "path": "assets/scan.worker-Bc_bzmph.js.map",
+      "bytes": 607236,
+      "sha256": "d00bd2dc2c390e974b37f114e0f74d7811d963a8665402264a2f3265a0e8b328"
+    },
+    {
+      "path": "assets/space-grotesk-latin-BhU9QXUp.woff2",
+      "bytes": 22288,
+      "sha256": "0640890476fc1198ab4de571fb658de443c4d85b66466ec09534a8737ab1ce9d"
+    },
+    {
+      "path": "assets/space-grotesk-latin-ext-D9tNdqV9.woff2",
+      "bytes": 18940,
+      "sha256": "952dddb45d2f96f71cbf3b7f510b24379afc3c89ea02fcf89d377b45d62c0166"
+    },
+    {
+      "path": "assets/space-grotesk-vietnamese-D0rl6rjA.woff2",
+      "bytes": 6712,
+      "sha256": "8895e3d49825128bfa5238e4c96e9b432d7a3dadbe5c17c6081267398305dc71"
+    },
+    {
+      "path": "favicon.svg",
+      "bytes": 360,
+      "sha256": "8a223c5369b990e7795446b06d4c17559a05ff6ed0d1d66e85e64015ed05395f"
+    },
+    {
+      "path": "index.html",
+      "bytes": 2259,
+      "sha256": "942a46dc7842b487e039cf2bb6a62ce1d534647067428c9e22bf4f99e17442a3"
+    }
+  ],
+  "scope": "Hosted static demo; npm package not released."
+}

@@ -1,0 +1,257 @@
+{
+  "site": "https://antonsoo.github.io/ghostchars/",
+  "cases": 12,
+  "page_errors": [],
+  "external_requests": [],
+  "csp_violations": [],
+  "workflows": [
+    {
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "width": 1440,
+      "case": "wrapped-0",
+      "offline_before_first_authored_input": true,
+      "expected_findings": 1,
+      "exact_sanitized_codepoints": [
+        80,
+        114,
+        111,
+        109,
+        112,
+        116,
+        32,
+        127988,
+        32,
+        101,
+        110,
+        100
+      ],
+      "selected_output_matches": true,
+      "horizontal_overflow": false
+    },
+    {
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "width": 1440,
+      "case": "registered-gbsct",
+      "offline_before_first_authored_input": true,
+      "expected_findings": 0,
+      "exact_sanitized_codepoints": [
+        127988,
+        917607,
+        917602,
+        917619,
+        917603,
+        917620,
+        917631
+      ],
+      "selected_output_matches": true,
+      "horizontal_overflow": false
+    },
+    {
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "width": 1440,
+      "case": "suffix-gbsct",
+      "offline_before_first_authored_input": true,
+      "expected_findings": 1,
+      "exact_sanitized_codepoints": [
+        127988,
+        917607,
+        917602,
+        917619,
+        917603,
+        917620,
+        917631
+      ],
+      "selected_output_matches": true,
+      "horizontal_overflow": false
+    },
+    {
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "width": 375,
+      "case": "wrapped-0",
+      "offline_before_first_authored_input": true,
+      "expected_findings": 1,
+      "exact_sanitized_codepoints": [
+        80,
+        114,
+        111,
+        109,
+        112,
+        116,
+        32,
+        127988,
+        32,
+        101,
+        110,
+        100
+      ],
+      "selected_output_matches": true,
+      "horizontal_overflow": false
+    },
+    {
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "width": 375,
+      "case": "registered-gbsct",
+      "offline_before_first_authored_input": true,
+      "expected_findings": 0,
+      "exact_sanitized_codepoints": [
+        127988,
+        917607,
+        917602,
+        917619,
+        917603,
+        917620,
+        917631
+      ],
+      "selected_output_matches": true,
+      "horizontal_overflow": false
+    },
+    {
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "width": 375,
+      "case": "suffix-gbsct",
+      "offline_before_first_authored_input": true,
+      "expected_findings": 1,
+      "exact_sanitized_codepoints": [
+        127988,
+        917607,
+        917602,
+        917619,
+        917603,
+        917620,
+        917631
+      ],
+      "selected_output_matches": true,
+      "horizontal_overflow": false
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "width": 1440,
+      "case": "wrapped-0",
+      "offline_before_first_authored_input": true,
+      "expected_findings": 1,
+      "exact_sanitized_codepoints": [
+        80,
+        114,
+        111,
+        109,
+        112,
+        116,
+        32,
+        127988,
+        32,
+        101,
+        110,
+        100
+      ],
+      "selected_output_matches": true,
+      "horizontal_overflow": false
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "width": 1440,
+      "case": "registered-gbsct",
+      "offline_before_first_authored_input": true,
+      "expected_findings": 0,
+      "exact_sanitized_codepoints": [
+        127988,
+        917607,
+        917602,
+        917619,
+        917603,
+        917620,
+        917631
+      ],
+      "selected_output_matches": true,
+      "horizontal_overflow": false
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "width": 1440,
+      "case": "suffix-gbsct",
+      "offline_before_first_authored_input": true,
+      "expected_findings": 1,
+      "exact_sanitized_codepoints": [
+        127988,
+        917607,
+        917602,
+        917619,
+        917603,
+        917620,
+        917631
+      ],
+      "selected_output_matches": true,
+      "horizontal_overflow": false
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "width": 375,
+      "case": "wrapped-0",
+      "offline_before_first_authored_input": true,
+      "expected_findings": 1,
+      "exact_sanitized_codepoints": [
+        80,
+        114,
+        111,
+        109,
+        112,
+        116,
+        32,
+        127988,
+        32,
+        101,
+        110,
+        100
+      ],
+      "selected_output_matches": true,
+      "horizontal_overflow": false
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "width": 375,
+      "case": "registered-gbsct",
+      "offline_before_first_authored_input": true,
+      "expected_findings": 0,
+      "exact_sanitized_codepoints": [
+        127988,
+        917607,
+        917602,
+        917619,
+        917603,
+        917620,
+        917631
+      ],
+      "selected_output_matches": true,
+      "horizontal_overflow": false
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "width": 375,
+      "case": "suffix-gbsct",
+      "offline_before_first_authored_input": true,
+      "expected_findings": 1,
+      "exact_sanitized_codepoints": [
+        127988,
+        917607,
+        917602,
+        917619,
+        917603,
+        917620,
+        917631
+      ],
+      "selected_output_matches": true,
+      "horizontal_overflow": false
+    }
+  ]
+}

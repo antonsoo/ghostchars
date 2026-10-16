@@ -94,3 +94,23 @@ cd web && UPDATE_TAG_SCREENSHOTS=1 npm run test:browser
 This detects a specific Unicode encoding and preserves registered variants;
 it does not parse programming-language semantics, certify prompt safety, detect
 every hidden-text encoding or establish that a finding is malicious.
+
+## Public source and demo
+
+Source/evidence revision `cbb0e30a1cb76fd5b4757ea631ce0f505e5178e4` was pushed
+and checked with a clean tree against GitHub's branch head. All 59 changed files
+matched their pinned raw URLs; the [publication receipt](results/publication.json)
+includes the committed CLI bundle, fixtures and evidence.
+
+The existing [static inspector](https://antonsoo.github.io/ghostchars/) was
+updated by a normal fast-forward push to `gh-pages`, revision
+`6fd27089211a7e5e9369506da02e9363922835d9`. All
+[32 served files](results/hosted-bytes.json) match the clean tested build.
+[Fresh hosted Chromium/Firefox contexts](results/hosted-browser.json), at
+desktop and 375 px, loaded the canonical site and disconnected before their
+first authored input. All 12 wrapped/registered/appended cases passed, including
+payload decoding, exact selected output and no external requests, CSP violations,
+page errors or horizontal overflow. `hosted.mjs` repeats this check.
+
+The local wheel/package checks, public source and hosted demo are separate
+receipts. No npm release was performed; the package metadata remains 0.1.5.

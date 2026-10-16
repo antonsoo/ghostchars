@@ -1,0 +1,304 @@
+{
+  "source_commit": "cbb0e30a1cb76fd5b4757ea631ce0f505e5178e4",
+  "remote_main": "cbb0e30a1cb76fd5b4757ea631ce0f505e5178e4",
+  "clean_tree_at_verification": true,
+  "pinned_public_files_matched": 59,
+  "files": [
+    {
+      "path": "CHANGELOG.md",
+      "bytes": 20488,
+      "sha256": "7c9b6764eadbd3772de2aa7532a0e890b60148e450187eaf06b7d172247724b1"
+    },
+    {
+      "path": "README.md",
+      "bytes": 33661,
+      "sha256": "4ac2ad43517ca45aeffd3681c328b2781a8f6f878f412fb3942fa1cbe005c045"
+    },
+    {
+      "path": "dist/cli.js",
+      "bytes": 278470,
+      "sha256": "27380d811330b5cefd54bd55dba454fe0fcb3586adbc62d047c1765dd81333d6"
+    },
+    {
+      "path": "docs/assets/flag-tag-payloads/chromium-1440.png",
+      "bytes": 427864,
+      "sha256": "a0be1948c9ddec280b6515677d54f2eabbac424e4219d9a5f2afbb4b1d37bce0"
+    },
+    {
+      "path": "docs/assets/flag-tag-payloads/chromium-375.png",
+      "bytes": 352797,
+      "sha256": "c18e695c61122f973604ac1868f50e30ffe70a204c85d13772c36afa5a0699d6"
+    },
+    {
+      "path": "docs/assets/flag-tag-payloads/firefox-1440.png",
+      "bytes": 488145,
+      "sha256": "07a12d9a510b5b1853d98c01bbd7c493c600fe4f76f8028deaf8e4ea6622f800"
+    },
+    {
+      "path": "docs/assets/flag-tag-payloads/firefox-375.png",
+      "bytes": 444055,
+      "sha256": "48a3f633a4aeefb9ad7fbb5d2066e29eeca5abbc90240dc0d65b28ef78a81e54"
+    },
+    {
+      "path": "src/core/decodeTags.ts",
+      "bytes": 4120,
+      "sha256": "670789dfdc9bad2b4f760466b4dea31d01cc8ff90073a01f358da1ad3bda883e"
+    },
+    {
+      "path": "src/core/rules/tags.ts",
+      "bytes": 1544,
+      "sha256": "4a035508118611374f7b550ca7ea0da4b0fd28818d383b219819f8ee587f7952"
+    },
+    {
+      "path": "src/core/types.ts",
+      "bytes": 3943,
+      "sha256": "0d60ce0a9a0d4bdbd0483704d6684fe771888c1ea70df257e6d1d4bf1da3e888"
+    },
+    {
+      "path": "studies/flag-tag-payloads/README.md",
+      "bytes": 5320,
+      "sha256": "fc8b93bc172343e10965b103af639787fe637b8b4ddc4a6d7f55c0a94909fbd1"
+    },
+    {
+      "path": "studies/flag-tag-payloads/cases.json",
+      "bytes": 6303,
+      "sha256": "b584eda53049a0cace0517fcd28a8bee3cba511b200db633bf260fe8d73584a9"
+    },
+    {
+      "path": "studies/flag-tag-payloads/fixtures/adjacent-registered.txt",
+      "bytes": 56,
+      "sha256": "76cfdff71b2180c1d4a539e820509ed39fdbe64204f29e33b864cbc134d4b9c2"
+    },
+    {
+      "path": "studies/flag-tag-payloads/fixtures/after-astral-line.txt",
+      "bytes": 44,
+      "sha256": "a81bf271bae8f1b7b1762cc5715d17de22f768a74eae594dfd8b90160e50e717"
+    },
+    {
+      "path": "studies/flag-tag-payloads/fixtures/bare-black-flag.txt",
+      "bytes": 4,
+      "sha256": "fe6da3181cd6b27edbe4892ef1c50ab542365298a91841fd3a69ca8b746c7ed2"
+    },
+    {
+      "path": "studies/flag-tag-payloads/fixtures/cancel-only.txt",
+      "bytes": 8,
+      "sha256": "c00c33eb7639e968a7a4b20ed038ad1d44d5e070d39d84e209a7fe5548218ba6"
+    },
+    {
+      "path": "studies/flag-tag-payloads/fixtures/extended-gbeng.txt",
+      "bytes": 52,
+      "sha256": "a0314542456e1cc1e71a1a01a1159bf4672d8ff5458b734dbacf4bd0d148f92a"
+    },
+    {
+      "path": "studies/flag-tag-payloads/fixtures/extended-gbsct.txt",
+      "bytes": 52,
+      "sha256": "80cc2ab443320c7638c31d98206e07341a8f7e1a1bfcf1d6ceef204cb41414d7"
+    },
+    {
+      "path": "studies/flag-tag-payloads/fixtures/extended-gbwls.txt",
+      "bytes": 52,
+      "sha256": "b75fadb540fb74b0326c6513d1ddc82975ffe3456f82188e70fbaa8770dd38f5"
+    },
+    {
+      "path": "studies/flag-tag-payloads/fixtures/flag-and-extra-cancel.txt",
+      "bytes": 32,
+      "sha256": "e528f0eb79d8f1ae0832ee16bfc7aaf268cef74910cfd07927370aabf4c3274a"
+    },
+    {
+      "path": "studies/flag-tag-payloads/fixtures/grinning-base.txt",
+      "bytes": 32,
+      "sha256": "241708ffcfb36a9b6491d95723ec5491ede88ca34e58f7d78e31c7e27f20adc9"
+    },
+    {
+      "path": "studies/flag-tag-payloads/fixtures/missing-cancel.txt",
+      "bytes": 28,
+      "sha256": "37cb4d06fad7727797a9ba59177e74e7591a824a164eaf353ad18ebb9d158933"
+    },
+    {
+      "path": "studies/flag-tag-payloads/fixtures/registered-gbeng.txt",
+      "bytes": 28,
+      "sha256": "bd2d545e285f20ff8733229e202619a921f7036b54657801a8e216502d7f8293"
+    },
+    {
+      "path": "studies/flag-tag-payloads/fixtures/registered-gbsct.txt",
+      "bytes": 28,
+      "sha256": "c94781ea4b53699242c238111fff670e026fe40bc55fdaa4a5c5dd72f8f55ad2"
+    },
+    {
+      "path": "studies/flag-tag-payloads/fixtures/registered-gbwls.txt",
+      "bytes": 28,
+      "sha256": "7b918b13c095d24a4d4e3faae876b92a132a0d5ade6362f06e0e09954bde7abc"
+    },
+    {
+      "path": "studies/flag-tag-payloads/fixtures/suffix-gbeng.txt",
+      "bytes": 56,
+      "sha256": "e89a68ae18c393f0c38503c88f21f0e86fde7ef9c5db7003b28acf618c95fd8b"
+    },
+    {
+      "path": "studies/flag-tag-payloads/fixtures/suffix-gbsct.txt",
+      "bytes": 56,
+      "sha256": "ed12c5f815c7c2dca3d5a1e2ed63d6d7469d7511d07802f2c1a7dbd4152ac768"
+    },
+    {
+      "path": "studies/flag-tag-payloads/fixtures/suffix-gbwls.txt",
+      "bytes": 56,
+      "sha256": "0a062c124080ab07def5ebdfac841a071e86f6299fde33d40550c69144b8cf18"
+    },
+    {
+      "path": "studies/flag-tag-payloads/fixtures/tag-control.txt",
+      "bytes": 36,
+      "sha256": "4caf027ab78d6890a8324e7d621e5b36efb96199ec89829002a291c903497f3d"
+    },
+    {
+      "path": "studies/flag-tag-payloads/fixtures/two-payloads.txt",
+      "bytes": 61,
+      "sha256": "dc5d9724e226cb575c910c3a8560650a4bbdd4b71c126f8f6794ede141133072"
+    },
+    {
+      "path": "studies/flag-tag-payloads/fixtures/without-base.txt",
+      "bytes": 39,
+      "sha256": "1ad0c1fb086dfcc38ea249ad8d7218b86849ece78a7336f052b995cb2fec962d"
+    },
+    {
+      "path": "studies/flag-tag-payloads/fixtures/wrapped-0.txt",
+      "bytes": 207,
+      "sha256": "7db75168c4c5d6f8ab7a9de64f0ad28dd06a27117758a46561180e431db44786"
+    },
+    {
+      "path": "studies/flag-tag-payloads/fixtures/wrapped-1.txt",
+      "bytes": 27,
+      "sha256": "5440ff3956883420c6a17d414e78fd5c32a58d8455a45e7d3b902e821f5e6b6d"
+    },
+    {
+      "path": "studies/flag-tag-payloads/fixtures/wrapped-2.txt",
+      "bytes": 43,
+      "sha256": "edf66b23888ebbfcd1167c3784dfe38f1e4b17e686c4686e5456d5b31f5ccdb3"
+    },
+    {
+      "path": "studies/flag-tag-payloads/fixtures/wrapped-3.txt",
+      "bytes": 23,
+      "sha256": "4cf78ae1655971643c1303df0b332c562a27a50a574446d2e6de22da3ea9fd0b"
+    },
+    {
+      "path": "studies/flag-tag-payloads/fixtures/wrapped-4.txt",
+      "bytes": 35,
+      "sha256": "b8275a6ff8bba87704fd697a21d2d2ab591b83769774986b2a724155189dad4e"
+    },
+    {
+      "path": "studies/flag-tag-payloads/generate.mjs",
+      "bytes": 2299,
+      "sha256": "5b38c4e2e08a292fd76ec6fa38598f396eb0fbb61cbea1db2b6cbb88c4a54bf3"
+    },
+    {
+      "path": "studies/flag-tag-payloads/oracle.mjs",
+      "bytes": 2030,
+      "sha256": "9c61a0f0b80bf23e9cfbe8b3b58c91129c1591630ceeb86015a76ae23c878878"
+    },
+    {
+      "path": "studies/flag-tag-payloads/replay.mjs",
+      "bytes": 3095,
+      "sha256": "ab4872cac25776b259c4a8c45e7537d64110096adbabe2d5de4a859a713ee0a1"
+    },
+    {
+      "path": "studies/flag-tag-payloads/results/after.json",
+      "bytes": 34988,
+      "sha256": "e17054766fddf295aa80d808db1f857e32ad67f79316fd203729ddb2347b6a35"
+    },
+    {
+      "path": "studies/flag-tag-payloads/results/before.json",
+      "bytes": 21801,
+      "sha256": "6d7e6fa01d819a26a7685f49399cfdd689f66726b58cd5c49a8076bb711c5d58"
+    },
+    {
+      "path": "studies/flag-tag-payloads/results/browser.txt",
+      "bytes": 6130,
+      "sha256": "c42c6192b6599feece5ad4064d491203323db37b7bece817cfab8a8c8a9f9d1c"
+    },
+    {
+      "path": "studies/flag-tag-payloads/results/chromium-browser.json",
+      "bytes": 1530,
+      "sha256": "47afd557acceef643c06c4622600aa6359daf471c08422bcf3a8188ba14ec811"
+    },
+    {
+      "path": "studies/flag-tag-payloads/results/clean-checks.txt",
+      "bytes": 990,
+      "sha256": "af377583d68d957b895909892f884b288f8ca6737ec9b0b4d3b3fea2bbbd4886"
+    },
+    {
+      "path": "studies/flag-tag-payloads/results/clean-install.txt",
+      "bytes": 468,
+      "sha256": "b4906e179701a6dffd975830a55ddbb271dcb10d4e96c85d11d1940ad8b41a88"
+    },
+    {
+      "path": "studies/flag-tag-payloads/results/firefox-browser.json",
+      "bytes": 1530,
+      "sha256": "47afd557acceef643c06c4622600aa6359daf471c08422bcf3a8188ba14ec811"
+    },
+    {
+      "path": "studies/flag-tag-payloads/results/installed-install.txt",
+      "bytes": 26,
+      "sha256": "a90ef79d50bea8dd0184b152afe98656487137971ad9195706542877f0e45329"
+    },
+    {
+      "path": "studies/flag-tag-payloads/results/installed-node20.json",
+      "bytes": 34988,
+      "sha256": "e17054766fddf295aa80d808db1f857e32ad67f79316fd203729ddb2347b6a35"
+    },
+    {
+      "path": "studies/flag-tag-payloads/results/installed-node26.json",
+      "bytes": 34988,
+      "sha256": "e17054766fddf295aa80d808db1f857e32ad67f79316fd203729ddb2347b6a35"
+    },
+    {
+      "path": "studies/flag-tag-payloads/results/installed-oracle.json",
+      "bytes": 998,
+      "sha256": "d6629210caa7db5ef174b59a024205ebfc3a2e11a9787a2ef6abc685ec887750"
+    },
+    {
+      "path": "studies/flag-tag-payloads/results/oracle-after.json",
+      "bytes": 998,
+      "sha256": "d6629210caa7db5ef174b59a024205ebfc3a2e11a9787a2ef6abc685ec887750"
+    },
+    {
+      "path": "studies/flag-tag-payloads/results/oracle-before.json",
+      "bytes": 994,
+      "sha256": "ceba9a926d53704c777ba9dbc0a6685159f3649aea11503a58034796c1a513b5"
+    },
+    {
+      "path": "studies/flag-tag-payloads/results/verification.json",
+      "bytes": 9650,
+      "sha256": "6eb27e1768b57220e7dade5f887fa2bdd9d913363337d73ff19a38196b72685c"
+    },
+    {
+      "path": "studies/flag-tag-payloads/results/web-checks.txt",
+      "bytes": 2503,
+      "sha256": "0cfb8c757b07565d7e0019d5bb0c0198bef20ad8c0fa61102638c88bb633b990"
+    },
+    {
+      "path": "studies/flag-tag-payloads/results/web-install.txt",
+      "bytes": 280,
+      "sha256": "647b4c364e82a74c12c79ebf23f27f8044251d13c93c496c811644090913ab36"
+    },
+    {
+      "path": "studies/flag-tag-payloads/unicode-oracle.json",
+      "bytes": 774,
+      "sha256": "f97fbff8e6a009145a9ea21af68b8a094c74b744e80fa164ce2ad28c090a244b"
+    },
+    {
+      "path": "tests/flagTagPayloads.spec.ts",
+      "bytes": 1815,
+      "sha256": "8852f3cf2ba9f1e573013757e5b9f047eea89ee89a02dc97aed732114e448891"
+    },
+    {
+      "path": "tests/tags.spec.ts",
+      "bytes": 3270,
+      "sha256": "da7bc594bd0ac72c17a031b1ebe8624c63c858226a91bcec62d2e080fd1dad81"
+    },
+    {
+      "path": "web/tests/workspace.pw.ts",
+      "bytes": 20217,
+      "sha256": "cc707ed83514950914cfc8c9bb9c6ca8d92268ffc3153154704d335103d4292e"
+    }
+  ],
+  "scope": "GitHub source only. No package release or hosted backend deployment."
+}
