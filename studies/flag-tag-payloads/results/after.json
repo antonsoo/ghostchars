@@ -139,6 +139,7 @@
       "remaining": [],
       "scan_exit": 1,
       "fix_exit": 1,
+      "cli_findings": 1,
       "cli_fixed": "Prompt 🏴 end",
       "cli_error": "",
       "matches": true
@@ -188,6 +189,7 @@
       "remaining": [],
       "scan_exit": 1,
       "fix_exit": 1,
+      "cli_findings": 1,
       "cli_fixed": "Prompt 🏴 end",
       "cli_error": "",
       "matches": true
@@ -245,6 +247,7 @@
       "remaining": [],
       "scan_exit": 1,
       "fix_exit": 1,
+      "cli_findings": 1,
       "cli_fixed": "Prompt 🏴 end",
       "cli_error": "",
       "matches": true
@@ -292,6 +295,7 @@
       "remaining": [],
       "scan_exit": 1,
       "fix_exit": 1,
+      "cli_findings": 1,
       "cli_fixed": "Prompt 🏴 end",
       "cli_error": "",
       "matches": true
@@ -345,6 +349,7 @@
       "remaining": [],
       "scan_exit": 1,
       "fix_exit": 1,
+      "cli_findings": 1,
       "cli_fixed": "Prompt 🏴 end",
       "cli_error": "",
       "matches": true
@@ -400,6 +405,7 @@
       "remaining": [],
       "scan_exit": 1,
       "fix_exit": 1,
+      "cli_findings": 1,
       "cli_fixed": "🏴",
       "cli_error": "",
       "matches": true
@@ -445,6 +451,7 @@
       "remaining": [],
       "scan_exit": 1,
       "fix_exit": 1,
+      "cli_findings": 1,
       "cli_fixed": "🏴",
       "cli_error": "",
       "matches": true
@@ -504,6 +511,7 @@
       "remaining": [],
       "scan_exit": 1,
       "fix_exit": 1,
+      "cli_findings": 1,
       "cli_fixed": "🏴",
       "cli_error": "",
       "matches": true
@@ -555,6 +563,7 @@
       "remaining": [],
       "scan_exit": 1,
       "fix_exit": 1,
+      "cli_findings": 1,
       "cli_fixed": "Prompt  end",
       "cli_error": "",
       "matches": true
@@ -606,6 +615,7 @@
       "remaining": [],
       "scan_exit": 1,
       "fix_exit": 1,
+      "cli_findings": 1,
       "cli_fixed": "😀",
       "cli_error": "",
       "matches": true
@@ -620,6 +630,7 @@
       "remaining": [],
       "scan_exit": 0,
       "fix_exit": 0,
+      "cli_findings": 0,
       "cli_fixed": "🏴󠁧󠁢󠁥󠁮󠁧󠁿",
       "cli_error": "",
       "matches": true
@@ -671,6 +682,7 @@
       "remaining": [],
       "scan_exit": 1,
       "fix_exit": 1,
+      "cli_findings": 1,
       "cli_fixed": "🏴󠁧󠁢󠁥󠁮󠁧󠁿",
       "cli_error": "",
       "matches": true
@@ -738,6 +750,7 @@
       "remaining": [],
       "scan_exit": 1,
       "fix_exit": 1,
+      "cli_findings": 1,
       "cli_fixed": "🏴",
       "cli_error": "",
       "matches": true
@@ -752,6 +765,7 @@
       "remaining": [],
       "scan_exit": 0,
       "fix_exit": 0,
+      "cli_findings": 0,
       "cli_fixed": "🏴󠁧󠁢󠁳󠁣󠁴󠁿",
       "cli_error": "",
       "matches": true
@@ -803,6 +817,7 @@
       "remaining": [],
       "scan_exit": 1,
       "fix_exit": 1,
+      "cli_findings": 1,
       "cli_fixed": "🏴󠁧󠁢󠁳󠁣󠁴󠁿",
       "cli_error": "",
       "matches": true
@@ -870,6 +885,7 @@
       "remaining": [],
       "scan_exit": 1,
       "fix_exit": 1,
+      "cli_findings": 1,
       "cli_fixed": "🏴",
       "cli_error": "",
       "matches": true
@@ -884,6 +900,7 @@
       "remaining": [],
       "scan_exit": 0,
       "fix_exit": 0,
+      "cli_findings": 0,
       "cli_fixed": "🏴󠁧󠁢󠁷󠁬󠁳󠁿",
       "cli_error": "",
       "matches": true
@@ -935,6 +952,7 @@
       "remaining": [],
       "scan_exit": 1,
       "fix_exit": 1,
+      "cli_findings": 1,
       "cli_fixed": "🏴󠁧󠁢󠁷󠁬󠁳󠁿",
       "cli_error": "",
       "matches": true
@@ -1002,6 +1020,7 @@
       "remaining": [],
       "scan_exit": 1,
       "fix_exit": 1,
+      "cli_findings": 1,
       "cli_fixed": "🏴",
       "cli_error": "",
       "matches": true
@@ -1016,6 +1035,7 @@
       "remaining": [],
       "scan_exit": 0,
       "fix_exit": 0,
+      "cli_findings": 0,
       "cli_fixed": "🏴󠁧󠁢󠁳󠁣󠁴󠁿🏴󠁧󠁢󠁷󠁬󠁳󠁿",
       "cli_error": "",
       "matches": true
@@ -1073,6 +1093,7 @@
       "remaining": [],
       "scan_exit": 1,
       "fix_exit": 1,
+      "cli_findings": 1,
       "cli_fixed": "😀\nPrompt 🏴",
       "cli_error": "",
       "matches": true
@@ -1170,6 +1191,7 @@
       "remaining": [],
       "scan_exit": 1,
       "fix_exit": 1,
+      "cli_findings": 2,
       "cli_fixed": "🏴 🏴",
       "cli_error": "",
       "matches": true
@@ -1209,6 +1231,7 @@
       "remaining": [],
       "scan_exit": 1,
       "fix_exit": 1,
+      "cli_findings": 1,
       "cli_fixed": "🏴󠁧󠁢󠁳󠁣󠁴󠁿",
       "cli_error": "",
       "matches": true
@@ -1223,6 +1246,7 @@
       "remaining": [],
       "scan_exit": 0,
       "fix_exit": 0,
+      "cli_findings": 0,
       "cli_fixed": "🏴",
       "cli_error": "",
       "matches": true

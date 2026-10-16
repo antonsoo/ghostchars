@@ -1,0 +1,26 @@
+npm notice run @antonsoloviev/ghostchars@0.1.5 lint
+npm notice run eslint .
+npm notice run @antonsoloviev/ghostchars@0.1.5 typecheck
+npm notice run tsc --noEmit
+npm notice run @antonsoloviev/ghostchars@0.1.5 test
+npm notice run vitest run
+
+ RUN  v5.0.1 <work>/clean
+
+
+ Test Files  24 passed (24)
+      Tests  334 passed (334)
+   Start at  18:22:15
+   Duration  1.69s (transform 44%, tests 37%, import 18%, worker 1%)
+
+  Transform  transforming modules took 5.41s · 44% of tracked time, re-done on every run
+             persist transforms across runs with fsModuleCache: true
+             learn more: https://vitest.dev/guide/improving-performance#caching-between-reruns
+
+npm notice run @antonsoloviev/ghostchars@0.1.5 build
+npm notice run npm run build:lib && npm run build:cli
+npm notice run @antonsoloviev/ghostchars@0.1.5 build:lib
+npm notice run tsc -p tsconfig.build.json
+npm notice run @antonsoloviev/ghostchars@0.1.5 build:cli
+npm notice run node esbuild.cli.mjs
+Built dist/cli.js

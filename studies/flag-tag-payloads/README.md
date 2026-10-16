@@ -9,6 +9,8 @@ regional flag, but is not a registered flag sequence.
 All examples here are authored, synthetic Unicode controls. They do not measure
 attack prevalence, model behavior or the security of a downstream prompt pipeline.
 
+![Actual production UI: two payloads revealed, with the black flag and Scotland flag preserved in sanitized output](../../docs/assets/flag-tag-payloads/chromium-1440.png)
+
 ## Correction
 
 The decoder now uses the already-vendored `RGI_Emoji_Tag_Sequence` data. Unicode
@@ -52,6 +54,23 @@ wrappers: every printable single ASCII character and every pair of lowercase
 ASCII letters. None is a registered sequence. Detection and exact tag-only
 repair rise from **0/771 to 771/771**; all three registered flags remain unchanged.
 [Baseline](results/oracle-before.json), [corrected](results/oracle-after.json).
+
+The [verification receipt](results/verification.json) records a clean archive's
+installation, lint/typecheck, 334 passing tests, package build and 38 production
+browser checks. The committed CLI exactly matches the clean rebuild. A separate
+tarball install matches all 53 built files; its public library and CLI pass all
+24 cases on both **Node 20.0.0** and **Node 26.7.0**, including real `--fix` writes
+and scan/fix exit codes. The installed oracle also passes 771/771 cases.
+
+Chromium and Firefox loaded the built app, disconnected, and inspected both a
+wrapped instruction and a payload appended to a registered flag. The output
+retained both visible carriers and the complete valid flag; selecting the output
+returned exactly those code points. Desktop/375px checks found no horizontal
+overflow, accessibility violations, page errors or CSP violations. Retained
+observations: [Chromium](results/chromium-browser.json),
+[Firefox](results/firefox-browser.json); the
+[mobile view](../../docs/assets/flag-tag-payloads/firefox-375.png) keeps the full
+explanation. All four screenshots were inspected.
 
 ## Reproduce
 

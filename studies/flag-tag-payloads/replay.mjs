@@ -23,12 +23,18 @@ try {
     const scan = spawnSync(process.execPath, [resolve(cliPath), path, '--no-config', '--format', 'json'], { encoding: 'utf8' });
     const fixed = spawnSync(process.execPath, [resolve(cliPath), path, '--no-config', '--fix', '--format', 'json'], { encoding: 'utf8' });
     const fixedText = await readFile(path, 'utf8');
+    const cliFindings = scan.status === 0 || scan.status === 1
+      ? JSON.parse(scan.stdout).results.flatMap(file => file.findings) : [];
+    const expectedExit = item.findings > 0 ? 1 : 0;
     observations.push({ id: item.id, sha256: createHash('sha256').update(bytes).digest('hex'),
       expected_findings: item.findings, findings: scanned.findings,
       expected_sanitized: item.expected, sanitized: cleaned.text,
       remaining: cleaned.remaining, scan_exit: scan.status, fix_exit: fixed.status,
+      cli_findings: cliFindings.length,
       cli_fixed: fixedText, cli_error: fixed.stderr.replaceAll(directory, '<work>'),
-      matches: scanned.findings.length === item.findings && cleaned.text === item.expected && fixedText === item.expected,
+      matches: scanned.findings.length === item.findings && cliFindings.length === item.findings
+        && scan.status === expectedExit && fixed.status === expectedExit
+        && cleaned.text === item.expected && fixedText === item.expected,
     });
   }
 } finally { await rm(directory, { recursive: true, force: true }); }

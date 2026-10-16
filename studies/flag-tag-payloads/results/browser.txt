@@ -1,0 +1,55 @@
+npm notice run ghostchars-web@0.1.0 test:browser
+npm notice run playwright test
+[WebServer] (node:1009803) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 38 tests using 2 workers
+
+(node:1009846) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:1009845) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   2 [chromium] › tests/workspace.pw.ts:70:1 › overlapping findings remain visible and sanitized lookalikes remain explicit (652ms)
+  ✓   1 [chromium] › tests/workspace.pw.ts:79:1 › registered variants survive offline inspection and output selection beside a real payload (985ms)
+  ✓   4 [chromium] › tests/workspace.pw.ts:133:1 › decoded display controls and markup stay inert (727ms)
+  ✓   5 [chromium] › tests/workspace.pw.ts:144:1 › finding locations select the exact UTF-16 range after an astral character (456ms)
+  ✓   3 [chromium] › tests/workspace.pw.ts:96:1 › registered flags stay intact while flag-wrapped payloads are revealed and removed offline (1.9s)
+  ✓   7 [chromium] › tests/workspace.pw.ts:184:1 › clipboard rejection selects actual sanitized text for manual copying (505ms)
+  ✓   6 [chromium] › tests/workspace.pw.ts:154:1 › canonical lookalikes retain their original spelling in selection and copied text (1.0s)
+  ✓   8 [chromium] › tests/workspace.pw.ts:194:1 › copy sends complete sanitized output and manual selection works (533ms)
+  ✓   9 [chromium] › tests/workspace.pw.ts:204:1 › old clipboard completion cannot announce success for newly edited text (687ms)
+  ✓  10 [chromium] › tests/workspace.pw.ts:216:1 › new input replaces held work and clears stale evidence immediately (810ms)
+  ✓  11 [chromium] › tests/workspace.pw.ts:229:1 › cancelling keeps the page responsive and retry runs the current text (701ms)
+  ✓  13 [chromium] › tests/workspace.pw.ts:256:1 › oversized input is rejected before creating a worker and smaller input recovers (509ms)
+  ✓  12 [chromium] › tests/workspace.pw.ts:241:1 › a worker load failure is recoverable without exposing stale results (903ms)
+  ✓  14 [chromium] › tests/workspace.pw.ts:268:1 › dense input bounds rendering without truncating scan totals or copied output (590ms)
+  ✓  16 [chromium] › tests/workspace.pw.ts:315:1 › lamp changes reuse cached evidence and clear removes previous text and findings (600ms)
+  ✓  15 [chromium] › tests/workspace.pw.ts:278:1 › dense unmatched bidi controls retain complete totals and sanitized text offline (1.3s)
+  ✓  17 [chromium] › tests/workspace.pw.ts:334:1 › scanning still works offline after the initial page has loaded (615ms)
+  ✓  18 [chromium] › tests/workspace.pw.ts:344:3 › all gallery examples are accessible and fit at 1440px (2.8s)
+  ✓  19 [chromium] › tests/workspace.pw.ts:344:3 › all gallery examples are accessible and fit at 375px (2.7s)
+(node:1010957) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:1010969) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  20 [firefox] › tests/workspace.pw.ts:70:1 › overlapping findings remain visible and sanitized lookalikes remain explicit (1.5s)
+  ✓  21 [firefox] › tests/workspace.pw.ts:79:1 › registered variants survive offline inspection and output selection beside a real payload (1.9s)
+  ✓  23 [firefox] › tests/workspace.pw.ts:133:1 › decoded display controls and markup stay inert (643ms)
+  ✓  22 [firefox] › tests/workspace.pw.ts:96:1 › registered flags stay intact while flag-wrapped payloads are revealed and removed offline (1.9s)
+  ✓  24 [firefox] › tests/workspace.pw.ts:144:1 › finding locations select the exact UTF-16 range after an astral character (631ms)
+  ✓  26 [firefox] › tests/workspace.pw.ts:184:1 › clipboard rejection selects actual sanitized text for manual copying (703ms)
+  ✓  25 [firefox] › tests/workspace.pw.ts:154:1 › canonical lookalikes retain their original spelling in selection and copied text (1.2s)
+  ✓  27 [firefox] › tests/workspace.pw.ts:194:1 › copy sends complete sanitized output and manual selection works (706ms)
+  ✓  28 [firefox] › tests/workspace.pw.ts:204:1 › old clipboard completion cannot announce success for newly edited text (865ms)
+  ✓  29 [firefox] › tests/workspace.pw.ts:216:1 › new input replaces held work and clears stale evidence immediately (968ms)
+  ✓  30 [firefox] › tests/workspace.pw.ts:229:1 › cancelling keeps the page responsive and retry runs the current text (881ms)
+  ✓  32 [firefox] › tests/workspace.pw.ts:256:1 › oversized input is rejected before creating a worker and smaller input recovers (785ms)
+  ✓  31 [firefox] › tests/workspace.pw.ts:241:1 › a worker load failure is recoverable without exposing stale results (1.3s)
+  ✓  33 [firefox] › tests/workspace.pw.ts:268:1 › dense input bounds rendering without truncating scan totals or copied output (796ms)
+  ✓  35 [firefox] › tests/workspace.pw.ts:315:1 › lamp changes reuse cached evidence and clear removes previous text and findings (779ms)
+  ✓  34 [firefox] › tests/workspace.pw.ts:278:1 › dense unmatched bidi controls retain complete totals and sanitized text offline (1.5s)
+  ✓  36 [firefox] › tests/workspace.pw.ts:334:1 › scanning still works offline after the initial page has loaded (813ms)
+  ✓  37 [firefox] › tests/workspace.pw.ts:344:3 › all gallery examples are accessible and fit at 1440px (3.8s)
+  ✓  38 [firefox] › tests/workspace.pw.ts:344:3 › all gallery examples are accessible and fit at 375px (4.3s)
+
+  38 passed (25.4s)
