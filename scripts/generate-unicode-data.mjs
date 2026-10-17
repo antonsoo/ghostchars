@@ -23,6 +23,7 @@ const outDir = join(root, 'src', 'generated');
 const UCD_BASE = 'https://unicode.org/Public/17.0.0/ucd';
 const SECURITY_BASE = 'https://unicode.org/Public/17.0.0/security';
 const EMOJI_BASE = 'https://unicode.org/Public/17.0.0/emoji';
+const IVD_VERSION = '2026-08-03';
 
 const SOURCES = [
   { id: 'derivedCoreProperties', url: `${UCD_BASE}/DerivedCoreProperties.txt` },
@@ -32,6 +33,7 @@ const SOURCES = [
   { id: 'emojiSequences', url: `${EMOJI_BASE}/emoji-sequences.txt` },
   { id: 'confusables', url: `${SECURITY_BASE}/confusables.txt` },
   { id: 'standardizedVariants', url: `${UCD_BASE}/StandardizedVariants.txt` },
+  { id: 'ideographicVariants', url: `https://www.unicode.org/ivd/data/${IVD_VERSION}/IVD_Sequences.txt` },
 ];
 
 async function download(url) {
@@ -151,6 +153,28 @@ function extractStandardizedVariants(text) {
   return pairs.sort((a, b) => a[0] - b[0] || a[1] - b[1]);
 }
 
+function extractIdeographicVariants(text) {
+  if (!text.trimEnd().endsWith('# EOF')) throw new Error('Truncated IVD sequences file');
+  const packed = new Set();
+  for (const raw of text.split('\n')) {
+    const line = raw.split('#')[0].trim();
+    if (!line) continue;
+    const fields = line.split(';').map(s => s.trim());
+    const pair = fields[0].split(/\s+/);
+    if (fields.length !== 3 || pair.length !== 2 || pair.some(cp => !/^[0-9A-F]{4,6}$/.test(cp))) {
+      throw new Error(`Invalid IVD sequence: ${line}`);
+    }
+    const [base, selector] = pair.map(cp => Number.parseInt(cp, 16));
+    if (base > 0x10ffff || (base >= 0xd800 && base <= 0xdfff) || selector < 0xe0100 || selector > 0xe01ef) {
+      throw new Error(`Invalid IVD scalar/selector: ${line}`);
+    }
+    // Several collections can register the same pair. The exact compact key
+    // fits in 29 bits; no CJK block or selector range is exempted.
+    packed.add(base * 256 + selector - 0xe0100);
+  }
+  return mergeRanges([...packed].map(key => [key, key]));
+}
+
 // ---- confusables.txt --------------------------------------------------
 
 function extractConfusables(text) {
@@ -237,10 +261,22 @@ export const standardizedVariants: ReadonlyArray<readonly [number, number]> = [
 `;
 }
 
+function emitIdeographicVariants(ranges) {
+  const body = ranges.map(([lo, hi]) => `[0x${lo.toString(16)},0x${hi.toString(16)}]`).join(',\n  ');
+  return `${banner(`IVD_Sequences.txt (IVD ${IVD_VERSION})`)}
+// Copyright 2006-2026 Unicode, Inc. See LICENSE-UNICODE.
+// https://www.unicode.org/ivd/data/${IVD_VERSION}/IVD_Sequences.txt
+/** Sorted inclusive ranges of exact keys: base * 256 + (selector - 0xE0100). */
+export const ideographicVariantRanges: ReadonlyArray<readonly [number, number]> = [
+  ${body}
+];
+`;
+}
+
 async function main() {
   await mkdir(outDir, { recursive: true });
   const previous = JSON.parse(await readFile(join(outDir, 'manifest.json'), 'utf8'));
-  const manifest = { unicodeVersion: '17.0.0', emojiVersion: '17.0', generatedAt: new Date().toISOString(), sources: {} };
+  const manifest = { unicodeVersion: '17.0.0', emojiVersion: '17.0', ivdVersion: IVD_VERSION, generatedAt: new Date().toISOString(), sources: {} };
   const texts = {};
 
   for (const { id, url } of SOURCES) {
@@ -261,6 +297,7 @@ async function main() {
   const tagSequences = extractTagSequences(texts.emojiSequences);
   const confusables = extractConfusables(texts.confusables);
   const standardized = extractStandardizedVariants(texts.standardizedVariants);
+  const ideographic = extractIdeographicVariants(texts.ideographicVariants);
 
   await writeFile(join(outDir, 'default-ignorable.ts'), emitRangeTable('defaultIgnorableRanges', defaultIgnorable, 'DerivedCoreProperties.txt (Default_Ignorable_Code_Point)'));
   await writeFile(join(outDir, 'scripts.ts'), emitScriptsTable(scriptNames, scriptRanges, 'Scripts.txt'));
@@ -269,6 +306,7 @@ async function main() {
   await writeFile(join(outDir, 'emoji-tag-sequences.ts'), emitTagSequences(tagSequences, 'emoji-sequences.txt (RGI_Emoji_Tag_Sequence)'));
   await writeFile(join(outDir, 'confusables.ts'), emitConfusables(confusables, 'confusables.txt'));
   await writeFile(join(outDir, 'standardized-variants.ts'), emitStandardizedVariants(standardized));
+  await writeFile(join(outDir, 'ideographic-variants.ts'), emitIdeographicVariants(ideographic));
 
   await writeFile(join(outDir, 'manifest.json'), JSON.stringify(manifest, null, 2) + '\n');
 
@@ -280,6 +318,7 @@ async function main() {
   console.log(`RGI tag sequences: ${tagSequences.length}`);
   console.log(`Confusables entries: ${confusables.size}`);
   console.log(`Standardized VS1-256 sequences: ${standardized.length}`);
+  console.log(`Exact IVD registration ranges: ${ideographic.length}`);
 }
 
 main().catch((err) => {

@@ -19,6 +19,14 @@ All notable changes to this project are documented in this file.
 
 ### Fixed
 
+- Check ideographic selector exemptions against the pinned 2026-08-03 IVD.
+  The broad CJK-block exemption hid instructions encoded one selector per
+  character and removed four registered variants outside its blocks. Decode
+  adjacent unregistered byte carriers together, retain exact source/removal
+  ranges, and preserve visible carriers during repair. Registered variants and
+  source gaps break the chain. Native CLI controls, all registered pairs and
+  the full existing prompt corpus are retained in `studies/ideographic-selectors`.
+
 - Exempt only registered RGI emoji tag sequences. A black flag wrapping arbitrary
   tag-encoded instructions previously produced no finding and survived sanitization.
   `decodeTags().isValidEmojiTagSequence` now indicates exact RGI recognition,

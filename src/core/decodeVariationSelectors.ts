@@ -1,5 +1,6 @@
-import { isEmoji } from './unicode-utils.js';
+import { inRanges, isEmoji } from './unicode-utils.js';
 import { standardizedVariants } from '../generated/standardized-variants.js';
+import { ideographicVariantRanges } from '../generated/ideographic-variants.js';
 
 // Standard use: exactly one variation selector after a base character picks
 // a glyph variant (VS15/VS16 = text/emoji presentation, or an entry in the
@@ -23,18 +24,8 @@ const registeredVariants = new Set(standardizedVariants.map(([base, selector]) =
 
 function isRegisteredVariant(base: number, selectorByte: number): boolean {
   const selector = selectorByte < 16 ? VS_LOW_START + selectorByte : VS_HIGH_START + selectorByte - 16;
-  return registeredVariants.has(base * 0x110000 + selector);
-}
-
-const CJK_IDEOGRAPH_RANGES: ReadonlyArray<readonly [number, number]> = [
-  [0x3400, 0x4dbf], // CJK Unified Ideographs Extension A
-  [0x4e00, 0x9fff], // CJK Unified Ideographs
-  [0xf900, 0xfaff], // CJK Compatibility Ideographs
-  [0x20000, 0x2fa1f], // Extensions B-F + Compatibility Supplement
-];
-
-function isCjkIdeograph(cp: number): boolean {
-  return CJK_IDEOGRAPH_RANGES.some(([lo, hi]) => cp >= lo && cp <= hi);
+  return registeredVariants.has(base * 0x110000 + selector)
+    || (selector >= VS_HIGH_START && inRanges(ideographicVariantRanges, base * 256 + selector - VS_HIGH_START));
 }
 
 export function isVariationSelector(cp: number): boolean {
@@ -57,7 +48,7 @@ export interface VariationSelectorRun {
   bytes: number[];
   /** `bytes` decoded as UTF-8, if valid; undefined otherwise. */
   decodedText: string | undefined;
-  /** True for a recognized single variant (or an unverified CJK IVS under the existing policy). */
+  /** True for a registered single variant or the existing emoji presentation policy. */
   isOrdinaryPresentationSelector: boolean;
   /**
    * True when the first selector already picked a recognized glyph/presentation variant:
@@ -85,14 +76,11 @@ export function decodeVariationSelectors(text: string): VariationSelectorRun[] {
         bytes.push(selectorToByte(c));
         j += c > 0xffff ? 2 : 1;
       }
-      // Exact standardized pairs cover mathematics, punctuation and script
-      // variants as well as the existing emoji presentation policy. CJK
-      // ideographs can take any single selector -- the actual registered
-      // pairing lives in the Unicode Ideographic Variation Database, which
-      // we don't vendor, so a single selector on a CJK base is treated as
-      // an ordinary (if unverified) IVS rather than flagged.
+      // Exact registrations cover standardized and ideographic variants.
+      // A CJK base alone does not establish that an arbitrary selector is a
+      // real IVS; that broad exemption hid one-byte-per-ideograph payloads.
       const recognizedFirst = base !== undefined && (isRegisteredVariant(base, bytes[0]!) || (isEmoji(base) && (bytes[0] === 14 || bytes[0] === 15)));
-      const isOrdinaryPresentationSelector = bytes.length === 1 && base !== undefined && (recognizedFirst || isCjkIdeograph(base));
+      const isOrdinaryPresentationSelector = bytes.length === 1 && recognizedFirst;
       const decodedText = tryDecodeUtf8(bytes);
       // A recognized variant followed by extra selectors: the first selector
       // stays; the rest are the stray ones. Not when
@@ -170,12 +158,42 @@ export interface SelectorBitStream {
   vs16IsOne: boolean;
 }
 
-// A message shorter than this is as likely to be chance as a message.
-const MIN_BIT_STREAM_BYTES = 8;
+// Avoid presenting incidental short selector sequences as complete messages.
+const MIN_STREAM_BYTES = 8;
 
 function isPlainText(text: string): boolean {
   // eslint-disable-next-line no-control-regex -- C0 controls other than tab, LF and CR are exactly what is being excluded.
   return !/[\u0000-\u0008\u000b\u000c\u000e-\u001f\u007f-\u009f\ufffd]/.test(text);
+}
+
+export interface SelectorByteStream {
+  runs: VariationSelectorRun[];
+  text: string;
+}
+
+/** Read one byte per adjacent carrier, without joining unrelated selector sightings.
+ * Registered variants are boundaries, never evidence of a hidden message.
+ */
+export function decodeSelectorByteStreams(runs: VariationSelectorRun[]): SelectorByteStream[] {
+  const streams: SelectorByteStream[] = [];
+  let chain: VariationSelectorRun[] = [];
+  const flush = () => {
+    if (chain.length >= MIN_STREAM_BYTES) {
+      const text = tryDecodeUtf8(chain.map(run => run.bytes[0]!));
+      if (text !== undefined && isPlainText(text)) streams.push({ runs: chain, text });
+    }
+    chain = [];
+  };
+  for (const run of runs) {
+    if (run.isOrdinaryPresentationSelector || run.baseCodePoint === undefined || run.bytes.length !== 1) {
+      flush();
+      continue;
+    }
+    if (chain.length && chain[chain.length - 1]!.end !== run.start) flush();
+    chain.push(run);
+  }
+  flush();
+  return streams;
 }
 
 function bitsToText(bits: number[]): string | undefined {
@@ -185,7 +203,7 @@ function bitsToText(bits: number[]): string | undefined {
     for (let k = 0; k < 8; k++) byte = (byte << 1) | bits[i + k]!;
     bytes.push(byte);
   }
-  if (bytes.length < MIN_BIT_STREAM_BYTES) return undefined;
+  if (bytes.length < MIN_STREAM_BYTES) return undefined;
   try {
     const text = new TextDecoder('utf-8', { fatal: true }).decode(new Uint8Array(bytes));
     return isPlainText(text) ? text : undefined;
@@ -199,12 +217,12 @@ function bitsToText(bits: number[]): string | undefined {
  * VS16 after each word or letter of an innocent paragraph, one bit apiece (VS16 = 1), eight
  * to a byte. No one selector is unusual, so each is only a stray one; read together, in text
  * order, they spell a sentence. Reported only when the bits decode to at least
- * MIN_BIT_STREAM_BYTES bytes of clean UTF-8 text, which a scatter of ordinary stray selectors
- * does not do.
+ * MIN_STREAM_BYTES bytes of clean UTF-8 text. Decoding establishes what the
+ * selectors encode, not whether the author intended an attack.
  */
 export function decodeSelectorBitStream(runs: VariationSelectorRun[]): SelectorBitStream | undefined {
   const carriers = runs.filter((run) => !run.isOrdinaryPresentationSelector && run.baseCodePoint !== undefined && run.bytes.length === 1 && (run.bytes[0] === 14 || run.bytes[0] === 15));
-  if (carriers.length < MIN_BIT_STREAM_BYTES * 8) return undefined;
+  if (carriers.length < MIN_STREAM_BYTES * 8) return undefined;
   for (const vs16IsOne of [true, false]) {
     const text = bitsToText(carriers.map((run) => ((run.bytes[0] === 15) === vs16IsOne ? 1 : 0)));
     if (text !== undefined) return { runs: carriers, text, vs16IsOne };

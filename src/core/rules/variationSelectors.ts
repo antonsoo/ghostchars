@@ -1,20 +1,32 @@
-import { decodeSelectorBitStream, decodeVariationSelectors, unwrapPayload, type VariationSelectorRun } from '../decodeVariationSelectors.js';
+import { decodeSelectorBitStream, decodeSelectorByteStreams, decodeVariationSelectors, unwrapPayload, type VariationSelectorRun } from '../decodeVariationSelectors.js';
 import { unicodeName } from '../names.js';
 import type { Finding } from '../types.js';
 import type { PositionLookup } from './position.js';
+
+interface ByteCarrier {
+  index: number;
+  count: number;
+  payload: { text: string; layers: number };
+}
 
 export function scanVariationSelectors(text: string, positionAt: PositionLookup): Finding[] {
   const findings: Finding[] = [];
   const runs = decodeVariationSelectors(text);
   const bitStream = decodeSelectorBitStream(runs);
   const bitCarriers = new Map(bitStream?.runs.map((run, index) => [run, index]));
+  const byteCarriers = new Map<VariationSelectorRun, ByteCarrier>();
+  for (const stream of decodeSelectorByteStreams(runs)) {
+    const payload = unwrapPayload(stream.text);
+    stream.runs.forEach((run, index) => byteCarriers.set(run, { index, count: stream.runs.length, payload }));
+  }
   for (const run of runs) {
     if (run.isOrdinaryPresentationSelector) continue;
 
     const codePoints = run.baseCodePoint !== undefined ? [run.baseCodePoint, ...bytesToSelectors(run.bytes)] : bytesToSelectors(run.bytes);
     const bitIndex = bitCarriers.get(run);
-    const isSmuggling = bitIndex !== undefined || (run.decodedText !== undefined && run.bytes.length > 1);
-    const payload = bitIndex !== undefined ? { text: bitStream!.text, layers: 1 } : run.decodedText !== undefined ? unwrapPayload(run.decodedText) : undefined;
+    const byteCarrier = byteCarriers.get(run);
+    const isSmuggling = byteCarrier !== undefined || bitIndex !== undefined || (run.decodedText !== undefined && run.bytes.length > 1);
+    const payload = byteCarrier?.payload ?? (bitIndex !== undefined ? { text: bitStream!.text, layers: 1 } : run.decodedText !== undefined ? unwrapPayload(run.decodedText) : undefined);
     const firstSelector = run.baseCodePoint === undefined ? undefined : text.codePointAt(run.start + (run.baseCodePoint > 0xffff ? 2 : 1));
     const keepsEmojiPresentation = run.afterPresentationSelector && (firstSelector === 0xfe0e || firstSelector === 0xfe0f);
 
@@ -25,7 +37,7 @@ export function scanVariationSelectors(text: string, positionAt: PositionLookup)
       end: positionAt(run.end),
       codePoints,
       names: codePoints.map(unicodeName),
-      message: smugglingMessage(run, bitIndex, bitStream?.runs.length, bitStream?.vs16IsOne, payload)
+      message: smugglingMessage(run, bitIndex, bitStream?.runs.length, bitStream?.vs16IsOne, payload, byteCarrier)
         ?? (run.baseCodePoint === undefined
           ? 'Variation selector with no preceding base character to apply a glyph variant to.'
           : run.afterPresentationSelector
@@ -37,7 +49,7 @@ export function scanVariationSelectors(text: string, positionAt: PositionLookup)
           : 'Remove the extra selectors; the first one, which selects a glyph variant, stays.'
         : 'Remove these characters unless selecting a real registered variation sequence (see the Unicode IVD / StandardizedVariants.txt).',
       // On a bit stream the message is spread over every carrier; it is said once, at the first.
-      decoded: bitIndex !== undefined && bitIndex > 0 ? undefined : payload?.text,
+      decoded: (byteCarrier?.index ?? bitIndex ?? 0) > 0 ? undefined : payload?.text,
       fixable: true,
       // The finding points at the base character, but only the selectors are removed.
       ...(run.selectorsStart > run.start ? { removal: { start: run.selectorsStart, end: run.end } } : {}),
@@ -46,8 +58,13 @@ export function scanVariationSelectors(text: string, positionAt: PositionLookup)
   return findings;
 }
 
-function smugglingMessage(run: VariationSelectorRun, bitIndex: number | undefined, bitCount: number | undefined, vs16IsOne: boolean | undefined, payload: { text: string; layers: number } | undefined): string | undefined {
+function smugglingMessage(run: VariationSelectorRun, bitIndex: number | undefined, bitCount: number | undefined, vs16IsOne: boolean | undefined, payload: { text: string; layers: number } | undefined, byteCarrier: ByteCarrier | undefined): string | undefined {
   if (payload === undefined) return undefined;
+  if (byteCarrier !== undefined) {
+    return byteCarrier.index === 0
+      ? `${byteCarrier.count} single variation selectors, one after each adjacent carrier, decode together as hidden UTF-8 text using one byte per selector: ${JSON.stringify(payload.text)}.`
+      : `Byte ${byteCarrier.index + 1} of ${byteCarrier.count} of the hidden message decoded at the first selector of this run.`;
+  }
   if (bitIndex !== undefined) {
     const polarity = vs16IsOne ? 'VS16 = 1, VS15 = 0' : 'VS15 = 1, VS16 = 0';
     return bitIndex === 0

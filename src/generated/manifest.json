@@ -1,7 +1,8 @@
 {
   "unicodeVersion": "17.0.0",
   "emojiVersion": "17.0",
-  "generatedAt": "2026-10-12T22:08:25.430Z",
+  "ivdVersion": "2026-08-03",
+  "generatedAt": "2026-10-17T19:48:56.104Z",
   "sources": {
     "derivedCoreProperties": {
       "url": "https://unicode.org/Public/17.0.0/ucd/DerivedCoreProperties.txt",
@@ -37,6 +38,11 @@
       "url": "https://unicode.org/Public/17.0.0/ucd/StandardizedVariants.txt",
       "sha256": "f55100b2fb11d3d75a37b8c1ab752192dbd1c4b12328c5ec6b38e3807c0ca597",
       "bytes": 71251
+    },
+    "ideographicVariants": {
+      "url": "https://www.unicode.org/ivd/data/2026-08-03/IVD_Sequences.txt",
+      "sha256": "2b466659c2bfde1c52e60bd9fc883ab14dfa5c583df024b80352420265d2cd87",
+      "bytes": 1346505
     }
   }
 }

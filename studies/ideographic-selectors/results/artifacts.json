@@ -1,0 +1,258 @@
+{
+  "scope": "Fresh staged-tree archive; npm pack then separate installation with --ignore-scripts. No npm release.",
+  "archive_tree": "fc5dbc998d61f41f19636777d08a412a11ae3cbe",
+  "node": "v26.7.0",
+  "packed": {
+    "file": "antonsoloviev-ghostchars-0.1.5.tgz",
+    "bytes": 339928,
+    "sha256": "4d852df03f5236097a5817d3adf11a74dd07a36688f16b6aca2ffa78648ca027"
+  },
+  "dist_files": {
+    "cli.js": {
+      "bytes": 620860,
+      "sha256": "427d4aa21640c861b032440f6ad22d5c4987625ea19a6ababffeb0fd7655fc96"
+    },
+    "index.js": {
+      "bytes": 217,
+      "sha256": "74c53f9f5531c99ca727c1a41de8f76a8d1d0e39e005009b76778584daa1206d"
+    },
+    "index.d.ts": {
+      "bytes": 33,
+      "sha256": "a06db219f83fd299973856c648293bcfca1f606a2617b7750f75b13dd28ca5fd"
+    },
+    "generated/script-extensions.d.ts": {
+      "bytes": 207,
+      "sha256": "fec261d555322d900ad4655cc750b9e9f6bccc99779294f9ce6f31dea5c937c4"
+    },
+    "generated/emoji-tag-sequences.d.ts": {
+      "bytes": 212,
+      "sha256": "d16462011b37945d9211c4ef6951a24ea69a4eeff6312e16d847b66e12a9be2b"
+    },
+    "generated/confusables.js": {
+      "bytes": 172228,
+      "sha256": "01295420d2ccd80a169e37dd25ef2e6d7d65acfd81912b1cb52e73d97764557a"
+    },
+    "generated/script-extensions.js": {
+      "bytes": 814,
+      "sha256": "ba4bf386b5121cb2381ec771db14f3ad99c2bd69e9295930ba010af552aface0"
+    },
+    "generated/emoji.js": {
+      "bytes": 3088,
+      "sha256": "3cc6ee4d8a658a74d5c74b0454ffdceadf2317f562b78b10662d18e9ee36d89c"
+    },
+    "generated/default-ignorable.js": {
+      "bytes": 602,
+      "sha256": "9682c6db6af339a92ca913d0762f3bfe799d4c8bfd4fc4211cca93f1bbd7c674"
+    },
+    "generated/ideographic-variants.d.ts": {
+      "bytes": 170,
+      "sha256": "2fd58362dab67749dc0443867ffc412dfaedfab294b49db22ea215d54624ae6b"
+    },
+    "generated/confusables.d.ts": {
+      "bytes": 196,
+      "sha256": "819016493c913b0a99987aa939b4e3274e16dd1b6f353c534164e6e64890ea0b"
+    },
+    "generated/scripts.js": {
+      "bytes": 24678,
+      "sha256": "5d671157299ea646ee08c8ca39908123e01a17fbac41591ada0c39b52432f80c"
+    },
+    "generated/standardized-variants.d.ts": {
+      "bytes": 160,
+      "sha256": "e740b1b4118b11201465e30f79a1dc828442df3be83b324eabdf36a6740f23a1"
+    },
+    "generated/ideographic-variants.js": {
+      "bytes": 401023,
+      "sha256": "1247a47d0b1bcb94754e07bdfa68631313fa9885328850942d81f6cd9a0fb8be"
+    },
+    "generated/default-ignorable.d.ts": {
+      "bytes": 148,
+      "sha256": "3db6532afbbd38e7a88a9866ca025280cb6565e06405500e20441416e8e82daf"
+    },
+    "generated/emoji.d.ts": {
+      "bytes": 137,
+      "sha256": "cee457a35342832b054db38172f39eda544046f99b4ccc5a5fe7a36d34517bdd"
+    },
+    "generated/emoji-tag-sequences.js": {
+      "bytes": 567,
+      "sha256": "fa0f173f7fec06f8ae5dabaa4b97d8b9b14ba66853557f3b8f518843ba729566"
+    },
+    "generated/scripts.d.ts": {
+      "bytes": 218,
+      "sha256": "c6f7dede067d25c71e909592dbb55aefae5ec97091b3e4bc8550c41283c28665"
+    },
+    "generated/standardized-variants.js": {
+      "bytes": 29049,
+      "sha256": "68aeed067e97b685bc1d34cc6c8093754c2faa95291fc07c372d0030dcd0d653"
+    },
+    "core/scanText.js": {
+      "bytes": 2790,
+      "sha256": "c978d8543f53eb0d1fcf06beb321962d78c7cda6f350d76dc48503ffff40d4bd"
+    },
+    "core/decodeTags.js": {
+      "bytes": 3743,
+      "sha256": "c5c0bcb229fab2a244fb7e5503c70f0e9b83e522aa4b6e22ea6dfc19b8bba767"
+    },
+    "core/diagnosticText.d.ts": {
+      "bytes": 159,
+      "sha256": "ea9be9a3e20c0eca2a8d2d0c001312219c28606b9e919597e87063a57d429d3d"
+    },
+    "core/unicode-utils.d.ts": {
+      "bytes": 1561,
+      "sha256": "f8c15bd9f447f00755325cbe1b45f2d69049b577ac2aea2c61f27855181ee306"
+    },
+    "core/diagnosticText.js": {
+      "bytes": 512,
+      "sha256": "8f5be7bce11ea0fda34154fd9b242166bf55587f35141fc442c482e01d8e6f36"
+    },
+    "core/decodeTags.d.ts": {
+      "bytes": 1308,
+      "sha256": "cdc687c111b5886ccf7732a86c6c356b12d1642a78214f612765f92d9fa288ec"
+    },
+    "core/decodeVariationSelectors.d.ts": {
+      "bytes": 2861,
+      "sha256": "6f5b02ef1e0b780a4e43860ad68e156578fcc6484b7dbae1d30362f83cc18f48"
+    },
+    "core/index.js": {
+      "bytes": 284,
+      "sha256": "e5ab7b6106d3dcced940e9a5fa2866ccf52db7e5e18e8775a0eadc1aae099d92"
+    },
+    "core/scanText.d.ts": {
+      "bytes": 142,
+      "sha256": "fc73e8752a3f283a9b21ee547d29378cdecbcb51dab37afb9e9d390357221dec"
+    },
+    "core/sanitize.d.ts": {
+      "bytes": 566,
+      "sha256": "cf95f47ce44b708c2add5fc2cfa058d36bb13104166da086e81a3f825c63d53d"
+    },
+    "core/unicode-utils.js": {
+      "bytes": 2827,
+      "sha256": "83e3cd9c75010c4c55137056cf919453268323de609874c02102ab6cc5fdf639"
+    },
+    "core/types.d.ts": {
+      "bytes": 4060,
+      "sha256": "612d42511076b1bda23cb5524445270432208d4b1de1add5b9599aadef583671"
+    },
+    "core/reveal.js": {
+      "bytes": 2963,
+      "sha256": "e1d4ab18c7baf4d7454cb78dc06efa1df6df94ff0726b6642487f24090653690"
+    },
+    "core/decodeVariationSelectors.js": {
+      "bytes": 8596,
+      "sha256": "1d777309faf6ed3b4ce762715d2c0473f3f83bc383c680ef6fdaf2402279853a"
+    },
+    "core/sanitize.js": {
+      "bytes": 4837,
+      "sha256": "15401892576ea027a54bf167130b88057cce9e6c79199f2dbeee0a3f85238941"
+    },
+    "core/names.d.ts": {
+      "bytes": 57,
+      "sha256": "6e8d516b6e17988b122b7199d498fc0786bdc66b47184c6c5e7bddd319a9574c"
+    },
+    "core/index.d.ts": {
+      "bytes": 549,
+      "sha256": "89ccc04102be3b48d1649c482ac74ca562b0b48bb25ad6f7f0ce207a09756ecc"
+    },
+    "core/reveal.d.ts": {
+      "bytes": 570,
+      "sha256": "048f2ad3ebecfcd3fca4fcdbb04083f61b9bec9c9594403720c6704de0608c05"
+    },
+    "core/names.js": {
+      "bytes": 3599,
+      "sha256": "271f618500c6e113a60aec8cee163a7f337f86bac692531b771e87545360a4e6"
+    },
+    "core/types.js": {
+      "bytes": 11,
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    "core/rules/whitespaceControl.js": {
+      "bytes": 6371,
+      "sha256": "07f45a3396a50abfa463d3725dd10d2c29136f78ae764ea18ebd937dd8e7c8d3"
+    },
+    "core/rules/whitespaceControl.d.ts": {
+      "bytes": 200,
+      "sha256": "dc5d18376f5409596fac9df8d9f6c96c207c1918e653e3e065e0520289caaa30"
+    },
+    "core/rules/confusables.js": {
+      "bytes": 20817,
+      "sha256": "89bda84d637c05188d22a8e1232fe89c9cf210a575f1404ea7e776a99abbe606"
+    },
+    "core/rules/bidi.js": {
+      "bytes": 5449,
+      "sha256": "263a1775c64a5942a896223dabe3e65abbeb228ab0c6ce522e37e0737e6c1767"
+    },
+    "core/rules/styledText.d.ts": {
+      "bytes": 340,
+      "sha256": "0c72746ef55ad8fb007db704d1b2245017cd96ca6098cc45df94800ac9a8a5f5"
+    },
+    "core/rules/tags.d.ts": {
+      "bytes": 184,
+      "sha256": "63da80777c0315ec8b6ef64480cd73b54b63ca2708825e119ca8f059c9fc3811"
+    },
+    "core/rules/tags.js": {
+      "bytes": 1530,
+      "sha256": "fc6e99f7dac69f5d3483ce29fc94ca998c32858109f30942e7e7a27c70dc1d9a"
+    },
+    "core/rules/invisible.d.ts": {
+      "bytes": 189,
+      "sha256": "5dd8656ac408d87d3223af6c02a67a5fd6fc6bdc0479edaff72fd287f88a7022"
+    },
+    "core/rules/confusables.d.ts": {
+      "bytes": 192,
+      "sha256": "757bd958e918b1e2dca37809ac766ab12605c3406e28f46a6c60ef163ff0a00d"
+    },
+    "core/rules/styledText.js": {
+      "bytes": 5430,
+      "sha256": "7fcfc9a8deb28dc6dbce2ce10f9816c697c35db4ff3cfab1f277314d40166050"
+    },
+    "core/rules/position.js": {
+      "bytes": 1551,
+      "sha256": "e68bf5ecd0a89baf10b38185f33a743809c12db0ebe759d9c9bbcf4cb42c7331"
+    },
+    "core/rules/invisible.js": {
+      "bytes": 5971,
+      "sha256": "92e0943b600c44e88db9e79fc45cd16993078e9ed19f04d6e084b50c38fbe2ea"
+    },
+    "core/rules/bidi.d.ts": {
+      "bytes": 973,
+      "sha256": "cb408c2c050f64e3fb5d1863cd0597d0f038449c0deb893b2b3e0a6a2a753307"
+    },
+    "core/rules/position.d.ts": {
+      "bytes": 1177,
+      "sha256": "acb76c2d72d1eb3c38d5766d3e71bed65ec81d21d2367277241b6e31a4d4621f"
+    },
+    "core/rules/variationSelectors.js": {
+      "bytes": 5254,
+      "sha256": "f207c956631226c9fec1a83fee4de930b2f11e761d9f1edb9d2ba752a35a5f36"
+    },
+    "core/rules/variationSelectors.d.ts": {
+      "bytes": 198,
+      "sha256": "83b90d064c3a9c9ee65b6fcc18d8ab75c27202cbc3f87c778bdda29e3a75179f"
+    }
+  },
+  "all_installed_dist_files_identical": true,
+  "tracked_cli_matches_clean_build": true,
+  "licenses_identical": true,
+  "bin_executable": true,
+  "checks": {
+    "typecheck": true,
+    "lint": true,
+    "tests": 351,
+    "self_scan_clean": true,
+    "benchmark_smoke": true,
+    "web_types_lint_build": true,
+    "web_browser": {
+      "startTime": "2026-10-17T19:49:53.703Z",
+      "duration": 36481.674,
+      "expected": 40,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    }
+  },
+  "focused_browser": "browser.json",
+  "installed_replays": [
+    "installed-node20.json",
+    "installed-node26.json",
+    "installed-oracle-node20.json"
+  ]
+}

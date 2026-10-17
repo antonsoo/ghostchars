@@ -305,6 +305,7 @@ Scanning runs in a local worker. Editing, clearing, or cancelling discards the p
 | `Default_Ignorable_Code_Point`, `Scripts`, `ScriptExtensions`, `Emoji` | unicode.org UCD | **17.0.0** |
 | Confusables (UTS #39) | [unicode.org Security data](https://www.unicode.org/Public/17.0.0/security/confusables.txt) | **17.0.0** |
 | RGI emoji tag sequences | [unicode.org Emoji data](https://www.unicode.org/Public/17.0.0/emoji/emoji-sequences.txt) | **Emoji 17.0** |
+| Ideographic variation sequences | [Unicode IVD](https://www.unicode.org/ivd/data/2026-08-03/IVD_Sequences.txt) | **2026-08-03** |
 
 `LICENSE-UNICODE` is the Unicode License that governs those files.
 
@@ -325,7 +326,15 @@ can be removed while preserving the flag; other repairs keep the visible carrier
 
 ### Variation-selector smuggling (rule 3)
 
-`decodeVariationSelectors()` maps VS1-16 (U+FE00-FE0F) to bytes 0-15 and VS17-256 (U+E0100-E01EF) to bytes 16-255, decodes runs as UTF-8, and allows exactly one exception: a single VS15/VS16 on an emoji, or any single selector on a CJK ideograph (a real registered variation sequence, per the Unicode Ideographic Variation Database -- not vendored here, so a single selector on a CJK base is accepted rather than verified against the exact registered pairing). Anything else -- a run of more than one selector, or a selector on the wrong kind of base -- is flagged.
+`decodeVariationSelectors()` maps VS1-16 (U+FE00-FE0F) to bytes 0-15 and
+VS17-256 (U+E0100-E01EF) to bytes 16-255. In this source checkout, a single
+selector is ordinary only for an exact standardized/IVD pair or the existing
+VS15/VS16 emoji presentation policy. CJK block membership alone no longer
+exempts it. Adjacent unregistered carriers can encode one UTF-8 byte each;
+streams of at least eight clean-text bytes are decoded together, with the
+message on the first finding. Registered variants and source gaps break the
+chain. [Before/after CLI, registration oracle and corpus replay](studies/ideographic-selectors/README.md)
+retain the correction and its boundaries; no npm release is included.
 
 ### Invisible characters (rule 4)
 
@@ -354,7 +363,7 @@ A fixed list of Unicode space separators and line/paragraph separators that aren
 - **Two words of one non-Latin script that share a skeleton are not reported.** `confusables.txt` folds lookalikes inside a script too, so ordinary text collides with itself. Latin is the exception, since its own non-ASCII lookalikes (a dotless i, U+0131; a fullwidth letter) are how an ASCII name is imitated without leaving the script; the price was that Turkish text, where the question particle is written both with a dotted and with a dotless i, was reported (see the `node_modules` breakdown below). In the source checkout (unreleased) a file with ten or more distinct words containing a dotless i, or ten or more distinct words of one Cyrillic or Greek script, is taken to be written in that language and its words are not reported as imitating a Latin word; fewer than ten are still reported. Measured in [`studies/prompt-census`](studies/prompt-census/README.md).
 - **Tokenization is regex-based, not an AST.** The confusables rule treats any `\p{L}\p{M}\p{Nd}\p{Pc}`-shaped run as an "identifier," including words inside comments, string literals, and plain prose -- it will flag `admin` written twice in a docstring next to its Cyrillic lookalike, the same as it would in real code.
 - **A single character type is sometimes both a real signal and commonly legitimate at once.** NBSP is the clearest case: French typography requires it before `:`/`;`/`!`/`?`, so any French-localized string will contain plenty of "findings" that are correct detections of a real, intentional NBSP -- not an attack. This is a known, honest trade-off of not being format-aware (see the `node_modules` breakdown below); `.ghostcharsrc.json` per-glob overrides exist specifically to quiet a known-legitimate path (e.g. a translations directory) without touching the default elsewhere.
-- **CJK variation sequences are accepted, not verified.** A single variation selector on a CJK ideograph is treated as an ordinary Ideographic Variation Sequence rather than checked against the real IVD registry (not vendored here), so an invalid but structurally-single selector on a CJK base won't be flagged.
+- **Registration is not a safety verdict.** The source checkout checks exact IVD pairs and preserves registered variants, whose choices can themselves carry information. It does not establish font support, author intent or whether a model will follow hidden text. Emoji VS15/VS16 recognition retains its broader presentation policy.
 - **The bidi-balance check is per-line by design** (see above); a payload that only becomes unbalanced when reasoned about across an entire multi-line paragraph, rather than within one rendered line, is out of scope.
 - Every detector was checked against an independent oracle where one exists: bidi/tag/variation-selector/invisible ranges are cross-checked against literal code points from the Unicode spec text (not re-derived from the generated tables), and the confusables skeleton is verified against `confusables.txt` entries directly (see `tests/`).
 

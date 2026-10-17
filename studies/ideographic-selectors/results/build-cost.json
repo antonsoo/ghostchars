@@ -1,0 +1,27 @@
+{
+  "before": {
+    "cli.js": {
+      "bytes": 278470,
+      "gzip_bytes": 73834,
+      "sha256": "27380d811330b5cefd54bd55dba454fe0fcb3586adbc62d047c1765dd81333d6"
+    },
+    "scan.worker-Bc_bzmph.js": {
+      "bytes": 176748,
+      "gzip_bytes": 57057,
+      "sha256": "92d484f109da2c128cd730966d2ac15567bf57adbdbaa8736920c637746cb0c9"
+    }
+  },
+  "after": {
+    "cli.js": {
+      "bytes": 620860,
+      "gzip_bytes": 158968,
+      "sha256": "427d4aa21640c861b032440f6ad22d5c4987625ea19a6ababffeb0fd7655fc96"
+    },
+    "scan.worker-DBZjQneN.js": {
+      "bytes": 457417,
+      "gzip_bytes": 137590,
+      "sha256": "b971b0ec7cd5184b6e85deb6b0940a3ace18149c72eaff8c222b7fd36cf02586"
+    }
+  },
+  "scope": "Fresh locked builds; gzip sizes computed locally, not measured HTTP transfer sizes."
+}

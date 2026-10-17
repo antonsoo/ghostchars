@@ -1,0 +1,58 @@
+{
+  "scope": "Second pinned download and generation; all eight TypeScript tables and manifest except generatedAt are byte-identical.",
+  "generator_sha256": "af204ad03c863fee81fa6282382f472c8e8771cc72dbdc9e7423e4c70adeb6d1",
+  "tables": {
+    "src/generated/confusables.ts": "1ae51c81a23b6ffeb8b7777cba7ae600ddfdd552ac9804db873f0138bb283ad0",
+    "src/generated/default-ignorable.ts": "40b38c84b4b548b54c7972ad82dbf9ca3cf9dbbcbeade5b1e2a6470904a16e26",
+    "src/generated/emoji-tag-sequences.ts": "7e6242b5abd72b8d462568ff710771c0c2b2d35eab5c730f92666eb6792783b7",
+    "src/generated/emoji.ts": "22553f5b01204a6f8c8b9cd469b026e1864f80e0b69de75d693d0015c0e46887",
+    "src/generated/ideographic-variants.ts": "822651dd1785b01d1c5e3f0c00fd2e5f92c774160cb7de5416c78973f59a0a2c",
+    "src/generated/script-extensions.ts": "92105224a280ae4e1c188174398bb283e74b49ee171fcf43a466265ddbd495af",
+    "src/generated/scripts.ts": "817ba157fee24b936a8706698bd34af58e65e22e82d99bd49b448a0c7e1329b5",
+    "src/generated/standardized-variants.ts": "61bcc8246410424c5a2116bd45279a44217e41a05c9d40b897cb1c941b6056d3"
+  },
+  "sources": {
+    "derivedCoreProperties": {
+      "url": "https://unicode.org/Public/17.0.0/ucd/DerivedCoreProperties.txt",
+      "sha256": "24c7fed1195c482faaefd5c1e7eb821c5ee1fb6de07ecdbaa64b56a99da22c08",
+      "bytes": 1134783
+    },
+    "scripts": {
+      "url": "https://unicode.org/Public/17.0.0/ucd/Scripts.txt",
+      "sha256": "9f5e50d3abaee7d6ce09480f325c706f485ae3240912527e651954d2d6b035bf",
+      "bytes": 192460
+    },
+    "scriptExtensions": {
+      "url": "https://unicode.org/Public/17.0.0/ucd/ScriptExtensions.txt",
+      "sha256": "ec2107e58825a1586acee8e0911ce18260394ac8b87e535ca325f1ccbeb06bc6",
+      "bytes": 20707
+    },
+    "emojiData": {
+      "url": "https://unicode.org/Public/17.0.0/ucd/emoji/emoji-data.txt",
+      "sha256": "2cb2bb9455cda83e8481541ecf5b6dfda66a3bb89efa3fa7c5297eccf607b72b",
+      "bytes": 107324
+    },
+    "emojiSequences": {
+      "url": "https://unicode.org/Public/17.0.0/emoji/emoji-sequences.txt",
+      "sha256": "12cc8267dc33cbd11ed32bcf6fc5dc2ad9c7a77bae1bdfba2f41b1b9b3ead8dd",
+      "bytes": 194868
+    },
+    "confusables": {
+      "url": "https://unicode.org/Public/17.0.0/security/confusables.txt",
+      "sha256": "091c7f82fc39ef208faf8f94d29c244de99254675e09de163160c810d13ef22a",
+      "bytes": 745683
+    },
+    "standardizedVariants": {
+      "url": "https://unicode.org/Public/17.0.0/ucd/StandardizedVariants.txt",
+      "sha256": "f55100b2fb11d3d75a37b8c1ab752192dbd1c4b12328c5ec6b38e3807c0ca597",
+      "bytes": 71251
+    },
+    "ideographicVariants": {
+      "url": "https://www.unicode.org/ivd/data/2026-08-03/IVD_Sequences.txt",
+      "sha256": "2b466659c2bfde1c52e60bd9fc883ab14dfa5c583df024b80352420265d2cd87",
+      "bytes": 1346505
+    }
+  },
+  "ivd_version": "2026-08-03",
+  "reproduced": true
+}

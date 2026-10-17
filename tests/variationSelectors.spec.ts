@@ -50,9 +50,30 @@ describe('variation selectors', () => {
     expect(findings.some((f) => f.rule.startsWith('variation-selector'))).toBe(false);
   });
 
-  it('does not flag a single VS on a CJK ideograph', () => {
-    const { findings } = scanText('邊︀ variant');
+  it('preserves the registered ideographic variant of 邊', () => {
+    const { findings } = scanText('邊\u{E0100} variant');
     expect(findings.some((f) => f.rule.startsWith('variation-selector'))).toBe(false);
+  });
+
+  it.each([
+    [0x30654, 0xe0100], [0x30654, 0xe0101], [0x30654, 0xe0102], [0x31350, 0xe0100],
+  ])('preserves a registered newer ideograph %i / selector %i', (base, selector) => {
+    const text = String.fromCodePoint(base, selector);
+    expect(scanText(text).findings).toEqual([]);
+    expect(sanitize(text).text).toBe(text);
+  });
+
+  it.each(['邊\uFE00', '山\u{E0159}', '\u{30654}\u{E0103}'])('does not exempt an unregistered CJK pair %s', text => {
+    expect(scanText(text).findings.some(f => f.rule === 'variation-selector-stray')).toBe(true);
+    expect(sanitize(text).text).toBe([...text][0]);
+  });
+
+  it('preserves a registered IVS when removing non-text extra selectors', () => {
+    const text = '山\u{E0100}\uFE00';
+    const result = sanitize(text);
+    expect(result.text).toBe('山\u{E0100}');
+    expect(result.remaining).toEqual([]);
+    expect(result.fixed[0]!.removal).toEqual({start: 3, end: 4});
   });
 
   it('flags and decodes a smuggled payload riding on an emoji', () => {
