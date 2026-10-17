@@ -19,6 +19,14 @@ All notable changes to this project are documented in this file.
 
 ### Fixed
 
+- Resolve every Script_Extensions alias through pinned Unicode 17 property
+  aliases instead of silently keeping only matching long names. Use exact
+  extension sets and resolve a word's unique compatible script for collision
+  classification; preserve primary-script joiner exemptions so shared Latin
+  accents cannot hide ZWNJ/ZWJ. Retain Cyrillic/Arabic controls, the incomplete
+  data-only prototype, full-code-point lookup equivalence and public-corpus
+  costs under `studies/script-extensions`.
+
 - Check ideographic selector exemptions against the pinned 2026-08-03 IVD.
   The broad CJK-block exemption hid instructions encoded one selector per
   character and removed four registered variants outside its blocks. Decode

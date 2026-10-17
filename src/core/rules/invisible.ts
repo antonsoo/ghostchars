@@ -1,7 +1,7 @@
 import { unicodeName } from '../names.js';
 import type { Finding } from '../types.js';
 import { defaultIgnorableRanges } from '../../generated/default-ignorable.js';
-import { codePointBefore, isEmoji, isRegionalIndicator, rangesToClass, scriptsOf } from '../unicode-utils.js';
+import { codePointBefore, isEmoji, isRegionalIndicator, rangesToClass, scriptOf } from '../unicode-utils.js';
 import { describeCodePoint, type PositionLookup } from './position.js';
 import { BIDI_MARKS, EXPLICIT_FORMATTING } from './bidi.js';
 import { TAG_BASE, TAG_CANCEL } from '../decodeTags.js';
@@ -126,12 +126,14 @@ function isEmojiJoinContext(prev: number | undefined, next: number | undefined):
 // side is a joining-script letter, the other a Latin letter or digit. Splitting an ASCII word
 // has ASCII on both sides, which this does not allow.
 function isLatinTermWithJoiningSuffix(prev: number | undefined, next: number | undefined): boolean {
-  const joining = (c: number | undefined) => c !== undefined && scriptsOf(c).some((s) => JOINING_SCRIPTS.has(s) && s !== 'Hebrew');
+  const joining = (c: number | undefined) => c !== undefined && scriptOf(c) !== 'Hebrew' && JOINING_SCRIPTS.has(scriptOf(c));
   const latinOrDigit = (c: number | undefined) => c !== undefined && ((c >= 0x30 && c <= 0x39) || (c >= 0x41 && c <= 0x5a) || (c >= 0x61 && c <= 0x7a));
   return (latinOrDigit(prev) && joining(next)) || (joining(prev) && latinOrDigit(next));
 }
 
 function isJoiningScriptContext(prev: number | undefined, next: number | undefined): boolean {
-  const inJoiningScript = (c: number | undefined) => c !== undefined && scriptsOf(c).some((s) => JOINING_SCRIPTS.has(s));
+  // Preserve the primary-script policy: a shared Latin accent that *can* occur
+  // in Syriac does not establish that this Latin word is a joining-script context.
+  const inJoiningScript = (c: number | undefined) => c !== undefined && JOINING_SCRIPTS.has(scriptOf(c));
   return inJoiningScript(prev) && inJoiningScript(next);
 }

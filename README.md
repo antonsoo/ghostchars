@@ -302,12 +302,18 @@ Scanning runs in a local worker. Editing, clearing, or cancelling discards the p
 
 | Data | Source | Version |
 |---|---|---|
-| `Default_Ignorable_Code_Point`, `Scripts`, `ScriptExtensions`, `Emoji` | unicode.org UCD | **17.0.0** |
+| `Default_Ignorable_Code_Point`, `Scripts`, `ScriptExtensions`, `PropertyValueAliases`, `Emoji` | unicode.org UCD | **17.0.0** |
 | Confusables (UTS #39) | [unicode.org Security data](https://www.unicode.org/Public/17.0.0/security/confusables.txt) | **17.0.0** |
 | RGI emoji tag sequences | [unicode.org Emoji data](https://www.unicode.org/Public/17.0.0/emoji/emoji-sequences.txt) | **Emoji 17.0** |
 | Ideographic variation sequences | [Unicode IVD](https://www.unicode.org/ivd/data/2026-08-03/IVD_Sequences.txt) | **2026-08-03** |
 
 `LICENSE-UNICODE` is the Unicode License that governs those files.
+
+The source resolves abbreviated script-extension values through that alias
+table. Shared characters supply alternatives, so an ordinary Cyrillic
+apostrophe or Arabic vowel does not invent extra scripts in its word. The
+zero-width joiner policy separately uses primary scripts; shared Latin accents
+do not acquire a joining-script exemption. [Native controls and full property/corpus checks](studies/script-extensions/README.md).
 
 ### Bidi (rule 1)
 

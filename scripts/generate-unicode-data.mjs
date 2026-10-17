@@ -29,6 +29,7 @@ const SOURCES = [
   { id: 'derivedCoreProperties', url: `${UCD_BASE}/DerivedCoreProperties.txt` },
   { id: 'scripts', url: `${UCD_BASE}/Scripts.txt` },
   { id: 'scriptExtensions', url: `${UCD_BASE}/ScriptExtensions.txt` },
+  { id: 'propertyValueAliases', url: `${UCD_BASE}/PropertyValueAliases.txt` },
   { id: 'emojiData', url: `${UCD_BASE}/emoji/emoji-data.txt` },
   { id: 'emojiSequences', url: `${EMOJI_BASE}/emoji-sequences.txt` },
   { id: 'confusables', url: `${SECURITY_BASE}/confusables.txt` },
@@ -102,12 +103,32 @@ function extractScripts(text) {
   return { names, ranges };
 }
 
-function extractScriptExtensions(text, scriptNames) {
+function extractScriptAliases(text) {
+  const aliases = new Map();
+  for (const raw of text.split('\n')) {
+    const fields = raw.split('#')[0].split(';').map(field => field.trim());
+    if (fields[0] !== 'sc') continue;
+    if (fields.length < 3 || fields.some(field => !field)) throw new Error('Malformed Script alias record');
+    const canonical = fields[2];
+    for (const alias of fields.slice(1)) {
+      if (aliases.has(alias) && aliases.get(alias) !== canonical) throw new Error(`Conflicting Script alias: ${alias}`);
+      aliases.set(alias, canonical);
+    }
+  }
+  if (!aliases.size) throw new Error('No Script property aliases found');
+  return aliases;
+}
+
+function extractScriptExtensions(text, scriptNames, aliases) {
   const ranges = [];
   for (const { lo, hi, fields } of parsePropertyLines(text)) {
-    const scripts = fields[0].split(' ').filter(Boolean);
-    const ids = scripts.map((s) => scriptNames.indexOf(s)).filter((i) => i >= 0);
-    if (ids.length) ranges.push([lo, hi, ids]);
+    const scripts = fields[0].split(/\s+/);
+    const ids = scripts.map(alias => {
+      const id = scriptNames.indexOf(aliases.get(alias));
+      if (id < 0) throw new Error(`Unresolved Script_Extensions alias: ${alias}`);
+      return id;
+    });
+    ranges.push([lo, hi, [...new Set(ids)].sort((a, b) => a - b)]);
   }
   ranges.sort((a, b) => a[0] - b[0]);
   return ranges;
@@ -292,7 +313,8 @@ async function main() {
 
   const defaultIgnorable = extractDefaultIgnorable(texts.derivedCoreProperties);
   const { names: scriptNames, ranges: scriptRanges } = extractScripts(texts.scripts);
-  const scriptExtensionRanges = extractScriptExtensions(texts.scriptExtensions, scriptNames);
+  const scriptAliases = extractScriptAliases(texts.propertyValueAliases);
+  const scriptExtensionRanges = extractScriptExtensions(texts.scriptExtensions, scriptNames, scriptAliases);
   const emoji = extractEmoji(texts.emojiData);
   const tagSequences = extractTagSequences(texts.emojiSequences);
   const confusables = extractConfusables(texts.confusables);

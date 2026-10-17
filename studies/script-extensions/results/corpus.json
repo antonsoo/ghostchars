@@ -1,0 +1,1571 @@
+{
+  "node": "v26.7.0",
+  "manifestSha256": "4918139517b95809158fbf484befc670943054fbacd9ad7ada50034a2146ce84",
+  "docs": 83494,
+  "bytes": 155361980,
+  "inputSha256": "1175ffa359bfdadcd06d38b6f7cbc850e390c174d319937decf41536796f3cc4",
+  "before": {
+    "findings": 18583,
+    "outputSha256": "bf4cda1289bef0f427ecc67af7f41bba30e4a4466498acf6575fa396b72d4373",
+    "scanMs": 7303.780083999938
+  },
+  "after": {
+    "findings": 18610,
+    "outputSha256": "9b7c2c0dd19628a9320f4ad437b748dabb4844fe6f0cacb41c6d3414df095172",
+    "scanMs": 6590.610316000197
+  },
+  "timingScope": "One sequential local pass; baseline runs first for each input. Not an isolated benchmark.",
+  "changed": [
+    {
+      "source": "L1B3RT4S",
+      "file": "GROK-MEGA.mkd",
+      "inputSha256": "c5ddaa0675c85cc168a45c7f0337ba20a767863320b40a317cf30c37a59c093b",
+      "before": 8946,
+      "after": 8973,
+      "added": [
+        {
+          "rule": "confusable",
+          "severity": "warning",
+          "start": {
+            "line": 3,
+            "column": 1085,
+            "offset": 3357
+          },
+          "end": {
+            "line": 3,
+            "column": 1099,
+            "offset": 3371
+          },
+          "codePoints": [
+            12493,
+            776,
+            12460,
+            8205,
+            1090,
+            12452,
+            770,
+            70,
+            770,
+            12452,
+            769,
+            100,
+            72,
+            107
+          ],
+          "names": [
+            "U+30CD",
+            "U+0308",
+            "U+30AC",
+            "ZERO WIDTH JOINER",
+            "U+0442",
+            "U+30A4",
+            "U+0302",
+            "U+0046",
+            "U+0302",
+            "U+30A4",
+            "U+0301",
+            "U+0064",
+            "U+0048",
+            "U+006B"
+          ],
+          "message": "\"ネ̈ガ‍тイ̂F̂イ́dHk\" mixes scripts with incompatible choices for its shared characters in one word -- a common homoglyph-attack shape. Skeleton: \"ネ̈力゙‍ᴛ亻̂F̂亻́dHk\".",
+          "suggestion": "Confirm every character is intentional (e.g. a Greek variable name is fine on its own, but Latin+Cyrillic in one identifier rarely is), or rename to a single script.",
+          "skeleton": "ネ̈力゙‍ᴛ亻̂F̂亻́dHk",
+          "fixable": false
+        },
+        {
+          "rule": "confusable",
+          "severity": "warning",
+          "start": {
+            "line": 3,
+            "column": 2095,
+            "offset": 4367
+          },
+          "end": {
+            "line": 3,
+            "column": 2100,
+            "offset": 4372
+          },
+          "codePoints": [
+            775,
+            1068,
+            1077,
+            8205,
+            1211
+          ],
+          "names": [
+            "U+0307",
+            "U+042C",
+            "U+0435",
+            "ZERO WIDTH JOINER",
+            "U+04BB"
+          ],
+          "message": "\"̇Ье‍һ\" mixes scripts with incompatible choices for its shared characters in one word -- a common homoglyph-attack shape. Skeleton: \"̇be‍h\".",
+          "suggestion": "Confirm every character is intentional (e.g. a Greek variable name is fine on its own, but Latin+Cyrillic in one identifier rarely is), or rename to a single script.",
+          "skeleton": "̇be‍h",
+          "fixable": false
+        },
+        {
+          "rule": "confusable",
+          "severity": "warning",
+          "start": {
+            "line": 13,
+            "column": 92,
+            "offset": 16045
+          },
+          "end": {
+            "line": 13,
+            "column": 108,
+            "offset": 16061
+          },
+          "codePoints": [
+            953,
+            8204,
+            953,
+            963,
+            945,
+            769,
+            951,
+            946,
+            768,
+            955,
+            768,
+            949,
+            951,
+            770,
+            8205,
+            948
+          ],
+          "names": [
+            "U+03B9",
+            "ZERO WIDTH NON-JOINER",
+            "U+03B9",
+            "U+03C3",
+            "U+03B1",
+            "U+0301",
+            "U+03B7",
+            "U+03B2",
+            "U+0300",
+            "U+03BB",
+            "U+0300",
+            "U+03B5",
+            "U+03B7",
+            "U+0302",
+            "ZERO WIDTH JOINER",
+            "U+03B4"
+          ],
+          "message": "\"ι‌ισάηβ̀λ̀εη̂‍δ\" mixes scripts with incompatible choices for its shared characters in one word -- a common homoglyph-attack shape. Skeleton: \"i‌ioán̩ß̀λ̀ꞓn̩̂‍ẟ\".",
+          "suggestion": "Confirm every character is intentional (e.g. a Greek variable name is fine on its own, but Latin+Cyrillic in one identifier rarely is), or rename to a single script.",
+          "skeleton": "i‌ioán̩ß̀λ̀ꞓn̩̂‍ẟ",
+          "fixable": false
+        },
+        {
+          "rule": "confusable",
+          "severity": "warning",
+          "start": {
+            "line": 13,
+            "column": 314,
+            "offset": 16267
+          },
+          "end": {
+            "line": 13,
+            "column": 319,
+            "offset": 16272
+          },
+          "codePoints": [
+            957,
+            775,
+            8205,
+            948,
+            8204
+          ],
+          "names": [
+            "U+03BD",
+            "U+0307",
+            "ZERO WIDTH JOINER",
+            "U+03B4",
+            "ZERO WIDTH NON-JOINER"
+          ],
+          "message": "\"ν̇‍δ‌\" mixes scripts with incompatible choices for its shared characters in one word -- a common homoglyph-attack shape. Skeleton: \"v̇‍ẟ‌\".",
+          "suggestion": "Confirm every character is intentional (e.g. a Greek variable name is fine on its own, but Latin+Cyrillic in one identifier rarely is), or rename to a single script.",
+          "skeleton": "v̇‍ẟ‌",
+          "fixable": false
+        },
+        {
+          "rule": "confusable",
+          "severity": "warning",
+          "start": {
+            "line": 13,
+            "column": 561,
+            "offset": 16514
+          },
+          "end": {
+            "line": 13,
+            "column": 570,
+            "offset": 16523
+          },
+          "codePoints": [
+            964,
+            951,
+            770,
+            959,
+            965,
+            947,
+            775,
+            8204,
+            951
+          ],
+          "names": [
+            "U+03C4",
+            "U+03B7",
+            "U+0302",
+            "U+03BF",
+            "U+03C5",
+            "U+03B3",
+            "U+0307",
+            "ZERO WIDTH NON-JOINER",
+            "U+03B7"
+          ],
+          "message": "\"τη̂ουγ̇‌η\" mixes scripts with incompatible choices for its shared characters in one word -- a common homoglyph-attack shape. Skeleton: \"ᴛn̩̂ouẏ‌n̩\".",
+          "suggestion": "Confirm every character is intentional (e.g. a Greek variable name is fine on its own, but Latin+Cyrillic in one identifier rarely is), or rename to a single script.",
+          "skeleton": "ᴛn̩̂ouẏ‌n̩",
+          "fixable": false
+        },
+        {
+          "rule": "confusable",
+          "severity": "warning",
+          "start": {
+            "line": 13,
+            "column": 654,
+            "offset": 16607
+          },
+          "end": {
+            "line": 13,
+            "column": 657,
+            "offset": 16610
+          },
+          "codePoints": [
+            775,
+            1077,
+            770
+          ],
+          "names": [
+            "U+0307",
+            "U+0435",
+            "U+0302"
+          ],
+          "message": "\"̇е̂\" mixes scripts with incompatible choices for its shared characters in one word -- a common homoglyph-attack shape. Skeleton: \"̇ê\".",
+          "suggestion": "Confirm every character is intentional (e.g. a Greek variable name is fine on its own, but Latin+Cyrillic in one identifier rarely is), or rename to a single script.",
+          "skeleton": "̇ê",
+          "fixable": false
+        },
+        {
+          "rule": "confusable",
+          "severity": "warning",
+          "start": {
+            "line": 13,
+            "column": 674,
+            "offset": 16627
+          },
+          "end": {
+            "line": 13,
+            "column": 681,
+            "offset": 16634
+          },
+          "codePoints": [
+            965,
+            963,
+            768,
+            945,
+            951,
+            770,
+            955
+          ],
+          "names": [
+            "U+03C5",
+            "U+03C3",
+            "U+0300",
+            "U+03B1",
+            "U+03B7",
+            "U+0302",
+            "U+03BB"
+          ],
+          "message": "\"υσ̀αη̂λ\" mixes scripts with incompatible choices for its shared characters in one word -- a common homoglyph-attack shape. Skeleton: \"uòan̩̂λ\".",
+          "suggestion": "Confirm every character is intentional (e.g. a Greek variable name is fine on its own, but Latin+Cyrillic in one identifier rarely is), or rename to a single script.",
+          "skeleton": "uòan̩̂λ",
+          "fixable": false
+        },
+        {
+          "rule": "confusable",
+          "severity": "warning",
+          "start": {
+            "line": 13,
+            "column": 807,
+            "offset": 16760
+          },
+          "end": {
+            "line": 13,
+            "column": 817,
+            "offset": 16770
+          },
+          "codePoints": [
+            70,
+            12458,
+            57,
+            102,
+            90,
+            12458,
+            969,
+            12456,
+            948,
+            776
+          ],
+          "names": [
+            "U+0046",
+            "U+30AA",
+            "U+0039",
+            "U+0066",
+            "U+005A",
+            "U+30AA",
+            "U+03C9",
+            "U+30A8",
+            "U+03B4",
+            "U+0308"
+          ],
+          "message": "\"Fオ9fZオωエδ̈\" mixes scripts with incompatible choices for its shared characters in one word -- a common homoglyph-attack shape. Skeleton: \"Fオ9fZオω工ẟ̈\".",
+          "suggestion": "Confirm every character is intentional (e.g. a Greek variable name is fine on its own, but Latin+Cyrillic in one identifier rarely is), or rename to a single script.",
+          "skeleton": "Fオ9fZオω工ẟ̈",
+          "fixable": false
+        },
+        {
+          "rule": "confusable",
+          "severity": "warning",
+          "start": {
+            "line": 13,
+            "column": 1776,
+            "offset": 17729
+          },
+          "end": {
+            "line": 13,
+            "column": 1782,
+            "offset": 17735
+          },
+          "codePoints": [
+            1072,
+            775,
+            1211,
+            776,
+            1109,
+            775
+          ],
+          "names": [
+            "U+0430",
+            "U+0307",
+            "U+04BB",
+            "U+0308",
+            "U+0455",
+            "U+0307"
+          ],
+          "message": "\"а̇һ̈ѕ̇\" mixes scripts with incompatible choices for its shared characters in one word -- a common homoglyph-attack shape. Skeleton: \"ȧḧṡ\".",
+          "suggestion": "Confirm every character is intentional (e.g. a Greek variable name is fine on its own, but Latin+Cyrillic in one identifier rarely is), or rename to a single script.",
+          "skeleton": "ȧḧṡ",
+          "fixable": false
+        },
+        {
+          "rule": "confusable",
+          "severity": "warning",
+          "start": {
+            "line": 13,
+            "column": 2316,
+            "offset": 18269
+          },
+          "end": {
+            "line": 13,
+            "column": 2319,
+            "offset": 18272
+          },
+          "codePoints": [
+            1077,
+            775,
+            1211
+          ],
+          "names": [
+            "U+0435",
+            "U+0307",
+            "U+04BB"
+          ],
+          "message": "\"е̇һ\" mixes scripts with incompatible choices for its shared characters in one word -- a common homoglyph-attack shape. Skeleton: \"ėh\".",
+          "suggestion": "Confirm every character is intentional (e.g. a Greek variable name is fine on its own, but Latin+Cyrillic in one identifier rarely is), or rename to a single script.",
+          "skeleton": "ėh",
+          "fixable": false
+        },
+        {
+          "rule": "confusable",
+          "severity": "warning",
+          "start": {
+            "line": 22,
+            "column": 151,
+            "offset": 25650
+          },
+          "end": {
+            "line": 22,
+            "column": 162,
+            "offset": 25661
+          },
+          "codePoints": [
+            954,
+            951,
+            945,
+            951,
+            8204,
+            772,
+            955,
+            955,
+            8204,
+            770,
+            949
+          ],
+          "names": [
+            "U+03BA",
+            "U+03B7",
+            "U+03B1",
+            "U+03B7",
+            "ZERO WIDTH NON-JOINER",
+            "U+0304",
+            "U+03BB",
+            "U+03BB",
+            "ZERO WIDTH NON-JOINER",
+            "U+0302",
+            "U+03B5"
+          ],
+          "message": "\"κηαη‌̄λλ‌̂ε\" mixes scripts with incompatible choices for its shared characters in one word -- a common homoglyph-attack shape. Skeleton: \"ĸn̩an̩‌̄λλ‌̂ꞓ\".",
+          "suggestion": "Confirm every character is intentional (e.g. a Greek variable name is fine on its own, but Latin+Cyrillic in one identifier rarely is), or rename to a single script.",
+          "skeleton": "ĸn̩an̩‌̄λλ‌̂ꞓ",
+          "fixable": false
+        },
+        {
+          "rule": "confusable",
+          "severity": "warning",
+          "start": {
+            "line": 22,
+            "column": 1307,
+            "offset": 26806
+          },
+          "end": {
+            "line": 22,
+            "column": 1311,
+            "offset": 26810
+          },
+          "codePoints": [
+            956,
+            945,
+            770,
+            951
+          ],
+          "names": [
+            "U+03BC",
+            "U+03B1",
+            "U+0302",
+            "U+03B7"
+          ],
+          "message": "\"μα̂η\" mixes scripts with incompatible choices for its shared characters in one word -- a common homoglyph-attack shape. Skeleton: \"μân̩\".",
+          "suggestion": "Confirm every character is intentional (e.g. a Greek variable name is fine on its own, but Latin+Cyrillic in one identifier rarely is), or rename to a single script.",
+          "skeleton": "μân̩",
+          "fixable": false
+        },
+        {
+          "rule": "confusable",
+          "severity": "warning",
+          "start": {
+            "line": 22,
+            "column": 1817,
+            "offset": 27316
+          },
+          "end": {
+            "line": 22,
+            "column": 1827,
+            "offset": 27326
+          },
+          "codePoints": [
+            949,
+            951,
+            775,
+            957,
+            963,
+            769,
+            965,
+            961,
+            949,
+            951
+          ],
+          "names": [
+            "U+03B5",
+            "U+03B7",
+            "U+0307",
+            "U+03BD",
+            "U+03C3",
+            "U+0301",
+            "U+03C5",
+            "U+03C1",
+            "U+03B5",
+            "U+03B7"
+          ],
+          "message": "\"εη̇νσ́υρεη\" mixes scripts with incompatible choices for its shared characters in one word -- a common homoglyph-attack shape. Skeleton: \"ꞓṅ̩vóupꞓn̩\".",
+          "suggestion": "Confirm every character is intentional (e.g. a Greek variable name is fine on its own, but Latin+Cyrillic in one identifier rarely is), or rename to a single script.",
+          "skeleton": "ꞓṅ̩vóupꞓn̩",
+          "fixable": false
+        },
+        {
+          "rule": "confusable",
+          "severity": "warning",
+          "start": {
+            "line": 22,
+            "column": 2133,
+            "offset": 27632
+          },
+          "end": {
+            "line": 22,
+            "column": 2146,
+            "offset": 27645
+          },
+          "codePoints": [
+            945,
+            951,
+            769,
+            957,
+            776,
+            963,
+            8204,
+            969,
+            769,
+            949,
+            951,
+            770,
+            961
+          ],
+          "names": [
+            "U+03B1",
+            "U+03B7",
+            "U+0301",
+            "U+03BD",
+            "U+0308",
+            "U+03C3",
+            "ZERO WIDTH NON-JOINER",
+            "U+03C9",
+            "U+0301",
+            "U+03B5",
+            "U+03B7",
+            "U+0302",
+            "U+03C1"
+          ],
+          "message": "\"αήν̈σ‌ώεη̂ρ\" mixes scripts with incompatible choices for its shared characters in one word -- a common homoglyph-attack shape. Skeleton: \"ań̩v̈o‌ώꞓn̩̂p\".",
+          "suggestion": "Confirm every character is intentional (e.g. a Greek variable name is fine on its own, but Latin+Cyrillic in one identifier rarely is), or rename to a single script.",
+          "skeleton": "ań̩v̈o‌ώꞓn̩̂p",
+          "fixable": false
+        },
+        {
+          "rule": "confusable",
+          "severity": "warning",
+          "start": {
+            "line": 22,
+            "column": 2375,
+            "offset": 27874
+          },
+          "end": {
+            "line": 22,
+            "column": 2379,
+            "offset": 27878
+          },
+          "codePoints": [
+            964,
+            8205,
+            959,
+            770
+          ],
+          "names": [
+            "U+03C4",
+            "ZERO WIDTH JOINER",
+            "U+03BF",
+            "U+0302"
+          ],
+          "message": "\"τ‍ο̂\" mixes scripts with incompatible choices for its shared characters in one word -- a common homoglyph-attack shape. Skeleton: \"ᴛ‍ô\".",
+          "suggestion": "Confirm every character is intentional (e.g. a Greek variable name is fine on its own, but Latin+Cyrillic in one identifier rarely is), or rename to a single script.",
+          "skeleton": "ᴛ‍ô",
+          "fixable": false
+        },
+        {
+          "rule": "confusable",
+          "severity": "warning",
+          "start": {
+            "line": 25,
+            "column": 364,
+            "offset": 30441
+          },
+          "end": {
+            "line": 25,
+            "column": 368,
+            "offset": 30445
+          },
+          "codePoints": [
+            775,
+            54,
+            1077,
+            769
+          ],
+          "names": [
+            "U+0307",
+            "U+0036",
+            "U+0435",
+            "U+0301"
+          ],
+          "message": "\"̇6е́\" mixes scripts with incompatible choices for its shared characters in one word -- a common homoglyph-attack shape. Skeleton: \"̇6é\".",
+          "suggestion": "Confirm every character is intentional (e.g. a Greek variable name is fine on its own, but Latin+Cyrillic in one identifier rarely is), or rename to a single script.",
+          "skeleton": "̇6é",
+          "fixable": false
+        },
+        {
+          "rule": "confusable",
+          "severity": "warning",
+          "start": {
+            "line": 30,
+            "column": 83,
+            "offset": 37424
+          },
+          "end": {
+            "line": 30,
+            "column": 97,
+            "offset": 37438
+          },
+          "codePoints": [
+            5854,
+            5825,
+            5825,
+            5835,
+            5802,
+            5818,
+            5842,
+            770,
+            5850,
+            5846,
+            8204,
+            5818,
+            5854,
+            768
+          ],
+          "names": [
+            "U+16DE",
+            "U+16C1",
+            "U+16C1",
+            "U+16CB",
+            "U+16AA",
+            "U+16BA",
+            "U+16D2",
+            "U+0302",
+            "U+16DA",
+            "U+16D6",
+            "ZERO WIDTH NON-JOINER",
+            "U+16BA",
+            "U+16DE",
+            "U+0300"
+          ],
+          "message": "\"ᛞᛁᛁᛋᚪᚺᛒ̂ᛚᛖ‌ᚺᛞ̀\" mixes scripts with incompatible choices for its shared characters in one word -- a common homoglyph-attack shape. Skeleton: \"ᛞllᛋᚪᚺᛒ̂ᛚM‌ᚺᛞ̀\".",
+          "suggestion": "Confirm every character is intentional (e.g. a Greek variable name is fine on its own, but Latin+Cyrillic in one identifier rarely is), or rename to a single script.",
+          "skeleton": "ᛞllᛋᚪᚺᛒ̂ᛚM‌ᚺᛞ̀",
+          "fixable": false
+        },
+        {
+          "rule": "confusable",
+          "severity": "warning",
+          "start": {
+            "line": 30,
+            "column": 148,
+            "offset": 37489
+          },
+          "end": {
+            "line": 30,
+            "column": 156,
+            "offset": 37497
+          },
+          "codePoints": [
+            768,
+            5822,
+            775,
+            5815,
+            8204,
+            768,
+            5846,
+            5818
+          ],
+          "names": [
+            "U+0300",
+            "U+16BE",
+            "U+0307",
+            "U+16B7",
+            "ZERO WIDTH NON-JOINER",
+            "U+0300",
+            "U+16D6",
+            "U+16BA"
+          ],
+          "message": "\"̀ᚾ̇ᚷ‌̀ᛖᚺ\" mixes scripts with incompatible choices for its shared characters in one word -- a common homoglyph-attack shape. Skeleton: \"̀ᚾ̇X‌̀Mᚺ\".",
+          "suggestion": "Confirm every character is intentional (e.g. a Greek variable name is fine on its own, but Latin+Cyrillic in one identifier rarely is), or rename to a single script.",
+          "skeleton": "̀ᚾ̇X‌̀Mᚺ",
+          "fixable": false
+        },
+        {
+          "rule": "confusable",
+          "severity": "warning",
+          "start": {
+            "line": 30,
+            "column": 450,
+            "offset": 37791
+          },
+          "end": {
+            "line": 30,
+            "column": 463,
+            "offset": 37804
+          },
+          "codePoints": [
+            5802,
+            769,
+            5818,
+            5859,
+            5859,
+            5794,
+            5809,
+            775,
+            5802,
+            5818,
+            5839,
+            5846,
+            5818
+          ],
+          "names": [
+            "U+16AA",
+            "U+0301",
+            "U+16BA",
+            "U+16E3",
+            "U+16E3",
+            "U+16A2",
+            "U+16B1",
+            "U+0307",
+            "U+16AA",
+            "U+16BA",
+            "U+16CF",
+            "U+16D6",
+            "U+16BA"
+          ],
+          "message": "\"ᚪ́ᚺᛣᛣᚢᚱ̇ᚪᚺᛏᛖᚺ\" mixes scripts with incompatible choices for its shared characters in one word -- a common homoglyph-attack shape. Skeleton: \"ᚪ́ᚺᛣᛣᚢᚱ̇ᚪᚺᛏMᚺ\".",
+          "suggestion": "Confirm every character is intentional (e.g. a Greek variable name is fine on its own, but Latin+Cyrillic in one identifier rarely is), or rename to a single script.",
+          "skeleton": "ᚪ́ᚺᛣᛣᚢᚱ̇ᚪᚺᛏMᚺ",
+          "fixable": false
+        },
+        {
+          "rule": "confusable",
+          "severity": "warning",
+          "start": {
+            "line": 30,
+            "column": 510,
+            "offset": 37851
+          },
+          "end": {
+            "line": 30,
+            "column": 517,
+            "offset": 37858
+          },
+          "codePoints": [
+            770,
+            8205,
+            5839,
+            5818,
+            5846,
+            5818,
+            5822
+          ],
+          "names": [
+            "U+0302",
+            "ZERO WIDTH JOINER",
+            "U+16CF",
+            "U+16BA",
+            "U+16D6",
+            "U+16BA",
+            "U+16BE"
+          ],
+          "message": "\"̂‍ᛏᚺᛖᚺᚾ\" mixes scripts with incompatible choices for its shared characters in one word -- a common homoglyph-attack shape. Skeleton: \"̂‍ᛏᚺMᚺᚾ\".",
+          "suggestion": "Confirm every character is intentional (e.g. a Greek variable name is fine on its own, but Latin+Cyrillic in one identifier rarely is), or rename to a single script.",
+          "skeleton": "̂‍ᛏᚺMᚺᚾ",
+          "fixable": false
+        },
+        {
+          "rule": "confusable",
+          "severity": "warning",
+          "start": {
+            "line": 30,
+            "column": 572,
+            "offset": 37913
+          },
+          "end": {
+            "line": 30,
+            "column": 574,
+            "offset": 37915
+          },
+          "codePoints": [
+            5815,
+            772
+          ],
+          "names": [
+            "U+16B7",
+            "U+0304"
+          ],
+          "message": "\"ᚷ̄\" mixes scripts with incompatible choices for its shared characters in one word -- a common homoglyph-attack shape. Skeleton: \"X̄\".",
+          "suggestion": "Confirm every character is intentional (e.g. a Greek variable name is fine on its own, but Latin+Cyrillic in one identifier rarely is), or rename to a single script.",
+          "skeleton": "X̄",
+          "fixable": false
+        },
+        {
+          "rule": "confusable",
+          "severity": "warning",
+          "start": {
+            "line": 30,
+            "column": 703,
+            "offset": 38044
+          },
+          "end": {
+            "line": 30,
+            "column": 707,
+            "offset": 38048
+          },
+          "codePoints": [
+            5842,
+            772,
+            5825,
+            769
+          ],
+          "names": [
+            "U+16D2",
+            "U+0304",
+            "U+16C1",
+            "U+0301"
+          ],
+          "message": "\"ᛒ̄ᛁ́\" mixes scripts with incompatible choices for its shared characters in one word -- a common homoglyph-attack shape. Skeleton: \"ᛒ̄ĺ\".",
+          "suggestion": "Confirm every character is intentional (e.g. a Greek variable name is fine on its own, but Latin+Cyrillic in one identifier rarely is), or rename to a single script.",
+          "skeleton": "ᛒ̄ĺ",
+          "fixable": false
+        },
+        {
+          "rule": "confusable",
+          "severity": "warning",
+          "start": {
+            "line": 30,
+            "column": 756,
+            "offset": 38097
+          },
+          "end": {
+            "line": 30,
+            "column": 762,
+            "offset": 38103
+          },
+          "codePoints": [
+            5827,
+            769,
+            5855,
+            5874,
+            5846,
+            5818
+          ],
+          "names": [
+            "U+16C3",
+            "U+0301",
+            "U+16DF",
+            "U+16F2",
+            "U+16D6",
+            "U+16BA"
+          ],
+          "message": "\"ᛃ́ᛟᛲᛖᚺ\" mixes scripts with incompatible choices for its shared characters in one word -- a common homoglyph-attack shape. Skeleton: \"ᛃ́ᛟᛲMᚺ\".",
+          "suggestion": "Confirm every character is intentional (e.g. a Greek variable name is fine on its own, but Latin+Cyrillic in one identifier rarely is), or rename to a single script.",
+          "skeleton": "ᛃ́ᛟᛲMᚺ",
+          "fixable": false
+        },
+        {
+          "rule": "confusable",
+          "severity": "warning",
+          "start": {
+            "line": 30,
+            "column": 786,
+            "offset": 38127
+          },
+          "end": {
+            "line": 30,
+            "column": 794,
+            "offset": 38135
+          },
+          "codePoints": [
+            768,
+            8205,
+            5809,
+            5846,
+            5818,
+            5800,
+            5818,
+            5850
+          ],
+          "names": [
+            "U+0300",
+            "ZERO WIDTH JOINER",
+            "U+16B1",
+            "U+16D6",
+            "U+16BA",
+            "U+16A8",
+            "U+16BA",
+            "U+16DA"
+          ],
+          "message": "\"̀‍ᚱᛖᚺᚨᚺᛚ\" mixes scripts with incompatible choices for its shared characters in one word -- a common homoglyph-attack shape. Skeleton: \"̀‍ᚱMᚺᚨᚺᛚ\".",
+          "suggestion": "Confirm every character is intentional (e.g. a Greek variable name is fine on its own, but Latin+Cyrillic in one identifier rarely is), or rename to a single script.",
+          "skeleton": "̀‍ᚱMᚺᚨᚺᛚ",
+          "fixable": false
+        },
+        {
+          "rule": "confusable",
+          "severity": "warning",
+          "start": {
+            "line": 30,
+            "column": 1101,
+            "offset": 38442
+          },
+          "end": {
+            "line": 30,
+            "column": 1115,
+            "offset": 38456
+          },
+          "codePoints": [
+            5832,
+            5809,
+            5846,
+            5818,
+            5835,
+            5846,
+            8205,
+            768,
+            5818,
+            5822,
+            5839,
+            5835,
+            8204,
+            772
+          ],
+          "names": [
+            "U+16C8",
+            "U+16B1",
+            "U+16D6",
+            "U+16BA",
+            "U+16CB",
+            "U+16D6",
+            "ZERO WIDTH JOINER",
+            "U+0300",
+            "U+16BA",
+            "U+16BE",
+            "U+16CF",
+            "U+16CB",
+            "ZERO WIDTH NON-JOINER",
+            "U+0304"
+          ],
+          "message": "\"ᛈᚱᛖᚺᛋᛖ‍̀ᚺᚾᛏᛋ‌̄\" mixes scripts with incompatible choices for its shared characters in one word -- a common homoglyph-attack shape. Skeleton: \"ᛈᚱMᚺᛋM‍̀ᚺᚾᛏᛋ‌̄\".",
+          "suggestion": "Confirm every character is intentional (e.g. a Greek variable name is fine on its own, but Latin+Cyrillic in one identifier rarely is), or rename to a single script.",
+          "skeleton": "ᛈᚱMᚺᛋM‍̀ᚺᚾᛏᛋ‌̄",
+          "fixable": false
+        },
+        {
+          "rule": "confusable",
+          "severity": "warning",
+          "start": {
+            "line": 30,
+            "column": 1134,
+            "offset": 38475
+          },
+          "end": {
+            "line": 30,
+            "column": 1146,
+            "offset": 38487
+          },
+          "codePoints": [
+            5859,
+            768,
+            5801,
+            5815,
+            5822,
+            5825,
+            768,
+            5825,
+            5839,
+            5825,
+            5825,
+            5793
+          ],
+          "names": [
+            "U+16E3",
+            "U+0300",
+            "U+16A9",
+            "U+16B7",
+            "U+16BE",
+            "U+16C1",
+            "U+0300",
+            "U+16C1",
+            "U+16CF",
+            "U+16C1",
+            "U+16C1",
+            "U+16A1"
+          ],
+          "message": "\"ᛣ̀ᚩᚷᚾᛁ̀ᛁᛏᛁᛁᚡ\" mixes scripts with incompatible choices for its shared characters in one word -- a common homoglyph-attack shape. Skeleton: \"ᛣ̀ᚩXᚾl̀lᛏllᚡ\".",
+          "suggestion": "Confirm every character is intentional (e.g. a Greek variable name is fine on its own, but Latin+Cyrillic in one identifier rarely is), or rename to a single script.",
+          "skeleton": "ᛣ̀ᚩXᚾl̀lᛏllᚡ",
+          "fixable": false
+        },
+        {
+          "rule": "confusable",
+          "severity": "warning",
+          "start": {
+            "line": 30,
+            "column": 1147,
+            "offset": 38488
+          },
+          "end": {
+            "line": 30,
+            "column": 1151,
+            "offset": 38492
+          },
+          "codePoints": [
+            5846,
+            8204,
+            770,
+            5818
+          ],
+          "names": [
+            "U+16D6",
+            "ZERO WIDTH NON-JOINER",
+            "U+0302",
+            "U+16BA"
+          ],
+          "message": "\"ᛖ‌̂ᚺ\" mixes scripts with incompatible choices for its shared characters in one word -- a common homoglyph-attack shape. Skeleton: \"M‌̂ᚺ\".",
+          "suggestion": "Confirm every character is intentional (e.g. a Greek variable name is fine on its own, but Latin+Cyrillic in one identifier rarely is), or rename to a single script.",
+          "skeleton": "M‌̂ᚺ",
+          "fixable": false
+        },
+        {
+          "rule": "confusable",
+          "severity": "warning",
+          "start": {
+            "line": 30,
+            "column": 1303,
+            "offset": 38644
+          },
+          "end": {
+            "line": 30,
+            "column": 1317,
+            "offset": 38658
+          },
+          "codePoints": [
+            5855,
+            5847,
+            5822,
+            5825,
+            5825,
+            5865,
+            776,
+            5846,
+            5818,
+            8205,
+            5809,
+            5835,
+            5846,
+            5818
+          ],
+          "names": [
+            "U+16DF",
+            "U+16D7",
+            "U+16BE",
+            "U+16C1",
+            "U+16C1",
+            "U+16E9",
+            "U+0308",
+            "U+16D6",
+            "U+16BA",
+            "ZERO WIDTH JOINER",
+            "U+16B1",
+            "U+16CB",
+            "U+16D6",
+            "U+16BA"
+          ],
+          "message": "\"ᛟᛗᚾᛁᛁᛩ̈ᛖᚺ‍ᚱᛋᛖᚺ\" mixes scripts with incompatible choices for its shared characters in one word -- a common homoglyph-attack shape. Skeleton: \"ᛟᛗᚾllᛩ̈Mᚺ‍ᚱᛋMᚺ\".",
+          "suggestion": "Confirm every character is intentional (e.g. a Greek variable name is fine on its own, but Latin+Cyrillic in one identifier rarely is), or rename to a single script.",
+          "skeleton": "ᛟᛗᚾllᛩ̈Mᚺ‍ᚱᛋMᚺ",
+          "fixable": false
+        },
+        {
+          "rule": "confusable",
+          "severity": "warning",
+          "start": {
+            "line": 30,
+            "column": 1596,
+            "offset": 38937
+          },
+          "end": {
+            "line": 30,
+            "column": 1600,
+            "offset": 38941
+          },
+          "codePoints": [
+            5825,
+            5825,
+            772,
+            5792
+          ],
+          "names": [
+            "U+16C1",
+            "U+16C1",
+            "U+0304",
+            "U+16A0"
+          ],
+          "message": "\"ᛁᛁ̄ᚠ\" mixes scripts with incompatible choices for its shared characters in one word -- a common homoglyph-attack shape. Skeleton: \"ll̄ᚠ\".",
+          "suggestion": "Confirm every character is intentional (e.g. a Greek variable name is fine on its own, but Latin+Cyrillic in one identifier rarely is), or rename to a single script.",
+          "skeleton": "ll̄ᚠ",
+          "fixable": false
+        },
+        {
+          "rule": "confusable",
+          "severity": "warning",
+          "start": {
+            "line": 31,
+            "column": 2123,
+            "offset": 41713
+          },
+          "end": {
+            "line": 31,
+            "column": 2136,
+            "offset": 41726
+          },
+          "codePoints": [
+            120010,
+            120008,
+            119890,
+            120007,
+            95,
+            1082,
+            8204,
+            769,
+            87
+          ],
+          "names": [
+            "U+1D4CA",
+            "U+1D4C8",
+            "U+1D452",
+            "U+1D4C7",
+            "U+005F",
+            "U+043A",
+            "ZERO WIDTH NON-JOINER",
+            "U+0301",
+            "U+0057"
+          ],
+          "message": "\"𝓊𝓈𝑒𝓇_к‌́W\" mixes scripts with incompatible choices for its shared characters in one word -- a common homoglyph-attack shape. Skeleton: \"user_ĸ‌́W\".",
+          "suggestion": "Confirm every character is intentional (e.g. a Greek variable name is fine on its own, but Latin+Cyrillic in one identifier rarely is), or rename to a single script.",
+          "skeleton": "user_ĸ‌́W",
+          "fixable": false
+        },
+        {
+          "rule": "confusable",
+          "severity": "warning",
+          "start": {
+            "line": 31,
+            "column": 2201,
+            "offset": 41791
+          },
+          "end": {
+            "line": 31,
+            "column": 2204,
+            "offset": 41794
+          },
+          "codePoints": [
+            1077,
+            775,
+            1211
+          ],
+          "names": [
+            "U+0435",
+            "U+0307",
+            "U+04BB"
+          ],
+          "message": "\"е̇һ\" mixes scripts with incompatible choices for its shared characters in one word -- a common homoglyph-attack shape. Skeleton: \"ėh\".",
+          "suggestion": "Confirm every character is intentional (e.g. a Greek variable name is fine on its own, but Latin+Cyrillic in one identifier rarely is), or rename to a single script.",
+          "skeleton": "ėh",
+          "fixable": false
+        },
+        {
+          "rule": "confusable",
+          "severity": "warning",
+          "start": {
+            "line": 33,
+            "column": 328,
+            "offset": 42278
+          },
+          "end": {
+            "line": 33,
+            "column": 340,
+            "offset": 42290
+          },
+          "codePoints": [
+            769,
+            5818,
+            5822,
+            5846,
+            8205,
+            5818,
+            5809,
+            5800,
+            5818,
+            5839,
+            5846,
+            5818
+          ],
+          "names": [
+            "U+0301",
+            "U+16BA",
+            "U+16BE",
+            "U+16D6",
+            "ZERO WIDTH JOINER",
+            "U+16BA",
+            "U+16B1",
+            "U+16A8",
+            "U+16BA",
+            "U+16CF",
+            "U+16D6",
+            "U+16BA"
+          ],
+          "message": "\"́ᚺᚾᛖ‍ᚺᚱᚨᚺᛏᛖᚺ\" mixes scripts with incompatible choices for its shared characters in one word -- a common homoglyph-attack shape. Skeleton: \"́ᚺᚾM‍ᚺᚱᚨᚺᛏMᚺ\".",
+          "suggestion": "Confirm every character is intentional (e.g. a Greek variable name is fine on its own, but Latin+Cyrillic in one identifier rarely is), or rename to a single script.",
+          "skeleton": "́ᚺᚾM‍ᚺᚱᚨᚺᛏMᚺ",
+          "fixable": false
+        },
+        {
+          "rule": "confusable",
+          "severity": "warning",
+          "start": {
+            "line": 33,
+            "column": 1207,
+            "offset": 43157
+          },
+          "end": {
+            "line": 33,
+            "column": 1212,
+            "offset": 43162
+          },
+          "codePoints": [
+            5800,
+            770,
+            5818,
+            8205,
+            5825
+          ],
+          "names": [
+            "U+16A8",
+            "U+0302",
+            "U+16BA",
+            "ZERO WIDTH JOINER",
+            "U+16C1"
+          ],
+          "message": "\"ᚨ̂ᚺ‍ᛁ\" mixes scripts with incompatible choices for its shared characters in one word -- a common homoglyph-attack shape. Skeleton: \"ᚨ̂ᚺ‍l\".",
+          "suggestion": "Confirm every character is intentional (e.g. a Greek variable name is fine on its own, but Latin+Cyrillic in one identifier rarely is), or rename to a single script.",
+          "skeleton": "ᚨ̂ᚺ‍l",
+          "fixable": false
+        },
+        {
+          "rule": "confusable",
+          "severity": "warning",
+          "start": {
+            "line": 33,
+            "column": 2004,
+            "offset": 43954
+          },
+          "end": {
+            "line": 33,
+            "column": 2014,
+            "offset": 43964
+          },
+          "codePoints": [
+            5800,
+            768,
+            5818,
+            5822,
+            8204,
+            5835,
+            5865,
+            5846,
+            5818,
+            5809
+          ],
+          "names": [
+            "U+16A8",
+            "U+0300",
+            "U+16BA",
+            "U+16BE",
+            "ZERO WIDTH NON-JOINER",
+            "U+16CB",
+            "U+16E9",
+            "U+16D6",
+            "U+16BA",
+            "U+16B1"
+          ],
+          "message": "\"ᚨ̀ᚺᚾ‌ᛋᛩᛖᚺᚱ\" mixes scripts with incompatible choices for its shared characters in one word -- a common homoglyph-attack shape. Skeleton: \"ᚨ̀ᚺᚾ‌ᛋᛩMᚺᚱ\".",
+          "suggestion": "Confirm every character is intentional (e.g. a Greek variable name is fine on its own, but Latin+Cyrillic in one identifier rarely is), or rename to a single script.",
+          "skeleton": "ᚨ̀ᚺᚾ‌ᛋᛩMᚺᚱ",
+          "fixable": false
+        }
+      ],
+      "removed": [
+        {
+          "rule": "confusable",
+          "severity": "warning",
+          "start": {
+            "line": 18,
+            "column": 957,
+            "offset": 21677
+          },
+          "end": {
+            "line": 18,
+            "column": 963,
+            "offset": 21683
+          },
+          "codePoints": [
+            120061,
+            771,
+            12495,
+            120061
+          ],
+          "names": [
+            "U+1D4FD",
+            "U+0303",
+            "U+30CF",
+            "U+1D4FD"
+          ],
+          "message": "\"𝓽̃ハ𝓽\" mixes scripts (Thai, Katakana) in one word -- a common homoglyph-attack shape. Skeleton: \"t̃八t\".",
+          "suggestion": "Confirm every character is intentional (e.g. a Greek variable name is fine on its own, but Latin+Cyrillic in one identifier rarely is), or rename to a single script.",
+          "skeleton": "t̃八t",
+          "fixable": false
+        },
+        {
+          "rule": "confusable",
+          "severity": "warning",
+          "start": {
+            "line": 18,
+            "column": 1282,
+            "offset": 22002
+          },
+          "end": {
+            "line": 18,
+            "column": 1288,
+            "offset": 22008
+          },
+          "codePoints": [
+            12498,
+            120044,
+            120049,
+            771
+          ],
+          "names": [
+            "U+30D2",
+            "U+1D4EC",
+            "U+1D4F1",
+            "U+0303"
+          ],
+          "message": "\"ヒ𝓬𝓱̃\" mixes scripts (Katakana, Thai) in one word -- a common homoglyph-attack shape. Skeleton: \"ヒch̃\".",
+          "suggestion": "Confirm every character is intentional (e.g. a Greek variable name is fine on its own, but Latin+Cyrillic in one identifier rarely is), or rename to a single script.",
+          "skeleton": "ヒch̃",
+          "fixable": false
+        },
+        {
+          "rule": "confusable",
+          "severity": "warning",
+          "start": {
+            "line": 18,
+            "column": 1713,
+            "offset": 22433
+          },
+          "end": {
+            "line": 18,
+            "column": 1727,
+            "offset": 22447
+          },
+          "codePoints": [
+            67,
+            771,
+            8204,
+            12458,
+            120054,
+            12510,
+            12531,
+            770,
+            120045,
+            776,
+            120060
+          ],
+          "names": [
+            "U+0043",
+            "U+0303",
+            "ZERO WIDTH NON-JOINER",
+            "U+30AA",
+            "U+1D4F6",
+            "U+30DE",
+            "U+30F3",
+            "U+0302",
+            "U+1D4ED",
+            "U+0308",
+            "U+1D4FC"
+          ],
+          "message": "\"C̃‌オ𝓶マン̂𝓭̈𝓼\" mixes scripts (Latin, Thai, Katakana) in one word -- a common homoglyph-attack shape. Skeleton: \"C̃‌オrnマン̂d̈s\".",
+          "suggestion": "Confirm every character is intentional (e.g. a Greek variable name is fine on its own, but Latin+Cyrillic in one identifier rarely is), or rename to a single script.",
+          "skeleton": "C̃‌オrnマン̂d̈s",
+          "fixable": false
+        },
+        {
+          "rule": "confusable",
+          "severity": "warning",
+          "start": {
+            "line": 19,
+            "column": 27,
+            "offset": 22933
+          },
+          "end": {
+            "line": 19,
+            "column": 33,
+            "offset": 22939
+          },
+          "codePoints": [
+            120063,
+            12452,
+            12487,
+            771,
+            114
+          ],
+          "names": [
+            "U+1D4FF",
+            "U+30A4",
+            "U+30C7",
+            "U+0303",
+            "U+0072"
+          ],
+          "message": "\"𝓿イデ̃r\" mixes scripts (Katakana, Thai, Latin) in one word -- a common homoglyph-attack shape. Skeleton: \"v亻デ̃r\".",
+          "suggestion": "Confirm every character is intentional (e.g. a Greek variable name is fine on its own, but Latin+Cyrillic in one identifier rarely is), or rename to a single script.",
+          "skeleton": "v亻デ̃r",
+          "fixable": false
+        },
+        {
+          "rule": "confusable",
+          "severity": "warning",
+          "start": {
+            "line": 20,
+            "column": 329,
+            "offset": 23360
+          },
+          "end": {
+            "line": 20,
+            "column": 334,
+            "offset": 23365
+          },
+          "codePoints": [
+            120196,
+            12458,
+            12454,
+            771
+          ],
+          "names": [
+            "U+1D584",
+            "U+30AA",
+            "U+30A6",
+            "U+0303"
+          ],
+          "message": "\"𝖄オウ̃\" mixes scripts (Katakana, Thai) in one word -- a common homoglyph-attack shape. Skeleton: \"Yオウ̃\".",
+          "suggestion": "Confirm every character is intentional (e.g. a Greek variable name is fine on its own, but Latin+Cyrillic in one identifier rarely is), or rename to a single script.",
+          "skeleton": "Yオウ̃",
+          "fixable": false
+        },
+        {
+          "rule": "confusable",
+          "severity": "warning",
+          "start": {
+            "line": 20,
+            "column": 1558,
+            "offset": 24589
+          },
+          "end": {
+            "line": 20,
+            "column": 1580,
+            "offset": 24611
+          },
+          "codePoints": [
+            771,
+            120213,
+            120205,
+            120222,
+            120216,
+            770,
+            8205,
+            12452,
+            776,
+            120200,
+            12450,
+            120209,
+            120209,
+            120222
+          ],
+          "names": [
+            "U+0303",
+            "U+1D595",
+            "U+1D58D",
+            "U+1D59E",
+            "U+1D598",
+            "U+0302",
+            "ZERO WIDTH JOINER",
+            "U+30A4",
+            "U+0308",
+            "U+1D588",
+            "U+30A2",
+            "U+1D591",
+            "U+1D591",
+            "U+1D59E"
+          ],
+          "message": "\"̃𝖕𝖍𝖞𝖘̂‍イ̈𝖈ア𝖑𝖑𝖞\" mixes scripts (Thai, Katakana) in one word -- a common homoglyph-attack shape. Skeleton: \"̃phyŝ‍亻̈cアlly\".",
+          "suggestion": "Confirm every character is intentional (e.g. a Greek variable name is fine on its own, but Latin+Cyrillic in one identifier rarely is), or rename to a single script.",
+          "skeleton": "̃phyŝ‍亻̈cアlly",
+          "fixable": false
+        },
+        {
+          "rule": "confusable",
+          "severity": "warning",
+          "start": {
+            "line": 20,
+            "column": 1634,
+            "offset": 24665
+          },
+          "end": {
+            "line": 20,
+            "column": 1638,
+            "offset": 24669
+          },
+          "codePoints": [
+            771,
+            12502,
+            120217
+          ],
+          "names": [
+            "U+0303",
+            "U+30D6",
+            "U+1D599"
+          ],
+          "message": "\"̃ブ𝖙\" mixes scripts (Thai, Katakana) in one word -- a common homoglyph-attack shape. Skeleton: \"̃ブt\".",
+          "suggestion": "Confirm every character is intentional (e.g. a Greek variable name is fine on its own, but Latin+Cyrillic in one identifier rarely is), or rename to a single script.",
+          "skeleton": "̃ブt",
+          "fixable": false
+        }
+      ],
+      "diagnosticsChanged": 437
+    }
+  ],
+  "unrelatedRulesIdentical": true
+}

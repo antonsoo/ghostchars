@@ -15,12 +15,13 @@ declare global {
 }
 
 const errors = new WeakMap<Page, string[]>();
-test.beforeEach(async ({ page }) => {
+test.beforeEach(async ({ page, baseURL }) => {
   const failures: string[] = [];
   errors.set(page, failures);
+  const allowedOrigin = new URL(baseURL!).origin;
   page.on('pageerror', (error) => failures.push(error.message));
   page.on('request', (request) => {
-    if (!request.url().startsWith('http://127.0.0.1:4322/')) failures.push(`External request: ${request.url()}`);
+    if (!request.url().startsWith(allowedOrigin + '/')) failures.push(`External request: ${request.url()}`);
   });
   await page.addInitScript(() => {
     window.__csp = [];
@@ -113,6 +114,52 @@ test('exact IVD pairs survive while adjacent unregistered carriers reveal their 
   }
   await page.locator('#select-clean').click();
   expect(await page.locator('#sanitized-output').evaluate((node: HTMLTextAreaElement) => node.value.slice(node.selectionStart, node.selectionEnd))).toBe('山'.repeat(32));
+});
+
+test('script alternatives preserve ordinary text and keep Latin joiners visible offline', async ({ page, context, browserName }) => {
+  await context.setOffline(true);
+  const ordinary = 'обʼєкт пʼєса звʼязок\nيُعطى يُعطي';
+  await inspect(page, ordinary);
+  await expect(page.locator('#scan-status')).toContainText('0 findings');
+  await expect(page.locator('#sanitized-output')).toHaveValue(ordinary);
+  const source = ordinary + '\nReview a\u0308\u200c\u0308b\npaypаl';
+  await inspect(page, source);
+  await expect(page.locator('#scan-status')).toContainText('2 findings');
+  await expect(page.locator('#sanitized-output')).toHaveValue(source.replace('\u200c', ''));
+  const locations = page.locator('#all-findings button.loc');
+  await expect(locations).toHaveCount(2);
+  const selected: string[] = [];
+  for (let index = 0; index < 2; index++) {
+    await locations.nth(index).click();
+    selected.push(await page.locator('#input').evaluate((node: HTMLTextAreaElement) => node.value.slice(node.selectionStart, node.selectionEnd)));
+  }
+  expect(selected).toEqual(['\u200c', 'paypаl']);
+  await page.locator('#select-clean').click();
+  expect(await page.locator('#sanitized-output').evaluate((node: HTMLTextAreaElement) => node.value.slice(node.selectionStart, node.selectionEnd))).toBe(source.replace('\u200c', ''));
+  await inspect(page, ordinary);
+  await expect(page.locator('#scan-status')).toContainText('0 findings');
+  const audits: { width: number; violations: string[] }[] = [];
+  const directory = process.env.CAPTURE_SCX_EVIDENCE;
+  for (const width of [1440, 375]) {
+    await page.setViewportSize({ width, height: 960 });
+    const audit = await new AxeBuilder({ page }).analyze();
+    expect(audit.violations).toEqual([]);
+    audits.push({ width, violations: audit.violations.map(v => v.id) });
+    expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+    if (directory) {
+      await mkdir(directory, { recursive: true });
+      await page.locator('#input').blur();
+      await page.locator('#scan-status').evaluate(node => { node.scrollIntoView({ block: 'start' }); window.scrollBy(0, -24); });
+      await page.screenshot({ path: `${directory}/${browserName}-${width}.png` });
+    }
+  }
+  if (directory) await writeFile(`${directory}/${browserName}.json`, JSON.stringify({
+    browser: browserName, url: page.url(), offlineAfterLoad: true, ordinary, ordinaryFindings: 0,
+    controlledFindings: 2, selected, sanitizedPreservesOrdinaryText: true, outputSelectionMatches: true,
+    widths: [1440, 375], audits, pageErrors: errors.get(page),
+    cspViolations: await page.evaluate(() => window.__csp),
+    workerCount: await page.evaluate(() => window.__workerCount),
+  }, null, 2) + '\n');
 });
 
 test('registered flags stay intact while flag-wrapped payloads are revealed and removed offline', async ({ page, context, browserName }) => {

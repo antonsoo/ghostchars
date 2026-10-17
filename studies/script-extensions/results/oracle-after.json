@@ -1,0 +1,106 @@
+{
+  "scope": "Pinned property-set equivalence across every Unicode code point, including surrogate/unassigned defaults; not full UAX #24 run segmentation or UTS #39 conformance.",
+  "node": "v26.7.0",
+  "icu": "78.3",
+  "unicode": "17.0",
+  "inputs": {
+    "PropertyValueAliases.txt": {
+      "bytes": 81858,
+      "sha256": "64e9a5f76f7a1e8b5a47d6a1f9a26522a251208f5276bdfa1559dac7cf2e827a",
+      "url": "https://www.unicode.org/Public/17.0.0/ucd/PropertyValueAliases.txt"
+    },
+    "Scripts.txt": {
+      "bytes": 192460,
+      "sha256": "9f5e50d3abaee7d6ce09480f325c706f485ae3240912527e651954d2d6b035bf",
+      "url": "https://www.unicode.org/Public/17.0.0/ucd/Scripts.txt"
+    },
+    "ScriptExtensions.txt": {
+      "bytes": 20707,
+      "sha256": "ec2107e58825a1586acee8e0911ce18260394ac8b87e535ca325f1ccbeb06bc6",
+      "url": "https://www.unicode.org/Public/17.0.0/ucd/ScriptExtensions.txt"
+    }
+  },
+  "codePoints": 1114112,
+  "explicitRanges": 206,
+  "explicitCodePoints": 669,
+  "explicitMismatches": 0,
+  "defaultMismatches": 0,
+  "primaryAvailable": true,
+  "primaryMismatches": 0,
+  "examples": [],
+  "native": [
+    {
+      "cp": 700,
+      "script": "Cyrillic",
+      "pinnedExpected": true,
+      "nativeActual": true,
+      "matchesPinnedVersion": true
+    },
+    {
+      "cp": 700,
+      "script": "Latin",
+      "pinnedExpected": true,
+      "nativeActual": true,
+      "matchesPinnedVersion": true
+    },
+    {
+      "cp": 700,
+      "script": "Greek",
+      "pinnedExpected": false,
+      "nativeActual": false,
+      "matchesPinnedVersion": true
+    },
+    {
+      "cp": 776,
+      "script": "Latin",
+      "pinnedExpected": true,
+      "nativeActual": true,
+      "matchesPinnedVersion": true
+    },
+    {
+      "cp": 776,
+      "script": "Syriac",
+      "pinnedExpected": true,
+      "nativeActual": true,
+      "matchesPinnedVersion": true
+    },
+    {
+      "cp": 834,
+      "script": "Greek",
+      "pinnedExpected": true,
+      "nativeActual": true,
+      "matchesPinnedVersion": true
+    },
+    {
+      "cp": 834,
+      "script": "Cyrillic",
+      "pinnedExpected": false,
+      "nativeActual": false,
+      "matchesPinnedVersion": true
+    },
+    {
+      "cp": 12540,
+      "script": "Hiragana",
+      "pinnedExpected": true,
+      "nativeActual": true,
+      "matchesPinnedVersion": true
+    },
+    {
+      "cp": 12540,
+      "script": "Katakana",
+      "pinnedExpected": true,
+      "nativeActual": true,
+      "matchesPinnedVersion": true
+    },
+    {
+      "cp": 12540,
+      "script": "Latin",
+      "pinnedExpected": false,
+      "nativeActual": false,
+      "matchesPinnedVersion": true
+    }
+  ],
+  "nativeVersionDifferences": 0,
+  "lookupSha256": "d347415a9d5c19a4332cedc485c9aa57a223608271d2a37b81287352c64c2e5f",
+  "tableSha256": "85b302667eb125732de2ec9924823dc77d83d93a25df8862db014d0d11e18d40"
+}

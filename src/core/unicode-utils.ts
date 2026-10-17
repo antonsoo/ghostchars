@@ -70,16 +70,18 @@ export function isEmoji(cp: number): boolean {
   return inRanges(emojiRanges, cp);
 }
 
-/** Returns every Script/Script_Extensions name a code point belongs to (usually one). */
-export function scriptsOf(cp: number): string[] {
-  const out = new Set<string>();
+/** The single Script property value, independent of shared-script alternatives. */
+export function scriptOf(cp: number): string {
   const idx = rangeSearch(scriptRanges, cp);
-  if (idx >= 0) out.add(scriptNames[scriptRanges[idx]![2]]!);
+  return idx >= 0 ? scriptNames[scriptRanges[idx]![2]]! : 'Unknown';
+}
+
+/** Script_Extensions, defaulting to {Script} when no explicit record exists (UAX #24). */
+export function scriptsOf(cp: number): string[] {
   const extIdx = rangeSearch(scriptExtensionRanges, cp);
-  if (extIdx >= 0) {
-    for (const id of scriptExtensionRanges[extIdx]![2]) out.add(scriptNames[id]!);
-  }
-  return [...out];
+  return extIdx >= 0
+    ? scriptExtensionRanges[extIdx]![2].map(id => scriptNames[id]!)
+    : [scriptOf(cp)];
 }
 
 export const REGIONAL_INDICATOR_START = 0x1f1e6;

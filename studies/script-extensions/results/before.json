@@ -1,0 +1,485 @@
+{
+  "scope": "Actual library and CLI. Authored controls, including a pair observed in the unchanged public Arabic corpus. No language-parser, UTS #39 conformance or model-safety claim.",
+  "node": "v26.7.0",
+  "icu": "78.3",
+  "unicode": "17.0",
+  "cliSha256": "427d4aa21640c861b032440f6ad22d5c4987625ea19a6ababffeb0fd7655fc96",
+  "tableSha256": "ba4bf386b5121cb2381ec771db14f3ad99c2bd69e9295930ba010af552aface0",
+  "pathNormalization": "Temporary absolute/file-URI and cwd-relative input paths replaced with their basenames in CLI stdout.",
+  "sourceHashes": {
+    "unicode-utils": "83e3cd9c75010c4c55137056cf919453268323de609874c02102ab6cc5fdf639",
+    "rules/invisible": "92e0943b600c44e88db9e79fc45cd16993078e9ed19f04d6e084b50c38fbe2ea",
+    "rules/confusables": "89bda84d637c05188d22a8e1232fe89c9cf210a575f1404ea7e776a99abbe606"
+  },
+  "observations": [
+    {
+      "id": "cyrillic-object",
+      "input": "обʼєкт",
+      "expected": [],
+      "actual": [
+        "confusable"
+      ],
+      "findings": [
+        {
+          "rule": "confusable",
+          "severity": "warning",
+          "start": {
+            "line": 1,
+            "column": 1,
+            "offset": 0
+          },
+          "end": {
+            "line": 1,
+            "column": 7,
+            "offset": 6
+          },
+          "codePoints": [
+            1086,
+            1073,
+            700,
+            1108,
+            1082,
+            1090
+          ],
+          "names": [
+            "U+043E",
+            "U+0431",
+            "U+02BC",
+            "U+0454",
+            "U+043A",
+            "U+0442"
+          ],
+          "message": "\"обʼєкт\" mixes scripts (Cyrillic, Lisu, Thai, Toto) in one word -- a common homoglyph-attack shape. Skeleton: \"o6'ꞓĸᴛ\".",
+          "suggestion": "Confirm every character is intentional (e.g. a Greek variable name is fine on its own, but Latin+Cyrillic in one identifier rarely is), or rename to a single script.",
+          "skeleton": "o6'ꞓĸᴛ",
+          "fixable": false
+        }
+      ],
+      "repairs": [
+        {
+          "mode": "remove",
+          "text": "обʼєкт"
+        },
+        {
+          "mode": "normalize",
+          "text": "обʼєкт"
+        }
+      ]
+    },
+    {
+      "id": "cyrillic-play",
+      "input": "пʼєса",
+      "expected": [],
+      "actual": [
+        "confusable"
+      ],
+      "findings": [
+        {
+          "rule": "confusable",
+          "severity": "warning",
+          "start": {
+            "line": 1,
+            "column": 1,
+            "offset": 0
+          },
+          "end": {
+            "line": 1,
+            "column": 6,
+            "offset": 5
+          },
+          "codePoints": [
+            1087,
+            700,
+            1108,
+            1089,
+            1072
+          ],
+          "names": [
+            "U+043F",
+            "U+02BC",
+            "U+0454",
+            "U+0441",
+            "U+0430"
+          ],
+          "message": "\"пʼєса\" mixes scripts (Cyrillic, Lisu, Thai, Toto) in one word -- a common homoglyph-attack shape. Skeleton: \"π'ꞓca\".",
+          "suggestion": "Confirm every character is intentional (e.g. a Greek variable name is fine on its own, but Latin+Cyrillic in one identifier rarely is), or rename to a single script.",
+          "skeleton": "π'ꞓca",
+          "fixable": false
+        }
+      ],
+      "repairs": [
+        {
+          "mode": "remove",
+          "text": "пʼєса"
+        },
+        {
+          "mode": "normalize",
+          "text": "пʼєса"
+        }
+      ]
+    },
+    {
+      "id": "cyrillic-connection",
+      "input": "звʼязок",
+      "expected": [],
+      "actual": [
+        "confusable"
+      ],
+      "findings": [
+        {
+          "rule": "confusable",
+          "severity": "warning",
+          "start": {
+            "line": 1,
+            "column": 1,
+            "offset": 0
+          },
+          "end": {
+            "line": 1,
+            "column": 8,
+            "offset": 7
+          },
+          "codePoints": [
+            1079,
+            1074,
+            700,
+            1103,
+            1079,
+            1086,
+            1082
+          ],
+          "names": [
+            "U+0437",
+            "U+0432",
+            "U+02BC",
+            "U+044F",
+            "U+0437",
+            "U+043E",
+            "U+043A"
+          ],
+          "message": "\"звʼязок\" mixes scripts (Cyrillic, Lisu, Thai, Toto) in one word -- a common homoglyph-attack shape. Skeleton: \"ɜʙ'ᴙɜoĸ\".",
+          "suggestion": "Confirm every character is intentional (e.g. a Greek variable name is fine on its own, but Latin+Cyrillic in one identifier rarely is), or rename to a single script.",
+          "skeleton": "ɜʙ'ᴙɜoĸ",
+          "fixable": false
+        }
+      ],
+      "repairs": [
+        {
+          "mode": "remove",
+          "text": "звʼязок"
+        },
+        {
+          "mode": "normalize",
+          "text": "звʼязок"
+        }
+      ]
+    },
+    {
+      "id": "arabic-collision-control",
+      "input": "يُعطى يُعطي",
+      "expected": [],
+      "actual": [],
+      "findings": [],
+      "repairs": [
+        {
+          "mode": "remove",
+          "text": "يُعطى يُعطي"
+        },
+        {
+          "mode": "normalize",
+          "text": "يُعطى يُعطي"
+        }
+      ]
+    },
+    {
+      "id": "latin-diacritics-zwnj",
+      "input": "ä‌̈b",
+      "expected": [
+        "invisible"
+      ],
+      "actual": [
+        "invisible"
+      ],
+      "findings": [
+        {
+          "rule": "invisible",
+          "severity": "warning",
+          "start": {
+            "line": 1,
+            "column": 3,
+            "offset": 2
+          },
+          "end": {
+            "line": 1,
+            "column": 4,
+            "offset": 3
+          },
+          "codePoints": [
+            8204
+          ],
+          "names": [
+            "ZERO WIDTH NON-JOINER"
+          ],
+          "message": "ZERO WIDTH NON-JOINER (U+200C) is invisible and can hide or split identifiers/words without any visible trace.",
+          "suggestion": "Remove this character unless it is a documented, intentional zero-width joiner/non-joiner for the surrounding script or emoji sequence.",
+          "fixable": true
+        }
+      ],
+      "repairs": [
+        {
+          "mode": "remove",
+          "text": "ä̈b"
+        },
+        {
+          "mode": "normalize",
+          "text": "ä̈b"
+        }
+      ]
+    },
+    {
+      "id": "latin-diacritics-zwj",
+      "input": "ä‍̈b",
+      "expected": [
+        "invisible"
+      ],
+      "actual": [
+        "invisible"
+      ],
+      "findings": [
+        {
+          "rule": "invisible",
+          "severity": "warning",
+          "start": {
+            "line": 1,
+            "column": 3,
+            "offset": 2
+          },
+          "end": {
+            "line": 1,
+            "column": 4,
+            "offset": 3
+          },
+          "codePoints": [
+            8205
+          ],
+          "names": [
+            "ZERO WIDTH JOINER"
+          ],
+          "message": "ZERO WIDTH JOINER (U+200D) is invisible and can hide or split identifiers/words without any visible trace.",
+          "suggestion": "Remove this character unless it is a documented, intentional zero-width joiner/non-joiner for the surrounding script or emoji sequence.",
+          "fixable": true
+        }
+      ],
+      "repairs": [
+        {
+          "mode": "remove",
+          "text": "ä̈b"
+        },
+        {
+          "mode": "normalize",
+          "text": "ä̈b"
+        }
+      ]
+    },
+    {
+      "id": "cyrillic-with-greek-mark",
+      "input": "а͂",
+      "expected": [
+        "confusable"
+      ],
+      "actual": [],
+      "findings": [],
+      "repairs": [
+        {
+          "mode": "remove",
+          "text": "а͂"
+        },
+        {
+          "mode": "normalize",
+          "text": "а͂"
+        }
+      ]
+    },
+    {
+      "id": "mixed-lookalike",
+      "input": "paypаl",
+      "expected": [
+        "confusable"
+      ],
+      "actual": [
+        "confusable"
+      ],
+      "findings": [
+        {
+          "rule": "confusable",
+          "severity": "warning",
+          "start": {
+            "line": 1,
+            "column": 1,
+            "offset": 0
+          },
+          "end": {
+            "line": 1,
+            "column": 7,
+            "offset": 6
+          },
+          "codePoints": [
+            112,
+            97,
+            121,
+            112,
+            1072,
+            108
+          ],
+          "names": [
+            "U+0070",
+            "U+0061",
+            "U+0079",
+            "U+0070",
+            "U+0430",
+            "U+006C"
+          ],
+          "message": "\"paypаl\" mixes scripts (Latin, Cyrillic) in one word -- a common homoglyph-attack shape. Skeleton: \"paypal\".",
+          "suggestion": "Confirm every character is intentional (e.g. a Greek variable name is fine on its own, but Latin+Cyrillic in one identifier rarely is), or rename to a single script.",
+          "skeleton": "paypal",
+          "fixable": false
+        }
+      ],
+      "repairs": [
+        {
+          "mode": "remove",
+          "text": "paypаl"
+        },
+        {
+          "mode": "normalize",
+          "text": "paypаl"
+        }
+      ]
+    },
+    {
+      "id": "persian-joining-control",
+      "input": "می‌خواهم",
+      "expected": [],
+      "actual": [],
+      "findings": [],
+      "repairs": [
+        {
+          "mode": "remove",
+          "text": "می‌خواهم"
+        },
+        {
+          "mode": "normalize",
+          "text": "می‌خواهم"
+        }
+      ]
+    },
+    {
+      "id": "persian-suffix-control",
+      "input": "token‌ها",
+      "expected": [],
+      "actual": [],
+      "findings": [],
+      "repairs": [
+        {
+          "mode": "remove",
+          "text": "token‌ها"
+        },
+        {
+          "mode": "normalize",
+          "text": "token‌ها"
+        }
+      ]
+    },
+    {
+      "id": "virama-control",
+      "input": "क्‍ष",
+      "expected": [],
+      "actual": [],
+      "findings": [],
+      "repairs": [
+        {
+          "mode": "remove",
+          "text": "क्‍ष"
+        },
+        {
+          "mode": "normalize",
+          "text": "क्‍ष"
+        }
+      ]
+    }
+  ],
+  "commands": [
+    {
+      "input": "ordinary",
+      "format": "json",
+      "exitCode": 0,
+      "stdout": "{\n  \"ghostchars\": true,\n  \"summary\": {\n    \"error\": 0,\n    \"warning\": 3,\n    \"info\": 0,\n    \"total\": 3,\n    \"files\": 1,\n    \"durationMs\": 5.696421999999998,\n    \"complete\": true,\n    \"inputErrors\": 0\n  },\n  \"skipped\": [],\n  \"errors\": [],\n  \"results\": [\n    {\n      \"path\": \"ordinary.txt\",\n      \"findings\": [\n        {\n          \"rule\": \"confusable\",\n          \"severity\": \"warning\",\n          \"start\": {\n            \"line\": 1,\n            \"column\": 1,\n            \"offset\": 0\n          },\n          \"end\": {\n            \"line\": 1,\n            \"column\": 7,\n            \"offset\": 6\n          },\n          \"codePoints\": [\n            \"U+043E\",\n            \"U+0431\",\n            \"U+02BC\",\n            \"U+0454\",\n            \"U+043A\",\n            \"U+0442\"\n          ],\n          \"names\": [\n            \"U+043E\",\n            \"U+0431\",\n            \"U+02BC\",\n            \"U+0454\",\n            \"U+043A\",\n            \"U+0442\"\n          ],\n          \"message\": \"\\\"обʼєкт\\\" mixes scripts (Cyrillic, Lisu, Thai, Toto) in one word -- a common homoglyph-attack shape. Skeleton: \\\"o6'ꞓĸᴛ\\\".\",\n          \"suggestion\": \"Confirm every character is intentional (e.g. a Greek variable name is fine on its own, but Latin+Cyrillic in one identifier rarely is), or rename to a single script.\",\n          \"skeleton\": \"o6'ꞓĸᴛ\",\n          \"fixable\": false\n        },\n        {\n          \"rule\": \"confusable\",\n          \"severity\": \"warning\",\n          \"start\": {\n            \"line\": 1,\n            \"column\": 8,\n            \"offset\": 7\n          },\n          \"end\": {\n            \"line\": 1,\n            \"column\": 13,\n            \"offset\": 12\n          },\n          \"codePoints\": [\n            \"U+043F\",\n            \"U+02BC\",\n            \"U+0454\",\n            \"U+0441\",\n            \"U+0430\"\n          ],\n          \"names\": [\n            \"U+043F\",\n            \"U+02BC\",\n            \"U+0454\",\n            \"U+0441\",\n            \"U+0430\"\n          ],\n          \"message\": \"\\\"пʼєса\\\" mixes scripts (Cyrillic, Lisu, Thai, Toto) in one word -- a common homoglyph-attack shape. Skeleton: \\\"π'ꞓca\\\".\",\n          \"suggestion\": \"Confirm every character is intentional (e.g. a Greek variable name is fine on its own, but Latin+Cyrillic in one identifier rarely is), or rename to a single script.\",\n          \"skeleton\": \"π'ꞓca\",\n          \"fixable\": false\n        },\n        {\n          \"rule\": \"confusable\",\n          \"severity\": \"warning\",\n          \"start\": {\n            \"line\": 1,\n            \"column\": 14,\n            \"offset\": 13\n          },\n          \"end\": {\n            \"line\": 1,\n            \"column\": 21,\n            \"offset\": 20\n          },\n          \"codePoints\": [\n            \"U+0437\",\n            \"U+0432\",\n            \"U+02BC\",\n            \"U+044F\",\n            \"U+0437\",\n            \"U+043E\",\n            \"U+043A\"\n          ],\n          \"names\": [\n            \"U+0437\",\n            \"U+0432\",\n            \"U+02BC\",\n            \"U+044F\",\n            \"U+0437\",\n            \"U+043E\",\n            \"U+043A\"\n          ],\n          \"message\": \"\\\"звʼязок\\\" mixes scripts (Cyrillic, Lisu, Thai, Toto) in one word -- a common homoglyph-attack shape. Skeleton: \\\"ɜʙ'ᴙɜoĸ\\\".\",\n          \"suggestion\": \"Confirm every character is intentional (e.g. a Greek variable name is fine on its own, but Latin+Cyrillic in one identifier rarely is), or rename to a single script.\",\n          \"skeleton\": \"ɜʙ'ᴙɜoĸ\",\n          \"fixable\": false\n        }\n      ]\n    }\n  ]\n}\n",
+      "stderr": ""
+    },
+    {
+      "input": "ordinary",
+      "format": "sarif",
+      "exitCode": 0,
+      "stdout": "{\n  \"$schema\": \"https://docs.oasis-open.org/sarif/sarif/v2.1.0/errata01/os/schemas/sarif-schema-2.1.0.json\",\n  \"version\": \"2.1.0\",\n  \"runs\": [\n    {\n      \"tool\": {\n        \"driver\": {\n          \"name\": \"ghostchars\",\n          \"informationUri\": \"https://github.com/antonsoo/ghostchars\",\n          \"version\": \"0.1.5\",\n          \"rules\": [\n            {\n              \"id\": \"bidi-control\",\n              \"shortDescription\": {\n                \"text\": \"Explicit bidirectional formatting character (Trojan Source, CVE-2021-42574).\"\n              },\n              \"helpUri\": \"https://github.com/antonsoo/ghostchars#detections\"\n            },\n            {\n              \"id\": \"bidi-mark\",\n              \"shortDescription\": {\n                \"text\": \"Bidirectional mark character.\"\n              },\n              \"helpUri\": \"https://github.com/antonsoo/ghostchars#detections\"\n            },\n            {\n              \"id\": \"bidi-unbalanced\",\n              \"shortDescription\": {\n                \"text\": \"Unbalanced or unterminated bidirectional embedding/isolate.\"\n              },\n              \"helpUri\": \"https://github.com/antonsoo/ghostchars#detections\"\n            },\n            {\n              \"id\": \"tag-smuggling\",\n              \"shortDescription\": {\n                \"text\": \"Unicode tag characters outside a valid emoji tag sequence (ASCII smuggling).\"\n              },\n              \"helpUri\": \"https://github.com/antonsoo/ghostchars#detections\"\n            },\n            {\n              \"id\": \"variation-selector-smuggling\",\n              \"shortDescription\": {\n                \"text\": \"Variation selector run decodes to a hidden payload.\"\n              },\n              \"helpUri\": \"https://github.com/antonsoo/ghostchars#detections\"\n            },\n            {\n              \"id\": \"variation-selector-stray\",\n              \"shortDescription\": {\n                \"text\": \"Variation selector with no valid base character.\"\n              },\n              \"helpUri\": \"https://github.com/antonsoo/ghostchars#detections\"\n            },\n            {\n              \"id\": \"invisible\",\n              \"shortDescription\": {\n                \"text\": \"Invisible / default-ignorable character.\"\n              },\n              \"helpUri\": \"https://github.com/antonsoo/ghostchars#detections\"\n            },\n            {\n              \"id\": \"confusable\",\n              \"shortDescription\": {\n                \"text\": \"Visually confusable identifier (mixed script or skeleton collision).\"\n              },\n              \"helpUri\": \"https://github.com/antonsoo/ghostchars#detections\"\n            },\n            {\n              \"id\": \"styled-text\",\n              \"shortDescription\": {\n                \"text\": \"Letters in a styled Unicode alphabet (mathematical, fullwidth, circled, squared) that read as plain text.\"\n              },\n              \"helpUri\": \"https://github.com/antonsoo/ghostchars#detections\"\n            },\n            {\n              \"id\": \"unusual-whitespace\",\n              \"shortDescription\": {\n                \"text\": \"Unusual whitespace character.\"\n              },\n              \"helpUri\": \"https://github.com/antonsoo/ghostchars#detections\"\n            },\n            {\n              \"id\": \"control-character\",\n              \"shortDescription\": {\n                \"text\": \"Unexpected control character.\"\n              },\n              \"helpUri\": \"https://github.com/antonsoo/ghostchars#detections\"\n            }\n          ]\n        }\n      },\n      \"results\": [\n        {\n          \"ruleId\": \"confusable\",\n          \"level\": \"warning\",\n          \"message\": {\n            \"text\": \"\\\"обʼєкт\\\" mixes scripts (Cyrillic, Lisu, Thai, Toto) in one word -- a common homoglyph-attack shape. Skeleton: \\\"o6'ꞓĸᴛ\\\".\"\n          },\n          \"locations\": [\n            {\n              \"physicalLocation\": {\n                \"artifactLocation\": {\n                  \"uri\": \"ordinary.txt\"\n                },\n                \"region\": {\n                  \"startLine\": 1,\n                  \"startColumn\": 1,\n                  \"endLine\": 1,\n                  \"endColumn\": 7\n                }\n              }\n            }\n          ]\n        },\n        {\n          \"ruleId\": \"confusable\",\n          \"level\": \"warning\",\n          \"message\": {\n            \"text\": \"\\\"пʼєса\\\" mixes scripts (Cyrillic, Lisu, Thai, Toto) in one word -- a common homoglyph-attack shape. Skeleton: \\\"π'ꞓca\\\".\"\n          },\n          \"locations\": [\n            {\n              \"physicalLocation\": {\n                \"artifactLocation\": {\n                  \"uri\": \"ordinary.txt\"\n                },\n                \"region\": {\n                  \"startLine\": 1,\n                  \"startColumn\": 8,\n                  \"endLine\": 1,\n                  \"endColumn\": 13\n                }\n              }\n            }\n          ]\n        },\n        {\n          \"ruleId\": \"confusable\",\n          \"level\": \"warning\",\n          \"message\": {\n            \"text\": \"\\\"звʼязок\\\" mixes scripts (Cyrillic, Lisu, Thai, Toto) in one word -- a common homoglyph-attack shape. Skeleton: \\\"ɜʙ'ᴙɜoĸ\\\".\"\n          },\n          \"locations\": [\n            {\n              \"physicalLocation\": {\n                \"artifactLocation\": {\n                  \"uri\": \"ordinary.txt\"\n                },\n                \"region\": {\n                  \"startLine\": 1,\n                  \"startColumn\": 14,\n                  \"endLine\": 1,\n                  \"endColumn\": 21\n                }\n              }\n            }\n          ]\n        }\n      ],\n      \"invocations\": [\n        {\n          \"executionSuccessful\": true,\n          \"toolExecutionNotifications\": []\n        }\n      ],\n      \"properties\": {\n        \"skipped\": []\n      }\n    }\n  ]\n}\n",
+      "stderr": ""
+    },
+    {
+      "input": "ordinary",
+      "format": "github",
+      "exitCode": 0,
+      "stdout": "::warning file=ordinary.txt,line=1,col=1,endLine=1,endColumn=7,title=ghostchars%3A confusable::\"обʼєкт\" mixes scripts (Cyrillic, Lisu, Thai, Toto) in one word -- a common homoglyph-attack shape. Skeleton: \"o6'ꞓĸᴛ\".\n::warning file=ordinary.txt,line=1,col=8,endLine=1,endColumn=13,title=ghostchars%3A confusable::\"пʼєса\" mixes scripts (Cyrillic, Lisu, Thai, Toto) in one word -- a common homoglyph-attack shape. Skeleton: \"π'ꞓca\".\n::warning file=ordinary.txt,line=1,col=14,endLine=1,endColumn=21,title=ghostchars%3A confusable::\"звʼязок\" mixes scripts (Cyrillic, Lisu, Thai, Toto) in one word -- a common homoglyph-attack shape. Skeleton: \"ɜʙ'ᴙɜoĸ\".\n",
+      "stderr": ""
+    },
+    {
+      "input": "ordinary",
+      "format": "summary",
+      "exitCode": 0,
+      "stdout": "ordinary.txt\n  warn   confusable  x3  1:1 .. 1:14\n\nghostchars: 0 error(s), 3 warning(s), 0 info in 1 file(s) scanned.\n",
+      "stderr": ""
+    },
+    {
+      "input": "ordinary",
+      "repair": true,
+      "dryRunSourceUnchanged": true,
+      "dryExitCode": 0,
+      "fixExitCode": 0,
+      "output": "обʼєкт пʼєса звʼязок\nيُعطى يُعطي"
+    },
+    {
+      "input": "joiners",
+      "format": "json",
+      "exitCode": 0,
+      "stdout": "{\n  \"ghostchars\": true,\n  \"summary\": {\n    \"error\": 0,\n    \"warning\": 2,\n    \"info\": 0,\n    \"total\": 2,\n    \"files\": 1,\n    \"durationMs\": 5.853941999999996,\n    \"complete\": true,\n    \"inputErrors\": 0\n  },\n  \"skipped\": [],\n  \"errors\": [],\n  \"results\": [\n    {\n      \"path\": \"joiners.txt\",\n      \"findings\": [\n        {\n          \"rule\": \"invisible\",\n          \"severity\": \"warning\",\n          \"start\": {\n            \"line\": 1,\n            \"column\": 3,\n            \"offset\": 2\n          },\n          \"end\": {\n            \"line\": 1,\n            \"column\": 4,\n            \"offset\": 3\n          },\n          \"codePoints\": [\n            \"U+200C\"\n          ],\n          \"names\": [\n            \"ZERO WIDTH NON-JOINER\"\n          ],\n          \"message\": \"ZERO WIDTH NON-JOINER (U+200C) is invisible and can hide or split identifiers/words without any visible trace.\",\n          \"suggestion\": \"Remove this character unless it is a documented, intentional zero-width joiner/non-joiner for the surrounding script or emoji sequence.\",\n          \"fixable\": true\n        },\n        {\n          \"rule\": \"invisible\",\n          \"severity\": \"warning\",\n          \"start\": {\n            \"line\": 2,\n            \"column\": 3,\n            \"offset\": 8\n          },\n          \"end\": {\n            \"line\": 2,\n            \"column\": 4,\n            \"offset\": 9\n          },\n          \"codePoints\": [\n            \"U+200D\"\n          ],\n          \"names\": [\n            \"ZERO WIDTH JOINER\"\n          ],\n          \"message\": \"ZERO WIDTH JOINER (U+200D) is invisible and can hide or split identifiers/words without any visible trace.\",\n          \"suggestion\": \"Remove this character unless it is a documented, intentional zero-width joiner/non-joiner for the surrounding script or emoji sequence.\",\n          \"fixable\": true\n        }\n      ]\n    }\n  ]\n}\n",
+      "stderr": ""
+    },
+    {
+      "input": "joiners",
+      "format": "sarif",
+      "exitCode": 0,
+      "stdout": "{\n  \"$schema\": \"https://docs.oasis-open.org/sarif/sarif/v2.1.0/errata01/os/schemas/sarif-schema-2.1.0.json\",\n  \"version\": \"2.1.0\",\n  \"runs\": [\n    {\n      \"tool\": {\n        \"driver\": {\n          \"name\": \"ghostchars\",\n          \"informationUri\": \"https://github.com/antonsoo/ghostchars\",\n          \"version\": \"0.1.5\",\n          \"rules\": [\n            {\n              \"id\": \"bidi-control\",\n              \"shortDescription\": {\n                \"text\": \"Explicit bidirectional formatting character (Trojan Source, CVE-2021-42574).\"\n              },\n              \"helpUri\": \"https://github.com/antonsoo/ghostchars#detections\"\n            },\n            {\n              \"id\": \"bidi-mark\",\n              \"shortDescription\": {\n                \"text\": \"Bidirectional mark character.\"\n              },\n              \"helpUri\": \"https://github.com/antonsoo/ghostchars#detections\"\n            },\n            {\n              \"id\": \"bidi-unbalanced\",\n              \"shortDescription\": {\n                \"text\": \"Unbalanced or unterminated bidirectional embedding/isolate.\"\n              },\n              \"helpUri\": \"https://github.com/antonsoo/ghostchars#detections\"\n            },\n            {\n              \"id\": \"tag-smuggling\",\n              \"shortDescription\": {\n                \"text\": \"Unicode tag characters outside a valid emoji tag sequence (ASCII smuggling).\"\n              },\n              \"helpUri\": \"https://github.com/antonsoo/ghostchars#detections\"\n            },\n            {\n              \"id\": \"variation-selector-smuggling\",\n              \"shortDescription\": {\n                \"text\": \"Variation selector run decodes to a hidden payload.\"\n              },\n              \"helpUri\": \"https://github.com/antonsoo/ghostchars#detections\"\n            },\n            {\n              \"id\": \"variation-selector-stray\",\n              \"shortDescription\": {\n                \"text\": \"Variation selector with no valid base character.\"\n              },\n              \"helpUri\": \"https://github.com/antonsoo/ghostchars#detections\"\n            },\n            {\n              \"id\": \"invisible\",\n              \"shortDescription\": {\n                \"text\": \"Invisible / default-ignorable character.\"\n              },\n              \"helpUri\": \"https://github.com/antonsoo/ghostchars#detections\"\n            },\n            {\n              \"id\": \"confusable\",\n              \"shortDescription\": {\n                \"text\": \"Visually confusable identifier (mixed script or skeleton collision).\"\n              },\n              \"helpUri\": \"https://github.com/antonsoo/ghostchars#detections\"\n            },\n            {\n              \"id\": \"styled-text\",\n              \"shortDescription\": {\n                \"text\": \"Letters in a styled Unicode alphabet (mathematical, fullwidth, circled, squared) that read as plain text.\"\n              },\n              \"helpUri\": \"https://github.com/antonsoo/ghostchars#detections\"\n            },\n            {\n              \"id\": \"unusual-whitespace\",\n              \"shortDescription\": {\n                \"text\": \"Unusual whitespace character.\"\n              },\n              \"helpUri\": \"https://github.com/antonsoo/ghostchars#detections\"\n            },\n            {\n              \"id\": \"control-character\",\n              \"shortDescription\": {\n                \"text\": \"Unexpected control character.\"\n              },\n              \"helpUri\": \"https://github.com/antonsoo/ghostchars#detections\"\n            }\n          ]\n        }\n      },\n      \"results\": [\n        {\n          \"ruleId\": \"invisible\",\n          \"level\": \"warning\",\n          \"message\": {\n            \"text\": \"ZERO WIDTH NON-JOINER (U+200C) is invisible and can hide or split identifiers/words without any visible trace.\"\n          },\n          \"locations\": [\n            {\n              \"physicalLocation\": {\n                \"artifactLocation\": {\n                  \"uri\": \"joiners.txt\"\n                },\n                \"region\": {\n                  \"startLine\": 1,\n                  \"startColumn\": 3,\n                  \"endLine\": 1,\n                  \"endColumn\": 4\n                }\n              }\n            }\n          ]\n        },\n        {\n          \"ruleId\": \"invisible\",\n          \"level\": \"warning\",\n          \"message\": {\n            \"text\": \"ZERO WIDTH JOINER (U+200D) is invisible and can hide or split identifiers/words without any visible trace.\"\n          },\n          \"locations\": [\n            {\n              \"physicalLocation\": {\n                \"artifactLocation\": {\n                  \"uri\": \"joiners.txt\"\n                },\n                \"region\": {\n                  \"startLine\": 2,\n                  \"startColumn\": 3,\n                  \"endLine\": 2,\n                  \"endColumn\": 4\n                }\n              }\n            }\n          ]\n        }\n      ],\n      \"invocations\": [\n        {\n          \"executionSuccessful\": true,\n          \"toolExecutionNotifications\": []\n        }\n      ],\n      \"properties\": {\n        \"skipped\": []\n      }\n    }\n  ]\n}\n",
+      "stderr": ""
+    },
+    {
+      "input": "joiners",
+      "format": "github",
+      "exitCode": 0,
+      "stdout": "::warning file=joiners.txt,line=1,col=3,endLine=1,endColumn=4,title=ghostchars%3A invisible::ZERO WIDTH NON-JOINER (U+200C) is invisible and can hide or split identifiers/words without any visible trace.\n::warning file=joiners.txt,line=2,col=3,endLine=2,endColumn=4,title=ghostchars%3A invisible::ZERO WIDTH JOINER (U+200D) is invisible and can hide or split identifiers/words without any visible trace.\n",
+      "stderr": ""
+    },
+    {
+      "input": "joiners",
+      "format": "summary",
+      "exitCode": 0,
+      "stdout": "joiners.txt\n  warn   invisible  ZERO WIDTH NON-JOINER  x1  1:3\n  warn   invisible  ZERO WIDTH JOINER  x1  2:3\n\nghostchars: 0 error(s), 2 warning(s), 0 info in 1 file(s) scanned.\n",
+      "stderr": ""
+    },
+    {
+      "input": "joiners",
+      "repair": true,
+      "dryRunSourceUnchanged": true,
+      "dryExitCode": 0,
+      "fixExitCode": 0,
+      "output": "ä̈b\nä̈b"
+    }
+  ]
+}

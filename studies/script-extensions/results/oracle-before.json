@@ -1,0 +1,265 @@
+{
+  "scope": "Pinned property-set equivalence across every Unicode code point, including surrogate/unassigned defaults; not full UAX #24 run segmentation or UTS #39 conformance.",
+  "node": "v26.7.0",
+  "icu": "78.3",
+  "unicode": "17.0",
+  "inputs": {
+    "PropertyValueAliases.txt": {
+      "bytes": 81858,
+      "sha256": "64e9a5f76f7a1e8b5a47d6a1f9a26522a251208f5276bdfa1559dac7cf2e827a",
+      "url": "https://www.unicode.org/Public/17.0.0/ucd/PropertyValueAliases.txt"
+    },
+    "Scripts.txt": {
+      "bytes": 192460,
+      "sha256": "9f5e50d3abaee7d6ce09480f325c706f485ae3240912527e651954d2d6b035bf",
+      "url": "https://www.unicode.org/Public/17.0.0/ucd/Scripts.txt"
+    },
+    "ScriptExtensions.txt": {
+      "bytes": 20707,
+      "sha256": "ec2107e58825a1586acee8e0911ce18260394ac8b87e535ca325f1ccbeb06bc6",
+      "url": "https://www.unicode.org/Public/17.0.0/ucd/ScriptExtensions.txt"
+    }
+  },
+  "codePoints": 1114112,
+  "explicitRanges": 206,
+  "explicitCodePoints": 669,
+  "explicitMismatches": 669,
+  "defaultMismatches": 954246,
+  "primaryAvailable": false,
+  "primaryMismatches": 0,
+  "examples": [
+    {
+      "cp": 183,
+      "expected": [
+        "Avestan",
+        "Carian",
+        "Coptic",
+        "Duployan",
+        "Elbasan",
+        "Georgian",
+        "Glagolitic",
+        "Gothic",
+        "Greek",
+        "Gunjala_Gondi",
+        "Han",
+        "Latin",
+        "Lydian",
+        "Mahajani",
+        "Old_Permic",
+        "Shavian"
+      ],
+      "actual": [
+        "Common"
+      ]
+    },
+    {
+      "cp": 700,
+      "expected": [
+        "Bengali",
+        "Cyrillic",
+        "Devanagari",
+        "Latin",
+        "Lisu",
+        "Thai",
+        "Toto"
+      ],
+      "actual": [
+        "Common",
+        "Lisu",
+        "Thai",
+        "Toto"
+      ]
+    },
+    {
+      "cp": 711,
+      "expected": [
+        "Bopomofo",
+        "Latin"
+      ],
+      "actual": [
+        "Common"
+      ]
+    },
+    {
+      "cp": 713,
+      "expected": [
+        "Bopomofo",
+        "Latin"
+      ],
+      "actual": [
+        "Common"
+      ]
+    },
+    {
+      "cp": 714,
+      "expected": [
+        "Bopomofo",
+        "Latin"
+      ],
+      "actual": [
+        "Common"
+      ]
+    },
+    {
+      "cp": 715,
+      "expected": [
+        "Bopomofo",
+        "Latin"
+      ],
+      "actual": [
+        "Common"
+      ]
+    },
+    {
+      "cp": 717,
+      "expected": [
+        "Latin",
+        "Lisu"
+      ],
+      "actual": [
+        "Common",
+        "Lisu"
+      ]
+    },
+    {
+      "cp": 727,
+      "expected": [
+        "Latin",
+        "Thai"
+      ],
+      "actual": [
+        "Common",
+        "Thai"
+      ]
+    },
+    {
+      "cp": 729,
+      "expected": [
+        "Bopomofo",
+        "Latin"
+      ],
+      "actual": [
+        "Common"
+      ]
+    },
+    {
+      "cp": 768,
+      "expected": [
+        "Cherokee",
+        "Coptic",
+        "Cyrillic",
+        "Greek",
+        "Latin",
+        "Old_Permic",
+        "Sunuwar",
+        "Tai_Le"
+      ],
+      "actual": [
+        "Inherited"
+      ]
+    },
+    {
+      "cp": 769,
+      "expected": [
+        "Cherokee",
+        "Cyrillic",
+        "Greek",
+        "Latin",
+        "Osage",
+        "Sunuwar",
+        "Tai_Le",
+        "Todhri"
+      ],
+      "actual": [
+        "Inherited"
+      ]
+    },
+    {
+      "cp": 770,
+      "expected": [
+        "Cherokee",
+        "Cyrillic",
+        "Latin",
+        "Tifinagh"
+      ],
+      "actual": [
+        "Inherited"
+      ]
+    }
+  ],
+  "native": [
+    {
+      "cp": 700,
+      "script": "Cyrillic",
+      "pinnedExpected": true,
+      "nativeActual": true,
+      "matchesPinnedVersion": true
+    },
+    {
+      "cp": 700,
+      "script": "Latin",
+      "pinnedExpected": true,
+      "nativeActual": true,
+      "matchesPinnedVersion": true
+    },
+    {
+      "cp": 700,
+      "script": "Greek",
+      "pinnedExpected": false,
+      "nativeActual": false,
+      "matchesPinnedVersion": true
+    },
+    {
+      "cp": 776,
+      "script": "Latin",
+      "pinnedExpected": true,
+      "nativeActual": true,
+      "matchesPinnedVersion": true
+    },
+    {
+      "cp": 776,
+      "script": "Syriac",
+      "pinnedExpected": true,
+      "nativeActual": true,
+      "matchesPinnedVersion": true
+    },
+    {
+      "cp": 834,
+      "script": "Greek",
+      "pinnedExpected": true,
+      "nativeActual": true,
+      "matchesPinnedVersion": true
+    },
+    {
+      "cp": 834,
+      "script": "Cyrillic",
+      "pinnedExpected": false,
+      "nativeActual": false,
+      "matchesPinnedVersion": true
+    },
+    {
+      "cp": 12540,
+      "script": "Hiragana",
+      "pinnedExpected": true,
+      "nativeActual": true,
+      "matchesPinnedVersion": true
+    },
+    {
+      "cp": 12540,
+      "script": "Katakana",
+      "pinnedExpected": true,
+      "nativeActual": true,
+      "matchesPinnedVersion": true
+    },
+    {
+      "cp": 12540,
+      "script": "Latin",
+      "pinnedExpected": false,
+      "nativeActual": false,
+      "matchesPinnedVersion": true
+    }
+  ],
+  "nativeVersionDifferences": 0,
+  "lookupSha256": "83e3cd9c75010c4c55137056cf919453268323de609874c02102ab6cc5fdf639",
+  "tableSha256": "ba4bf386b5121cb2381ec771db14f3ad99c2bd69e9295930ba010af552aface0"
+}

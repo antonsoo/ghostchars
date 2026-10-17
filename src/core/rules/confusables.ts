@@ -38,7 +38,7 @@ function getConfusableMap(): Map<number, number[]> {
 const ZWNJ = String.fromCodePoint(0x200c);
 const ZWJ = String.fromCodePoint(0x200d);
 const IDENTIFIER_RE = new RegExp(`[\\p{L}\\p{M}\\p{Nd}\\p{Pc}][\\p{L}\\p{M}\\p{Nd}\\p{Pc}${ZWNJ}${ZWJ}]*`, 'gu');
-const SCRIPT_NEUTRAL = new Set(['Common', 'Inherited']);
+const SCRIPT_NEUTRAL = new Set(['Common', 'Inherited', 'Unknown']);
 
 // Fast paths for the overwhelmingly common case (a plain ASCII identifier):
 // skip the confusables map and script lookups entirely rather than doing a
@@ -64,8 +64,8 @@ function skeletonOf(token: string): string {
   return out.normalize('NFD');
 }
 
-/** For each character of a word that belongs to a script at all, the scripts it can be read as
- * (its Script, or any of its Script_Extensions). Common and Inherited characters say nothing. */
+/** Each character's Script_Extensions alternatives, or its default Script.
+ * Implicit Common, Inherited and Unknown values say nothing about the word's script. */
 function scriptSetsOfToken(token: string): string[][] {
   if (ASCII_RE.test(token)) return []; // ASCII letters/digits are always Latin/Common alone -- never "mixed"
   const sets: string[][] = [];
@@ -200,7 +200,15 @@ function isSuspiciousMix(token: string): boolean {
 /** The scripts a word is written in, for comparing two spellings: "Latin" for an ASCII word. */
 function scriptSignature(token: string): string {
   if (ASCII_RE.test(token)) return 'Latin';
-  return [...new Set(scriptSetsOfToken(token).flat())].sort().join('+') || 'Latin';
+  const sets = scriptSetsOfToken(token);
+  if (sets.length) {
+    // Alternatives on a shared mark are possibilities, not extra scripts in
+    // the word. Resolve a unique common script before classifying collisions
+    // or counting words toward a document's language context.
+    const common = sets[0]!.filter(script => sets.every(scripts => scripts.includes(script)));
+    if (common.length === 1) return common[0]!;
+  }
+  return [...new Set(sets.flat())].sort().join('+') || 'Latin';
 }
 
 interface Token {
@@ -309,14 +317,18 @@ export function scanConfusables(text: string, positionAt: PositionLookup = posit
     }
     const skeleton = skeletonOf(token.text);
     if (isSuspiciousMix(token.text)) {
-      const scripts = new Set(scriptSetsOfToken(token.text).flat());
+      const sets = scriptSetsOfToken(token.text);
+      const scripts = new Set(sets.flat());
+      const description = sets.some(choices => choices.length > 1)
+        ? 'mixes scripts with incompatible choices for its shared characters'
+        : `mixes scripts (${[...scripts].join(', ')})`;
       findings.push({
         rule: 'confusable',
         severity: 'warning',
         ...span(token),
         codePoints: [...token.text].map((c) => c.codePointAt(0)!),
         names: [...token.text].map((c) => unicodeName(c.codePointAt(0)!)),
-        message: `"${token.text}" mixes scripts (${[...scripts].join(', ')}) in one word -- a common homoglyph-attack shape. Skeleton: "${skeleton}".`,
+        message: `"${token.text}" ${description} in one word -- a common homoglyph-attack shape. Skeleton: "${skeleton}".`,
         suggestion: 'Confirm every character is intentional (e.g. a Greek variable name is fine on its own, but Latin+Cyrillic in one identifier rarely is), or rename to a single script.',
         skeleton,
         fixable: false,

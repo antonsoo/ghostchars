@@ -1,0 +1,166 @@
+{
+  "scope": "Review of every changed occurrence in the one changed public document; no attack/correctness labels assigned.",
+  "source": "L1B3RT4S",
+  "file": "GROK-MEGA.mkd",
+  "inputSha256": "c5ddaa0675c85cc168a45c7f0337ba20a767863320b40a317cf30c37a59c093b",
+  "added": 34,
+  "removed": 7,
+  "allChangedSpansMatchOriginalCodePoints": true,
+  "allAddedRemovedAreWarnings": true,
+  "sanitizedBytesIdentical": true,
+  "sanitizedSha256": "b33d9a215badcddc7c58614bf7c77b547ac86c4f35ec575fd4ecca3b112c04a4",
+  "beforeFindings": 8946,
+  "afterFindings": 8973,
+  "removedThaiDiagnoses": [
+    {
+      "start": {
+        "line": 18,
+        "column": 957,
+        "offset": 21677
+      },
+      "end": {
+        "line": 18,
+        "column": 963,
+        "offset": 21683
+      },
+      "codePoints": [
+        120061,
+        771,
+        12495,
+        120061
+      ],
+      "message": "\"𝓽̃ハ𝓽\" mixes scripts (Thai, Katakana) in one word -- a common homoglyph-attack shape. Skeleton: \"t̃八t\"."
+    },
+    {
+      "start": {
+        "line": 18,
+        "column": 1282,
+        "offset": 22002
+      },
+      "end": {
+        "line": 18,
+        "column": 1288,
+        "offset": 22008
+      },
+      "codePoints": [
+        12498,
+        120044,
+        120049,
+        771
+      ],
+      "message": "\"ヒ𝓬𝓱̃\" mixes scripts (Katakana, Thai) in one word -- a common homoglyph-attack shape. Skeleton: \"ヒch̃\"."
+    },
+    {
+      "start": {
+        "line": 18,
+        "column": 1713,
+        "offset": 22433
+      },
+      "end": {
+        "line": 18,
+        "column": 1727,
+        "offset": 22447
+      },
+      "codePoints": [
+        67,
+        771,
+        8204,
+        12458,
+        120054,
+        12510,
+        12531,
+        770,
+        120045,
+        776,
+        120060
+      ],
+      "message": "\"C̃‌オ𝓶マン̂𝓭̈𝓼\" mixes scripts (Latin, Thai, Katakana) in one word -- a common homoglyph-attack shape. Skeleton: \"C̃‌オrnマン̂d̈s\"."
+    },
+    {
+      "start": {
+        "line": 19,
+        "column": 27,
+        "offset": 22933
+      },
+      "end": {
+        "line": 19,
+        "column": 33,
+        "offset": 22939
+      },
+      "codePoints": [
+        120063,
+        12452,
+        12487,
+        771,
+        114
+      ],
+      "message": "\"𝓿イデ̃r\" mixes scripts (Katakana, Thai, Latin) in one word -- a common homoglyph-attack shape. Skeleton: \"v亻デ̃r\"."
+    },
+    {
+      "start": {
+        "line": 20,
+        "column": 329,
+        "offset": 23360
+      },
+      "end": {
+        "line": 20,
+        "column": 334,
+        "offset": 23365
+      },
+      "codePoints": [
+        120196,
+        12458,
+        12454,
+        771
+      ],
+      "message": "\"𝖄オウ̃\" mixes scripts (Katakana, Thai) in one word -- a common homoglyph-attack shape. Skeleton: \"Yオウ̃\"."
+    },
+    {
+      "start": {
+        "line": 20,
+        "column": 1558,
+        "offset": 24589
+      },
+      "end": {
+        "line": 20,
+        "column": 1580,
+        "offset": 24611
+      },
+      "codePoints": [
+        771,
+        120213,
+        120205,
+        120222,
+        120216,
+        770,
+        8205,
+        12452,
+        776,
+        120200,
+        12450,
+        120209,
+        120209,
+        120222
+      ],
+      "message": "\"̃𝖕𝖍𝖞𝖘̂‍イ̈𝖈ア𝖑𝖑𝖞\" mixes scripts (Thai, Katakana) in one word -- a common homoglyph-attack shape. Skeleton: \"̃phyŝ‍亻̈cアlly\"."
+    },
+    {
+      "start": {
+        "line": 20,
+        "column": 1634,
+        "offset": 24665
+      },
+      "end": {
+        "line": 20,
+        "column": 1638,
+        "offset": 24669
+      },
+      "codePoints": [
+        771,
+        12502,
+        120217
+      ],
+      "message": "\"̃ブ𝖙\" mixes scripts (Thai, Katakana) in one word -- a common homoglyph-attack shape. Skeleton: \"̃ブt\"."
+    }
+  ]
+}
