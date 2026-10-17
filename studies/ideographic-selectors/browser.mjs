@@ -1,5 +1,5 @@
 // Replay the actual built worker after its no-store HTTP server has stopped.
-// node browser.mjs DIST_ROOT OUTPUT SCREENSHOT_DIR
+// node browser.mjs DIST_ROOT OUTPUT SCREENSHOT_DIR [PUBLIC_URL]
 /* global window, document, innerWidth */
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
@@ -12,7 +12,7 @@ import { URL } from 'node:url';
 const require = createRequire(new URL('../../web/package.json', import.meta.url));
 const { chromium, firefox } = require('playwright');
 const AxeBuilder = require('@axe-core/playwright');
-const [dist, output, screenshots] = process.argv.slice(2);
+const [dist, output, screenshots, publicURL] = process.argv.slice(2);
 assert.ok(screenshots, 'Supply DIST_ROOT OUTPUT SCREENSHOT_DIR');
 const sha = bytes => createHash('sha256').update(bytes).digest('hex');
 const assets = new Map();
@@ -45,7 +45,7 @@ for (const [engine, launcher] of Object.entries({ chromium, firefox })) {
         response.end(body ?? 'Not found');
       });
       await new Promise(resolve => server.listen(0, '127.0.0.1', resolve));
-      const origin = `http://127.0.0.1:${server.address().port}`;
+      const origin = publicURL ? new URL(publicURL).origin : `http://127.0.0.1:${server.address().port}`;
       const context = await browser.newContext({ viewport: { width, height: 960 } });
       let stopped = false;
       const stop = async () => {
@@ -64,17 +64,22 @@ for (const [engine, launcher] of Object.entries({ chromium, firefox })) {
           document.addEventListener('securitypolicyviolation', e => window.policyViolations.push(e.violatedDirective));
         });
         const scanned = async () => page.waitForFunction(() => /^Scanned /.test(document.querySelector('#scan-status').textContent) && document.querySelector('#input').getAttribute('aria-busy') === 'false');
-        await page.goto(origin + '/ghostchars/');
+        await page.goto(publicURL ?? origin + '/ghostchars/');
         await scanned();
         await page.evaluate(() => document.fonts.ready);
         assert.equal(workers.length, 1);
-        assert.ok(served.has(workers[0]), 'The actual worker was served from this build.');
         // Also compare every emitted file, including maps and initially unused assets.
         for (const [path, expectedBytes] of assets) {
           const response = await fetch(origin + path);
           assert.equal(response.status, 200, path);
           assert.equal(sha(Buffer.from(await response.arrayBuffer())), sha(expectedBytes), path);
+          if (publicURL) served.set(path, {
+            bytes: expectedBytes.length, sha256: sha(expectedBytes), status: response.status,
+            cacheControl: response.headers.get('cache-control'), etag: response.headers.get('etag'),
+            lastModified: response.headers.get('last-modified'),
+          });
         }
+        assert.ok(served.has(workers[0]), 'The actual worker was served from this build.');
         await context.setOffline(true);
         await stop();
         await page.locator('#input').fill(registered);
@@ -112,7 +117,7 @@ for (const [engine, launcher] of Object.entries({ chromium, firefox })) {
         await page.locator('#scan-status').evaluate(node => { node.scrollIntoView({ block: 'start' }); window.scrollBy(0, -24); });
         const screenshot = `${engine}-${width}.png`;
         await page.screenshot({ path: resolve(screenshots, screenshot) });
-        results.push({ engine, browserVersion: browser.version(), width, theme: 'existing dark-only design', serverStoppedBeforeNewInput: true, cacheControl: 'no-store', offline: true,
+        results.push({ engine, browserVersion: browser.version(), width, theme: 'existing dark-only design', sourceURL: publicURL ?? 'loopback', localServerStoppedBeforeNewInput: !publicURL, cacheControl: publicURL ? 'See individual public HTTP responses' : 'no-store', offline: true,
           registeredPairsPreserved: 4, findings: 32, decoded: 'ignore all previous instructions', inputSha256: sha(source), sanitizedSha256: sha(expected), selections, selectedOutputMatches: true,
           workers, served: Object.fromEntries(served), errors, lateRequests, policyViolations, axeViolations: 0, horizontalOverflow: false,
           screenshot, screenshotSha256: sha(await readFile(resolve(screenshots, screenshot))) });
@@ -121,5 +126,5 @@ for (const [engine, launcher] of Object.entries({ chromium, firefox })) {
   } finally { await browser.close(); }
 }
 await mkdir(dirname(resolve(output)), { recursive: true });
-await writeFile(output, JSON.stringify({ scope: 'Actual built worker; no server after load. Keyboard selection checked, operating-system clipboard not read. CJK font supplied only through task-local Fontconfig; no font redistributed.', results }, null, 2) + '\n');
+await writeFile(output, JSON.stringify({ scope: (publicURL ? 'Public HTTPS bytes and actual worker; browser goes offline after load. Remote server is not stopped. ' : 'Actual built worker; no local server after load. ') + 'Keyboard selection checked, operating-system clipboard not read. CJK font supplied only through task-local Fontconfig; no font redistributed.', results }, null, 2) + '\n');
 console.log(`${results.length} offline browser contexts: registered pairs preserved, payload decoded and removed, exact source/output selections.`);

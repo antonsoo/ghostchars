@@ -1,5 +1,8 @@
 # One selector per ideograph must not hide an instruction
 
+This correction is at `a8b22df525fce5a54baace039c07b06e48fb7655`.
+The ledgers below retain that revision's scope.
+
 The [authored fixture](fixtures/carrier-message.txt) looks like four repetitions
 of `山川異域風月同天`. Each visible character also carries one unregistered
 variation selector, encoding one byte of `ignore all previous instructions`.
@@ -140,6 +143,27 @@ The [generator replay](results/generator.json) independently downloaded all
 eight pinned sources again and reproduced all eight generated TypeScript files;
 only the manifest's generation timestamp changes.
 
-These are local source and installed-artifact checks. No npm release is implied
-by the unchanged package version 0.1.5. Public source and hosted bytes require
-separate verification.
+## Public source and demo
+
+[Public source verification](results/public-source.json) checks GitHub's
+unauthenticated main ref and eight pinned raw files, including the generated
+registry and checked-in CLI. The existing Pages branch was updated by a normal
+fast-forward push of the verified static build. Build command:
+`npm --prefix web ci && npm --prefix web run build`; output: `web/dist`.
+
+[Publication identity](results/publication.json) and
+[actual hosted-browser replay](results/hosted-browser.json) separately verify
+all 32 canonical files against that build and repeat the focused workflow on
+the public HTTPS site in both engines at both widths. The browser goes offline
+after load; the remote server is not stopped. All four hosted captures were
+opened and inspected and are byte-identical to the local captures, so the
+existing images are reused. The four previous asset filenames remain available
+with their previous bytes for cached HTML; they are not part of the new build.
+
+Reproduce public verification with:
+
+```sh
+node studies/ideographic-selectors/browser.mjs web/dist /tmp/ivs-hosted.json /tmp/ivs-shots https://antonsoo.github.io/ghostchars/
+```
+
+No npm release is implied by the unchanged package version 0.1.5.

@@ -1,0 +1,55 @@
+{
+  "scope": "Unauthenticated public main/raw checks; no npm release or hosted build assertion.",
+  "source_commit": "a8b22df525fce5a54baace039c07b06e48fb7655",
+  "observed_main": "a8b22df525fce5a54baace039c07b06e48fb7655",
+  "files": [
+    {
+      "path": "src/core/decodeVariationSelectors.ts",
+      "url": "https://raw.githubusercontent.com/antonsoo/ghostchars/a8b22df525fce5a54baace039c07b06e48fb7655/src/core/decodeVariationSelectors.ts",
+      "bytes": 9717,
+      "sha256": "1cc36dff63198c6e4cbc8c005a15f7d8e5ac3668667e657634972fabdd394568"
+    },
+    {
+      "path": "src/core/rules/variationSelectors.ts",
+      "url": "https://raw.githubusercontent.com/antonsoo/ghostchars/a8b22df525fce5a54baace039c07b06e48fb7655/src/core/rules/variationSelectors.ts",
+      "bytes": 5457,
+      "sha256": "94fa42d0eb1f1db9469043fa981c74b8bf821766cbf43cdf9aa47dea8a738494"
+    },
+    {
+      "path": "src/generated/ideographic-variants.ts",
+      "url": "https://raw.githubusercontent.com/antonsoo/ghostchars/a8b22df525fce5a54baace039c07b06e48fb7655/src/generated/ideographic-variants.ts",
+      "bytes": 355154,
+      "sha256": "822651dd1785b01d1c5e3f0c00fd2e5f92c774160cb7de5416c78973f59a0a2c"
+    },
+    {
+      "path": "src/generated/manifest.json",
+      "url": "https://raw.githubusercontent.com/antonsoo/ghostchars/a8b22df525fce5a54baace039c07b06e48fb7655/src/generated/manifest.json",
+      "bytes": 1858,
+      "sha256": "7d2b7961b76c4b86d8a2962ea06193821a622880bdc42405db1c15c2c6e4a87c"
+    },
+    {
+      "path": "scripts/generate-unicode-data.mjs",
+      "url": "https://raw.githubusercontent.com/antonsoo/ghostchars/a8b22df525fce5a54baace039c07b06e48fb7655/scripts/generate-unicode-data.mjs",
+      "bytes": 14081,
+      "sha256": "af204ad03c863fee81fa6282382f472c8e8771cc72dbdc9e7423e4c70adeb6d1"
+    },
+    {
+      "path": "dist/cli.js",
+      "url": "https://raw.githubusercontent.com/antonsoo/ghostchars/a8b22df525fce5a54baace039c07b06e48fb7655/dist/cli.js",
+      "bytes": 620860,
+      "sha256": "427d4aa21640c861b032440f6ad22d5c4987625ea19a6ababffeb0fd7655fc96"
+    },
+    {
+      "path": "tests/ideographicSelectors.spec.ts",
+      "url": "https://raw.githubusercontent.com/antonsoo/ghostchars/a8b22df525fce5a54baace039c07b06e48fb7655/tests/ideographicSelectors.spec.ts",
+      "bytes": 4031,
+      "sha256": "67b00bd4463982085dfe18d20d06b47f3ceed8ea46c07fa3762fb7eb6b2f07a5"
+    },
+    {
+      "path": "studies/ideographic-selectors/fixtures/carrier-message.txt",
+      "url": "https://raw.githubusercontent.com/antonsoo/ghostchars/a8b22df525fce5a54baace039c07b06e48fb7655/studies/ideographic-selectors/fixtures/carrier-message.txt",
+      "bytes": 224,
+      "sha256": "2a8069f6ba49fe44ba9ae2c5fa6639b1a2147bbfc4692a708daa278d07a39a4c"
+    }
+  ]
+}

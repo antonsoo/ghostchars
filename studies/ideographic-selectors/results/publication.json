@@ -1,0 +1,42 @@
+{
+  "source_commit": "a8b22df525fce5a54baace039c07b06e48fb7655",
+  "observed_pages_commit": "e383d94a64025b16f1de8043dbf1dcfb0b1f6515",
+  "hosted_url": "https://antonsoo.github.io/ghostchars/",
+  "canonical_files": 32,
+  "canonical_bytes_match_each_context": true,
+  "contexts": 4,
+  "registered_pairs_preserved_per_context": 4,
+  "controlled_payload_findings": 32,
+  "reused_screenshots": {
+    "chromium-1440.png": "24ba571ba4d533fe80a21ed44dc41f0566fb5bd54641da99c9261511387b0337",
+    "chromium-375.png": "4b40924c2f6d9e121f775e1199520e7096ffc1c69938c82bc01306a6f8586b16",
+    "firefox-1440.png": "c36293f2db467edc2ed51e56c4cf24bda8e7d004d422dde375705301a7ccd269",
+    "firefox-375.png": "f2fe13b3efd8e6b3f6073720607dfa78db980ca1a1e3f11255e97215a97cade7"
+  },
+  "all_hosted_captures_identical_to_local": true,
+  "previous_assets_retained_for_cached_html": [
+    {
+      "path": "assets/index-Dr4oDMwB.js",
+      "bytes": 17094,
+      "sha256": "948358ccc26386574f2a39d348e4ec8d37bc91b094be234456aad161f3a0ebaa"
+    },
+    {
+      "path": "assets/index-Dr4oDMwB.js.map",
+      "bytes": 29863,
+      "sha256": "44dabe2534f95d23fadebea311ee2bc56e48b386ff4a9d99c8ef56cd1e14e9a2"
+    },
+    {
+      "path": "assets/scan.worker-Bc_bzmph.js",
+      "bytes": 176748,
+      "sha256": "92d484f109da2c128cd730966d2ac15567bf57adbdbaa8736920c637746cb0c9"
+    },
+    {
+      "path": "assets/scan.worker-Bc_bzmph.js.map",
+      "bytes": 607236,
+      "sha256": "d00bd2dc2c390e974b37f114e0f74d7811d963a8665402264a2f3265a0e8b328"
+    }
+  ],
+  "build_command": "npm --prefix web ci && npm --prefix web run build",
+  "output_directory": "web/dist",
+  "scope": "Actual public canonical bytes and Chromium/Firefox replay; browser offline after load. No npm release."
+}
