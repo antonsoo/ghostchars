@@ -1,5 +1,6 @@
 # Shared characters have alternatives, not simultaneous scripts
 
+The correction is `f3de5f6f0cdcbd0ce2a7bd20b801d0159c12193a`.
 The baseline at `36d7aa9` reports `обʼєкт` as mixing Cyrillic, Lisu, Thai
 and Toto. U+02BC MODIFIER LETTER APOSTROPHE has seven script alternatives;
 Cyrillic is one of the four the generator silently drops. The same problem
@@ -148,5 +149,23 @@ cd web
 CAPTURE_SCX_EVIDENCE=/tmp/scx-shots npm run test:browser -- --grep 'script alternatives'
 ```
 
-These are source and local installed/browser checks. Public source and hosted
-bytes require their own verification.
+[Public source verification](results/public-source.json) checks the public main
+ref and nine pinned raw files. [Hosted bytes](results/hosted-bytes.json) separately
+match all 32 canonical HTTPS files to the clean build. The existing Pages branch
+was updated by a normal fast-forward push; prior asset filenames remain available
+for cached pages. Build: `npm --prefix web ci && npm --prefix web run build`;
+output: `web/dist`.
+
+The [publication receipt](results/publication.json) records the Pages commit and
+actual public-browser runs in both engines. Both repeat the new control workflow
+offline after page load, at both widths. All four public captures were opened
+and inspected and equal the local images byte-for-byte, so those images are
+reused. Hosted ledgers: [Chromium](results/hosted-browser-chromium.json),
+[Firefox](results/hosted-browser-firefox.json).
+
+```sh
+cd web
+GHOSTCHARS_BROWSER_URL=https://antonsoo.github.io/ghostchars/ npm run test:browser -- --grep 'script alternatives'
+```
+
+This source/public demo correction includes no npm release.

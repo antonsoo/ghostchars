@@ -1,0 +1,61 @@
+{
+  "scope": "Unauthenticated public main ref and nine pinned raw files; no registry release assertion.",
+  "source_commit": "f3de5f6f0cdcbd0ce2a7bd20b801d0159c12193a",
+  "observed_main": "f3de5f6f0cdcbd0ce2a7bd20b801d0159c12193a",
+  "files": [
+    {
+      "path": "src/core/unicode-utils.ts",
+      "url": "https://raw.githubusercontent.com/antonsoo/ghostchars/f3de5f6f0cdcbd0ce2a7bd20b801d0159c12193a/src/core/unicode-utils.ts",
+      "bytes": 3407,
+      "sha256": "965235d32fcc874cef07035410ca3b8da776a98ddb69b8255e22a41bb171c203"
+    },
+    {
+      "path": "src/core/rules/confusables.ts",
+      "url": "https://raw.githubusercontent.com/antonsoo/ghostchars/f3de5f6f0cdcbd0ce2a7bd20b801d0159c12193a/src/core/rules/confusables.ts",
+      "bytes": 20969,
+      "sha256": "98768abf91dc27c9eaabeada2aa3f00e2914f21cf84a08a8c60f6e3d52e57b1a"
+    },
+    {
+      "path": "src/core/rules/invisible.ts",
+      "url": "https://raw.githubusercontent.com/antonsoo/ghostchars/f3de5f6f0cdcbd0ce2a7bd20b801d0159c12193a/src/core/rules/invisible.ts",
+      "bytes": 6168,
+      "sha256": "4eeb688696950a3b14bbb070e065562dbe77c67767e7c4c3fe73d0ebbf71bb07"
+    },
+    {
+      "path": "scripts/generate-unicode-data.mjs",
+      "url": "https://raw.githubusercontent.com/antonsoo/ghostchars/f3de5f6f0cdcbd0ce2a7bd20b801d0159c12193a/scripts/generate-unicode-data.mjs",
+      "bytes": 15056,
+      "sha256": "4312ffb34d596cb3564f8b2a87620631d894d9186035696913de2cd7116e89a1"
+    },
+    {
+      "path": "src/generated/script-extensions.ts",
+      "url": "https://raw.githubusercontent.com/antonsoo/ghostchars/f3de5f6f0cdcbd0ce2a7bd20b801d0159c12193a/src/generated/script-extensions.ts",
+      "bytes": 6594,
+      "sha256": "3890cef87876ec6a4670c548e8eba415c8e1264d2e4166165ccd7a12c9f303f7"
+    },
+    {
+      "path": "src/generated/manifest.json",
+      "url": "https://raw.githubusercontent.com/antonsoo/ghostchars/f3de5f6f0cdcbd0ce2a7bd20b801d0159c12193a/src/generated/manifest.json",
+      "bytes": 2079,
+      "sha256": "0bde3a8ea17fde9d42f23007accb4703842e3237d57667f0552b6214c73360ee"
+    },
+    {
+      "path": "dist/cli.js",
+      "url": "https://raw.githubusercontent.com/antonsoo/ghostchars/f3de5f6f0cdcbd0ce2a7bd20b801d0159c12193a/dist/cli.js",
+      "bytes": 627597,
+      "sha256": "54721fbc04c20962524c3e93586dd9308ee9f3193b8ab5a1b70886f14292f465"
+    },
+    {
+      "path": "tests/scriptExtensions.spec.ts",
+      "url": "https://raw.githubusercontent.com/antonsoo/ghostchars/f3de5f6f0cdcbd0ce2a7bd20b801d0159c12193a/tests/scriptExtensions.spec.ts",
+      "bytes": 2836,
+      "sha256": "392b0e3725438350a344716f6cacc53b767356d61ce67943a887e36fea557f15"
+    },
+    {
+      "path": "web/playwright.config.ts",
+      "url": "https://raw.githubusercontent.com/antonsoo/ghostchars/f3de5f6f0cdcbd0ce2a7bd20b801d0159c12193a/web/playwright.config.ts",
+      "bytes": 762,
+      "sha256": "3478b5bd1a734b0eec23919f20c89d2db55824d1a078d82e718a54c582e9dd4d"
+    }
+  ]
+}

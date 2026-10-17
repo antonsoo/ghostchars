@@ -1,0 +1,39 @@
+{
+  "scope": "Public canonical HTTPS bytes and actual browser workers, offline after load; no npm release.",
+  "source_commit": "f3de5f6f0cdcbd0ce2a7bd20b801d0159c12193a",
+  "observed_pages_commit": "1532ba097421a50de37322bc4c6dc25cef4523f6",
+  "canonical_files": 32,
+  "build_command": "npm --prefix web ci && npm --prefix web run build",
+  "output_directory": "web/dist",
+  "browser_stats": {
+    "startTime": "2026-10-17T20:13:38.541Z",
+    "duration": 8656.264,
+    "expected": 2,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "screenshots": [
+    {
+      "file": "firefox-1440.png",
+      "identical_to_local": true,
+      "sha256": "1fe871956cfbd42510e236ee0addeb55b75fdaf1d0d1072658008aafa5825ab2"
+    },
+    {
+      "file": "chromium-375.png",
+      "identical_to_local": true,
+      "sha256": "394680cfb2b0d8e6c92de1dc10d7470b28aa9afb381f7d81237941727aa6f1d9"
+    },
+    {
+      "file": "firefox-375.png",
+      "identical_to_local": true,
+      "sha256": "16df7efa36dfca2665ac7d3685f67ae46f0d69ed509ecb8acf1b2298792e37f5"
+    },
+    {
+      "file": "chromium-1440.png",
+      "identical_to_local": true,
+      "sha256": "5d28d9b0a69a02801a42e40d2681bde6bff70eb9a6c2ba8f0f8b923c953545bd"
+    }
+  ],
+  "prior_assets_retained": true
+}

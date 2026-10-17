@@ -1,0 +1,31 @@
+{
+  "browser": "chromium",
+  "url": "https://antonsoo.github.io/ghostchars/",
+  "offlineAfterLoad": true,
+  "ordinary": "обʼєкт пʼєса звʼязок\nيُعطى يُعطي",
+  "ordinaryFindings": 0,
+  "controlledFindings": 2,
+  "selected": [
+    "‌",
+    "paypаl"
+  ],
+  "sanitizedPreservesOrdinaryText": true,
+  "outputSelectionMatches": true,
+  "widths": [
+    1440,
+    375
+  ],
+  "audits": [
+    {
+      "width": 1440,
+      "violations": []
+    },
+    {
+      "width": 375,
+      "violations": []
+    }
+  ],
+  "pageErrors": [],
+  "cspViolations": [],
+  "workerCount": 1
+}
