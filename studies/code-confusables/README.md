@@ -127,6 +127,21 @@ Seven samples follow four warmups; I/O and report formatting are excluded.
 These controlled timings are not a general throughput benchmark or a claim
 that code mode is as cheap as suppressing those findings.
 
+## Clean install and installed CLI
+
+The [artifact receipt](results/verification.json) identifies implementation
+`0a28874`. A fresh archive on Node 24.21.0 passes install, lint, both type checks,
+all 387 tests, library/CLI builds and a clean 45-file self-scan. A separate clean
+web install passes lint, types, build and all 42 Chromium/Firefox workflows.
+Both terminal screenshots were opened and inspected.
+
+Every installed `dist/` file matches the clean build byte-for-byte after packing
+and installing with `--ignore-scripts`. The actual installed CLI passes all
+sixteen native pairs, formats, configuration and repair controls on
+[Node 20.0.0](results/installed-node20.json) and
+[Node 24.21.0](results/installed-node24.json). This is a local tarball with version
+metadata 0.1.5, not the existing registry package.
+
 ## Scope and limits
 
 - Code mode identifies raw candidate spellings. It does not parse declarations,
