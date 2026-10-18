@@ -61,7 +61,9 @@ export interface ScanOptions {
   severityOverrides?: Partial<Record<RuleId, Severity | false>>;
   /** Suppress findings made entirely of these code points. sanitize() also protects each allowed scalar from removal. */
   allowCodePoints?: Iterable<number>;
-  /** Reserved for compatibility; currently does not change rule behavior. */
+  /** Check confusable tokens without prose exemptions, including single characters,
+   * styled letters, canonical variants and same-script/language-context collisions.
+   * Does not parse source code or determine language-specific identifier equality. */
   isCode?: boolean;
 }
 

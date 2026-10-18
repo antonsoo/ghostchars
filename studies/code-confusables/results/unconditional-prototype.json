@@ -1,0 +1,802 @@
+{
+  "node": "v26.7.0",
+  "manifestSha256": "4918139517b95809158fbf484befc670943054fbacd9ad7ada50034a2146ce84",
+  "docs": 83494,
+  "bytes": 155361980,
+  "inputSha256": "1175ffa359bfdadcd06d38b6f7cbc850e390c174d319937decf41536796f3cc4",
+  "before": {
+    "findings": 18610,
+    "outputSha256": "9b7c2c0dd19628a9320f4ad437b748dabb4844fe6f0cacb41c6d3414df095172",
+    "scanMs": 10113.940968000827
+  },
+  "after": {
+    "findings": 19354,
+    "outputSha256": "008595850a3d52ac99227730dfdc6356b95d26c0365f4fba6564ab2a4ed9f609",
+    "scanMs": 9952.580203999358
+  },
+  "timingScope": "One sequential local pass; baseline runs first for each input. Not an isolated benchmark.",
+  "unrelatedRulesIdentical": true,
+  "scope": "Rejected unconditional short-token prototype: remove both token.text.length < 2 guards, retain all other baseline prose exemptions. This is not the explicit code mode or the final default policy. Added findings are not labelled attacks.",
+  "changed": [
+    {
+      "source": "awesome-copilot",
+      "file": ".github/workflows/skill-quality-report.yml",
+      "inputSha256": "856280710107e517ed3d8509f2bea8196303634f7afbbe6626680236ba12bf16",
+      "before": 0,
+      "after": 16,
+      "added": 16,
+      "removed": 0,
+      "newSpansBySpelling": [
+        {
+          "codePoints": [
+            8505
+          ],
+          "skeleton": "i",
+          "count": 2
+        },
+        {
+          "codePoints": [
+            105
+          ],
+          "skeleton": "i",
+          "count": 14
+        }
+      ]
+    },
+    {
+      "source": "awesome-copilot",
+      "file": "agents/trojan-skill-hunter.agent.md",
+      "inputSha256": "8d4d96e392a2e2712b78c9acfad1892845f798d8c1b8f5bb515eaf689374b7eb",
+      "before": 0,
+      "after": 53,
+      "added": 53,
+      "removed": 0,
+      "newSpansBySpelling": [
+        {
+          "codePoints": [
+            97
+          ],
+          "skeleton": "a",
+          "count": 52
+        },
+        {
+          "codePoints": [
+            1072
+          ],
+          "skeleton": "a",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "source": "awesome-copilot",
+      "file": "skills/quality-playbook/references/exploration_patterns.md",
+      "inputSha256": "b479ffef5ce8dcf4b31010e070a9102cbffd671cabc4ebcf3668f2a16443acd0",
+      "before": 0,
+      "after": 2,
+      "added": 2,
+      "removed": 0,
+      "newSpansBySpelling": [
+        {
+          "codePoints": [
+            105
+          ],
+          "skeleton": "i",
+          "count": 1
+        },
+        {
+          "codePoints": [
+            305
+          ],
+          "skeleton": "i",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "source": "wshobson-agents",
+      "file": "plugins/llm-finetuning/skills/finetuning-method-selection/SKILL.md",
+      "inputSha256": "f5bdd023c60c7be833cde26ff505a838774b0e81adbc8b8dab3e63dd6a727a61",
+      "before": 0,
+      "after": 28,
+      "added": 28,
+      "removed": 0,
+      "newSpansBySpelling": [
+        {
+          "codePoints": [
+            97
+          ],
+          "skeleton": "a",
+          "count": 27
+        },
+        {
+          "codePoints": [
+            945
+          ],
+          "skeleton": "a",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "source": "wshobson-agents",
+      "file": "plugins/llm-finetuning/skills/vision-sft/references/collators-and-pitfalls.md",
+      "inputSha256": "d0cdb3473a2448df562c48d32703b8bc261369ac03c6723684a190edf6900116",
+      "before": 0,
+      "after": 28,
+      "added": 28,
+      "removed": 0,
+      "newSpansBySpelling": [
+        {
+          "codePoints": [
+            97
+          ],
+          "skeleton": "a",
+          "count": 27
+        },
+        {
+          "codePoints": [
+            945
+          ],
+          "skeleton": "a",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "source": "wshobson-agents",
+      "file": "plugins/llm-finetuning/skills/vision-sft/SKILL.md",
+      "inputSha256": "376e4bc7fa04d037025ef7c83fc994b5aedfdee96c76f3a1c3e5da0379e3f706",
+      "before": 0,
+      "after": 34,
+      "added": 34,
+      "removed": 0,
+      "newSpansBySpelling": [
+        {
+          "codePoints": [
+            97
+          ],
+          "skeleton": "a",
+          "count": 32
+        },
+        {
+          "codePoints": [
+            945
+          ],
+          "skeleton": "a",
+          "count": 2
+        }
+      ]
+    },
+    {
+      "source": "TheBigPromptLibrary",
+      "file": "CustomInstructions/ChatGPT/rRKjBKQoO_Unity_7AO.md",
+      "inputSha256": "0a745cf4f3b15ee1eb8e2c6e9fe2c76e2191338c3767a3f6042460421b7563d8",
+      "before": 0,
+      "after": 12,
+      "added": 12,
+      "removed": 0,
+      "newSpansBySpelling": [
+        {
+          "codePoints": [
+            97
+          ],
+          "skeleton": "a",
+          "count": 11
+        },
+        {
+          "codePoints": [
+            945
+          ],
+          "skeleton": "a",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "source": "L1B3RT4S",
+      "file": "DEEPSEEK.mkd",
+      "inputSha256": "34462c84c73ab06d565cb09b29742fa89bf56e230bdab234a8aba70edcc4655e",
+      "before": 33,
+      "after": 39,
+      "added": 6,
+      "removed": 0,
+      "newSpansBySpelling": [
+        {
+          "codePoints": [
+            8488
+          ],
+          "skeleton": "Z",
+          "count": 1
+        },
+        {
+          "codePoints": [
+            90
+          ],
+          "skeleton": "Z",
+          "count": 5
+        }
+      ]
+    },
+    {
+      "source": "L1B3RT4S",
+      "file": "GROK-MEGA.mkd",
+      "inputSha256": "c5ddaa0675c85cc168a45c7f0337ba20a767863320b40a317cf30c37a59c093b",
+      "before": 8973,
+      "after": 9019,
+      "added": 46,
+      "removed": 0,
+      "newSpansBySpelling": [
+        {
+          "codePoints": [
+            70
+          ],
+          "skeleton": "F",
+          "count": 2
+        },
+        {
+          "codePoints": [
+            921
+          ],
+          "skeleton": "l",
+          "count": 1
+        },
+        {
+          "codePoints": [
+            108
+          ],
+          "skeleton": "l",
+          "count": 18
+        },
+        {
+          "codePoints": [
+            917
+          ],
+          "skeleton": "E",
+          "count": 1
+        },
+        {
+          "codePoints": [
+            69
+          ],
+          "skeleton": "E",
+          "count": 4
+        },
+        {
+          "codePoints": [
+            8497
+          ],
+          "skeleton": "F",
+          "count": 1
+        },
+        {
+          "codePoints": [
+            8496
+          ],
+          "skeleton": "E",
+          "count": 2
+        },
+        {
+          "codePoints": [
+            49
+          ],
+          "skeleton": "l",
+          "count": 9
+        },
+        {
+          "codePoints": [
+            8464
+          ],
+          "skeleton": "l",
+          "count": 3
+        },
+        {
+          "codePoints": [
+            73
+          ],
+          "skeleton": "l",
+          "count": 3
+        },
+        {
+          "codePoints": [
+            5825
+          ],
+          "skeleton": "l",
+          "count": 2
+        }
+      ]
+    },
+    {
+      "source": "itw-jailbreak-prompts",
+      "file": "jailbreak_2023_12_25_train-00000-of-00001_000362.txt",
+      "inputSha256": "1f703350658738734fe22f95502fca105decd76273501c238d50ba0cfcc5acc6",
+      "before": 0,
+      "after": 16,
+      "added": 16,
+      "removed": 0,
+      "newSpansBySpelling": [
+        {
+          "codePoints": [
+            97
+          ],
+          "skeleton": "a",
+          "count": 14
+        },
+        {
+          "codePoints": [
+            945
+          ],
+          "skeleton": "a",
+          "count": 2
+        }
+      ]
+    },
+    {
+      "source": "itw-jailbreak-prompts",
+      "file": "jailbreak_2023_12_25_train-00000-of-00001_000616.txt",
+      "inputSha256": "c31d978c9b1783a9efa41db455b7913ae2a383a1057b42ad97eb96e00a7bade3",
+      "before": 0,
+      "after": 15,
+      "added": 15,
+      "removed": 0,
+      "newSpansBySpelling": [
+        {
+          "codePoints": [
+            97
+          ],
+          "skeleton": "a",
+          "count": 13
+        },
+        {
+          "codePoints": [
+            945
+          ],
+          "skeleton": "a",
+          "count": 2
+        }
+      ]
+    },
+    {
+      "source": "itw-jailbreak-prompts",
+      "file": "jailbreak_2023_12_25_train-00000-of-00001_000842.txt",
+      "inputSha256": "eb146756a827e8f7a3dcfcccf983aa402345d0245c2872593c99cf3bb5f835c3",
+      "before": 0,
+      "after": 14,
+      "added": 14,
+      "removed": 0,
+      "newSpansBySpelling": [
+        {
+          "codePoints": [
+            97
+          ],
+          "skeleton": "a",
+          "count": 12
+        },
+        {
+          "codePoints": [
+            945
+          ],
+          "skeleton": "a",
+          "count": 2
+        }
+      ]
+    },
+    {
+      "source": "itw-jailbreak-prompts",
+      "file": "jailbreak_2023_12_25_train-00000-of-00001_000905.txt",
+      "inputSha256": "9ad64778f7d1af3b917433c069a652a7929fc3e79fa33a7003580905af4bce0f",
+      "before": 0,
+      "after": 40,
+      "added": 40,
+      "removed": 0,
+      "newSpansBySpelling": [
+        {
+          "codePoints": [
+            97
+          ],
+          "skeleton": "a",
+          "count": 37
+        },
+        {
+          "codePoints": [
+            945
+          ],
+          "skeleton": "a",
+          "count": 3
+        }
+      ]
+    },
+    {
+      "source": "itw-jailbreak-prompts",
+      "file": "jailbreak_2023_12_25_train-00000-of-00001_001009.txt",
+      "inputSha256": "81f05bca0b3500aec255a0d7b6d237dbe22b6cb4859ad9fc75d8cfabb15c30f8",
+      "before": 0,
+      "after": 38,
+      "added": 38,
+      "removed": 0,
+      "newSpansBySpelling": [
+        {
+          "codePoints": [
+            97
+          ],
+          "skeleton": "a",
+          "count": 35
+        },
+        {
+          "codePoints": [
+            945
+          ],
+          "skeleton": "a",
+          "count": 3
+        }
+      ]
+    },
+    {
+      "source": "itw-jailbreak-prompts",
+      "file": "jailbreak_2023_12_25_train-00000-of-00001_001024.txt",
+      "inputSha256": "8c1674bd02d15fa88a2bbdb4d8b9f31ae73beee2773435b0026e19defd4f86dd",
+      "before": 0,
+      "after": 54,
+      "added": 54,
+      "removed": 0,
+      "newSpansBySpelling": [
+        {
+          "codePoints": [
+            97
+          ],
+          "skeleton": "a",
+          "count": 51
+        },
+        {
+          "codePoints": [
+            945
+          ],
+          "skeleton": "a",
+          "count": 3
+        }
+      ]
+    },
+    {
+      "source": "itw-jailbreak-prompts",
+      "file": "jailbreak_2023_12_25_train-00000-of-00001_001026.txt",
+      "inputSha256": "cfba09214cbff1e5eaadc97df4323d2fadc07d62b4f688885d904d3ac8d6242d",
+      "before": 0,
+      "after": 51,
+      "added": 51,
+      "removed": 0,
+      "newSpansBySpelling": [
+        {
+          "codePoints": [
+            97
+          ],
+          "skeleton": "a",
+          "count": 48
+        },
+        {
+          "codePoints": [
+            945
+          ],
+          "skeleton": "a",
+          "count": 3
+        }
+      ]
+    },
+    {
+      "source": "itw-jailbreak-prompts",
+      "file": "jailbreak_2023_12_25_train-00000-of-00001_001053.txt",
+      "inputSha256": "2e59c8bdb5ea60e5889a8f39f59487020fd6e7f2aba13cb4baab0bb0293f51eb",
+      "before": 0,
+      "after": 38,
+      "added": 38,
+      "removed": 0,
+      "newSpansBySpelling": [
+        {
+          "codePoints": [
+            97
+          ],
+          "skeleton": "a",
+          "count": 35
+        },
+        {
+          "codePoints": [
+            945
+          ],
+          "skeleton": "a",
+          "count": 3
+        }
+      ]
+    },
+    {
+      "source": "itw-jailbreak-prompts",
+      "file": "jailbreak_2023_12_25_train-00000-of-00001_001054.txt",
+      "inputSha256": "03733683a702289570dc1f89b94ee75d371b703447a4a0142076d2cec6b69259",
+      "before": 0,
+      "after": 6,
+      "added": 6,
+      "removed": 0,
+      "newSpansBySpelling": [
+        {
+          "codePoints": [
+            97
+          ],
+          "skeleton": "a",
+          "count": 5
+        },
+        {
+          "codePoints": [
+            945
+          ],
+          "skeleton": "a",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "source": "itw-jailbreak-prompts",
+      "file": "jailbreak_2023_12_25_train-00000-of-00001_001058.txt",
+      "inputSha256": "98b2b269bb960d16133fc412ff4d1b55a43322a2361183bedea00887db8bf9a4",
+      "before": 0,
+      "after": 47,
+      "added": 47,
+      "removed": 0,
+      "newSpansBySpelling": [
+        {
+          "codePoints": [
+            97
+          ],
+          "skeleton": "a",
+          "count": 44
+        },
+        {
+          "codePoints": [
+            945
+          ],
+          "skeleton": "a",
+          "count": 3
+        }
+      ]
+    },
+    {
+      "source": "itw-jailbreak-prompts",
+      "file": "jailbreak_2023_12_25_train-00000-of-00001_001353.txt",
+      "inputSha256": "1536cc5f0b9bb0939ad3196420031b944ce1b2fba385d3b0389de047261fcf3c",
+      "before": 14,
+      "after": 35,
+      "added": 21,
+      "removed": 0,
+      "newSpansBySpelling": [
+        {
+          "codePoints": [
+            97
+          ],
+          "skeleton": "a",
+          "count": 18
+        },
+        {
+          "codePoints": [
+            945
+          ],
+          "skeleton": "a",
+          "count": 2
+        },
+        {
+          "codePoints": [
+            120514
+          ],
+          "skeleton": "a",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "source": "itw-jailbreak-prompts",
+      "file": "regular_2023_12_25_train-00000-of-00001_008884.txt",
+      "inputSha256": "0156af12249bfadce32060307ebdd480015526bb2fec9d4ce432a9915fefc795",
+      "before": 18,
+      "after": 20,
+      "added": 2,
+      "removed": 0,
+      "newSpansBySpelling": [
+        {
+          "codePoints": [
+            714
+          ],
+          "skeleton": "'",
+          "count": 1
+        },
+        {
+          "codePoints": [
+            715
+          ],
+          "skeleton": "'",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "source": "itw-jailbreak-prompts",
+      "file": "regular_2023_12_25_train-00000-of-00001_010537.txt",
+      "inputSha256": "37d3b833173cc46b2e5b25c54325a88de79afeaeddda786a93e120b577645853",
+      "before": 0,
+      "after": 16,
+      "added": 16,
+      "removed": 0,
+      "newSpansBySpelling": [
+        {
+          "codePoints": [
+            97
+          ],
+          "skeleton": "a",
+          "count": 14
+        },
+        {
+          "codePoints": [
+            945
+          ],
+          "skeleton": "a",
+          "count": 2
+        }
+      ]
+    },
+    {
+      "source": "itw-jailbreak-prompts",
+      "file": "regular_2023_12_25_train-00000-of-00001_010566.txt",
+      "inputSha256": "617a85c332057b5992126e87e1af2380550e1e26d42db3ec8a9a34c6a3b9e96b",
+      "before": 26,
+      "after": 61,
+      "added": 35,
+      "removed": 0,
+      "newSpansBySpelling": [
+        {
+          "codePoints": [
+            97
+          ],
+          "skeleton": "a",
+          "count": 34
+        },
+        {
+          "codePoints": [
+            945
+          ],
+          "skeleton": "a",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "source": "itw-jailbreak-prompts",
+      "file": "regular_2023_12_25_train-00000-of-00001_011990.txt",
+      "inputSha256": "7b59cc2723a56c5fde03a753e2dd359087d3c939a12e565b91c04e27a61e9dd7",
+      "before": 0,
+      "after": 43,
+      "added": 43,
+      "removed": 0,
+      "newSpansBySpelling": [
+        {
+          "codePoints": [
+            593
+          ],
+          "skeleton": "a",
+          "count": 1
+        },
+        {
+          "codePoints": [
+            97
+          ],
+          "skeleton": "a",
+          "count": 42
+        }
+      ]
+    },
+    {
+      "source": "itw-jailbreak-prompts",
+      "file": "regular_2023_12_25_train-00000-of-00001_012544.txt",
+      "inputSha256": "983845e69033b23cd433cb7a158e694298c64cf85e552c5fe1baffff2c983964",
+      "before": 29,
+      "after": 66,
+      "added": 37,
+      "removed": 0,
+      "newSpansBySpelling": [
+        {
+          "codePoints": [
+            97
+          ],
+          "skeleton": "a",
+          "count": 34
+        },
+        {
+          "codePoints": [
+            945
+          ],
+          "skeleton": "a",
+          "count": 3
+        }
+      ]
+    },
+    {
+      "source": "itw-jailbreak-prompts",
+      "file": "regular_2023_12_25_train-00000-of-00001_013121.txt",
+      "inputSha256": "73dae02e3f1cf65db43a473288da17ce8e1f32eb5fa3c3fc3a2d56dc3471d6dc",
+      "before": 0,
+      "after": 16,
+      "added": 16,
+      "removed": 0,
+      "newSpansBySpelling": [
+        {
+          "codePoints": [
+            97
+          ],
+          "skeleton": "a",
+          "count": 14
+        },
+        {
+          "codePoints": [
+            945
+          ],
+          "skeleton": "a",
+          "count": 2
+        }
+      ]
+    },
+    {
+      "source": "itw-jailbreak-prompts",
+      "file": "regular_2023_12_25_train-00000-of-00001_013668.txt",
+      "inputSha256": "13eba451e17cc91e436714d8d877abeb945425174475ae6b13d4f72169faf012",
+      "before": 27,
+      "after": 57,
+      "added": 30,
+      "removed": 0,
+      "newSpansBySpelling": [
+        {
+          "codePoints": [
+            49
+          ],
+          "skeleton": "l",
+          "count": 13
+        },
+        {
+          "codePoints": [
+            73
+          ],
+          "skeleton": "l",
+          "count": 7
+        },
+        {
+          "codePoints": [
+            8499
+          ],
+          "skeleton": "M",
+          "count": 2
+        },
+        {
+          "codePoints": [
+            8464
+          ],
+          "skeleton": "l",
+          "count": 2
+        },
+        {
+          "codePoints": [
+            8466
+          ],
+          "skeleton": "L",
+          "count": 3
+        },
+        {
+          "codePoints": [
+            77
+          ],
+          "skeleton": "M",
+          "count": 2
+        },
+        {
+          "codePoints": [
+            76
+          ],
+          "skeleton": "L",
+          "count": 1
+        }
+      ]
+    }
+  ]
+}

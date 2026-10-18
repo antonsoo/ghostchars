@@ -6929,6 +6929,7 @@ function getConfusableMap() {
 var ZWNJ = String.fromCodePoint(8204);
 var ZWJ = String.fromCodePoint(8205);
 var IDENTIFIER_RE = new RegExp(`[\\p{L}\\p{M}\\p{Nd}\\p{Pc}][\\p{L}\\p{M}\\p{Nd}\\p{Pc}${ZWNJ}${ZWJ}]*`, "gu");
+var CODE_IDENTIFIER_RE = new RegExp(`[\\p{ID_Start}$_][\\p{ID_Continue}$${ZWNJ}${ZWJ}]*`, "gu");
 var SCRIPT_NEUTRAL = /* @__PURE__ */ new Set(["Common", "Inherited", "Unknown"]);
 var ASCII_RE = /^[\x00-\x7f]+$/;
 var ASCII_CONFUSABLE_CHARS = new Set([...getConfusableMap().keys()].filter((cp) => cp < 128).map((cp) => String.fromCodePoint(cp)));
@@ -7065,18 +7066,19 @@ function scriptSignature(token) {
   return [...new Set(sets.flat())].sort().join("+") || "Latin";
 }
 var ESCAPE_LETTERS = /* @__PURE__ */ new Set(["n", "t", "r", "f", "v", "b"]);
-function forEachToken(text, visit) {
-  IDENTIFIER_RE.lastIndex = 0;
+function forEachToken(text, visit, isCode = false) {
+  const identifiers = isCode ? CODE_IDENTIFIER_RE : IDENTIFIER_RE;
+  identifiers.lastIndex = 0;
   let match;
-  while (match = IDENTIFIER_RE.exec(text)) {
+  while (match = identifiers.exec(text)) {
     let index = match.index;
     let word = match[0];
-    if (index > 0 && text.charCodeAt(index - 1) === 92 && ESCAPE_LETTERS.has(word[0]) && word.length > 1 && word.charCodeAt(1) > 127) {
+    if (!isCode && index > 0 && text.charCodeAt(index - 1) === 92 && ESCAPE_LETTERS.has(word[0]) && word.length > 1 && word.charCodeAt(1) > 127) {
       index++;
       word = word.slice(1);
     }
     visit({ text: word, index });
-    if (match.index === IDENTIFIER_RE.lastIndex) IDENTIFIER_RE.lastIndex++;
+    if (match.index === identifiers.lastIndex) identifiers.lastIndex++;
   }
 }
 function isAscii(s) {
@@ -7107,7 +7109,7 @@ function isStyledWord(token) {
   }
   return styled;
 }
-function scanConfusables(text, positionAt = positionIndex(text)) {
+function scanConfusables(text, positionAt = positionIndex(text), isCode = false) {
   const findings = [];
   const span = (token) => {
     return {
@@ -7119,7 +7121,7 @@ function scanConfusables(text, positionAt = positionIndex(text)) {
   const wordsByScript = /* @__PURE__ */ new Map();
   const turkicWords = /* @__PURE__ */ new Set();
   forEachToken(text, (token) => {
-    if (token.text.length < 2 || isAscii(token.text)) return;
+    if (!isCode && token.text.length < 2 || isAscii(token.text)) return;
     const script = singleForeignScript(token.text);
     if (script !== void 0) {
       if (!wordsByScript.has(script)) wordsByScript.set(script, /* @__PURE__ */ new Set());
@@ -7146,11 +7148,11 @@ function scanConfusables(text, positionAt = positionIndex(text)) {
     }
     if (!bySkeleton.has(skeleton)) bySkeleton.set(skeleton, []);
     bySkeleton.get(skeleton).push(token);
-  });
+  }, isCode);
   if (bySkeleton.size === 0) return findings;
   const matchedSkeleton = /* @__PURE__ */ new Map();
   forEachToken(text, (token) => {
-    if (token.text.length < 2 || !isAscii(token.text)) return;
+    if (!isCode && token.text.length < 2 || !isAscii(token.text)) return;
     let skeleton = matchedSkeleton.get(token.text);
     if (skeleton === void 0) {
       const reduced = skeletonOf(token.text);
@@ -7158,24 +7160,24 @@ function scanConfusables(text, positionAt = positionIndex(text)) {
       matchedSkeleton.set(token.text, skeleton);
     }
     if (skeleton !== null) bySkeleton.get(skeleton).push(token);
-  });
+  }, isCode);
   const groups = [...bySkeleton].map(([skeleton, group]) => ({ skeleton, group: group.sort((a, b) => a.index - b.index) }));
   groups.sort((a, b) => a.group[0].index - b.group[0].index);
   for (const { skeleton, group: spelled } of groups) {
-    const group = spelled.filter((t) => !isStyledWord(t.text));
+    const group = isCode ? spelled : spelled.filter((t) => !isStyledWord(t.text));
     const distinctSpellings = new Set(group.map((t) => t.text));
     if (distinctSpellings.size < 2) continue;
-    if (new Set([...distinctSpellings].map((s) => s.normalize("NFD"))).size < 2) continue;
+    if (!isCode && new Set([...distinctSpellings].map((s) => s.normalize("NFD"))).size < 2) continue;
     if (![...distinctSpellings].some((s) => !isAscii(s))) continue;
     const signatures = new Set([...distinctSpellings].map(scriptSignature));
-    if (signatures.size === 1 && !signatures.has("Latin") && ![...signatures][0].includes("+")) continue;
+    if (!isCode && signatures.size === 1 && !signatures.has("Latin") && ![...signatures][0].includes("+")) continue;
     const ordinary = (spelling) => {
       if (isAscii(spelling)) return true;
       const script = singleForeignScript(spelling);
       if (script !== void 0) return (wordsByScript.get(script)?.size ?? 0) >= WRITTEN_IN_WORDS;
       return isTurkicI(spelling) && turkicWords.size >= WRITTEN_IN_WORDS;
     };
-    if ([...distinctSpellings].every(ordinary)) continue;
+    if (!isCode && [...distinctSpellings].every(ordinary)) continue;
     for (const token of group) {
       const others = distinctSpellings.size - (distinctSpellings.has(token.text) ? 1 : 0);
       findings.push({
@@ -24290,7 +24292,7 @@ function scanText(text, options = {}) {
     ...scanTags(text, positionAt),
     ...scanVariationSelectors(text, positionAt),
     ...scanInvisible(text, positionAt),
-    ...scanConfusables(text, positionAt),
+    ...scanConfusables(text, positionAt, options.isCode === true),
     ...scanStyledText(text, positionAt),
     ...scanWhitespaceAndControl(text, positionAt)
   ];
@@ -24712,8 +24714,9 @@ function object(value, label) {
 }
 function validateBlock(value, label, override) {
   const block = object(value, label);
-  const keys = override ? ["files", "rules", "allow"] : ["rules", "allow", "overrides"];
+  const keys = override ? ["files", "rules", "allow", "isCode"] : ["rules", "allow", "overrides", "isCode"];
   for (const key of Object.keys(block)) if (!keys.includes(key)) throw new Error(`Unknown ${label} option: ${key}`);
+  if (block.isCode !== void 0 && typeof block.isCode !== "boolean") throw new Error(`${label}.isCode must be a boolean`);
   if (block.rules !== void 0) {
     for (const [rule, severity] of Object.entries(object(block.rules, `${label}.rules`))) {
       if (!RULES.has(rule)) throw new Error(`Unknown rule in ${label}: ${rule}`);
@@ -24746,13 +24749,15 @@ function parseAllow(entries) {
 function scanOptionsForFile(config, filePath) {
   const severityOverrides = { ...config.rules };
   const allow = new Set(parseAllow(config.allow));
+  let isCode = config.isCode;
   for (const override of config.overrides ?? []) {
     if (override.files.some((glob) => globToRegex(glob).test(filePath))) {
       Object.assign(severityOverrides, override.rules);
       for (const cp of parseAllow(override.allow)) allow.add(cp);
+      if (override.isCode !== void 0) isCode = override.isCode;
     }
   }
-  return { file: filePath, severityOverrides, allowCodePoints: allow };
+  return { file: filePath, severityOverrides, allowCodePoints: allow, ...isCode === void 0 ? {} : { isCode } };
 }
 
 // src/cli/formatters/github.ts
@@ -24899,6 +24904,11 @@ function formatPretty(report) {
       lines.push(`  ${loc}  ${SEVERITY_LABEL[f.severity]}  ${colors.dim(f.rule)}`);
       lines.push(`    ${shortDiagnostic(f.message)}`);
       lines.push(`    ${colors.gray("|")} ${sourceExcerpt(file.source, f)}`);
+      if (f.rule === "confusable") {
+        const points = f.codePoints.slice(0, 16).map((cp) => `U+${cp.toString(16).toUpperCase().padStart(4, "0")}`).join(" ");
+        const omitted = f.codePoints.length > 16 ? ` [${f.codePoints.length - 16} code points omitted; use --format json]` : "";
+        lines.push(`    code points: ${points}${omitted}`);
+      }
       lines.push(`    ${colors.dim("fix:")} ${shortDiagnostic(f.suggestion)}`);
       lines.push("");
     }
@@ -25360,13 +25370,14 @@ Options:
   --dry-run                             With --fix, preview changes instead of writing
   --config <path>                       Path to a .ghostcharsrc.json (default: ./.ghostcharsrc.json)
   --no-config                           Ignore any .ghostcharsrc.json
+  --code                                Check confusables without prose exemptions (no source parser)
   --output <path>                       Write the scan report to a separate file after scanning
   --quiet                               Suppress the summary line
 
 Exit codes: 0 = no error-level findings, 1 = error-level findings present, 2 = usage/runtime error.
 `;
 function parseArgs(argv) {
-  const args = { format: "pretty", fix: false, dryRun: false, config: void 0, output: void 0, noConfig: false, quiet: false, help: false, version: false, paths: [], command: "scan" };
+  const args = { format: "pretty", fix: false, dryRun: false, code: false, config: void 0, output: void 0, noConfig: false, quiet: false, help: false, version: false, paths: [], command: "scan" };
   let i = 0;
   if (argv[0] === "reveal") {
     args.command = "reveal";
@@ -25380,6 +25391,7 @@ function parseArgs(argv) {
     else if (a === "--dry-run") args.dryRun = true;
     else if (a === "--quiet" || a === "-q") args.quiet = true;
     else if (a === "--no-config") args.noConfig = true;
+    else if (a === "--code") args.code = true;
     else if (a === "--format") args.format = argv[++i] ?? "pretty";
     else if (a.startsWith("--format=")) args.format = a.slice("--format=".length);
     else if (a === "--config") {
@@ -25398,6 +25410,7 @@ function parseArgs(argv) {
   if (args.config === "") throw new UsageError("--config requires a file path");
   if (args.output === "") throw new UsageError("--output requires a file path");
   if (args.output && args.command === "reveal") throw new UsageError("--output is for scan reports; reveal writes to stdout");
+  if (args.code && args.command === "reveal") throw new UsageError("--code is for scans; reveal does not classify identifiers");
   return args;
 }
 var UsageError = class extends Error {
@@ -25468,6 +25481,7 @@ function main(argv) {
       continue;
     }
     const options = scanOptionsForFile(config, file.path);
+    if (args.code) options.isCode = true;
     const { findings } = scanText(source, options);
     report.files.push({ path: file.path, source, findings });
     if (args.fix && findings.some((f) => f.fixable)) {

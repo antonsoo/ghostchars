@@ -1,0 +1,44 @@
+{
+  "url": "https://antonsoo.github.io/ghostchars/",
+  "scope": "Existing public prose-mode registered-variant, ideographic-selector and flag workflows. This does not expose the new --code CLI context. Canonical/script-alternative cases were also run on the public site with 4 passes; their established receipts remain in those studies.",
+  "stats": {
+    "startTime": "2026-10-18T08:33:09.086Z",
+    "duration": 20118.099000000002,
+    "expected": 6,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "cases": [
+    {
+      "title": "registered variants survive offline inspection and output selection beside a real payload",
+      "project": "chromium",
+      "status": "expected"
+    },
+    {
+      "title": "exact IVD pairs survive while adjacent unregistered carriers reveal their message offline",
+      "project": "chromium",
+      "status": "expected"
+    },
+    {
+      "title": "registered flags stay intact while flag-wrapped payloads are revealed and removed offline",
+      "project": "chromium",
+      "status": "expected"
+    },
+    {
+      "title": "registered variants survive offline inspection and output selection beside a real payload",
+      "project": "firefox",
+      "status": "expected"
+    },
+    {
+      "title": "exact IVD pairs survive while adjacent unregistered carriers reveal their message offline",
+      "project": "firefox",
+      "status": "expected"
+    },
+    {
+      "title": "registered flags stay intact while flag-wrapped payloads are revealed and removed offline",
+      "project": "firefox",
+      "status": "expected"
+    }
+  ]
+}

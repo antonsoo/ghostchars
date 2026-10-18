@@ -11,6 +11,16 @@ All notable changes to this project are documented in this file.
 
 ### Added
 
+- Source CLI `--code`, library `isCode: true`, and global/per-file `isCode`
+  configuration select confusable checks without prose collision exemptions.
+  Retain short, styled, canonically equivalent and same-script candidates;
+  use Unicode identifier properties for letter-numbers and Other_ID_Start
+  symbols, including dollar signs in complete names. Sixteen native JavaScript
+  binding pairs and independently captured ICU skeletons retain the previously
+  missed examples. Default scans stay unchanged on 83,494 public documents.
+  Confusable names remain manual repairs; the web demo keeps the text policy.
+  [Reproduction and boundaries](studies/code-confusables/README.md). No npm release.
+
 - (source checkout) `styled-text` rule: letters in the mathematical, fullwidth, circled, squared and small-capital alphabets are reported with the plain text they read as (`decoded`, NFKC). A whole jailbreak written in circled letters, with no plain spelling beside it, was not reported at all before. Fullwidth letters and digits inside CJK text, runs of fewer than three letters and digit-only runs are not reported.
 - (source checkout) Variation-selector payloads that are written in selectors again are decoded to the end ("search pliny ..." sat four layers down in one file, and the first layer decoded to more invisible characters). The finding says how many layers.
 - (source checkout) A single VS15/VS16 after each word of a paragraph is read as one bit apiece (VS16 = 1, either way round); when the bits are at least 8 bytes of clean UTF-8 text they are reported as `variation-selector-smuggling` errors and the first carries the message. A jailbreak collection hides a sentence this way under 240 selectors that were each only a stray-selector warning.

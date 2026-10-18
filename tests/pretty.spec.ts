@@ -8,6 +8,16 @@ function report(source: string): string {
 }
 
 describe('bounded CLI evidence', () => {
+  it('names lookalike code points even when the terminal draws the spellings identically', () => {
+    const source = 'a \u0430';
+    const output = formatPretty({ files: [{ path: 'input.js', source, findings: scanText(source, { isCode: true }).findings }], errors: [], skipped: [], durationMs: 1 });
+    expect(output).toContain('code points: U+0061');
+    expect(output).toContain('code points: U+0430');
+    const dense = report('a\u0430'.repeat(1000));
+    expect(dense).toContain('[1984 code points omitted; use --format json]');
+    expect(dense.length).toBeLessThan(3000);
+  });
+
   it('keeps every dense-line finding and full counts without repeating the full line', () => {
     const source = 'a\u200b'.repeat(1500);
     const output = report(source);

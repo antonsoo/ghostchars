@@ -24,6 +24,13 @@ export function formatPretty(report: ScanReport): string {
       lines.push(`  ${loc}  ${SEVERITY_LABEL[f.severity]}  ${colors.dim(f.rule)}`);
       lines.push(`    ${shortDiagnostic(f.message)}`);
       lines.push(`    ${colors.gray('|')} ${sourceExcerpt(file.source, f)}`);
+      if (f.rule === 'confusable') {
+        // The terminal font may draw the two spellings identically. Name the
+        // actual scalars, with a bound independent of identifier length.
+        const points = f.codePoints.slice(0, 16).map(cp => `U+${cp.toString(16).toUpperCase().padStart(4, '0')}`).join(' ');
+        const omitted = f.codePoints.length > 16 ? ` [${f.codePoints.length - 16} code points omitted; use --format json]` : '';
+        lines.push(`    code points: ${points}${omitted}`);
+      }
       lines.push(`    ${colors.dim('fix:')} ${shortDiagnostic(f.suggestion)}`);
       lines.push('');
     }

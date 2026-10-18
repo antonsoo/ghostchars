@@ -38,6 +38,11 @@ function getConfusableMap(): Map<number, number[]> {
 const ZWNJ = String.fromCodePoint(0x200c);
 const ZWJ = String.fromCodePoint(0x200d);
 const IDENTIFIER_RE = new RegExp(`[\\p{L}\\p{M}\\p{Nd}\\p{Pc}][\\p{L}\\p{M}\\p{Nd}\\p{Pc}${ZWNJ}${ZWJ}]*`, 'gu');
+// Unicode identifier properties include letter-numbers and Other_ID_Start
+// symbols (such as the estimated symbol) which general-category L excludes.
+// Add ECMAScript's dollar/underscore starts and joining-control continuations.
+// This finds candidates in raw text; it does not parse escapes or source scopes.
+const CODE_IDENTIFIER_RE = new RegExp(`[\\p{ID_Start}$_][\\p{ID_Continue}$${ZWNJ}${ZWJ}]*`, 'gu');
 const SCRIPT_NEUTRAL = new Set(['Common', 'Inherited', 'Unknown']);
 
 // Fast paths for the overwhelmingly common case (a plain ASCII identifier):
@@ -221,21 +226,22 @@ interface Token {
 const ESCAPE_LETTERS = new Set(['n', 't', 'r', 'f', 'v', 'b']);
 
 /** Calls `visit` with each identifier-shaped run in `text`, in order. */
-function forEachToken(text: string, visit: (token: Token) => void): void {
-  IDENTIFIER_RE.lastIndex = 0;
+function forEachToken(text: string, visit: (token: Token) => void, isCode = false): void {
+  const identifiers = isCode ? CODE_IDENTIFIER_RE : IDENTIFIER_RE;
+  identifiers.lastIndex = 0;
   let match: RegExpExecArray | null;
-  while ((match = IDENTIFIER_RE.exec(text))) {
+  while ((match = identifiers.exec(text))) {
     let index = match.index;
     let word = match[0];
     // "\nWord" in a string literal is a line break and then a word, not the word "nWord". Only
     // told apart when a letter of another script follows, which is where it was misread: in
     // an all-ASCII run the escape letter changes nothing that is reported.
-    if (index > 0 && text.charCodeAt(index - 1) === 0x5c && ESCAPE_LETTERS.has(word[0]!) && word.length > 1 && word.charCodeAt(1) > 0x7f) {
+    if (!isCode && index > 0 && text.charCodeAt(index - 1) === 0x5c && ESCAPE_LETTERS.has(word[0]!) && word.length > 1 && word.charCodeAt(1) > 0x7f) {
       index++;
       word = word.slice(1);
     }
     visit({ text: word, index });
-    if (match.index === IDENTIFIER_RE.lastIndex) IDENTIFIER_RE.lastIndex++;
+    if (match.index === identifiers.lastIndex) identifiers.lastIndex++;
   }
 }
 
@@ -290,7 +296,7 @@ function isStyledWord(token: string): boolean {
   return styled;
 }
 
-export function scanConfusables(text: string, positionAt: PositionLookup = positionIndex(text)): Finding[] {
+export function scanConfusables(text: string, positionAt: PositionLookup = positionIndex(text), isCode = false): Finding[] {
   const findings: Finding[] = [];
   const span = (token: Token): Pick<Finding, 'start' | 'end'> => {
     return {
@@ -307,7 +313,9 @@ export function scanConfusables(text: string, positionAt: PositionLookup = posit
   const wordsByScript = new Map<string, Set<string>>();
   const turkicWords = new Set<string>();
   forEachToken(text, (token) => {
-    if (token.text.length < 2 || isAscii(token.text)) return; // single characters can't "mix" scripts meaningfully
+    // A single letter cannot mix scripts, but two one-letter identifiers can
+    // collide. Keep the short-word exclusion only for ordinary text.
+    if ((!isCode && token.text.length < 2) || isAscii(token.text)) return;
     const script = singleForeignScript(token.text);
     if (script !== undefined) {
       if (!wordsByScript.has(script)) wordsByScript.set(script, new Set());
@@ -337,14 +345,14 @@ export function scanConfusables(text: string, positionAt: PositionLookup = posit
 
     if (!bySkeleton.has(skeleton)) bySkeleton.set(skeleton, []);
     bySkeleton.get(skeleton)!.push(token);
-  });
+  }, isCode);
   if (bySkeleton.size === 0) return findings;
 
   // Then the ASCII identifiers that share one of those skeletons. Each distinct spelling is
   // reduced once; the ones that match nothing are remembered as such and not kept.
   const matchedSkeleton = new Map<string, string | null>();
   forEachToken(text, (token) => {
-    if (token.text.length < 2 || !isAscii(token.text)) return;
+    if ((!isCode && token.text.length < 2) || !isAscii(token.text)) return;
     let skeleton = matchedSkeleton.get(token.text);
     if (skeleton === undefined) {
       const reduced = skeletonOf(token.text);
@@ -352,30 +360,30 @@ export function scanConfusables(text: string, positionAt: PositionLookup = posit
       matchedSkeleton.set(token.text, skeleton);
     }
     if (skeleton !== null) bySkeleton.get(skeleton)!.push(token);
-  });
+  }, isCode);
 
   // Report groups in the order their first spelling appears in the text, each in text order.
   const groups = [...bySkeleton].map(([skeleton, group]) => ({ skeleton, group: group.sort((a, b) => a.index - b.index) }));
   groups.sort((a, b) => a.group[0]!.index - b.group[0]!.index);
 
   for (const { skeleton, group: spelled } of groups) {
-    // A word set in a styled alphabet beside its plain spelling is the styled-text rule's finding,
-    // which says what it reads as; it is decoration or disguise, not an identifier imitating another.
-    const group = spelled.filter((t) => !isStyledWord(t.text));
+    // In prose, decoration belongs to styled-text. In code, a mathematical
+    // letter can be a different binding from the plain letter it resembles.
+    const group = isCode ? spelled : spelled.filter((t) => !isStyledWord(t.text));
     const distinctSpellings = new Set(group.map((t) => t.text));
     if (distinctSpellings.size < 2) continue;
-    // A composed/decomposed name in prose is still the same text. Only report
-    // a collision if canonically different spellings also share this skeleton.
-    // Language-specific identifier equality (e.g. JavaScript's raw code units)
-    // is outside this prose-aware rule; never rewrite the original spelling.
-    if (new Set([...distinctSpellings].map(s => s.normalize('NFD'))).size < 2) continue;
+    // A composed/decomposed name in prose is still the same text. Code mode
+    // retains both: some languages distinguish them (JavaScript), while others
+    // normalize identifiers (Python). This scanner does not parse either one
+    // and must never rewrite the original spelling.
+    if (!isCode && new Set([...distinctSpellings].map(s => s.normalize('NFD'))).size < 2) continue;
     if (![...distinctSpellings].some((s) => !isAscii(s))) continue; // ASCII-vs-ASCII: out of scope, see note above
     // Two words of one script that share a skeleton are two words: confusables.txt folds
     // lookalikes inside a script too (Hebrew vav and final nun both reduce to "l"), so ordinary
     // text collides with itself. Latin is kept, since its non-ASCII lookalikes (a dotless i, a
     // fullwidth letter) are how an ASCII name is imitated without leaving the script.
     const signatures = new Set([...distinctSpellings].map(scriptSignature));
-    if (signatures.size === 1 && !signatures.has('Latin') && ![...signatures][0]!.includes('+')) continue;
+    if (!isCode && signatures.size === 1 && !signatures.has('Latin') && ![...signatures][0]!.includes('+')) continue;
     // A text that is written in Russian, Greek or Turkish: every non-ASCII spelling is an ordinary
     // word of it, so sharing letters with an English word next to it is not an imitation.
     const ordinary = (spelling: string): boolean => {
@@ -384,7 +392,7 @@ export function scanConfusables(text: string, positionAt: PositionLookup = posit
       if (script !== undefined) return (wordsByScript.get(script)?.size ?? 0) >= WRITTEN_IN_WORDS;
       return isTurkicI(spelling) && turkicWords.size >= WRITTEN_IN_WORDS;
     };
-    if ([...distinctSpellings].every(ordinary)) continue;
+    if (!isCode && [...distinctSpellings].every(ordinary)) continue;
 
     for (const token of group) {
       const others = distinctSpellings.size - (distinctSpellings.has(token.text) ? 1 : 0);

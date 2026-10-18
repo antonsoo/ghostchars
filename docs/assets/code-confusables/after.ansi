@@ -1,0 +1,27 @@
+[4mstudies/code-confusables/fixtures/latin-cyrillic-a.mjs[0m
+[2m  Bounded source excerpts: [[...]] marks each finding. End positions are exclusive.[0m
+  [90m2:7-2:8[0m  [31m[1merror[0m[0m  [2mconfusable[0m
+    "a" is visually confusable with 1 other spelling(s) used elsewhere in this file (they share the skeleton "a") -- this is how lookalike identifier/variable attacks work.
+    [90m|[0m const [[a]] = 10;
+    code points: U+0061
+    [2mfix:[0m Rename one of the colliding identifiers so they are visually distinguishable, or confirm this is intentional (e.g. deliberately testing confusable handling).
+
+  [90m3:7-3:8[0m  [31m[1merror[0m[0m  [2mconfusable[0m
+    "а" is visually confusable with 1 other spelling(s) used elsewhere in this file (they share the skeleton "a") -- this is how lookalike identifier/variable attacks work.
+    [90m|[0m const [[а]] = 20;
+    code points: U+0430
+    [2mfix:[0m Rename one of the colliding identifiers so they are visually distinguishable, or confirm this is intentional (e.g. deliberately testing confusable handling).
+
+  [90m4:29-4:30[0m  [31m[1merror[0m[0m  [2mconfusable[0m
+    "a" is visually confusable with 1 other spelling(s) used elsewhere in this file (they share the skeleton "a") -- this is how lookalike identifier/variable attacks work.
+    [90m|[0m console.log(JSON.stringify([[[a]], а]));
+    code points: U+0061
+    [2mfix:[0m Rename one of the colliding identifiers so they are visually distinguishable, or confirm this is intentional (e.g. deliberately testing confusable handling).
+
+  [90m4:32-4:33[0m  [31m[1merror[0m[0m  [2mconfusable[0m
+    "а" is visually confusable with 1 other spelling(s) used elsewhere in this file (they share the skeleton "a") -- this is how lookalike identifier/variable attacks work.
+    [90m|[0m console.log(JSON.stringify([a, [[а]]]));
+    code points: U+0430
+    [2mfix:[0m Rename one of the colliding identifiers so they are visually distinguishable, or confirm this is intentional (e.g. deliberately testing confusable handling).
+
+[1mghostchars: 4 error(s), 0 warning(s), 0 info in 1 file(s) scanned (15ms).[0m

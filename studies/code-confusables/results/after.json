@@ -1,0 +1,1528 @@
+{
+  "schemaVersion": 1,
+  "node": "v26.7.0",
+  "oracleSha256": "05b0c2a3ad17d906d42ba2923caf60ad27376052ad0548ff9dba982da629ad58",
+  "codeFlagAvailable": true,
+  "cases": [
+    {
+      "name": "latin-cyrillic-a",
+      "file": "fixtures/latin-cyrillic-a.mjs",
+      "sha256": "69ca5887fba3a70b6927737150ae8410ee3a33ce7773de766cfcfb989ad540f7",
+      "plainFindings": 0,
+      "nativeValues": [
+        10,
+        20
+      ],
+      "strictFindings": [
+        {
+          "text": "a",
+          "rule": "confusable",
+          "severity": "error",
+          "skeleton": "a",
+          "start": {
+            "line": 2,
+            "column": 7,
+            "offset": 59
+          },
+          "end": {
+            "line": 2,
+            "column": 8,
+            "offset": 60
+          },
+          "fixable": false
+        },
+        {
+          "text": "а",
+          "rule": "confusable",
+          "severity": "error",
+          "skeleton": "a",
+          "start": {
+            "line": 3,
+            "column": 7,
+            "offset": 73
+          },
+          "end": {
+            "line": 3,
+            "column": 8,
+            "offset": 74
+          },
+          "fixable": false
+        },
+        {
+          "text": "a",
+          "rule": "confusable",
+          "severity": "error",
+          "skeleton": "a",
+          "start": {
+            "line": 4,
+            "column": 29,
+            "offset": 109
+          },
+          "end": {
+            "line": 4,
+            "column": 30,
+            "offset": 110
+          },
+          "fixable": false
+        },
+        {
+          "text": "а",
+          "rule": "confusable",
+          "severity": "error",
+          "skeleton": "a",
+          "start": {
+            "line": 4,
+            "column": 32,
+            "offset": 112
+          },
+          "end": {
+            "line": 4,
+            "column": 33,
+            "offset": 113
+          },
+          "fixable": false
+        }
+      ],
+      "preservedBySanitize": true,
+      "plainCLI": {
+        "exitCode": 0,
+        "findings": 0
+      },
+      "strictCLI": {
+        "exitCode": 1,
+        "findings": 4,
+        "reportSha256": "e7b47e0eaec533640d2960ca653af98be81009ac676e963c37851046f94bcc20",
+        "stderr": ""
+      }
+    },
+    {
+      "name": "latin-greek-o",
+      "file": "fixtures/latin-greek-o.mjs",
+      "sha256": "39087f0131f09f7fe12d33393a0a3807099dd3682014593a1dcf4f161d103c34",
+      "plainFindings": 0,
+      "nativeValues": [
+        10,
+        20
+      ],
+      "strictFindings": [
+        {
+          "text": "o",
+          "rule": "confusable",
+          "severity": "error",
+          "skeleton": "o",
+          "start": {
+            "line": 2,
+            "column": 7,
+            "offset": 59
+          },
+          "end": {
+            "line": 2,
+            "column": 8,
+            "offset": 60
+          },
+          "fixable": false
+        },
+        {
+          "text": "ο",
+          "rule": "confusable",
+          "severity": "error",
+          "skeleton": "o",
+          "start": {
+            "line": 3,
+            "column": 7,
+            "offset": 73
+          },
+          "end": {
+            "line": 3,
+            "column": 8,
+            "offset": 74
+          },
+          "fixable": false
+        },
+        {
+          "text": "o",
+          "rule": "confusable",
+          "severity": "error",
+          "skeleton": "o",
+          "start": {
+            "line": 4,
+            "column": 29,
+            "offset": 109
+          },
+          "end": {
+            "line": 4,
+            "column": 30,
+            "offset": 110
+          },
+          "fixable": false
+        },
+        {
+          "text": "ο",
+          "rule": "confusable",
+          "severity": "error",
+          "skeleton": "o",
+          "start": {
+            "line": 4,
+            "column": 32,
+            "offset": 112
+          },
+          "end": {
+            "line": 4,
+            "column": 33,
+            "offset": 113
+          },
+          "fixable": false
+        }
+      ],
+      "preservedBySanitize": true,
+      "plainCLI": {
+        "exitCode": 0,
+        "findings": 0
+      },
+      "strictCLI": {
+        "exitCode": 1,
+        "findings": 4,
+        "reportSha256": "052785bfd25971ba8d48869f3935bfb111d4ea0d528c0d340b6aafbdf65acd3a",
+        "stderr": ""
+      }
+    },
+    {
+      "name": "latin-greek-rho",
+      "file": "fixtures/latin-greek-rho.mjs",
+      "sha256": "4fd53a4c9edf3234459f1506c42d1f4a207f6288036dea73b862cde58e8e7955",
+      "plainFindings": 0,
+      "nativeValues": [
+        10,
+        20
+      ],
+      "strictFindings": [
+        {
+          "text": "p",
+          "rule": "confusable",
+          "severity": "error",
+          "skeleton": "p",
+          "start": {
+            "line": 2,
+            "column": 7,
+            "offset": 59
+          },
+          "end": {
+            "line": 2,
+            "column": 8,
+            "offset": 60
+          },
+          "fixable": false
+        },
+        {
+          "text": "ρ",
+          "rule": "confusable",
+          "severity": "error",
+          "skeleton": "p",
+          "start": {
+            "line": 3,
+            "column": 7,
+            "offset": 73
+          },
+          "end": {
+            "line": 3,
+            "column": 8,
+            "offset": 74
+          },
+          "fixable": false
+        },
+        {
+          "text": "p",
+          "rule": "confusable",
+          "severity": "error",
+          "skeleton": "p",
+          "start": {
+            "line": 4,
+            "column": 29,
+            "offset": 109
+          },
+          "end": {
+            "line": 4,
+            "column": 30,
+            "offset": 110
+          },
+          "fixable": false
+        },
+        {
+          "text": "ρ",
+          "rule": "confusable",
+          "severity": "error",
+          "skeleton": "p",
+          "start": {
+            "line": 4,
+            "column": 32,
+            "offset": 112
+          },
+          "end": {
+            "line": 4,
+            "column": 33,
+            "offset": 113
+          },
+          "fixable": false
+        }
+      ],
+      "preservedBySanitize": true,
+      "plainCLI": {
+        "exitCode": 0,
+        "findings": 0
+      },
+      "strictCLI": {
+        "exitCode": 1,
+        "findings": 4,
+        "reportSha256": "abdbed2dc2cbcddd827536d0391b34b21861ea9067d92f556cd17d005a42213f",
+        "stderr": ""
+      }
+    },
+    {
+      "name": "cyrillic-greek-o",
+      "file": "fixtures/cyrillic-greek-o.mjs",
+      "sha256": "e0fc154337d9943bf34c7cf1801cf408e7889c3152f3d1a4b740e2faea691796",
+      "plainFindings": 0,
+      "nativeValues": [
+        10,
+        20
+      ],
+      "strictFindings": [
+        {
+          "text": "о",
+          "rule": "confusable",
+          "severity": "error",
+          "skeleton": "o",
+          "start": {
+            "line": 2,
+            "column": 7,
+            "offset": 59
+          },
+          "end": {
+            "line": 2,
+            "column": 8,
+            "offset": 60
+          },
+          "fixable": false
+        },
+        {
+          "text": "ο",
+          "rule": "confusable",
+          "severity": "error",
+          "skeleton": "o",
+          "start": {
+            "line": 3,
+            "column": 7,
+            "offset": 73
+          },
+          "end": {
+            "line": 3,
+            "column": 8,
+            "offset": 74
+          },
+          "fixable": false
+        },
+        {
+          "text": "о",
+          "rule": "confusable",
+          "severity": "error",
+          "skeleton": "o",
+          "start": {
+            "line": 4,
+            "column": 29,
+            "offset": 109
+          },
+          "end": {
+            "line": 4,
+            "column": 30,
+            "offset": 110
+          },
+          "fixable": false
+        },
+        {
+          "text": "ο",
+          "rule": "confusable",
+          "severity": "error",
+          "skeleton": "o",
+          "start": {
+            "line": 4,
+            "column": 32,
+            "offset": 112
+          },
+          "end": {
+            "line": 4,
+            "column": 33,
+            "offset": 113
+          },
+          "fixable": false
+        }
+      ],
+      "preservedBySanitize": true,
+      "plainCLI": {
+        "exitCode": 0,
+        "findings": 0
+      },
+      "strictCLI": {
+        "exitCode": 1,
+        "findings": 4,
+        "reportSha256": "9c112e8fdeb00ec6e4ecc4590d12ae540e2b0212c018bb4efd6358fbc9dc6d2f",
+        "stderr": ""
+      }
+    },
+    {
+      "name": "latin-ligature",
+      "file": "fixtures/latin-ligature.mjs",
+      "sha256": "1386e832742f2010275e4e47028219effb12f31432406425b0a805887c92f13f",
+      "plainFindings": 0,
+      "nativeValues": [
+        10,
+        20
+      ],
+      "strictFindings": [
+        {
+          "text": "ff",
+          "rule": "confusable",
+          "severity": "error",
+          "skeleton": "ff",
+          "start": {
+            "line": 2,
+            "column": 7,
+            "offset": 59
+          },
+          "end": {
+            "line": 2,
+            "column": 9,
+            "offset": 61
+          },
+          "fixable": false
+        },
+        {
+          "text": "ﬀ",
+          "rule": "confusable",
+          "severity": "error",
+          "skeleton": "ff",
+          "start": {
+            "line": 3,
+            "column": 7,
+            "offset": 74
+          },
+          "end": {
+            "line": 3,
+            "column": 8,
+            "offset": 75
+          },
+          "fixable": false
+        },
+        {
+          "text": "ff",
+          "rule": "confusable",
+          "severity": "error",
+          "skeleton": "ff",
+          "start": {
+            "line": 4,
+            "column": 29,
+            "offset": 110
+          },
+          "end": {
+            "line": 4,
+            "column": 31,
+            "offset": 112
+          },
+          "fixable": false
+        },
+        {
+          "text": "ﬀ",
+          "rule": "confusable",
+          "severity": "error",
+          "skeleton": "ff",
+          "start": {
+            "line": 4,
+            "column": 33,
+            "offset": 114
+          },
+          "end": {
+            "line": 4,
+            "column": 34,
+            "offset": 115
+          },
+          "fixable": false
+        }
+      ],
+      "preservedBySanitize": true,
+      "plainCLI": {
+        "exitCode": 0,
+        "findings": 0
+      },
+      "strictCLI": {
+        "exitCode": 1,
+        "findings": 4,
+        "reportSha256": "dd0a80cb86074ff8336dc1ffe54bffa51a7a18e984f67406bb045fd56b648331",
+        "stderr": ""
+      }
+    },
+    {
+      "name": "canonical-single",
+      "file": "fixtures/canonical-single.mjs",
+      "sha256": "c8c11ed755558894eda19d18a572a565701e8960da3f6969f65866c3b74d9f3b",
+      "plainFindings": 0,
+      "nativeValues": [
+        10,
+        20
+      ],
+      "strictFindings": [
+        {
+          "text": "é",
+          "rule": "confusable",
+          "severity": "error",
+          "skeleton": "é",
+          "start": {
+            "line": 2,
+            "column": 7,
+            "offset": 59
+          },
+          "end": {
+            "line": 2,
+            "column": 8,
+            "offset": 60
+          },
+          "fixable": false
+        },
+        {
+          "text": "é",
+          "rule": "confusable",
+          "severity": "error",
+          "skeleton": "é",
+          "start": {
+            "line": 3,
+            "column": 7,
+            "offset": 73
+          },
+          "end": {
+            "line": 3,
+            "column": 9,
+            "offset": 75
+          },
+          "fixable": false
+        },
+        {
+          "text": "é",
+          "rule": "confusable",
+          "severity": "error",
+          "skeleton": "é",
+          "start": {
+            "line": 4,
+            "column": 29,
+            "offset": 110
+          },
+          "end": {
+            "line": 4,
+            "column": 30,
+            "offset": 111
+          },
+          "fixable": false
+        },
+        {
+          "text": "é",
+          "rule": "confusable",
+          "severity": "error",
+          "skeleton": "é",
+          "start": {
+            "line": 4,
+            "column": 32,
+            "offset": 113
+          },
+          "end": {
+            "line": 4,
+            "column": 34,
+            "offset": 115
+          },
+          "fixable": false
+        }
+      ],
+      "preservedBySanitize": true,
+      "plainCLI": {
+        "exitCode": 0,
+        "findings": 0
+      },
+      "strictCLI": {
+        "exitCode": 1,
+        "findings": 4,
+        "reportSha256": "0d510d2b5f894b4b10e6977dacce3b9205bf61b4ae0ee4d3a55b2c2ad546957e",
+        "stderr": ""
+      }
+    },
+    {
+      "name": "same-script-theta",
+      "file": "fixtures/same-script-theta.mjs",
+      "sha256": "f4b4d3f3c324644919ad65e3bd569829654aabb4b601d040a70fec2b2d0ace25",
+      "plainFindings": 0,
+      "nativeValues": [
+        10,
+        20
+      ],
+      "strictFindings": [
+        {
+          "text": "θ",
+          "rule": "confusable",
+          "severity": "error",
+          "skeleton": "O̵",
+          "start": {
+            "line": 2,
+            "column": 7,
+            "offset": 59
+          },
+          "end": {
+            "line": 2,
+            "column": 8,
+            "offset": 60
+          },
+          "fixable": false
+        },
+        {
+          "text": "ϑ",
+          "rule": "confusable",
+          "severity": "error",
+          "skeleton": "O̵",
+          "start": {
+            "line": 3,
+            "column": 7,
+            "offset": 73
+          },
+          "end": {
+            "line": 3,
+            "column": 8,
+            "offset": 74
+          },
+          "fixable": false
+        },
+        {
+          "text": "θ",
+          "rule": "confusable",
+          "severity": "error",
+          "skeleton": "O̵",
+          "start": {
+            "line": 4,
+            "column": 29,
+            "offset": 109
+          },
+          "end": {
+            "line": 4,
+            "column": 30,
+            "offset": 110
+          },
+          "fixable": false
+        },
+        {
+          "text": "ϑ",
+          "rule": "confusable",
+          "severity": "error",
+          "skeleton": "O̵",
+          "start": {
+            "line": 4,
+            "column": 32,
+            "offset": 112
+          },
+          "end": {
+            "line": 4,
+            "column": 33,
+            "offset": 113
+          },
+          "fixable": false
+        }
+      ],
+      "preservedBySanitize": true,
+      "plainCLI": {
+        "exitCode": 0,
+        "findings": 0
+      },
+      "strictCLI": {
+        "exitCode": 1,
+        "findings": 4,
+        "reportSha256": "e1b30fe253ab11c1eafcdc4f4c575b1ca3307ef72b158dd0b3f043c8f5b220b8",
+        "stderr": ""
+      }
+    },
+    {
+      "name": "styled-single",
+      "file": "fixtures/styled-single.mjs",
+      "sha256": "63fb48eaeddca5d3f473173d211f661411bf9e223fa930c55e91ab883233a604",
+      "plainFindings": 0,
+      "nativeValues": [
+        10,
+        20
+      ],
+      "strictFindings": [
+        {
+          "text": "a",
+          "rule": "confusable",
+          "severity": "error",
+          "skeleton": "a",
+          "start": {
+            "line": 2,
+            "column": 7,
+            "offset": 59
+          },
+          "end": {
+            "line": 2,
+            "column": 8,
+            "offset": 60
+          },
+          "fixable": false
+        },
+        {
+          "text": "𝐚",
+          "rule": "confusable",
+          "severity": "error",
+          "skeleton": "a",
+          "start": {
+            "line": 3,
+            "column": 7,
+            "offset": 73
+          },
+          "end": {
+            "line": 3,
+            "column": 9,
+            "offset": 75
+          },
+          "fixable": false
+        },
+        {
+          "text": "a",
+          "rule": "confusable",
+          "severity": "error",
+          "skeleton": "a",
+          "start": {
+            "line": 4,
+            "column": 29,
+            "offset": 110
+          },
+          "end": {
+            "line": 4,
+            "column": 30,
+            "offset": 111
+          },
+          "fixable": false
+        },
+        {
+          "text": "𝐚",
+          "rule": "confusable",
+          "severity": "error",
+          "skeleton": "a",
+          "start": {
+            "line": 4,
+            "column": 32,
+            "offset": 113
+          },
+          "end": {
+            "line": 4,
+            "column": 34,
+            "offset": 115
+          },
+          "fixable": false
+        }
+      ],
+      "preservedBySanitize": true,
+      "plainCLI": {
+        "exitCode": 0,
+        "findings": 0
+      },
+      "strictCLI": {
+        "exitCode": 1,
+        "findings": 4,
+        "reportSha256": "27c517553a6d6ace0da7ca08c2818e91ff0aea56d3e887c0c8a49c781602a348",
+        "stderr": ""
+      }
+    },
+    {
+      "name": "fullwidth-single",
+      "file": "fixtures/fullwidth-single.mjs",
+      "sha256": "b6e4e414658643ffa165bf4da35ab7160fee65779e14643a3a2aaa99d488c746",
+      "plainFindings": 0,
+      "nativeValues": [
+        10,
+        20
+      ],
+      "strictFindings": [
+        {
+          "text": "a",
+          "rule": "confusable",
+          "severity": "error",
+          "skeleton": "a",
+          "start": {
+            "line": 2,
+            "column": 7,
+            "offset": 59
+          },
+          "end": {
+            "line": 2,
+            "column": 8,
+            "offset": 60
+          },
+          "fixable": false
+        },
+        {
+          "text": "ａ",
+          "rule": "confusable",
+          "severity": "error",
+          "skeleton": "a",
+          "start": {
+            "line": 3,
+            "column": 7,
+            "offset": 73
+          },
+          "end": {
+            "line": 3,
+            "column": 8,
+            "offset": 74
+          },
+          "fixable": false
+        },
+        {
+          "text": "a",
+          "rule": "confusable",
+          "severity": "error",
+          "skeleton": "a",
+          "start": {
+            "line": 4,
+            "column": 29,
+            "offset": 109
+          },
+          "end": {
+            "line": 4,
+            "column": 30,
+            "offset": 110
+          },
+          "fixable": false
+        },
+        {
+          "text": "ａ",
+          "rule": "confusable",
+          "severity": "error",
+          "skeleton": "a",
+          "start": {
+            "line": 4,
+            "column": 32,
+            "offset": 112
+          },
+          "end": {
+            "line": 4,
+            "column": 33,
+            "offset": 113
+          },
+          "fixable": false
+        }
+      ],
+      "preservedBySanitize": true,
+      "plainCLI": {
+        "exitCode": 0,
+        "findings": 0
+      },
+      "strictCLI": {
+        "exitCode": 1,
+        "findings": 4,
+        "reportSha256": "6644be746f1100b615da74b58650b26f21c40d0214ebc3ebf6016473987e587d",
+        "stderr": ""
+      }
+    },
+    {
+      "name": "canonical-word",
+      "file": "fixtures/canonical-word.mjs",
+      "sha256": "7eafe9fb155836cda2edd6c8df73f23e77e31e46a73943ec6211ee9373067c03",
+      "plainFindings": 0,
+      "nativeValues": [
+        10,
+        20
+      ],
+      "strictFindings": [
+        {
+          "text": "café",
+          "rule": "confusable",
+          "severity": "error",
+          "skeleton": "café",
+          "start": {
+            "line": 2,
+            "column": 7,
+            "offset": 59
+          },
+          "end": {
+            "line": 2,
+            "column": 11,
+            "offset": 63
+          },
+          "fixable": false
+        },
+        {
+          "text": "café",
+          "rule": "confusable",
+          "severity": "error",
+          "skeleton": "café",
+          "start": {
+            "line": 3,
+            "column": 7,
+            "offset": 76
+          },
+          "end": {
+            "line": 3,
+            "column": 12,
+            "offset": 81
+          },
+          "fixable": false
+        },
+        {
+          "text": "café",
+          "rule": "confusable",
+          "severity": "error",
+          "skeleton": "café",
+          "start": {
+            "line": 4,
+            "column": 29,
+            "offset": 116
+          },
+          "end": {
+            "line": 4,
+            "column": 33,
+            "offset": 120
+          },
+          "fixable": false
+        },
+        {
+          "text": "café",
+          "rule": "confusable",
+          "severity": "error",
+          "skeleton": "café",
+          "start": {
+            "line": 4,
+            "column": 35,
+            "offset": 122
+          },
+          "end": {
+            "line": 4,
+            "column": 40,
+            "offset": 127
+          },
+          "fixable": false
+        }
+      ],
+      "preservedBySanitize": true,
+      "plainCLI": {
+        "exitCode": 0,
+        "findings": 0
+      },
+      "strictCLI": {
+        "exitCode": 1,
+        "findings": 4,
+        "reportSha256": "0b2f94f35f7dfa6d13500b11f75bf18efb44d0f7e082e79c15b8dc6548e72363",
+        "stderr": ""
+      }
+    },
+    {
+      "name": "hebrew-same-script",
+      "file": "fixtures/hebrew-same-script.mjs",
+      "sha256": "bf1504306352ae09d3ad445ba148dd465a4a0ab4477abe4e4c1cad29472557cc",
+      "plainFindings": 0,
+      "nativeValues": [
+        10,
+        20
+      ],
+      "strictFindings": [
+        {
+          "text": "ו",
+          "rule": "confusable",
+          "severity": "error",
+          "skeleton": "l",
+          "start": {
+            "line": 2,
+            "column": 7,
+            "offset": 59
+          },
+          "end": {
+            "line": 2,
+            "column": 8,
+            "offset": 60
+          },
+          "fixable": false
+        },
+        {
+          "text": "ן",
+          "rule": "confusable",
+          "severity": "error",
+          "skeleton": "l",
+          "start": {
+            "line": 3,
+            "column": 7,
+            "offset": 73
+          },
+          "end": {
+            "line": 3,
+            "column": 8,
+            "offset": 74
+          },
+          "fixable": false
+        },
+        {
+          "text": "ו",
+          "rule": "confusable",
+          "severity": "error",
+          "skeleton": "l",
+          "start": {
+            "line": 4,
+            "column": 29,
+            "offset": 109
+          },
+          "end": {
+            "line": 4,
+            "column": 30,
+            "offset": 110
+          },
+          "fixable": false
+        },
+        {
+          "text": "ן",
+          "rule": "confusable",
+          "severity": "error",
+          "skeleton": "l",
+          "start": {
+            "line": 4,
+            "column": 32,
+            "offset": 112
+          },
+          "end": {
+            "line": 4,
+            "column": 33,
+            "offset": 113
+          },
+          "fixable": false
+        }
+      ],
+      "preservedBySanitize": true,
+      "plainCLI": {
+        "exitCode": 0,
+        "findings": 0
+      },
+      "strictCLI": {
+        "exitCode": 1,
+        "findings": 4,
+        "reportSha256": "2a8ad8f988494fe55a57aff87c2652ca2b9fe5991deeeb2a7c6bae2a55a4e347",
+        "stderr": ""
+      }
+    },
+    {
+      "name": "accented-single",
+      "file": "fixtures/accented-single.mjs",
+      "sha256": "4dbebe71788f6522a9697312b2f7571c9515600447fcd11174be3fde7f862e71",
+      "plainFindings": 0,
+      "nativeValues": [
+        10,
+        20
+      ],
+      "strictFindings": [
+        {
+          "text": "á",
+          "rule": "confusable",
+          "severity": "error",
+          "skeleton": "á",
+          "start": {
+            "line": 2,
+            "column": 7,
+            "offset": 59
+          },
+          "end": {
+            "line": 2,
+            "column": 8,
+            "offset": 60
+          },
+          "fixable": false
+        },
+        {
+          "text": "а́",
+          "rule": "confusable",
+          "severity": "error",
+          "skeleton": "á",
+          "start": {
+            "line": 3,
+            "column": 7,
+            "offset": 73
+          },
+          "end": {
+            "line": 3,
+            "column": 9,
+            "offset": 75
+          },
+          "fixable": false
+        },
+        {
+          "text": "á",
+          "rule": "confusable",
+          "severity": "error",
+          "skeleton": "á",
+          "start": {
+            "line": 4,
+            "column": 29,
+            "offset": 110
+          },
+          "end": {
+            "line": 4,
+            "column": 30,
+            "offset": 111
+          },
+          "fixable": false
+        },
+        {
+          "text": "а́",
+          "rule": "confusable",
+          "severity": "error",
+          "skeleton": "á",
+          "start": {
+            "line": 4,
+            "column": 32,
+            "offset": 113
+          },
+          "end": {
+            "line": 4,
+            "column": 34,
+            "offset": 115
+          },
+          "fixable": false
+        }
+      ],
+      "preservedBySanitize": true,
+      "plainCLI": {
+        "exitCode": 0,
+        "findings": 0
+      },
+      "strictCLI": {
+        "exitCode": 1,
+        "findings": 4,
+        "reportSha256": "3c41c701d6ba05cd9666bf6acf79cbc2cea3aac10ad0ddeb899a8959de43a351",
+        "stderr": ""
+      }
+    },
+    {
+      "name": "letter-number",
+      "file": "fixtures/letter-number.mjs",
+      "sha256": "578ae81c9c98a4dd1c09cebd93378581da363313d91a7099abb45ad4e59a12f0",
+      "plainFindings": 0,
+      "nativeValues": [
+        10,
+        20
+      ],
+      "strictFindings": [
+        {
+          "text": "I",
+          "rule": "confusable",
+          "severity": "error",
+          "skeleton": "l",
+          "start": {
+            "line": 2,
+            "column": 7,
+            "offset": 59
+          },
+          "end": {
+            "line": 2,
+            "column": 8,
+            "offset": 60
+          },
+          "fixable": false
+        },
+        {
+          "text": "Ⅰ",
+          "rule": "confusable",
+          "severity": "error",
+          "skeleton": "l",
+          "start": {
+            "line": 3,
+            "column": 7,
+            "offset": 73
+          },
+          "end": {
+            "line": 3,
+            "column": 8,
+            "offset": 74
+          },
+          "fixable": false
+        },
+        {
+          "text": "I",
+          "rule": "confusable",
+          "severity": "error",
+          "skeleton": "l",
+          "start": {
+            "line": 4,
+            "column": 29,
+            "offset": 109
+          },
+          "end": {
+            "line": 4,
+            "column": 30,
+            "offset": 110
+          },
+          "fixable": false
+        },
+        {
+          "text": "Ⅰ",
+          "rule": "confusable",
+          "severity": "error",
+          "skeleton": "l",
+          "start": {
+            "line": 4,
+            "column": 32,
+            "offset": 112
+          },
+          "end": {
+            "line": 4,
+            "column": 33,
+            "offset": 113
+          },
+          "fixable": false
+        }
+      ],
+      "preservedBySanitize": true,
+      "plainCLI": {
+        "exitCode": 0,
+        "findings": 0
+      },
+      "strictCLI": {
+        "exitCode": 1,
+        "findings": 4,
+        "reportSha256": "70cd8178c62bcca68163b60b4dbff5ef33bf466e020c806a6bfd5961b288253c",
+        "stderr": ""
+      }
+    },
+    {
+      "name": "other-id-start",
+      "file": "fixtures/other-id-start.mjs",
+      "sha256": "93c4c04a72bdee84ecd96a438debbc883a212d4a95cf97331ac2a7f58d166f2d",
+      "plainFindings": 0,
+      "nativeValues": [
+        10,
+        20
+      ],
+      "strictFindings": [
+        {
+          "text": "e",
+          "rule": "confusable",
+          "severity": "error",
+          "skeleton": "e",
+          "start": {
+            "line": 2,
+            "column": 7,
+            "offset": 59
+          },
+          "end": {
+            "line": 2,
+            "column": 8,
+            "offset": 60
+          },
+          "fixable": false
+        },
+        {
+          "text": "℮",
+          "rule": "confusable",
+          "severity": "error",
+          "skeleton": "e",
+          "start": {
+            "line": 3,
+            "column": 7,
+            "offset": 73
+          },
+          "end": {
+            "line": 3,
+            "column": 8,
+            "offset": 74
+          },
+          "fixable": false
+        },
+        {
+          "text": "e",
+          "rule": "confusable",
+          "severity": "error",
+          "skeleton": "e",
+          "start": {
+            "line": 4,
+            "column": 29,
+            "offset": 109
+          },
+          "end": {
+            "line": 4,
+            "column": 30,
+            "offset": 110
+          },
+          "fixable": false
+        },
+        {
+          "text": "℮",
+          "rule": "confusable",
+          "severity": "error",
+          "skeleton": "e",
+          "start": {
+            "line": 4,
+            "column": 32,
+            "offset": 112
+          },
+          "end": {
+            "line": 4,
+            "column": 33,
+            "offset": 113
+          },
+          "fixable": false
+        }
+      ],
+      "preservedBySanitize": true,
+      "plainCLI": {
+        "exitCode": 0,
+        "findings": 0
+      },
+      "strictCLI": {
+        "exitCode": 1,
+        "findings": 4,
+        "reportSha256": "d4a9d9bf0be271e22bafc957497a763760b16762afc8111db312efee850ab3c1",
+        "stderr": ""
+      }
+    },
+    {
+      "name": "dollar-prefix",
+      "file": "fixtures/dollar-prefix.mjs",
+      "sha256": "ca9553e0d64e86f0b28c08beb8fef1477f71e1c79e26fdc30f8b69079bfb3f79",
+      "plainFindings": 0,
+      "nativeValues": [
+        10,
+        20
+      ],
+      "strictFindings": [
+        {
+          "text": "$a",
+          "rule": "confusable",
+          "severity": "error",
+          "skeleton": "$a",
+          "start": {
+            "line": 2,
+            "column": 7,
+            "offset": 59
+          },
+          "end": {
+            "line": 2,
+            "column": 9,
+            "offset": 61
+          },
+          "fixable": false
+        },
+        {
+          "text": "$а",
+          "rule": "confusable",
+          "severity": "error",
+          "skeleton": "$a",
+          "start": {
+            "line": 3,
+            "column": 7,
+            "offset": 74
+          },
+          "end": {
+            "line": 3,
+            "column": 9,
+            "offset": 76
+          },
+          "fixable": false
+        },
+        {
+          "text": "$a",
+          "rule": "confusable",
+          "severity": "error",
+          "skeleton": "$a",
+          "start": {
+            "line": 4,
+            "column": 29,
+            "offset": 111
+          },
+          "end": {
+            "line": 4,
+            "column": 31,
+            "offset": 113
+          },
+          "fixable": false
+        },
+        {
+          "text": "$а",
+          "rule": "confusable",
+          "severity": "error",
+          "skeleton": "$a",
+          "start": {
+            "line": 4,
+            "column": 33,
+            "offset": 115
+          },
+          "end": {
+            "line": 4,
+            "column": 35,
+            "offset": 117
+          },
+          "fixable": false
+        }
+      ],
+      "preservedBySanitize": true,
+      "plainCLI": {
+        "exitCode": 0,
+        "findings": 0
+      },
+      "strictCLI": {
+        "exitCode": 1,
+        "findings": 4,
+        "reportSha256": "7baafeb8487b6fc058178833889a76be53c7bbf9426b8c632fea2ce2417a34ce",
+        "stderr": ""
+      }
+    },
+    {
+      "name": "dollar-suffix",
+      "file": "fixtures/dollar-suffix.mjs",
+      "sha256": "22439abc96163c424a69bdf6ba8071e314b209a7e3c4132d8968662534d030be",
+      "plainFindings": 0,
+      "nativeValues": [
+        10,
+        20
+      ],
+      "strictFindings": [
+        {
+          "text": "a$",
+          "rule": "confusable",
+          "severity": "error",
+          "skeleton": "a$",
+          "start": {
+            "line": 2,
+            "column": 7,
+            "offset": 59
+          },
+          "end": {
+            "line": 2,
+            "column": 9,
+            "offset": 61
+          },
+          "fixable": false
+        },
+        {
+          "text": "а$",
+          "rule": "confusable",
+          "severity": "error",
+          "skeleton": "a$",
+          "start": {
+            "line": 3,
+            "column": 7,
+            "offset": 74
+          },
+          "end": {
+            "line": 3,
+            "column": 9,
+            "offset": 76
+          },
+          "fixable": false
+        },
+        {
+          "text": "a$",
+          "rule": "confusable",
+          "severity": "error",
+          "skeleton": "a$",
+          "start": {
+            "line": 4,
+            "column": 29,
+            "offset": 111
+          },
+          "end": {
+            "line": 4,
+            "column": 31,
+            "offset": 113
+          },
+          "fixable": false
+        },
+        {
+          "text": "а$",
+          "rule": "confusable",
+          "severity": "error",
+          "skeleton": "a$",
+          "start": {
+            "line": 4,
+            "column": 33,
+            "offset": 115
+          },
+          "end": {
+            "line": 4,
+            "column": 35,
+            "offset": 117
+          },
+          "fixable": false
+        }
+      ],
+      "preservedBySanitize": true,
+      "plainCLI": {
+        "exitCode": 0,
+        "findings": 0
+      },
+      "strictCLI": {
+        "exitCode": 1,
+        "findings": 4,
+        "reportSha256": "bb73798b01fb07109b456ec57d1db8502d0a27ae5798efeeb767dc130cf9987b",
+        "stderr": ""
+      }
+    }
+  ],
+  "controls": [
+    "a a",
+    "I l 1",
+    "rn m",
+    "a β",
+    "λ",
+    "а а"
+  ],
+  "formats": {
+    "pretty": {
+      "exitCode": 1,
+      "outputSha256": "8da7d14cc6c0e8efff16107de47ed5219c9e7679c2b60c8bf1f7ec91b846269c",
+      "bytes": 1914
+    },
+    "summary": {
+      "exitCode": 1,
+      "outputSha256": "aeb4625a5e902ffab8f52ecac242c20109e7ec354010347d072c12002f8ffc04",
+      "bytes": 135
+    },
+    "sarif": {
+      "exitCode": 1,
+      "outputSha256": "27b7ab5ca07a4e1c79ed2fe0ff1554a92d0e32fde98a086b150826721466873c",
+      "bytes": 6589
+    },
+    "github": {
+      "exitCode": 1,
+      "outputSha256": "0426f50fb56d26247bd5578be2e473f57748f003b802582b651e16e449e541f5",
+      "bytes": 1122
+    }
+  },
+  "configuration": {
+    "global": {
+      "exitCode": 1,
+      "findings": 4
+    },
+    "matching-override": {
+      "exitCode": 1,
+      "findings": 4
+    },
+    "later-false": {
+      "exitCode": 0,
+      "findings": 0
+    },
+    "flag-wins": {
+      "exitCode": 1,
+      "findings": 4
+    },
+    "rule-disabled": {
+      "exitCode": 0,
+      "findings": 0
+    },
+    "invalid-global": {
+      "exitCode": 2,
+      "diagnostic": "isCode must be a boolean"
+    },
+    "invalid-override": {
+      "exitCode": 2,
+      "diagnostic": "isCode must be a boolean"
+    },
+    "confusablesNeverRenamed": true,
+    "unrelatedInvisibleRemoved": true
+  },
+  "discrepancies": [],
+  "scope": "The code context is explicit. Default prose scans are unchanged; no source parser, binding resolver or automatic identifier renaming is claimed."
+}

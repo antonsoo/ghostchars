@@ -9,11 +9,13 @@ interface FileOverride {
   files: string[];
   rules?: RuleOverrides;
   allow?: Array<number | string>;
+  isCode?: boolean;
 }
 
 export interface GhostcharsConfig {
   rules?: RuleOverrides;
   allow?: Array<number | string>;
+  isCode?: boolean;
   overrides?: FileOverride[];
 }
 
@@ -42,8 +44,9 @@ function object(value: unknown, label: string): Record<string, unknown> {
 
 function validateBlock(value: unknown, label: string, override: boolean): Record<string, unknown> {
   const block = object(value, label);
-  const keys = override ? ['files', 'rules', 'allow'] : ['rules', 'allow', 'overrides'];
+  const keys = override ? ['files', 'rules', 'allow', 'isCode'] : ['rules', 'allow', 'overrides', 'isCode'];
   for (const key of Object.keys(block)) if (!keys.includes(key)) throw new Error(`Unknown ${label} option: ${key}`);
+  if (block.isCode !== undefined && typeof block.isCode !== 'boolean') throw new Error(`${label}.isCode must be a boolean`);
   if (block.rules !== undefined) {
     for (const [rule, severity] of Object.entries(object(block.rules, `${label}.rules`))) {
       if (!RULES.has(rule as RuleId)) throw new Error(`Unknown rule in ${label}: ${rule}`);
@@ -80,13 +83,15 @@ function parseAllow(entries: Array<number | string> | undefined): number[] {
 export function scanOptionsForFile(config: GhostcharsConfig, filePath: string): ScanOptions {
   const severityOverrides: RuleOverrides = { ...config.rules };
   const allow = new Set(parseAllow(config.allow));
+  let isCode = config.isCode;
 
   for (const override of config.overrides ?? []) {
     if (override.files.some((glob) => globToRegex(glob).test(filePath))) {
       Object.assign(severityOverrides, override.rules);
       for (const cp of parseAllow(override.allow)) allow.add(cp);
+      if (override.isCode !== undefined) isCode = override.isCode;
     }
   }
 
-  return { file: filePath, severityOverrides, allowCodePoints: allow };
+  return { file: filePath, severityOverrides, allowCodePoints: allow, ...(isCode === undefined ? {} : { isCode }) };
 }

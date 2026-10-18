@@ -36,6 +36,7 @@ Options:
   --dry-run                             With --fix, preview changes instead of writing
   --config <path>                       Path to a .ghostcharsrc.json (default: ./.ghostcharsrc.json)
   --no-config                           Ignore any .ghostcharsrc.json
+  --code                                Check confusables without prose exemptions (no source parser)
   --output <path>                       Write the scan report to a separate file after scanning
   --quiet                               Suppress the summary line
 
@@ -43,7 +44,7 @@ Exit codes: 0 = no error-level findings, 1 = error-level findings present, 2 = u
 `;
 
 function parseArgs(argv: string[]) {
-  const args = { format: 'pretty', fix: false, dryRun: false, config: undefined as string | undefined, output: undefined as string | undefined, noConfig: false, quiet: false, help: false, version: false, paths: [] as string[], command: 'scan' as 'scan' | 'reveal' };
+  const args = { format: 'pretty', fix: false, dryRun: false, code: false, config: undefined as string | undefined, output: undefined as string | undefined, noConfig: false, quiet: false, help: false, version: false, paths: [] as string[], command: 'scan' as 'scan' | 'reveal' };
   let i = 0;
   if (argv[0] === 'reveal') {
     args.command = 'reveal';
@@ -57,6 +58,7 @@ function parseArgs(argv: string[]) {
     else if (a === '--dry-run') args.dryRun = true;
     else if (a === '--quiet' || a === '-q') args.quiet = true;
     else if (a === '--no-config') args.noConfig = true;
+    else if (a === '--code') args.code = true;
     else if (a === '--format') args.format = argv[++i] ?? 'pretty';
     else if (a.startsWith('--format=')) args.format = a.slice('--format='.length);
     else if (a === '--config') {
@@ -77,6 +79,7 @@ function parseArgs(argv: string[]) {
   if (args.config === '') throw new UsageError('--config requires a file path');
   if (args.output === '') throw new UsageError('--output requires a file path');
   if (args.output && args.command === 'reveal') throw new UsageError('--output is for scan reports; reveal writes to stdout');
+  if (args.code && args.command === 'reveal') throw new UsageError('--code is for scans; reveal does not classify identifiers');
   return args;
 }
 
@@ -155,6 +158,7 @@ export function main(argv: string[]): number {
     }
 
     const options: ScanOptions = scanOptionsForFile(config, file.path);
+    if (args.code) options.isCode = true;
     const { findings } = scanText(source, options);
     report.files.push({ path: file.path, source, findings });
 

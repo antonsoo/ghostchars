@@ -51,6 +51,15 @@ node dist/cli.js .
 - **pre-commit hook** (`.pre-commit-hooks.yaml`).
 - **Web app**, "the UV lamp": paste text, watch hidden characters glow, entirely client-side (the page's Content-Security-Policy, `connect-src 'self'`, has the browser refuse to send the text anywhere). <https://antonsoo.github.io/ghostchars/>
 
+**Code scans (source CLI/library, unreleased):** `ghostchars src --code` checks
+short names, styled letters, canonical variants and same-script lookalikes that
+the ordinary text policy deliberately leaves quiet. Sixteen runnable JavaScript
+examples previously scanned clean despite holding distinct bindings with equal
+ICU skeletons; code mode reports their exact spans and never renames them.
+Use `isCode: true` in the library or a matching file override. Default text scans
+remain unchanged across 83,494 pinned public documents. The browser keeps the
+ordinary text policy. [Examples, configuration and limits](studies/code-confusables/README.md).
+
 ## What it detects
 
 The source checkout uses Unicode 17's security mappings, including revised
@@ -59,8 +68,8 @@ lookalikes that the previous table missed. A runnable JavaScript fixture with
 the distinct bindings as confusable. The update also removes an obsolete
 collision and leaves identifier text unchanged during repair. See the
 [data comparison, public-text replay and CLI/browser evidence](studies/unicode-security-data/README.md).
-This update is available from source; it is not an npm release or a hosted-demo
-deployment.
+This update is in source and the public demo. The npm registry release remains
+unchanged. [Current hosted-byte check](studies/code-confusables/results/existing-demo-bytes.json).
 
 The source checkout also catches **accented cross-script lookalikes** that the
 previous scanner missed entirely. A runnable JavaScript example returned a
@@ -95,6 +104,9 @@ ghostchars .
 
 # One line per kind of finding in each file, with what any payload decodes to (source checkout, unreleased)
 ghostchars . --format summary
+
+# Review identifier collisions without the prose exemptions (source checkout)
+ghostchars src --code
 
 # CI-friendly formats
 ghostchars . --format sarif > ghostchars.sarif
@@ -149,7 +161,8 @@ mathematical symbols, CJK punctuation and script variants while claiming they
 were unregistered. Exact Unicode 17 pairs now come from the pinned normative
 table. Unsupported pairs and encoded payloads still produce findings.
 [Reproductions and independent Unicode checks](studies/standardized-variants/README.md)
-cover the correction; no npm release or hosted deployment is included.
+cover the correction. These variants also survive the current public demo;
+the npm registry release remains unchanged.
 
 
 The source checkout also reports **incomplete scans** separately from clean
@@ -225,12 +238,16 @@ The npm release has not yet gained `--output`.
 
 ### Config (`.ghostcharsrc.json`)
 
+The `isCode` settings below require a source build; npm 0.1.5 predates this option.
+
 ```json
 {
   "rules": { "unusual-whitespace": "warning" },
   "allow": ["U+200D"],
   "overrides": [
-    { "files": ["fixtures/**"], "rules": { "bidi-control": false } }
+    { "files": ["fixtures/**"], "rules": { "bidi-control": false } },
+    { "files": ["src/**"], "isCode": true },
+    { "files": ["src/locales/**"], "isCode": false }
   ]
 }
 ```
@@ -240,7 +257,11 @@ a compound finding. A disabled rule cannot remove text, but another enabled rule
 may still cover the same character; disabling `bidi-control` alone does not
 disable `bidi-unbalanced`. Severity changes (`info`, `warning`, `error`) change
 reporting, not whether an enabled fixable rule can remove its characters.
-All matching overrides merge in order; allowlists accumulate.
+All matching overrides merge in order; allowlists accumulate. In the source
+checkout, `isCode` selects the confusable policy globally or per matching path;
+a later `false` restores the text policy. `--code` explicitly selects code mode
+for every scanned file, overriding configuration. This also works in the GitHub
+Action through its `config` input; no registry install is involved.
 
 `--fix` reports findings from the **original** scan: exit 1 means error-level
 findings, while exit 2 takes precedence for input or repair failures. Run a
@@ -350,9 +371,12 @@ Driven directly by the `Default_Ignorable_Code_Point` property rather than a han
 
 Uses UTS #39's prototype mappings for identifier-shaped tokens. In this source
 checkout, canonical decomposition (NFD) runs before and after that mapping,
-so accents and combining order cannot hide a collision. This is a prose-aware
-subset, not a complete UTS #39 conformance implementation. Two independent
-signals are flagged.
+so accents and combining order cannot hide a collision. The default is a
+prose-aware subset, not a complete UTS #39 conformance implementation. Code mode
+uses Unicode identifier properties (plus `$`, `_`, ZWJ and ZWNJ), includes short
+tokens and bypasses the collision exemptions for language context, canonical
+variants, styled letters and same-script words. Neither mode resolves source
+scopes or decodes language escapes. Two independent signals are flagged.
 
 **A word that mixes scripts and holds a lookalike.** Real writing mixes scripts all the time, so the scripts of a word (from `Scripts.txt` + `ScriptExtensions.txt`, Common and Inherited aside) are first held against UTS #39's restriction levels (section 5.2). A word is ordinary, and not looked at further, when it is one script; Latin with Han + Hiragana + Katakana, Han + Bopomofo or Han + Hangul (Japanese, Chinese and Korean have no spaces, so a Latin term sits inside the word around it); or Latin with one other script in general use except Cyrillic and Greek (Arabic and Hebrew attach prefixes to a Latin term). What is left (Latin with Cyrillic or Greek, two non-Latin scripts, Latin with a script like Cherokee) is reported when the word holds an actual lookalike: a character of another script that `confusables.txt` reduces to ASCII letters, or an ASCII letter planted in a word of a script that has a double for it. So `LaTeX2ε`, `Δt` and `10μs` pass (a Greek letter used as a symbol imitates nothing) and `paypal` with the Cyrillic U+0430 for its `a` does not. The words of a `snake_case` name are judged one by one.
 

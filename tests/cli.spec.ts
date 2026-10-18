@@ -121,6 +121,25 @@ describe('config', () => {
 });
 
 describe('main() end-to-end', () => {
+  it('selects code collisions explicitly and keeps confusable repairs manual', () => {
+    const source = 'const a = 10; const \u0430 = 20;\n';
+    writeFileSync(join(dir, 'input.mjs'), source);
+    expect(withSilencedConsole(() => main(['input.mjs', '--no-config']))).toBe(0);
+    expect(withSilencedConsole(() => main(['input.mjs', '--code', '--fix', '--no-config']))).toBe(1);
+    expect(readFileSync(join(dir, 'input.mjs'), 'utf8')).toBe(source);
+    expect(withSilencedConsole(() => main(['reveal', 'input.mjs', '--code']))).toBe(2);
+  });
+
+  it('refuses invalid code-context configuration before any repair', () => {
+    const source = 'const a = 10;\u200b';
+    writeFileSync(join(dir, 'input.mjs'), source);
+    for (const config of [{ isCode: 'true' }, { overrides: [{ files: ['*.mjs'], isCode: 1 }] }]) {
+      writeFileSync(join(dir, '.ghostcharsrc.json'), JSON.stringify(config));
+      expect(withSilencedConsole(() => main(['input.mjs', '--fix']))).toBe(2);
+      expect(readFileSync(join(dir, 'input.mjs'), 'utf8')).toBe(source);
+    }
+  });
+
   it('exits 1 when error-level findings are present', () => {
     writeFileSync(join(dir, 'bad.js'), 'const a = 1;‮// rlo');
     const code = withSilencedConsole(() => main(['bad.js', '--format', 'json']));

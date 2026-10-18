@@ -1,0 +1,373 @@
+{
+  "schemaVersion": 1,
+  "node": "v26.7.0",
+  "oracleSha256": "05b0c2a3ad17d906d42ba2923caf60ad27376052ad0548ff9dba982da629ad58",
+  "codeFlagAvailable": false,
+  "cases": [
+    {
+      "name": "latin-cyrillic-a",
+      "file": "fixtures/latin-cyrillic-a.mjs",
+      "sha256": "69ca5887fba3a70b6927737150ae8410ee3a33ce7773de766cfcfb989ad540f7",
+      "plainFindings": 0,
+      "nativeValues": [
+        10,
+        20
+      ],
+      "strictFindings": [],
+      "preservedBySanitize": true,
+      "plainCLI": {
+        "exitCode": 0,
+        "findings": 0
+      },
+      "strictCLI": null
+    },
+    {
+      "name": "latin-greek-o",
+      "file": "fixtures/latin-greek-o.mjs",
+      "sha256": "39087f0131f09f7fe12d33393a0a3807099dd3682014593a1dcf4f161d103c34",
+      "plainFindings": 0,
+      "nativeValues": [
+        10,
+        20
+      ],
+      "strictFindings": [],
+      "preservedBySanitize": true,
+      "plainCLI": {
+        "exitCode": 0,
+        "findings": 0
+      },
+      "strictCLI": null
+    },
+    {
+      "name": "latin-greek-rho",
+      "file": "fixtures/latin-greek-rho.mjs",
+      "sha256": "4fd53a4c9edf3234459f1506c42d1f4a207f6288036dea73b862cde58e8e7955",
+      "plainFindings": 0,
+      "nativeValues": [
+        10,
+        20
+      ],
+      "strictFindings": [],
+      "preservedBySanitize": true,
+      "plainCLI": {
+        "exitCode": 0,
+        "findings": 0
+      },
+      "strictCLI": null
+    },
+    {
+      "name": "cyrillic-greek-o",
+      "file": "fixtures/cyrillic-greek-o.mjs",
+      "sha256": "e0fc154337d9943bf34c7cf1801cf408e7889c3152f3d1a4b740e2faea691796",
+      "plainFindings": 0,
+      "nativeValues": [
+        10,
+        20
+      ],
+      "strictFindings": [],
+      "preservedBySanitize": true,
+      "plainCLI": {
+        "exitCode": 0,
+        "findings": 0
+      },
+      "strictCLI": null
+    },
+    {
+      "name": "latin-ligature",
+      "file": "fixtures/latin-ligature.mjs",
+      "sha256": "1386e832742f2010275e4e47028219effb12f31432406425b0a805887c92f13f",
+      "plainFindings": 0,
+      "nativeValues": [
+        10,
+        20
+      ],
+      "strictFindings": [],
+      "preservedBySanitize": true,
+      "plainCLI": {
+        "exitCode": 0,
+        "findings": 0
+      },
+      "strictCLI": null
+    },
+    {
+      "name": "canonical-single",
+      "file": "fixtures/canonical-single.mjs",
+      "sha256": "c8c11ed755558894eda19d18a572a565701e8960da3f6969f65866c3b74d9f3b",
+      "plainFindings": 0,
+      "nativeValues": [
+        10,
+        20
+      ],
+      "strictFindings": [],
+      "preservedBySanitize": true,
+      "plainCLI": {
+        "exitCode": 0,
+        "findings": 0
+      },
+      "strictCLI": null
+    },
+    {
+      "name": "same-script-theta",
+      "file": "fixtures/same-script-theta.mjs",
+      "sha256": "f4b4d3f3c324644919ad65e3bd569829654aabb4b601d040a70fec2b2d0ace25",
+      "plainFindings": 0,
+      "nativeValues": [
+        10,
+        20
+      ],
+      "strictFindings": [],
+      "preservedBySanitize": true,
+      "plainCLI": {
+        "exitCode": 0,
+        "findings": 0
+      },
+      "strictCLI": null
+    },
+    {
+      "name": "styled-single",
+      "file": "fixtures/styled-single.mjs",
+      "sha256": "63fb48eaeddca5d3f473173d211f661411bf9e223fa930c55e91ab883233a604",
+      "plainFindings": 0,
+      "nativeValues": [
+        10,
+        20
+      ],
+      "strictFindings": [],
+      "preservedBySanitize": true,
+      "plainCLI": {
+        "exitCode": 0,
+        "findings": 0
+      },
+      "strictCLI": null
+    },
+    {
+      "name": "fullwidth-single",
+      "file": "fixtures/fullwidth-single.mjs",
+      "sha256": "b6e4e414658643ffa165bf4da35ab7160fee65779e14643a3a2aaa99d488c746",
+      "plainFindings": 0,
+      "nativeValues": [
+        10,
+        20
+      ],
+      "strictFindings": [],
+      "preservedBySanitize": true,
+      "plainCLI": {
+        "exitCode": 0,
+        "findings": 0
+      },
+      "strictCLI": null
+    },
+    {
+      "name": "canonical-word",
+      "file": "fixtures/canonical-word.mjs",
+      "sha256": "7eafe9fb155836cda2edd6c8df73f23e77e31e46a73943ec6211ee9373067c03",
+      "plainFindings": 0,
+      "nativeValues": [
+        10,
+        20
+      ],
+      "strictFindings": [],
+      "preservedBySanitize": true,
+      "plainCLI": {
+        "exitCode": 0,
+        "findings": 0
+      },
+      "strictCLI": null
+    },
+    {
+      "name": "hebrew-same-script",
+      "file": "fixtures/hebrew-same-script.mjs",
+      "sha256": "bf1504306352ae09d3ad445ba148dd465a4a0ab4477abe4e4c1cad29472557cc",
+      "plainFindings": 0,
+      "nativeValues": [
+        10,
+        20
+      ],
+      "strictFindings": [],
+      "preservedBySanitize": true,
+      "plainCLI": {
+        "exitCode": 0,
+        "findings": 0
+      },
+      "strictCLI": null
+    },
+    {
+      "name": "accented-single",
+      "file": "fixtures/accented-single.mjs",
+      "sha256": "4dbebe71788f6522a9697312b2f7571c9515600447fcd11174be3fde7f862e71",
+      "plainFindings": 0,
+      "nativeValues": [
+        10,
+        20
+      ],
+      "strictFindings": [],
+      "preservedBySanitize": true,
+      "plainCLI": {
+        "exitCode": 0,
+        "findings": 0
+      },
+      "strictCLI": null
+    },
+    {
+      "name": "letter-number",
+      "file": "fixtures/letter-number.mjs",
+      "sha256": "578ae81c9c98a4dd1c09cebd93378581da363313d91a7099abb45ad4e59a12f0",
+      "plainFindings": 0,
+      "nativeValues": [
+        10,
+        20
+      ],
+      "strictFindings": [],
+      "preservedBySanitize": true,
+      "plainCLI": {
+        "exitCode": 0,
+        "findings": 0
+      },
+      "strictCLI": null
+    },
+    {
+      "name": "other-id-start",
+      "file": "fixtures/other-id-start.mjs",
+      "sha256": "93c4c04a72bdee84ecd96a438debbc883a212d4a95cf97331ac2a7f58d166f2d",
+      "plainFindings": 0,
+      "nativeValues": [
+        10,
+        20
+      ],
+      "strictFindings": [],
+      "preservedBySanitize": true,
+      "plainCLI": {
+        "exitCode": 0,
+        "findings": 0
+      },
+      "strictCLI": null
+    },
+    {
+      "name": "dollar-prefix",
+      "file": "fixtures/dollar-prefix.mjs",
+      "sha256": "ca9553e0d64e86f0b28c08beb8fef1477f71e1c79e26fdc30f8b69079bfb3f79",
+      "plainFindings": 0,
+      "nativeValues": [
+        10,
+        20
+      ],
+      "strictFindings": [],
+      "preservedBySanitize": true,
+      "plainCLI": {
+        "exitCode": 0,
+        "findings": 0
+      },
+      "strictCLI": null
+    },
+    {
+      "name": "dollar-suffix",
+      "file": "fixtures/dollar-suffix.mjs",
+      "sha256": "22439abc96163c424a69bdf6ba8071e314b209a7e3c4132d8968662534d030be",
+      "plainFindings": 0,
+      "nativeValues": [
+        10,
+        20
+      ],
+      "strictFindings": [],
+      "preservedBySanitize": true,
+      "plainCLI": {
+        "exitCode": 0,
+        "findings": 0
+      },
+      "strictCLI": null
+    }
+  ],
+  "controls": [
+    "a a",
+    "I l 1",
+    "rn m",
+    "a β",
+    "λ",
+    "а а"
+  ],
+  "formats": {},
+  "configuration": {},
+  "discrepancies": [
+    {
+      "case": "latin-cyrillic-a",
+      "expected": 4,
+      "actual": 0
+    },
+    {
+      "case": "latin-greek-o",
+      "expected": 4,
+      "actual": 0
+    },
+    {
+      "case": "latin-greek-rho",
+      "expected": 4,
+      "actual": 0
+    },
+    {
+      "case": "cyrillic-greek-o",
+      "expected": 4,
+      "actual": 0
+    },
+    {
+      "case": "latin-ligature",
+      "expected": 4,
+      "actual": 0
+    },
+    {
+      "case": "canonical-single",
+      "expected": 4,
+      "actual": 0
+    },
+    {
+      "case": "same-script-theta",
+      "expected": 4,
+      "actual": 0
+    },
+    {
+      "case": "styled-single",
+      "expected": 4,
+      "actual": 0
+    },
+    {
+      "case": "fullwidth-single",
+      "expected": 4,
+      "actual": 0
+    },
+    {
+      "case": "canonical-word",
+      "expected": 4,
+      "actual": 0
+    },
+    {
+      "case": "hebrew-same-script",
+      "expected": 4,
+      "actual": 0
+    },
+    {
+      "case": "accented-single",
+      "expected": 4,
+      "actual": 0
+    },
+    {
+      "case": "letter-number",
+      "expected": 4,
+      "actual": 0
+    },
+    {
+      "case": "other-id-start",
+      "expected": 4,
+      "actual": 0
+    },
+    {
+      "case": "dollar-prefix",
+      "expected": 4,
+      "actual": 0
+    },
+    {
+      "case": "dollar-suffix",
+      "expected": 4,
+      "actual": 0
+    }
+  ],
+  "scope": "The code context is explicit. Default prose scans are unchanged; no source parser, binding resolver or automatic identifier renaming is claimed."
+}
