@@ -1,0 +1,26 @@
+{
+  "node20": {
+    "node": "v20.0.0",
+    "acorn": "8.19.0",
+    "all_59_dist_files_match_artifact": true,
+    "three_licences_match": true,
+    "public_subpath_import": {
+      "node": "v20.0.0",
+      "findings": 2,
+      "sourceUnchanged": true
+    },
+    "native_pairs": 31
+  },
+  "node24": {
+    "node": "v24.21.0",
+    "acorn": "8.19.0",
+    "all_59_dist_files_match_artifact": true,
+    "three_licences_match": true,
+    "public_subpath_import": {
+      "node": "v24.21.0",
+      "findings": 2,
+      "sourceUnchanged": true
+    },
+    "native_pairs": 31
+  }
+}

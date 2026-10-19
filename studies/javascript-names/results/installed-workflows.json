@@ -1,0 +1,131 @@
+{
+  "runs": [
+    {
+      "node": "v20.0.0",
+      "format": "json",
+      "exit_code": 1,
+      "output_sha256": "dcbe7f456ab5153a485996b989494ca6cc74b215f120e889f76ca17940652737"
+    },
+    {
+      "node": "v20.0.0",
+      "format": "sarif",
+      "exit_code": 1,
+      "output_sha256": "fa8bf7db1b2b1eff56939994d2ceeea63cfbded054d2f7a8f7934b74e2f2d422"
+    },
+    {
+      "node": "v20.0.0",
+      "format": "github",
+      "exit_code": 1,
+      "output_sha256": "661e34c3a5c0ea7786e08351d0b50ccf8c20fff8ff1f872b38f0e0579a129cbf"
+    },
+    {
+      "node": "v20.0.0",
+      "format": "summary",
+      "exit_code": 1,
+      "output_sha256": "6781d1bd4e4b7cfb28d9f7dff448fee0e2c6ce3f1a2e27de2ae64d807ea71867"
+    },
+    {
+      "node": "v20.0.0",
+      "format": "pretty",
+      "exit_code": 1,
+      "output_sha256": "1b3cf5f0e95c512767c0268a22d31d440ffa7a965118ee8e10083a6a2d0bd216"
+    },
+    {
+      "node": "v20.0.0",
+      "arguments": [
+        "invalid.mjs",
+        "--javascript",
+        "module",
+        "--format",
+        "json"
+      ],
+      "exit_code": 2
+    },
+    {
+      "node": "v20.0.0",
+      "arguments": [
+        "control.mjs",
+        "--javascript",
+        "module",
+        "--fix"
+      ],
+      "exit_code": 2
+    },
+    {
+      "node": "v20.0.0",
+      "arguments": [
+        "control.mjs",
+        "--javascript",
+        "module",
+        "--output",
+        "control.mjs"
+      ],
+      "exit_code": 2
+    },
+    {
+      "node": "v24.21.0",
+      "format": "json",
+      "exit_code": 1,
+      "output_sha256": "067fd25aa3b8b2159708dccde223b541eec28e2f81eaa38867cd31195ccd9f8b"
+    },
+    {
+      "node": "v24.21.0",
+      "format": "sarif",
+      "exit_code": 1,
+      "output_sha256": "fa8bf7db1b2b1eff56939994d2ceeea63cfbded054d2f7a8f7934b74e2f2d422"
+    },
+    {
+      "node": "v24.21.0",
+      "format": "github",
+      "exit_code": 1,
+      "output_sha256": "661e34c3a5c0ea7786e08351d0b50ccf8c20fff8ff1f872b38f0e0579a129cbf"
+    },
+    {
+      "node": "v24.21.0",
+      "format": "summary",
+      "exit_code": 1,
+      "output_sha256": "6781d1bd4e4b7cfb28d9f7dff448fee0e2c6ce3f1a2e27de2ae64d807ea71867"
+    },
+    {
+      "node": "v24.21.0",
+      "format": "pretty",
+      "exit_code": 1,
+      "output_sha256": "5860e1b7b68b27e2e086a136a89e023eebfc382f817d3308b2f02bd9f698da6d"
+    },
+    {
+      "node": "v24.21.0",
+      "arguments": [
+        "invalid.mjs",
+        "--javascript",
+        "module",
+        "--format",
+        "json"
+      ],
+      "exit_code": 2
+    },
+    {
+      "node": "v24.21.0",
+      "arguments": [
+        "control.mjs",
+        "--javascript",
+        "module",
+        "--fix"
+      ],
+      "exit_code": 2
+    },
+    {
+      "node": "v24.21.0",
+      "arguments": [
+        "control.mjs",
+        "--javascript",
+        "module",
+        "--output",
+        "control.mjs"
+      ],
+      "exit_code": 2
+    }
+  ],
+  "input_bytes_unchanged": true,
+  "public_subpath_declarations_compile": true,
+  "typescript": "5.9.3"
+}

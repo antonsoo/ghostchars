@@ -1,0 +1,13 @@
+
+> @antonsoloviev/ghostchars@0.1.5 build
+> npm run build:lib && npm run build:cli
+
+
+> @antonsoloviev/ghostchars@0.1.5 build:lib
+> tsc -p tsconfig.build.json
+
+
+> @antonsoloviev/ghostchars@0.1.5 build:cli
+> node esbuild.cli.mjs
+
+Built dist/cli.js

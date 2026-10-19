@@ -143,6 +143,29 @@ inference work, not isolated throughput or timing guarantees.
 node studies/javascript-names/resources.mjs . /tmp/javascript-resources.json
 ```
 
+## Installed package
+
+A clean archive of feature commit `fd65fb5` passes install, lint, type checks,
+all 396 checks and both builds on Node 24.21.0. The committed CLI matches that
+build. The [local package receipt](results/artifact-identity.json) identifies
+the tarball and all 59 compiled files; these bytes match both the source build
+used for the independent corpus and both isolated installed packages. MIT,
+Unicode and Acorn notices are present and byte-identical.
+
+The actual installed CLI repeats all 31 native controls on
+[Node 20.0.0](results/installed-node20.json.gz) and
+[Node 24.21.0](results/installed-node24.json.gz). Both installations also pass
+the [report workflow](results/installed-workflows.json): all five formats,
+explicit syntax gaps, repair refusal and protection against writing over the
+source. Original bytes remain unchanged. The public `./javascript` import
+works, and its exported TypeScript declarations compile in a consumer project.
+
+The web build and all 42 existing Chromium/Firefox workflows pass, including
+offline use and 375px views. This checks the shared-core refactor; the browser
+does not gain a JavaScript mode. The terminal capture was opened and inspected.
+These are local/source artifacts with version metadata 0.1.5; no npm registry
+release was performed.
+
 ## Limits
 
 - Names are compared across the file. This does not resolve scopes, bindings,
