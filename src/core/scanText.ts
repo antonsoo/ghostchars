@@ -39,6 +39,11 @@ export function scanText(text: string, options: ScanOptions = {}): ScanResult {
     ...scanWhitespaceAndControl(text, positionAt),
   ];
 
+  return finishScan(text, findings, options);
+}
+
+/** Shared policy and ordering for ordinary text and explicit language scans. */
+export function finishScan(text: string, findings: Finding[], options: ScanOptions): ScanResult {
   const allow = new Set(options.allowCodePoints ?? []);
   const filtered = findings
     .filter((f) => !f.codePoints.every((cp) => allow.has(cp)))

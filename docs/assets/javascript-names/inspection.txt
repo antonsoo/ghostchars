@@ -1,0 +1,27 @@
+studies/javascript-names/fixtures/latin-cyrillic-a-fixed.mjs
+  Bounded source excerpts: [[...]] marks each finding. End positions are exclusive.
+  2:7-2:8  error  confusable
+    JavaScript name "a"; a different name in this file shares its skeleton "a".
+    | const [[a]] = 10;
+    code points: U+0061
+    fix: Check the names in their scopes before renaming; this scan does not resolve bindings.
+
+  3:7-3:13  error  confusable
+    Source "\\u0430" decodes to JavaScript name "а"; a different name in this file shares its skeleton "a".
+    | const [[\u0430]] = 20;
+    code points: U+0430
+    fix: Check the names in their scopes before renaming; this scan does not resolve bindings.
+
+  4:29-4:30  error  confusable
+    JavaScript name "a"; a different name in this file shares its skeleton "a".
+    | console.log(JSON.stringify([[[a]], \u0430]));
+    code points: U+0061
+    fix: Check the names in their scopes before renaming; this scan does not resolve bindings.
+
+  4:32-4:38  error  confusable
+    Source "\\u0430" decodes to JavaScript name "а"; a different name in this file shares its skeleton "a".
+    | console.log(JSON.stringify([a, [[\u0430]]]));
+    code points: U+0430
+    fix: Check the names in their scopes before renaming; this scan does not resolve bindings.
+
+ghostchars: 4 error(s), 0 warning(s), 0 info in 1 file(s) scanned (13ms).

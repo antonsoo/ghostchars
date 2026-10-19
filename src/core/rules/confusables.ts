@@ -216,10 +216,15 @@ function scriptSignature(token: string): string {
   return [...new Set(sets.flat())].sort().join('+') || 'Latin';
 }
 
-interface Token {
+export interface IdentifierToken {
+  /** Decoded identifier, with any language namespace prefix retained. */
   text: string;
+  /** Original UTF-16 source offsets; end can differ from index + text.length. */
   index: number;
+  end?: number;
 }
+
+type Token = IdentifierToken;
 
 // The letter of a backslash escape (\n, \t, \r, \f, \v, \b) that sits in front of the next word
 // when text carries code or JSON strings with the escape written out.
@@ -297,11 +302,20 @@ function isStyledWord(token: string): boolean {
 }
 
 export function scanConfusables(text: string, positionAt: PositionLookup = positionIndex(text), isCode = false): Finding[] {
+  return scanTokens(visit => forEachToken(text, visit, isCode), positionAt, isCode);
+}
+
+/** Inspect parsed names while retaining the ranges of their original spellings. */
+export function scanIdentifierConfusables(tokens: readonly IdentifierToken[], positionAt: PositionLookup): Finding[] {
+  return scanTokens(visit => tokens.forEach(visit), positionAt, true);
+}
+
+function scanTokens(visitTokens: (visit: (token: Token) => void) => void, positionAt: PositionLookup, isCode: boolean): Finding[] {
   const findings: Finding[] = [];
   const span = (token: Token): Pick<Finding, 'start' | 'end'> => {
     return {
       start: positionAt(token.index),
-      end: positionAt(token.index + token.text.length),
+      end: positionAt(token.end ?? token.index + token.text.length),
     };
   };
 
@@ -312,7 +326,7 @@ export function scanConfusables(text: string, positionAt: PositionLookup = posit
   const bySkeleton = new Map<string, Token[]>();
   const wordsByScript = new Map<string, Set<string>>();
   const turkicWords = new Set<string>();
-  forEachToken(text, (token) => {
+  visitTokens((token) => {
     // A single letter cannot mix scripts, but two one-letter identifiers can
     // collide. Keep the short-word exclusion only for ordinary text.
     if ((!isCode && token.text.length < 2) || isAscii(token.text)) return;
@@ -345,13 +359,13 @@ export function scanConfusables(text: string, positionAt: PositionLookup = posit
 
     if (!bySkeleton.has(skeleton)) bySkeleton.set(skeleton, []);
     bySkeleton.get(skeleton)!.push(token);
-  }, isCode);
+  });
   if (bySkeleton.size === 0) return findings;
 
   // Then the ASCII identifiers that share one of those skeletons. Each distinct spelling is
   // reduced once; the ones that match nothing are remembered as such and not kept.
   const matchedSkeleton = new Map<string, string | null>();
-  forEachToken(text, (token) => {
+  visitTokens((token) => {
     if ((!isCode && token.text.length < 2) || !isAscii(token.text)) return;
     let skeleton = matchedSkeleton.get(token.text);
     if (skeleton === undefined) {
@@ -360,7 +374,7 @@ export function scanConfusables(text: string, positionAt: PositionLookup = posit
       matchedSkeleton.set(token.text, skeleton);
     }
     if (skeleton !== null) bySkeleton.get(skeleton)!.push(token);
-  }, isCode);
+  });
 
   // Report groups in the order their first spelling appears in the text, each in text order.
   const groups = [...bySkeleton].map(([skeleton, group]) => ({ skeleton, group: group.sort((a, b) => a.index - b.index) }));

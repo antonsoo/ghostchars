@@ -37,12 +37,17 @@
     ".": {
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js"
+    },
+    "./javascript": {
+      "types": "./dist/javascript.d.ts",
+      "import": "./dist/javascript.js"
     }
   },
   "files": [
     "dist",
     "LICENSE",
-    "LICENSE-UNICODE"
+    "LICENSE-UNICODE",
+    "LICENSE-ACORN"
   ],
   "scripts": {
     "generate:unicode": "node scripts/generate-unicode-data.mjs",
@@ -69,5 +74,8 @@
   },
   "allowScripts": {
     "esbuild": true
+  },
+  "dependencies": {
+    "acorn": "8.19.0"
   }
 }

@@ -1,0 +1,18 @@
+{
+  "command": [
+    "node",
+    "dist/cli.js",
+    "studies/javascript-names/fixtures/latin-cyrillic-a-fixed.mjs",
+    "--javascript",
+    "module",
+    "--no-config"
+  ],
+  "exit_code": 1,
+  "stdout_sha256": "8b3a3265fe91cb0dce7359221d2b535a89267e9e01b95eb8039d70e7b6feb6eb",
+  "source": "studies/javascript-names/fixtures/latin-cyrillic-a-fixed.mjs",
+  "source_sha256": "b094cb9b3daeacd90248e881f523fee740cb6e15a48c674983812ccddc1da40c",
+  "cli_sha256": "ccc37afda20d27d686640a2012fb19e653b4965431a243655e5ae7d4aee744ab",
+  "png_sha256": "811b875f1cfa23b0987ff13a064cd2698530ec54981b202e2b66bb51922d3b93",
+  "renderer_sha256": "404822e576414f3b69e1778863aca68229a0af1188045004694cf256b9767da8",
+  "node": "v26.7.0"
+}

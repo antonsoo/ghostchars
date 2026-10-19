@@ -20,7 +20,7 @@ Unicode gives text producers three ways to make a human and a machine read the s
 2. **Invisible and zero-width characters** (zero-width space, Hangul filler, soft hyphen, ...) can split or hide identifiers with no visible trace, and homoglyphs (Cyrillic `а` vs Latin `a`) let one name masquerade as another -- both covered by Unicode's own [UTS #39: Unicode Security Mechanisms](https://www.unicode.org/reports/tr39/).
 3. **Hidden payload encodings**: Unicode tag characters (U+E0000-U+E007F, "ASCII smuggling") and variation-selector runs can encode bytes inside what looks like an empty flag emoji or an ordinary character. A raw-text pipeline receives those code points even when its review interface does not display them.
 
-ghostchars combines these detectors in a dependency-free library, CLI and browser inspector. The findings name the characters and show decoded payloads so a reviewer can decide what to retain or remove.
+ghostchars combines these detectors in a library, standalone CLI and browser inspector. The findings name the characters and show decoded payloads so a reviewer can decide what to retain or remove.
 
 ## Quickstart
 
@@ -45,7 +45,7 @@ node dist/cli.js .
 
 ## Features
 
-- **Library** (`src/index.ts`, zero runtime dependencies, works in Node and the browser): `scanText`, `sanitize`, `reveal`, `decodeTags`, `decodeVariationSelectors`.
+- **Library** (`src/index.ts`, works in Node and the browser): `scanText`, `sanitize`, `reveal`, `decodeTags`, `decodeVariationSelectors`.
 - **CLI** (`ghostchars`): scans a path or a `git`-tracked repo, `pretty`/`json`/`sarif`/`github` output, `--fix`/`--dry-run`, `.ghostcharsrc.json` config, a `reveal` subcommand.
 - **GitHub Action** (`action.yml`): inline PR annotations or SARIF upload to code scanning.
 - **pre-commit hook** (`.pre-commit-hooks.yaml`).
@@ -59,6 +59,13 @@ ICU skeletons; code mode reports their exact spans and never renames them.
 Use `isCode: true` in the library or a matching file override. Default text scans
 remain unchanged across 83,494 pinned public documents. The browser keeps the
 ordinary text policy. [Examples, configuration and limits](studies/code-confusables/README.md).
+
+**Parsed JavaScript inspection (source CLI/library, unreleased):**
+`ghostchars file.mjs --javascript module` compares the identifier names JavaScript
+reads, including Unicode escapes. It keeps exact source spans, excludes comments
+and string contents from identifier comparisons, and reports invalid syntax as
+an incomplete scan. This mode uses pinned Acorn; the ordinary text API and browser
+do not import that parser. [Native binding examples and limits](studies/javascript-names/README.md).
 
 ## What it detects
 

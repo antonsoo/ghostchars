@@ -40,7 +40,7 @@ export interface Finding {
   message: string;
   /** Suggested fix, in prose. */
   suggestion: string;
-  /** Machine-readable decoded payload, when the finding is a smuggling rule (tags, variation selectors). */
+  /** Decoded payload, or the parsed identifier name when its source uses escapes. */
   decoded?: string;
   /** For confusables: the skeleton string this identifier/span is confusable with. */
   skeleton?: string;

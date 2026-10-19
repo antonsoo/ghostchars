@@ -1,0 +1,44 @@
+{
+  "node": "v26.7.0",
+  "typescript": "5.9.3",
+  "packages": [
+    {
+      "name": "acorn",
+      "version": "8.19.0",
+      "license": "MIT"
+    },
+    {
+      "name": "eslint",
+      "version": "9.39.5",
+      "license": "MIT"
+    },
+    {
+      "name": "@eslint/js",
+      "version": "9.39.5",
+      "license": "MIT"
+    },
+    {
+      "name": "typescript",
+      "version": "5.9.3",
+      "license": "Apache-2.0"
+    }
+  ],
+  "script_sha256": "3aaf51f0592bad0b9f873e72ba5159a3dc168804d335f1f16c6b432998605adb",
+  "lockfile_sha256": "b0273c9248d2d6d5d00bd17bb47c81ca92c9e03416dbc18491c460cb9b8fa4cf",
+  "summary": {
+    "files": 430,
+    "bytes": 18652730,
+    "identifiers": 774584,
+    "raw_confusable_findings": 0,
+    "raw_ranges_outside_identifiers": 0,
+    "parsed_confusable_findings": 0
+  },
+  "scope": "Locked dependency source; independent parser/range consistency, not an attack-labelled or held-out accuracy benchmark.",
+  "runtime_javascript_files": 30,
+  "full_receipt": {
+    "file": "native-source-corpus-full.json.gz",
+    "bytes": 26966,
+    "sha256": "5280707c3aa1fead80990e57195dceddd3c2cff15e8c33a8dcad630c7eac0f71",
+    "uncompressed_sha256": "7d16ebb5bd387950513bf12e708ecd1f069c413f192cc17ba4af68a1ef8112e6"
+  }
+}

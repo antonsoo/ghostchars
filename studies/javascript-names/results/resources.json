@@ -1,0 +1,49 @@
+{
+  "scope": "One fresh process per mode/input on the 14-vCPU, 48-GB WSL2 host while fixed inference jobs run; not isolated throughput. RSS includes interpreter, imports and source buffers.",
+  "runs": [
+    {
+      "mode": "raw",
+      "bytes": 145,
+      "codeUnits": 145,
+      "findings": 0,
+      "elapsedMs": 0.12425600000000259,
+      "maxRssKiB": 61536,
+      "node": "v26.7.0",
+      "file": "studies/javascript-names/fixtures/latin-cyrillic-a-fixed.mjs",
+      "inputSha256": "b094cb9b3daeacd90248e881f523fee740cb6e15a48c674983812ccddc1da40c"
+    },
+    {
+      "mode": "parsed",
+      "bytes": 145,
+      "codeUnits": 145,
+      "findings": 4,
+      "elapsedMs": 16.500455000000017,
+      "maxRssKiB": 62596,
+      "node": "v26.7.0",
+      "file": "studies/javascript-names/fixtures/latin-cyrillic-a-fixed.mjs",
+      "inputSha256": "b094cb9b3daeacd90248e881f523fee740cb6e15a48c674983812ccddc1da40c"
+    },
+    {
+      "mode": "raw",
+      "bytes": 9112572,
+      "codeUnits": 9112572,
+      "findings": 0,
+      "elapsedMs": 28.246365000000026,
+      "maxRssKiB": 77284,
+      "node": "v26.7.0",
+      "file": "node_modules/typescript/lib/typescript.js",
+      "inputSha256": "3ae902c92cc44dace175c0e69e13a4b0899f6983c6121d76b9ab8dd5795e7675"
+    },
+    {
+      "mode": "parsed",
+      "bytes": 9112572,
+      "codeUnits": 9112572,
+      "findings": 0,
+      "elapsedMs": 3182.174814,
+      "maxRssKiB": 305600,
+      "node": "v26.7.0",
+      "file": "node_modules/typescript/lib/typescript.js",
+      "inputSha256": "3ae902c92cc44dace175c0e69e13a4b0899f6983c6121d76b9ab8dd5795e7675"
+    }
+  ]
+}

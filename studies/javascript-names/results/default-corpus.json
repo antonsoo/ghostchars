@@ -1,0 +1,20 @@
+{
+  "node": "v26.7.0",
+  "manifestSha256": "4918139517b95809158fbf484befc670943054fbacd9ad7ada50034a2146ce84",
+  "docs": 83494,
+  "bytes": 155361980,
+  "inputSha256": "1175ffa359bfdadcd06d38b6f7cbc850e390c174d319937decf41536796f3cc4",
+  "before": {
+    "findings": 18610,
+    "outputSha256": "9b7c2c0dd19628a9320f4ad437b748dabb4844fe6f0cacb41c6d3414df095172",
+    "scanMs": 16775.55966399874
+  },
+  "after": {
+    "findings": 18610,
+    "outputSha256": "9b7c2c0dd19628a9320f4ad437b748dabb4844fe6f0cacb41c6d3414df095172",
+    "scanMs": 16950.78706100001
+  },
+  "timingScope": "One sequential local pass; baseline runs first for each input. Not an isolated benchmark.",
+  "changed": [],
+  "unrelatedRulesIdentical": true
+}

@@ -11,6 +11,15 @@ All notable changes to this project are documented in this file.
 
 ### Added
 
+- Explicit source CLI `--javascript module|script|commonjs` and library
+  `@antonsoloviev/ghostchars/javascript` parse JavaScript before comparing names.
+  Unicode escapes retain their original source ranges and decoded names;
+  comments, literal contents and equivalent spellings do not invent identifier
+  collisions. Private names keep their own namespace. Unsupported syntax makes
+  the CLI scan incomplete. This inspection mode refuses repair. Acorn 8.19.0 is
+  pinned and its MIT notice accompanies the bundled CLI. Ordinary scan behavior
+  is unchanged on the pinned 83,494-document replay.
+
 - Source CLI `--code`, library `isCode: true`, and global/per-file `isCode`
   configuration select confusable checks without prose collision exemptions.
   Retain short, styled, canonically equivalent and same-script candidates;

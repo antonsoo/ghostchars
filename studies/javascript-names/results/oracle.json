@@ -1,0 +1,445 @@
+{
+  "scope": "Authored native binding controls; not attack prevalence or detection accuracy.",
+  "script_sha256": "e2742fd8ce34391415009926bb0f5d2d848b31c9b3ef96e7f9610e4533ceb38f",
+  "icu_helper_sha256": "9ec326ff672b2e085bd7c6d55a3eca36ff0c752cf647a705f2e4d87e04028599",
+  "icu_pairs_sha256": "05b0c2a3ad17d906d42ba2923caf60ad27376052ad0548ff9dba982da629ad58",
+  "icu_version": "74.2.0.0",
+  "icu_unicode_version": "15.1.0.0",
+  "node": "v26.7.0",
+  "cases": [
+    {
+      "file": "fixtures/latin-cyrillic-a-fixed.mjs",
+      "sha256": "b094cb9b3daeacd90248e881f523fee740cb6e15a48c674983812ccddc1da40c",
+      "left": "a",
+      "right": "\u0430",
+      "right_source": "\\u0430",
+      "skeleton": "a",
+      "native_stdout": "[10,20]\n",
+      "native_values": [
+        10,
+        20
+      ],
+      "encoding": "fixed"
+    },
+    {
+      "file": "fixtures/latin-cyrillic-a-braced.mjs",
+      "sha256": "86cf092afe4b1d39db51fcdb44da2c11cf53a33a6cea49498342374c0252861e",
+      "left": "a",
+      "right": "\u0430",
+      "right_source": "\\u{430}",
+      "skeleton": "a",
+      "native_stdout": "[10,20]\n",
+      "native_values": [
+        10,
+        20
+      ],
+      "encoding": "braced"
+    },
+    {
+      "file": "fixtures/latin-greek-o-fixed.mjs",
+      "sha256": "afca45556a10d5bae1d1bcf0684695a4246dc5cf52fb29a9d1c8d098aebba789",
+      "left": "o",
+      "right": "\u03bf",
+      "right_source": "\\u03BF",
+      "skeleton": "o",
+      "native_stdout": "[10,20]\n",
+      "native_values": [
+        10,
+        20
+      ],
+      "encoding": "fixed"
+    },
+    {
+      "file": "fixtures/latin-greek-o-braced.mjs",
+      "sha256": "a503a1dcafdc79fcaa79414768bea88e262a3e8e0b53b213292e5892e3771249",
+      "left": "o",
+      "right": "\u03bf",
+      "right_source": "\\u{3BF}",
+      "skeleton": "o",
+      "native_stdout": "[10,20]\n",
+      "native_values": [
+        10,
+        20
+      ],
+      "encoding": "braced"
+    },
+    {
+      "file": "fixtures/latin-greek-rho-fixed.mjs",
+      "sha256": "d65feda0324c4931a49876e9c0c9b4a7debe860105c9fd1a2482465b8cda4805",
+      "left": "p",
+      "right": "\u03c1",
+      "right_source": "\\u03C1",
+      "skeleton": "p",
+      "native_stdout": "[10,20]\n",
+      "native_values": [
+        10,
+        20
+      ],
+      "encoding": "fixed"
+    },
+    {
+      "file": "fixtures/latin-greek-rho-braced.mjs",
+      "sha256": "46edacaef27b2a0a1b84226737d9f6596581a860b23f15e3af3009b364d6e76c",
+      "left": "p",
+      "right": "\u03c1",
+      "right_source": "\\u{3C1}",
+      "skeleton": "p",
+      "native_stdout": "[10,20]\n",
+      "native_values": [
+        10,
+        20
+      ],
+      "encoding": "braced"
+    },
+    {
+      "file": "fixtures/cyrillic-greek-o-fixed.mjs",
+      "sha256": "03c10b54725a6dd8ee59b3bf37fb896696ad60e825ca1fa8478a7be51ce175da",
+      "left": "\u043e",
+      "right": "\u03bf",
+      "right_source": "\\u03BF",
+      "skeleton": "o",
+      "native_stdout": "[10,20]\n",
+      "native_values": [
+        10,
+        20
+      ],
+      "encoding": "fixed"
+    },
+    {
+      "file": "fixtures/cyrillic-greek-o-braced.mjs",
+      "sha256": "cea8c7aec866da21654606e5f065a96093376695bb238aece463b65bf2d72679",
+      "left": "\u043e",
+      "right": "\u03bf",
+      "right_source": "\\u{3BF}",
+      "skeleton": "o",
+      "native_stdout": "[10,20]\n",
+      "native_values": [
+        10,
+        20
+      ],
+      "encoding": "braced"
+    },
+    {
+      "file": "fixtures/latin-ligature-fixed.mjs",
+      "sha256": "24197c8e41df54589dddc225a616ca2023491967d7fe5fab1c6b5274c4171e6b",
+      "left": "ff",
+      "right": "\ufb00",
+      "right_source": "\\uFB00",
+      "skeleton": "ff",
+      "native_stdout": "[10,20]\n",
+      "native_values": [
+        10,
+        20
+      ],
+      "encoding": "fixed"
+    },
+    {
+      "file": "fixtures/latin-ligature-braced.mjs",
+      "sha256": "89dce67beb8a547fe5e0a4c5009bc41d6d31db8ce5e4fb9f3a66116bf7e8a4bb",
+      "left": "ff",
+      "right": "\ufb00",
+      "right_source": "\\u{FB00}",
+      "skeleton": "ff",
+      "native_stdout": "[10,20]\n",
+      "native_values": [
+        10,
+        20
+      ],
+      "encoding": "braced"
+    },
+    {
+      "file": "fixtures/canonical-single-fixed.mjs",
+      "sha256": "dc7644b9d4331321e2e693c3515bb54a00dad94312560380df7c00a5bd5617ff",
+      "left": "\u00e9",
+      "right": "e\u0301",
+      "right_source": "\\u0065\\u0301",
+      "skeleton": "e\u0301",
+      "native_stdout": "[10,20]\n",
+      "native_values": [
+        10,
+        20
+      ],
+      "encoding": "fixed"
+    },
+    {
+      "file": "fixtures/canonical-single-braced.mjs",
+      "sha256": "48ba87971647a8e6a2bd8266c8073ed7f2f8d8cf8656419db9cf48a83eec0629",
+      "left": "\u00e9",
+      "right": "e\u0301",
+      "right_source": "\\u{65}\\u{301}",
+      "skeleton": "e\u0301",
+      "native_stdout": "[10,20]\n",
+      "native_values": [
+        10,
+        20
+      ],
+      "encoding": "braced"
+    },
+    {
+      "file": "fixtures/same-script-theta-fixed.mjs",
+      "sha256": "8a60418ab8aecf5f2e36014d57d6131a09abdd13307b6c3ba326023ccc79ebcc",
+      "left": "\u03b8",
+      "right": "\u03d1",
+      "right_source": "\\u03D1",
+      "skeleton": "O\u0335",
+      "native_stdout": "[10,20]\n",
+      "native_values": [
+        10,
+        20
+      ],
+      "encoding": "fixed"
+    },
+    {
+      "file": "fixtures/same-script-theta-braced.mjs",
+      "sha256": "d36c97d2424bbfda854c006ea5eb465b1e49396b11b96e83f690a0655d847f16",
+      "left": "\u03b8",
+      "right": "\u03d1",
+      "right_source": "\\u{3D1}",
+      "skeleton": "O\u0335",
+      "native_stdout": "[10,20]\n",
+      "native_values": [
+        10,
+        20
+      ],
+      "encoding": "braced"
+    },
+    {
+      "file": "fixtures/styled-single-braced.mjs",
+      "sha256": "961f652d3d32f787fbc7c407e993cc9e0b8c451d643d1dcf049781c0c7eac4c8",
+      "left": "a",
+      "right": "\ud835\udc1a",
+      "right_source": "\\u{1D41A}",
+      "skeleton": "a",
+      "native_stdout": "[10,20]\n",
+      "native_values": [
+        10,
+        20
+      ],
+      "encoding": "braced"
+    },
+    {
+      "file": "fixtures/fullwidth-single-fixed.mjs",
+      "sha256": "fe9b39caf67cfac96c008b311947baaba42b1eb35e8b0036a0c9ce4eff6e27b8",
+      "left": "a",
+      "right": "\uff41",
+      "right_source": "\\uFF41",
+      "skeleton": "a",
+      "native_stdout": "[10,20]\n",
+      "native_values": [
+        10,
+        20
+      ],
+      "encoding": "fixed"
+    },
+    {
+      "file": "fixtures/fullwidth-single-braced.mjs",
+      "sha256": "f44ca9c6e00cef7dbcd241f2d028231d0b786dae096902bcf8503c3ab791db5b",
+      "left": "a",
+      "right": "\uff41",
+      "right_source": "\\u{FF41}",
+      "skeleton": "a",
+      "native_stdout": "[10,20]\n",
+      "native_values": [
+        10,
+        20
+      ],
+      "encoding": "braced"
+    },
+    {
+      "file": "fixtures/canonical-word-fixed.mjs",
+      "sha256": "d911b8edf43dff8bdf3cb05fad7281c9c7de1e1d6b37df602bdb4f94df968c87",
+      "left": "caf\u00e9",
+      "right": "cafe\u0301",
+      "right_source": "\\u0063\\u0061\\u0066\\u0065\\u0301",
+      "skeleton": "cafe\u0301",
+      "native_stdout": "[10,20]\n",
+      "native_values": [
+        10,
+        20
+      ],
+      "encoding": "fixed"
+    },
+    {
+      "file": "fixtures/canonical-word-braced.mjs",
+      "sha256": "9bece877b46c8115041eeb23888bea55e656680cb2fbb2e01abc417f984fd155",
+      "left": "caf\u00e9",
+      "right": "cafe\u0301",
+      "right_source": "\\u{63}\\u{61}\\u{66}\\u{65}\\u{301}",
+      "skeleton": "cafe\u0301",
+      "native_stdout": "[10,20]\n",
+      "native_values": [
+        10,
+        20
+      ],
+      "encoding": "braced"
+    },
+    {
+      "file": "fixtures/hebrew-same-script-fixed.mjs",
+      "sha256": "a0cbec22201ffba1dd1f5c3b6dddd90c6841b8cbcc9ea39a4b983c5cbca51635",
+      "left": "\u05d5",
+      "right": "\u05df",
+      "right_source": "\\u05DF",
+      "skeleton": "l",
+      "native_stdout": "[10,20]\n",
+      "native_values": [
+        10,
+        20
+      ],
+      "encoding": "fixed"
+    },
+    {
+      "file": "fixtures/hebrew-same-script-braced.mjs",
+      "sha256": "cbe87150494be7515074b0d78db35d9cd791b8163c36101eb257e57906881353",
+      "left": "\u05d5",
+      "right": "\u05df",
+      "right_source": "\\u{5DF}",
+      "skeleton": "l",
+      "native_stdout": "[10,20]\n",
+      "native_values": [
+        10,
+        20
+      ],
+      "encoding": "braced"
+    },
+    {
+      "file": "fixtures/accented-single-fixed.mjs",
+      "sha256": "c6a517d5c8bb7552b6f2bed41a42ac221bc4dbe5e9e3f185c327d9fc467c1ad7",
+      "left": "\u00e1",
+      "right": "\u0430\u0301",
+      "right_source": "\\u0430\\u0301",
+      "skeleton": "a\u0301",
+      "native_stdout": "[10,20]\n",
+      "native_values": [
+        10,
+        20
+      ],
+      "encoding": "fixed"
+    },
+    {
+      "file": "fixtures/accented-single-braced.mjs",
+      "sha256": "2a53be817ab3aee7a8eceb89543d637f568fc771fdc92d3097462dafc8cad29b",
+      "left": "\u00e1",
+      "right": "\u0430\u0301",
+      "right_source": "\\u{430}\\u{301}",
+      "skeleton": "a\u0301",
+      "native_stdout": "[10,20]\n",
+      "native_values": [
+        10,
+        20
+      ],
+      "encoding": "braced"
+    },
+    {
+      "file": "fixtures/letter-number-fixed.mjs",
+      "sha256": "b0cda780f02b2259ab5589e28a364dc8cb9f2022973f6858ca5e077aca8e89ec",
+      "left": "I",
+      "right": "\u2160",
+      "right_source": "\\u2160",
+      "skeleton": "l",
+      "native_stdout": "[10,20]\n",
+      "native_values": [
+        10,
+        20
+      ],
+      "encoding": "fixed"
+    },
+    {
+      "file": "fixtures/letter-number-braced.mjs",
+      "sha256": "3dbe43ff15575e1e3dbcffc8cee178f30eaef62348afc4e21b3d0417652ab908",
+      "left": "I",
+      "right": "\u2160",
+      "right_source": "\\u{2160}",
+      "skeleton": "l",
+      "native_stdout": "[10,20]\n",
+      "native_values": [
+        10,
+        20
+      ],
+      "encoding": "braced"
+    },
+    {
+      "file": "fixtures/other-id-start-fixed.mjs",
+      "sha256": "7001d5265fe1e739b5bca94fa90368323b9bcb0d83718320b7b5563b5d251055",
+      "left": "e",
+      "right": "\u212e",
+      "right_source": "\\u212E",
+      "skeleton": "e",
+      "native_stdout": "[10,20]\n",
+      "native_values": [
+        10,
+        20
+      ],
+      "encoding": "fixed"
+    },
+    {
+      "file": "fixtures/other-id-start-braced.mjs",
+      "sha256": "fbf02a0e47442f09ec6ab3d664b7160ed93261ff382c6e63a8f1781a32d5cec1",
+      "left": "e",
+      "right": "\u212e",
+      "right_source": "\\u{212E}",
+      "skeleton": "e",
+      "native_stdout": "[10,20]\n",
+      "native_values": [
+        10,
+        20
+      ],
+      "encoding": "braced"
+    },
+    {
+      "file": "fixtures/dollar-prefix-fixed.mjs",
+      "sha256": "11fb58697391619afbd355a88fcce58601e9cc289e28174366d08d9fd01d2ba1",
+      "left": "$a",
+      "right": "$\u0430",
+      "right_source": "\\u0024\\u0430",
+      "skeleton": "$a",
+      "native_stdout": "[10,20]\n",
+      "native_values": [
+        10,
+        20
+      ],
+      "encoding": "fixed"
+    },
+    {
+      "file": "fixtures/dollar-prefix-braced.mjs",
+      "sha256": "3f517a48356fe9c0dbfb326b17324eebfee235165e65773544ef5d84f46f0ef1",
+      "left": "$a",
+      "right": "$\u0430",
+      "right_source": "\\u{24}\\u{430}",
+      "skeleton": "$a",
+      "native_stdout": "[10,20]\n",
+      "native_values": [
+        10,
+        20
+      ],
+      "encoding": "braced"
+    },
+    {
+      "file": "fixtures/dollar-suffix-fixed.mjs",
+      "sha256": "400027a9b0d532672f3bfd2f81642b4365c3faec441497508e9f183482333802",
+      "left": "a$",
+      "right": "\u0430$",
+      "right_source": "\\u0430\\u0024",
+      "skeleton": "a$",
+      "native_stdout": "[10,20]\n",
+      "native_values": [
+        10,
+        20
+      ],
+      "encoding": "fixed"
+    },
+    {
+      "file": "fixtures/dollar-suffix-braced.mjs",
+      "sha256": "c243afd05f8753fdc32cef2e2ef09a23e097c738a6fad76c5021cee16e07015a",
+      "left": "a$",
+      "right": "\u0430$",
+      "right_source": "\\u{430}\\u{24}",
+      "skeleton": "a$",
+      "native_stdout": "[10,20]\n",
+      "native_values": [
+        10,
+        20
+      ],
+      "encoding": "braced"
+    }
+  ]
+}

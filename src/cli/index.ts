@@ -3,6 +3,8 @@ import { readFileSync, realpathSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { resolve } from 'node:path';
 import { scanText } from '../core/index.js';
+import { scanJavaScript } from '../core/javascript.js';
+import type { JavaScriptSourceType } from '../core/javascript.js';
 import { diagnosticText } from '../core/diagnosticText.js';
 import type { ScanOptions } from '../core/index.js';
 import { loadConfig, scanOptionsForFile } from './config.js';
@@ -37,6 +39,7 @@ Options:
   --config <path>                       Path to a .ghostcharsrc.json (default: ./.ghostcharsrc.json)
   --no-config                           Ignore any .ghostcharsrc.json
   --code                                Check confusables without prose exemptions (no source parser)
+  --javascript <module|script|commonjs>  Parse JavaScript identifier names and escapes (inspection only)
   --output <path>                       Write the scan report to a separate file after scanning
   --quiet                               Suppress the summary line
 
@@ -44,7 +47,7 @@ Exit codes: 0 = no error-level findings, 1 = error-level findings present, 2 = u
 `;
 
 function parseArgs(argv: string[]) {
-  const args = { format: 'pretty', fix: false, dryRun: false, code: false, config: undefined as string | undefined, output: undefined as string | undefined, noConfig: false, quiet: false, help: false, version: false, paths: [] as string[], command: 'scan' as 'scan' | 'reveal' };
+  const args = { format: 'pretty', fix: false, dryRun: false, code: false, javascript: undefined as JavaScriptSourceType | undefined, config: undefined as string | undefined, output: undefined as string | undefined, noConfig: false, quiet: false, help: false, version: false, paths: [] as string[], command: 'scan' as 'scan' | 'reveal' };
   let i = 0;
   if (argv[0] === 'reveal') {
     args.command = 'reveal';
@@ -59,6 +62,11 @@ function parseArgs(argv: string[]) {
     else if (a === '--quiet' || a === '-q') args.quiet = true;
     else if (a === '--no-config') args.noConfig = true;
     else if (a === '--code') args.code = true;
+    else if (a === '--javascript' || a.startsWith('--javascript=')) {
+      const value = a === '--javascript' ? argv[++i] : a.slice('--javascript='.length);
+      if (value !== 'module' && value !== 'script' && value !== 'commonjs') throw new UsageError('--javascript requires module, script or commonjs');
+      args.javascript = value;
+    }
     else if (a === '--format') args.format = argv[++i] ?? 'pretty';
     else if (a.startsWith('--format=')) args.format = a.slice('--format='.length);
     else if (a === '--config') {
@@ -80,6 +88,9 @@ function parseArgs(argv: string[]) {
   if (args.output === '') throw new UsageError('--output requires a file path');
   if (args.output && args.command === 'reveal') throw new UsageError('--output is for scan reports; reveal writes to stdout');
   if (args.code && args.command === 'reveal') throw new UsageError('--code is for scans; reveal does not classify identifiers');
+  if (args.javascript && args.command === 'reveal') throw new UsageError('--javascript is for scans; reveal does not parse source');
+  if (args.javascript && args.code) throw new UsageError('Choose --javascript or --code');
+  if (args.javascript && (args.fix || args.dryRun)) throw new UsageError('--javascript is inspection only; source identifiers are never repaired');
   return args;
 }
 
@@ -159,7 +170,15 @@ export function main(argv: string[]): number {
 
     const options: ScanOptions = scanOptionsForFile(config, file.path);
     if (args.code) options.isCode = true;
-    const { findings } = scanText(source, options);
+    let findings;
+    try {
+      ({ findings } = args.javascript
+        ? scanJavaScript(source, { ...options, sourceType: args.javascript })
+        : scanText(source, options));
+    } catch (err) {
+      report.errors.push({ path: file.path, reason: `scan error: ${(err as Error).message}` });
+      continue;
+    }
     report.files.push({ path: file.path, source, findings });
 
     if (args.fix && findings.some((f) => f.fixable)) {
