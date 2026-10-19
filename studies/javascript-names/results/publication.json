@@ -1,0 +1,363 @@
+{
+  "source_commit": "86869bc3721ee2999bc5de33a6aca1d23839974b",
+  "base_commit": "e12e0708a57296cd0d7bb3d079663caf7250a4c6",
+  "all_public_bytes_match_git_objects": true,
+  "files": [
+    {
+      "file": "CHANGELOG.md",
+      "bytes": 22830,
+      "sha256": "4aef049ee9f053d1b31f76f4f997982fce4e7e626834e7029fc8fbf70471e4fe"
+    },
+    {
+      "file": "LICENSE-ACORN",
+      "bytes": 1099,
+      "sha256": "76a876cf886ff9be2a8b5e2e86514fed06223c8c9f0c1e9ee9606e93841e00b7"
+    },
+    {
+      "file": "README.md",
+      "bytes": 36546,
+      "sha256": "c429da512f45438723f1c7f8323270ea36f35235ef4233823d0019f67db26a10"
+    },
+    {
+      "file": "dist/cli.js",
+      "bytes": 836847,
+      "sha256": "ccc37afda20d27d686640a2012fb19e653b4965431a243655e5ae7d4aee744ab"
+    },
+    {
+      "file": "docs/assets/javascript-names/capture.json",
+      "bytes": 720,
+      "sha256": "a562ae1a5b3bf92a086b2d30709f4c2dc70d2655d061a6596cfc0635919cbef8"
+    },
+    {
+      "file": "docs/assets/javascript-names/inspection.png",
+      "bytes": 295719,
+      "sha256": "811b875f1cfa23b0987ff13a064cd2698530ec54981b202e2b66bb51922d3b93"
+    },
+    {
+      "file": "docs/assets/javascript-names/inspection.txt",
+      "bytes": 1355,
+      "sha256": "8b3a3265fe91cb0dce7359221d2b535a89267e9e01b95eb8039d70e7b6feb6eb"
+    },
+    {
+      "file": "esbuild.cli.mjs",
+      "bytes": 482,
+      "sha256": "a991522abfc066d327309460cb0576a5d1641d9b42976ece7616a03259b71594"
+    },
+    {
+      "file": "package-lock.json",
+      "bytes": 106325,
+      "sha256": "b0273c9248d2d6d5d00bd17bb47c81ca92c9e03416dbc18491c460cb9b8fa4cf"
+    },
+    {
+      "file": "package.json",
+      "bytes": 2050,
+      "sha256": "b055aa71d22c0aaad75ff63665f26241bf121651973e193d9f23a00a0ded4d03"
+    },
+    {
+      "file": "src/cli/index.ts",
+      "bytes": 11419,
+      "sha256": "b86b6c21cb93422755b762e00300d57e74a6899be0e98c921ea298bcabb36449"
+    },
+    {
+      "file": "src/core/javascript.ts",
+      "bytes": 3952,
+      "sha256": "97d650d711dba1711c4cd9258b9119dfdd614c98c6701b180d221cf60010ab8a"
+    },
+    {
+      "file": "src/core/rules/confusables.ts",
+      "bytes": 22293,
+      "sha256": "2cb6e79dd62a47f8c8cabeeae0563988abb8fc1acf67ae7c6198547b0472d858"
+    },
+    {
+      "file": "src/core/scanText.ts",
+      "bytes": 3129,
+      "sha256": "227d74b1320f61d3640862c53104dda9ab09d18a2913d98112fb15b7a69da8a6"
+    },
+    {
+      "file": "src/core/types.ts",
+      "bytes": 4099,
+      "sha256": "9ba4e308a303906495098a726f35af71943dfc44252e6c330eccd91393f4550c"
+    },
+    {
+      "file": "src/javascript.ts",
+      "bytes": 204,
+      "sha256": "cffe05b47dc0a225551de1d4be0624b29408581fc6697be73d140771a1e2a688"
+    },
+    {
+      "file": "studies/javascript-names/README.md",
+      "bytes": 9848,
+      "sha256": "ebd798fe5bb9685ba06bd9e9a40635a46742bee0c4053417a9e2b6778b945328"
+    },
+    {
+      "file": "studies/javascript-names/fixtures/accented-single-braced.mjs",
+      "bytes": 163,
+      "sha256": "2a53be817ab3aee7a8eceb89543d637f568fc771fdc92d3097462dafc8cad29b"
+    },
+    {
+      "file": "studies/javascript-names/fixtures/accented-single-fixed.mjs",
+      "bytes": 159,
+      "sha256": "c6a517d5c8bb7552b6f2bed41a42ac221bc4dbe5e9e3f185c327d9fc467c1ad7"
+    },
+    {
+      "file": "studies/javascript-names/fixtures/canonical-single-braced.mjs",
+      "bytes": 161,
+      "sha256": "48ba87971647a8e6a2bd8266c8073ed7f2f8d8cf8656419db9cf48a83eec0629"
+    },
+    {
+      "file": "studies/javascript-names/fixtures/canonical-single-fixed.mjs",
+      "bytes": 159,
+      "sha256": "dc7644b9d4331321e2e693c3515bb54a00dad94312560380df7c00a5bd5617ff"
+    },
+    {
+      "file": "studies/javascript-names/fixtures/canonical-word-braced.mjs",
+      "bytes": 203,
+      "sha256": "9bece877b46c8115041eeb23888bea55e656680cb2fbb2e01abc417f984fd155"
+    },
+    {
+      "file": "studies/javascript-names/fixtures/canonical-word-fixed.mjs",
+      "bytes": 201,
+      "sha256": "d911b8edf43dff8bdf3cb05fad7281c9c7de1e1d6b37df602bdb4f94df968c87"
+    },
+    {
+      "file": "studies/javascript-names/fixtures/cyrillic-greek-o-braced.mjs",
+      "bytes": 149,
+      "sha256": "cea8c7aec866da21654606e5f065a96093376695bb238aece463b65bf2d72679"
+    },
+    {
+      "file": "studies/javascript-names/fixtures/cyrillic-greek-o-fixed.mjs",
+      "bytes": 147,
+      "sha256": "03c10b54725a6dd8ee59b3bf37fb896696ad60e825ca1fa8478a7be51ce175da"
+    },
+    {
+      "file": "studies/javascript-names/fixtures/dollar-prefix-braced.mjs",
+      "bytes": 161,
+      "sha256": "3f517a48356fe9c0dbfb326b17324eebfee235165e65773544ef5d84f46f0ef1"
+    },
+    {
+      "file": "studies/javascript-names/fixtures/dollar-prefix-fixed.mjs",
+      "bytes": 159,
+      "sha256": "11fb58697391619afbd355a88fcce58601e9cc289e28174366d08d9fd01d2ba1"
+    },
+    {
+      "file": "studies/javascript-names/fixtures/dollar-suffix-braced.mjs",
+      "bytes": 161,
+      "sha256": "c243afd05f8753fdc32cef2e2ef09a23e097c738a6fad76c5021cee16e07015a"
+    },
+    {
+      "file": "studies/javascript-names/fixtures/dollar-suffix-fixed.mjs",
+      "bytes": 159,
+      "sha256": "400027a9b0d532672f3bfd2f81642b4365c3faec441497508e9f183482333802"
+    },
+    {
+      "file": "studies/javascript-names/fixtures/fullwidth-single-braced.mjs",
+      "bytes": 149,
+      "sha256": "f44ca9c6e00cef7dbcd241f2d028231d0b786dae096902bcf8503c3ab791db5b"
+    },
+    {
+      "file": "studies/javascript-names/fixtures/fullwidth-single-fixed.mjs",
+      "bytes": 145,
+      "sha256": "fe9b39caf67cfac96c008b311947baaba42b1eb35e8b0036a0c9ce4eff6e27b8"
+    },
+    {
+      "file": "studies/javascript-names/fixtures/hebrew-same-script-braced.mjs",
+      "bytes": 149,
+      "sha256": "cbe87150494be7515074b0d78db35d9cd791b8163c36101eb257e57906881353"
+    },
+    {
+      "file": "studies/javascript-names/fixtures/hebrew-same-script-fixed.mjs",
+      "bytes": 147,
+      "sha256": "a0cbec22201ffba1dd1f5c3b6dddd90c6841b8cbcc9ea39a4b983c5cbca51635"
+    },
+    {
+      "file": "studies/javascript-names/fixtures/latin-cyrillic-a-braced.mjs",
+      "bytes": 147,
+      "sha256": "86cf092afe4b1d39db51fcdb44da2c11cf53a33a6cea49498342374c0252861e"
+    },
+    {
+      "file": "studies/javascript-names/fixtures/latin-cyrillic-a-fixed.mjs",
+      "bytes": 145,
+      "sha256": "b094cb9b3daeacd90248e881f523fee740cb6e15a48c674983812ccddc1da40c"
+    },
+    {
+      "file": "studies/javascript-names/fixtures/latin-greek-o-braced.mjs",
+      "bytes": 147,
+      "sha256": "a503a1dcafdc79fcaa79414768bea88e262a3e8e0b53b213292e5892e3771249"
+    },
+    {
+      "file": "studies/javascript-names/fixtures/latin-greek-o-fixed.mjs",
+      "bytes": 145,
+      "sha256": "afca45556a10d5bae1d1bcf0684695a4246dc5cf52fb29a9d1c8d098aebba789"
+    },
+    {
+      "file": "studies/javascript-names/fixtures/latin-greek-rho-braced.mjs",
+      "bytes": 147,
+      "sha256": "46edacaef27b2a0a1b84226737d9f6596581a860b23f15e3af3009b364d6e76c"
+    },
+    {
+      "file": "studies/javascript-names/fixtures/latin-greek-rho-fixed.mjs",
+      "bytes": 145,
+      "sha256": "d65feda0324c4931a49876e9c0c9b4a7debe860105c9fd1a2482465b8cda4805"
+    },
+    {
+      "file": "studies/javascript-names/fixtures/latin-ligature-braced.mjs",
+      "bytes": 151,
+      "sha256": "89dce67beb8a547fe5e0a4c5009bc41d6d31db8ce5e4fb9f3a66116bf7e8a4bb"
+    },
+    {
+      "file": "studies/javascript-names/fixtures/latin-ligature-fixed.mjs",
+      "bytes": 147,
+      "sha256": "24197c8e41df54589dddc225a616ca2023491967d7fe5fab1c6b5274c4171e6b"
+    },
+    {
+      "file": "studies/javascript-names/fixtures/letter-number-braced.mjs",
+      "bytes": 149,
+      "sha256": "3dbe43ff15575e1e3dbcffc8cee178f30eaef62348afc4e21b3d0417652ab908"
+    },
+    {
+      "file": "studies/javascript-names/fixtures/letter-number-fixed.mjs",
+      "bytes": 145,
+      "sha256": "b0cda780f02b2259ab5589e28a364dc8cb9f2022973f6858ca5e077aca8e89ec"
+    },
+    {
+      "file": "studies/javascript-names/fixtures/other-id-start-braced.mjs",
+      "bytes": 149,
+      "sha256": "fbf02a0e47442f09ec6ab3d664b7160ed93261ff382c6e63a8f1781a32d5cec1"
+    },
+    {
+      "file": "studies/javascript-names/fixtures/other-id-start-fixed.mjs",
+      "bytes": 145,
+      "sha256": "7001d5265fe1e739b5bca94fa90368323b9bcb0d83718320b7b5563b5d251055"
+    },
+    {
+      "file": "studies/javascript-names/fixtures/same-script-theta-braced.mjs",
+      "bytes": 149,
+      "sha256": "d36c97d2424bbfda854c006ea5eb465b1e49396b11b96e83f690a0655d847f16"
+    },
+    {
+      "file": "studies/javascript-names/fixtures/same-script-theta-fixed.mjs",
+      "bytes": 147,
+      "sha256": "8a60418ab8aecf5f2e36014d57d6131a09abdd13307b6c3ba326023ccc79ebcc"
+    },
+    {
+      "file": "studies/javascript-names/fixtures/styled-single-braced.mjs",
+      "bytes": 151,
+      "sha256": "961f652d3d32f787fbc7c407e993cc9e0b8c451d643d1dcf049781c0c7eac4c8"
+    },
+    {
+      "file": "studies/javascript-names/native-source-corpus.mjs",
+      "bytes": 6234,
+      "sha256": "3aaf51f0592bad0b9f873e72ba5159a3dc168804d335f1f16c6b432998605adb"
+    },
+    {
+      "file": "studies/javascript-names/oracle.py",
+      "bytes": 3131,
+      "sha256": "e2742fd8ce34391415009926bb0f5d2d848b31c9b3ef96e7f9610e4533ceb38f"
+    },
+    {
+      "file": "studies/javascript-names/replay.mjs",
+      "bytes": 3356,
+      "sha256": "85f16c0c5f3e1e25be5df16b2d1b782218ed3e5e8dcb8a233ea035c980fff47d"
+    },
+    {
+      "file": "studies/javascript-names/resources.mjs",
+      "bytes": 1963,
+      "sha256": "4f518e135b781592909d7bbbb3e756602ab98640e79be9619b6eade745e9dabc"
+    },
+    {
+      "file": "studies/javascript-names/results/artifact-identity.json",
+      "bytes": 6525,
+      "sha256": "f87bff0cfa249f5db95d40244484133e92ac23244cc6dec83908e13906faf30d"
+    },
+    {
+      "file": "studies/javascript-names/results/clean-build.txt",
+      "bytes": 245,
+      "sha256": "cb994b31483409032cbac8515f8522df799879c3cfd3fabcfd036e066e91964c"
+    },
+    {
+      "file": "studies/javascript-names/results/clean-install.txt",
+      "bytes": 419,
+      "sha256": "6aeaa4e61e7afe04bd234386875bbb07d8110b563fe147c0c602a87d030eff89"
+    },
+    {
+      "file": "studies/javascript-names/results/clean-lint.txt",
+      "bytes": 52,
+      "sha256": "8e7eccd453a4ec72a5070cef028ad04be7378bba294d6604bdd94ac6de1d3f28"
+    },
+    {
+      "file": "studies/javascript-names/results/clean-tests.txt",
+      "bytes": 491,
+      "sha256": "84d06965fe0d8c9927b701fd19e9635784d5647944a37a241d06e68b759a2668"
+    },
+    {
+      "file": "studies/javascript-names/results/clean-typecheck.txt",
+      "bytes": 61,
+      "sha256": "4f95302bfcf72a8a1d086db1e0bbebaeabb6e4e9bbd45110e18889c205a4f6ea"
+    },
+    {
+      "file": "studies/javascript-names/results/default-corpus.json",
+      "bytes": 721,
+      "sha256": "74880b1a0982f9219be7f4bbcde2a3c3e3280dc0a724fc8d79503b99ad02b21a"
+    },
+    {
+      "file": "studies/javascript-names/results/icu-pairs.json",
+      "bytes": 5971,
+      "sha256": "05b0c2a3ad17d906d42ba2923caf60ad27376052ad0548ff9dba982da629ad58"
+    },
+    {
+      "file": "studies/javascript-names/results/installed-identities.json",
+      "bytes": 569,
+      "sha256": "800e4749254b1bb75ee5cb61301167a228a14a7ca8a953bf18a534f2cc4923d4"
+    },
+    {
+      "file": "studies/javascript-names/results/installed-node20.json.gz",
+      "bytes": 4406,
+      "sha256": "e582ccfd8120f2c4f866adb90e13974b2ec961d904c3411f763e808f025693d2"
+    },
+    {
+      "file": "studies/javascript-names/results/installed-node24.json.gz",
+      "bytes": 4407,
+      "sha256": "35e041d4e73210e0b65104d137ddbc70cd32d3c64318fc2d5584439aa0ba1987"
+    },
+    {
+      "file": "studies/javascript-names/results/installed-workflows.json",
+      "bytes": 2998,
+      "sha256": "f9f57c5a6145495c169f3d40021436aefc092aafa4e7516303f9ab1ffa8cd2f1"
+    },
+    {
+      "file": "studies/javascript-names/results/native-replay.json.gz",
+      "bytes": 4407,
+      "sha256": "e28dd43cc3d2314f94797c0765719da29936a1d90868118df5e7891fc3ab7eee"
+    },
+    {
+      "file": "studies/javascript-names/results/native-source-corpus-full.json.gz",
+      "bytes": 26966,
+      "sha256": "5280707c3aa1fead80990e57195dceddd3c2cff15e8c33a8dcad630c7eac0f71"
+    },
+    {
+      "file": "studies/javascript-names/results/native-source-corpus.json",
+      "bytes": 1242,
+      "sha256": "fcb73d2888dd74d365d6deed5a8ac6c33875bdc0de922fc5354c44f7b7322674"
+    },
+    {
+      "file": "studies/javascript-names/results/oracle.json",
+      "bytes": 12201,
+      "sha256": "da448b0ea7cabd03bff83cb7a0d094bf104f4691fe9a9eebace46d574d4ecbb2"
+    },
+    {
+      "file": "studies/javascript-names/results/resources.json",
+      "bytes": 1608,
+      "sha256": "ef400be435869db15e06b439d5bcc348d19117b340579a919858a1b9805ee452"
+    },
+    {
+      "file": "tests/javascript.spec.ts",
+      "bytes": 6549,
+      "sha256": "4f79177715218d06bf84e7f977e828b6a4cd642355ff6b28ae08c0471235318b"
+    },
+    {
+      "file": "tsconfig.build.json",
+      "bytes": 253,
+      "sha256": "83e3c569f0c870e63556eb79c2b745d39bd30bae3d3173f313650fa6fac6350a"
+    }
+  ],
+  "scope": "public Git source and evidence; separate from an npm release or hosted UI change"
+}

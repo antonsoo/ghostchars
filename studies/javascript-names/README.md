@@ -147,7 +147,8 @@ node studies/javascript-names/resources.mjs . /tmp/javascript-resources.json
 
 A clean archive of feature commit `fd65fb5` passes install, lint, type checks,
 all 396 checks and both builds on Node 24.21.0. The committed CLI matches that
-build. The [local package receipt](results/artifact-identity.json) identifies
+build. [Retained logs](results/log-normalization.json) replace the temporary
+checkout path and trim trailing blank lines; hashes retain the original output. The [local package receipt](results/artifact-identity.json) identifies
 the tarball and all 59 compiled files; these bytes match both the source build
 used for the independent corpus and both isolated installed packages. MIT,
 Unicode and Acorn notices are present and byte-identical.
@@ -165,6 +166,23 @@ offline use and 375px views. This checks the shared-core refactor; the browser
 does not gain a JavaScript mode. The terminal capture was opened and inspected.
 These are local/source artifacts with version metadata 0.1.5; no npm registry
 release was performed.
+
+## Public source upgrade
+
+A separate [registry-to-Git upgrade](results/public-upgrade.json) first installs
+npm 0.1.5, which refuses the new flag, then installs the pinned public feature
+commit. Version metadata stays 0.1.5, while all 59 compiled files now match the
+clean artifact and the local `npx` command reports all four native control
+spans. Install into a local project and inspect one of your JavaScript files:
+
+```sh
+npm install git+https://github.com/antonsoo/ghostchars.git#fd65fb5a4e86f9be40cc97cea1887c363737824f
+npx --no-install ghostchars file.mjs --javascript module
+```
+
+The [public-byte receipt](results/publication.json) independently compares all
+71 changed source, documentation and evidence files at `86869bc` with their
+Git objects. This source installation is separate from a new npm release.
 
 ## Limits
 

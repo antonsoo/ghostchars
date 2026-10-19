@@ -1,0 +1,30 @@
+{
+  "normalization": "temporary checkout path replaced with <clean-source>; trailing blank lines removed; other output retained",
+  "logs": [
+    {
+      "step": "install",
+      "raw_stdout_sha256": "6aeaa4e61e7afe04bd234386875bbb07d8110b563fe147c0c602a87d030eff89",
+      "retained_sha256": "6aeaa4e61e7afe04bd234386875bbb07d8110b563fe147c0c602a87d030eff89"
+    },
+    {
+      "step": "typecheck",
+      "raw_stdout_sha256": "4f95302bfcf72a8a1d086db1e0bbebaeabb6e4e9bbd45110e18889c205a4f6ea",
+      "retained_sha256": "0b1bfe5b9acf5904cfa850215d18b298aa5c08fd3bfaeeaf191d2cb9bad72d2e"
+    },
+    {
+      "step": "lint",
+      "raw_stdout_sha256": "8e7eccd453a4ec72a5070cef028ad04be7378bba294d6604bdd94ac6de1d3f28",
+      "retained_sha256": "2d4f10d77c2bf61777f507427898385941584d29fb3ddc9830aa86f8ca407a00"
+    },
+    {
+      "step": "tests",
+      "raw_stdout_sha256": "b1a1eeaf75f11ae6c23057b68dd88abea5c3b77a25a4dbbfcf1f3ff35d350668",
+      "retained_sha256": "26b5af5dbad4f1bbfb1839d3753f3138cf0b96e9f9d9dec5cb57c1806ae8dd46"
+    },
+    {
+      "step": "build",
+      "raw_stdout_sha256": "cb994b31483409032cbac8515f8522df799879c3cfd3fabcfd036e066e91964c",
+      "retained_sha256": "cb994b31483409032cbac8515f8522df799879c3cfd3fabcfd036e066e91964c"
+    }
+  ]
+}

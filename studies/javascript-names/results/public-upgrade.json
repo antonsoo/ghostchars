@@ -1,0 +1,31 @@
+{
+  "node": "v24.21.0",
+  "before": {
+    "version": "0.1.5",
+    "cli_sha256": "7073bb1f22061b0f23b92961ec88ebceac9296220a723f0ab5d2ca154b1d2f31",
+    "javascript_flag_exit": 2
+  },
+  "after": {
+    "version": "0.1.5",
+    "source_commit": "fd65fb5a4e86f9be40cc97cea1887c363737824f",
+    "resolved": "git+ssh://git@github.com/antonsoo/ghostchars.git#fd65fb5a4e86f9be40cc97cea1887c363737824f",
+    "runtime_files_match_artifact": 59,
+    "cli_sha256": "ccc37afda20d27d686640a2012fb19e653b4965431a243655e5ae7d4aee744ab",
+    "native_escaped_control_findings": 4,
+    "native_escaped_control_exit": 1,
+    "complete": true,
+    "local_npx_command": [
+      "npx",
+      "--no-install",
+      "ghostchars",
+      "control.mjs",
+      "--javascript",
+      "module",
+      "--format",
+      "json",
+      "--no-config"
+    ],
+    "local_npx_exit": 1
+  },
+  "registry_release": "not performed"
+}
