@@ -23,7 +23,7 @@
     "url": "git+https://github.com/antonsoo/ghostchars.git"
   },
   "license": "MIT",
-  "author": "Anton Soloviev",
+  "author": "Anthony Mercer",
   "type": "module",
   "engines": {
     "node": ">=20"
