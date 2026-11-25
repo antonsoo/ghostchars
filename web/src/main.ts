@@ -101,7 +101,7 @@ app.innerHTML = `
 
     <footer>
       <span>ghostchars -- MIT licensed -- <a href="https://github.com/antonsoo/ghostchars">github.com/antonsoo/ghostchars</a></span>
-      <span>by Anton Soloviev</span>
+      <span>by Anthony Mercer</span>
     </footer>
   </div>
 `;

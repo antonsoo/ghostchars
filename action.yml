@@ -1,6 +1,6 @@
 name: 'ghostchars'
 description: 'Catch invisible and deceptive Unicode -- bidi control smuggling, zero-width characters, tag/variation-selector payload smuggling, and homoglyph confusables.'
-author: 'Anton Soloviev'
+author: 'Anthony Mercer'
 branding:
   icon: 'eye'
   color: 'purple'

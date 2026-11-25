@@ -16,7 +16,7 @@ list) is committed.
 import csv, hashlib, io, json, os, sys, tarfile, time, urllib.request
 from concurrent.futures import ThreadPoolExecutor
 
-UA = "ghostchars-census/0.1 (research; contact anton@praviel.com)"
+UA = "ghostchars-census/0.1 (research; contact anthony@praviel.com)"
 TEXT_EXT = {".md", ".mdc", ".mdx", ".txt", ".prompt", ".yaml", ".yml", ".cursorrules", ".windsurfrules", ".rules", ".mkd"}
 TEXT_NAMES = {"agents.md", "claude.md", "gemini.md", ".cursorrules", ".windsurfrules", "copilot-instructions.md"}
 MAX_FILE = 2_000_000
