@@ -10,7 +10,10 @@
     "esModuleInterop": true,
     "isolatedModules": true,
     "noEmit": true,
-    "types": []
+    "types": [],
+    "paths": {
+      "acorn": ["./node_modules/acorn"]
+    }
   },
   "include": ["src", "../src/core"]
 }

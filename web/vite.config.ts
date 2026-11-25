@@ -6,6 +6,12 @@ import { resolve } from 'node:path';
 export default defineConfig({
   base: '/ghostchars/',
   plugins: [contentSecurityPolicy()],
+  resolve: {
+    // ../src/core imports acorn, and a bare import there would be looked up
+    // from the repository root. Resolving it from web/ keeps this app
+    // buildable with only its own install.
+    dedupe: ['acorn'],
+  },
   server: {
     fs: {
       // The app imports the core library straight from ../src (no publish
