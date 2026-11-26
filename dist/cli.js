@@ -30718,7 +30718,7 @@ function msToStr(ms) {
 }
 
 // src/cli/version.ts
-var VERSION = "0.1.5";
+var VERSION = "0.2.0";
 
 // src/cli/formatters/sarif.ts
 var SARIF_LEVEL = { error: "error", warning: "warning", info: "note" };
