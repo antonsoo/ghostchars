@@ -4,15 +4,24 @@ All notable changes to this project are documented in this file.
 
 ## [Unreleased]
 
+## [0.2.0] - 2026-11-26
+
 - Align security and emoji data with Unicode 17 at their versioned URLs.
   Revised palochka and added Cyrillic-sha mappings recover missed identifier
   collisions; the old palochka-to-i collision is removed. The parsed emoji tag
   allowlist is unchanged. Identifier repair remains manual.
 
+### Distribution
+
+- Published as `@anthonymercer/ghostchars`. The earlier
+  `@antonsoloviev/ghostchars` package is deprecated and points here; its
+  versions stay installable.
+- Package metadata names Anthony Mercer as the author.
+
 ### Added
 
 - Explicit source CLI `--javascript module|script|commonjs` and library
-  `@antonsoloviev/ghostchars/javascript` parse JavaScript before comparing names.
+  `@anthonymercer/ghostchars/javascript` parse JavaScript before comparing names.
   Unicode escapes retain their original source ranges and decoded names;
   comments, literal contents and equivalent spellings do not invent identifier
   collisions. Private names keep their own namespace. Unsupported syntax makes

